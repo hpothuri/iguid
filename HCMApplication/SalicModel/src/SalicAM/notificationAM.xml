@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="notificationAM"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true">
+  <DesignTime>
+    <Attr Name="_deployType" Value="0"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="SalicAM.notificationAM_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewUsage
+    Name="notificationVO1"
+    ViewObjectName="SalicView.notificationVO"/>
+  <ViewUsage
+    Name="notificationROVO1"
+    ViewObjectName="SalicROVO.notificationROVO"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
+</AppModule>

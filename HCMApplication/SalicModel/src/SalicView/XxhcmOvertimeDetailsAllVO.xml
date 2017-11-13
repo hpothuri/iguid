@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxhcmOvertimeDetailsAllVO"
+  Version="12.2.1.12.24"
+  InheritPersonalization="merge"
+  SelectList="XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID, 
+       XxhcmOvertimeDetailsAllEO.REQ_ID, 
+       XxhcmOvertimeDetailsAllEO.STATUS, 
+       XxhcmOvertimeDetailsAllEO.DESCRIPTION, 
+       XxhcmOvertimeDetailsAllEO.OVERTIME_HOURS, 
+       XxhcmOvertimeDetailsAllEO.OVERTIME_DATE, 
+       XxhcmOvertimeDetailsAllEO.OVERTIME_TYPE, 
+       XxhcmOvertimeDetailsAllEO.CALCULATED_HOURS, 
+       XxhcmOvertimeDetailsAllEO.MISSIONS, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE_CATEGORY, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE1, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE2, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE3, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE4, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE5, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE6, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE7, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE8, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE9, 
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE10, 
+       XxhcmOvertimeDetailsAllEO.CREATED_BY, 
+       XxhcmOvertimeDetailsAllEO.CREATION_DATE, 
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATED_BY, 
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_DATE, 
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_LOGIN, 
+       XxhcmOvertimeDetailsAllEO.ADV_AMT, 
+       XxhcmOvertimeDetailsAllEO.COMMENTS, 
+       XxhcmOvertimeDetailsAllEO.MONTHS, 
+       XxhcmOvertimeDetailsAllEO.NOTE, 
+       XxhcmOvertimeDetailsAllEO.LEAVE, 
+       XxhcmOvertimeDetailsAllEO.SALARY_PERIOD, 
+       XxhcmOvertimeDetailsAllEO.ACT_AMT, 
+       XxhcmOvertimeDetailsAllEO.AGE, 
+       XxhcmOvertimeDetailsAllEO.AVL_AMT, 
+       XxhcmOvertimeDetailsAllEO.CHILD, 
+       XxhcmOvertimeDetailsAllEO.GRADE, 
+       XxhcmOvertimeDetailsAllEO.INV_DATE, 
+       XxhcmOvertimeDetailsAllEO.INV_NUM, 
+       XxhcmOvertimeDetailsAllEO.INV_TOTAL, 
+       XxhcmOvertimeDetailsAllEO.MAX_AMT, 
+       XxhcmOvertimeDetailsAllEO.SCHOOL, 
+       XxhcmOvertimeDetailsAllEO.SCHOOLGRADE, 
+       XxhcmOvertimeDetailsAllEO.SEMESTER, 
+       XxhcmOvertimeDetailsAllEO.SALARY_END_DATE, 
+       XxhcmOvertimeDetailsAllEO.SAL_PERIOD, 
+       XxhcmOvertimeDetailsAllEO.PER_ABSENCE_ENTRY_ID, 
+       XxhcmOvertimeDetailsAllEO.CONTACTPERSONID, 
+       XxhcmOvertimeDetailsAllEO.LETTER_TO, 
+       XxhcmOvertimeDetailsAllEO.LETTER_TYPE, 
+       XxhcmOvertimeDetailsAllEO.OTHER, 
+       XxhcmOvertimeDetailsAllEO.TRIP_TYPE, 
+       XxhcmOvertimeDetailsAllEO.AIRLINE_TICKET_TYPE, 
+       XxhcmOvertimeDetailsAllEO.START_DATE, 
+       XxhcmOvertimeDetailsAllEO.END_DATE, 
+       XxhcmOvertimeDetailsAllEO.ORIG_START_DATE, 
+       XxhcmOvertimeDetailsAllEO.ORIG_END_DATE, 
+       XxhcmOvertimeDetailsAllEO.DEST_CATEGORY, 
+       XxhcmOvertimeDetailsAllEO.NUMBER_OF_DAYS, 
+       XxhcmOvertimeDetailsAllEO.EXIT_RERENTRY_VISA, 
+       XxhcmOvertimeDetailsAllEO.DEST_VISA_REQUIRED, 
+       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY_CITY, 
+       XxhcmOvertimeDetailsAllEO.ADV_PERDIEM, 
+       XxhcmOvertimeDetailsAllEO.PROJ_TYPE, 
+       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM, 
+       XxhcmOvertimeDetailsAllEO.OTHER1, 
+       XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY, 
+       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM"
+  FromList="XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full">
+  <ViewAccessor
+    Name="otTypeROVA"
+    ViewObjectName="SalicROVO.otTypeROVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="XxhcmOvertimeDetailsAllVO1"
+    ViewObjectName="SalicView.XxhcmOvertimeDetailsAllVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="absenceROVA"
+    ViewObjectName="SalicROVO.absenceROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findById"
+      FullName="SalicROVO.absenceROVO.findById"/>
+    <ParameterMap>
+      <PIMap Variable="BV_PER_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[EmpIdVacation]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="XxhcmOvertimeHeadersAllVO1"
+    ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findById"
+      FullName="SalicView.XxhcmOvertimeHeadersAllVO.findById"/>
+    <ParameterMap>
+      <PIMap Variable="BV_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[ReqId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="childrenROVA"
+    ViewObjectName="SalicROVO.childrenROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findById"
+      FullName="SalicROVO.childrenROVO.findById"/>
+    <ParameterMap>
+      <PIMap Variable="BV_FATH_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[empIdTRANS]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="childrenROVA1"
+    ViewObjectName="SalicROVO.childrenROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByChildId"
+      FullName="SalicROVO.childrenROVO.findByChildId"/>
+    <ParameterMap>
+      <PIMap Variable="BV_CHILD_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[Contactpersonid]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_ROVO1"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByLetterType"
+      FullName="SalicROVO.Lookup_ROVO.findByLetterType"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_ROVO2"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByLetterTo"
+      FullName="SalicROVO.Lookup_ROVO.findByLetterTo"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_TripType"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByTripType"
+      FullName="SalicROVO.Lookup_ROVO.findByTripType"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_DestinationCategory"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByDestCategory"
+      FullName="SalicROVO.Lookup_ROVO.findByDestCategory"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_ExitRerentryVisa"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByExitReEntryVisa"
+      FullName="SalicROVO.Lookup_ROVO.findByExitReEntryVisa"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_DestinationVisaRequired"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByDestVisaReq"
+      FullName="SalicROVO.Lookup_ROVO.findByDestVisaReq"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_DestinationCountryCity"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByDestinationCountryCity"
+      FullName="SalicROVO.Lookup_ROVO.findByDestinationCountryCity"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_AdvancePerDiem"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByAdvancePerDiem"
+      FullName="SalicROVO.Lookup_ROVO.findByAdvancePerDiem"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_ProjectType"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findByProjectType"
+      FullName="SalicROVO.Lookup_ROVO.findByProjectType"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="getOverTimeHdrId_ROVO1"
+    ViewObjectName="SalicROVO.getOverTimeHdrId_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="getOverTimeHdrId_ROVOCriteria"
+      FullName="SalicROVO.getOverTimeHdrId_ROVO.getOverTimeHdrId_ROVOCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="bind_empid">
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[empIdTRANS]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CityROVO1"
+    ViewObjectName="SalicView.CityROVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CountryROVO1"
+    ViewObjectName="SalicView.CountryROVO"
+    RowLevelBinds="true">
+    <ParameterMap>
+      <PIMap Variable="P_CITY_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[DestCountryCity]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CityCountryROVO1"
+    ViewObjectName="SalicROVO.CityCountryROVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="Lookup_AirlineTicketType"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findAirlineTicketType"
+      FullName="SalicROVO.Lookup_ROVO.findAirlineTicketType"/>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="GetCurrentAndNextMonthROVO1"
+    ViewObjectName="SalicROVO.GetCurrentAndNextMonthROVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="LetterTOROVO1"
+    ViewObjectName="SalicROVO.LetterTOROVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_OvertimeType"
+    ListVOName="otTypeROVA"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="OvertimeType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Leave"
+    ListVOName="absenceROVA"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Leave"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="PerAbsenceEntryId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="AnnualLeave"/>
+      <Item Value="PerAbsenceEntryId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="AnnualLeave"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="findById"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_childTRANS"
+    ListVOName="childrenROVA"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="childTRANS"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="Contactpersonid"/>
+      <Item Value="Age"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ChildName"/>
+      <Item Value="ChildPersonId"/>
+      <Item Value="Age"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ChildName"/>
+      <Item Value="Age"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="findByName"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_LetterType"
+    ListVOName="Lookup_ROVO1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="LetterType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TripType"
+    ListVOName="Lookup_TripType"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TripType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupTypeName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestCategory"
+    ListVOName="Lookup_DestinationCategory"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestCategory"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ExitRerentryVisa"
+    ListVOName="Lookup_ExitRerentryVisa"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ExitRerentryVisa"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupTypeName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestVisaRequired"
+    ListVOName="Lookup_DestinationVisaRequired"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestVisaRequired"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupTypeName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestCountryCity"
+    ListVOName="CityCountryROVO1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestCountryCity"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CityId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CountryName"/>
+      <Item Value="CityName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_AdvPerdiem"
+    ListVOName="Lookup_AdvancePerDiem"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AdvPerdiem"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupTypeName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProjType"
+    ListVOName="Lookup_ProjectType"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProjType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupTypeName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_BussTravReqNum"
+    ListVOName="getOverTimeHdrId_ROVO1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BussTravReqNum"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ReqId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RequestNumber"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_AirlineTicketType"
+    ListVOName="Lookup_AirlineTicketType"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AirlineTicketType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_SalPeriod"
+    ListVOName="GetCurrentAndNextMonthROVO1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="SalPeriod"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Cmonth"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Cmonth"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_LetterTo"
+    ListVOName="LetterTOROVO1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="LetterTo"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="Other"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Engname"/>
+      <Item Value="Arbname"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="Engname"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="XxhcmOvertimeDetailsAllEO"
+    Entity="SalicEntity.XxhcmOvertimeDetailsAllEO"/>
+  <ViewAttribute
+    Name="ReqDtlsId"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ReqDtlsId"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="REQ_DTLS_ID"/>
+  <ViewAttribute
+    Name="ReqId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ReqId"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="REQ_ID"/>
+  <ViewAttribute
+    Name="Status"
+    PrecisionRule="true"
+    EntityAttrName="Status"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="STATUS"/>
+  <ViewAttribute
+    Name="Description"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DESCRIPTION"/>
+  <ViewAttribute
+    Name="OvertimeHours"
+    PrecisionRule="true"
+    EntityAttrName="OvertimeHours"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="OVERTIME_HOURS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.OvertimeHours_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OvertimeDate"
+    PrecisionRule="true"
+    EntityAttrName="OvertimeDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="OVERTIME_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.OvertimeDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OvertimeType"
+    LOVName="LOV_OvertimeType"
+    PrecisionRule="true"
+    EntityAttrName="OvertimeType"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="OVERTIME_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.OvertimeType_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CalculatedHours"
+    PrecisionRule="true"
+    EntityAttrName="CalculatedHours"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="CALCULATED_HOURS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.CalculatedHours_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Missions"
+    PrecisionRule="true"
+    EntityAttrName="Missions"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="MISSIONS"/>
+  <ViewAttribute
+    Name="AttributeCategory"
+    PrecisionRule="true"
+    EntityAttrName="AttributeCategory"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE_CATEGORY"/>
+  <ViewAttribute
+    Name="Attribute1"
+    PrecisionRule="true"
+    EntityAttrName="Attribute1"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE1"/>
+  <ViewAttribute
+    Name="Attribute2"
+    PrecisionRule="true"
+    EntityAttrName="Attribute2"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE2"/>
+  <ViewAttribute
+    Name="Attribute3"
+    PrecisionRule="true"
+    EntityAttrName="Attribute3"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE3"/>
+  <ViewAttribute
+    Name="Attribute4"
+    PrecisionRule="true"
+    EntityAttrName="Attribute4"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE4"/>
+  <ViewAttribute
+    Name="Attribute5"
+    PrecisionRule="true"
+    EntityAttrName="Attribute5"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE5"/>
+  <ViewAttribute
+    Name="Attribute6"
+    PrecisionRule="true"
+    EntityAttrName="Attribute6"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE6"/>
+  <ViewAttribute
+    Name="Attribute7"
+    PrecisionRule="true"
+    EntityAttrName="Attribute7"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE7"/>
+  <ViewAttribute
+    Name="Attribute8"
+    PrecisionRule="true"
+    EntityAttrName="Attribute8"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE8"/>
+  <ViewAttribute
+    Name="Attribute9"
+    PrecisionRule="true"
+    EntityAttrName="Attribute9"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE9"/>
+  <ViewAttribute
+    Name="Attribute10"
+    PrecisionRule="true"
+    EntityAttrName="Attribute10"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ATTRIBUTE10"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreationDate"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="CREATION_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdateDate"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdateDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LAST_UPDATE_DATE"/>
+  <ViewAttribute
+    Name="LastUpdateLogin"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdateLogin"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LAST_UPDATE_LOGIN"/>
+  <ViewAttribute
+    Name="OTHoursTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="VIEW_ATTR"
+    SQLType="INTEGER">
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[XxhcmOvertimeDetailsAllVO1.sum("OvertimeHours")]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AdvAmt"
+    PrecisionRule="true"
+    EntityAttrName="AdvAmt"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ADV_AMT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.AdvAmt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Comments"
+    PrecisionRule="true"
+    EntityAttrName="Comments"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="COMMENTS"/>
+  <ViewAttribute
+    Name="Months"
+    PrecisionRule="true"
+    EntityAttrName="Months"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="MONTHS"
+    DefaultValue="6"/>
+  <ViewAttribute
+    Name="Note"
+    PrecisionRule="true"
+    EntityAttrName="Note"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="NOTE"/>
+  <ViewAttribute
+    Name="Leave"
+    PrecisionRule="true"
+    EntityAttrName="Leave"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LEAVE"
+    LOVName="LOV_Leave">
+    <Dependencies>
+      <Item
+        Value="EmpIdVacation"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SalaryPeriod"
+    PrecisionRule="true"
+    EntityAttrName="SalaryPeriod"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SALARY_PERIOD">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryPeriod_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActAmt"
+    PrecisionRule="true"
+    EntityAttrName="ActAmt"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ACT_AMT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.ActAmt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Age"
+    PrecisionRule="true"
+    EntityAttrName="Age"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="AGE"/>
+  <ViewAttribute
+    Name="AvlAmt"
+    PrecisionRule="true"
+    EntityAttrName="AvlAmt"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="AVL_AMT"
+    DefaultValue="2000">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.AvlAmt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Child"
+    PrecisionRule="true"
+    EntityAttrName="Child"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="CHILD">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.Child_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Grade"
+    PrecisionRule="true"
+    EntityAttrName="Grade"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="GRADE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.Grade_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="InvDate"
+    PrecisionRule="true"
+    EntityAttrName="InvDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="INV_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.InvDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="InvNum"
+    PrecisionRule="true"
+    EntityAttrName="InvNum"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="INV_NUM">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.InvNum_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="InvTotal"
+    PrecisionRule="true"
+    EntityAttrName="InvTotal"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="INV_TOTAL">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.InvTotal_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MaxAmt"
+    PrecisionRule="true"
+    EntityAttrName="MaxAmt"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="MAX_AMT"
+    DefaultValue="2000">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.MaxAmt_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="School"
+    PrecisionRule="true"
+    EntityAttrName="School"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SCHOOL"/>
+  <ViewAttribute
+    Name="Schoolgrade"
+    PrecisionRule="true"
+    EntityAttrName="Schoolgrade"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SCHOOLGRADE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.Schoolgrade_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Semester"
+    PrecisionRule="true"
+    EntityAttrName="Semester"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SEMESTER"/>
+  <ViewAttribute
+    Name="SalaryEndDate"
+    PrecisionRule="true"
+    EntityAttrName="SalaryEndDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SALARY_END_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryEndDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SalPeriod"
+    PrecisionRule="true"
+    EntityAttrName="SalPeriod"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SAL_PERIOD"
+    LOVName="LOV_SalPeriod">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PerAbsenceEntryId"
+    PrecisionRule="true"
+    EntityAttrName="PerAbsenceEntryId"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="PER_ABSENCE_ENTRY_ID"/>
+  <ViewAttribute
+    Name="empIdTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC">
+    <TransientExpression
+      Name="ExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+    <RecalcCondition
+      Name="RecalcExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Contactpersonid"
+    PrecisionRule="true"
+    EntityAttrName="Contactpersonid"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="CONTACTPERSONID"/>
+  <ViewAttribute
+    Name="childTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_childTRANS">
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(Contactpersonid!=null && childrenROVA1.first()!=null){
+return childrenROVA1.first().getAttribute('ChildName');
+}
+else{
+return null;
+}]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.childTRANS_LABEL"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LetterTo"
+    PrecisionRule="true"
+    EntityAttrName="LetterTo"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LETTER_TO"
+    LOVName="LOV_LetterTo">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.LetterTo_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LetterType"
+    PrecisionRule="true"
+    EntityAttrName="LetterType"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="LETTER_TYPE"
+    LOVName="LOV_LetterType">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.LetterType_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Other"
+    PrecisionRule="true"
+    EntityAttrName="Other"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="OTHER"/>
+  <ViewAttribute
+    Name="TripType"
+    PrecisionRule="true"
+    EntityAttrName="TripType"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="TRIP_TYPE"
+    LOVName="LOV_TripType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AirlineTicketType"
+    PrecisionRule="true"
+    EntityAttrName="AirlineTicketType"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="AIRLINE_TICKET_TYPE"
+    LOVName="LOV_AirlineTicketType">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StartDate"
+    PrecisionRule="true"
+    EntityAttrName="StartDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="START_DATE"/>
+  <ViewAttribute
+    Name="EndDate"
+    PrecisionRule="true"
+    EntityAttrName="EndDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="END_DATE"/>
+  <ViewAttribute
+    Name="OrigStartDate"
+    PrecisionRule="true"
+    EntityAttrName="OrigStartDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ORIG_START_DATE"/>
+  <ViewAttribute
+    Name="OrigEndDate"
+    PrecisionRule="true"
+    EntityAttrName="OrigEndDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ORIG_END_DATE"/>
+  <ViewAttribute
+    Name="DestCategory"
+    PrecisionRule="true"
+    EntityAttrName="DestCategory"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_CATEGORY"
+    LOVName="LOV_DestCategory">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="NumberOfDays"
+    PrecisionRule="true"
+    EntityAttrName="NumberOfDays"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="NUMBER_OF_DAYS"/>
+  <ViewAttribute
+    Name="ExitRerentryVisa"
+    PrecisionRule="true"
+    EntityAttrName="ExitRerentryVisa"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="EXIT_RERENTRY_VISA"
+    LOVName="LOV_ExitRerentryVisa">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestVisaRequired"
+    PrecisionRule="true"
+    EntityAttrName="DestVisaRequired"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_VISA_REQUIRED"
+    LOVName="LOV_DestVisaRequired">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestCountryCity"
+    PrecisionRule="true"
+    EntityAttrName="DestCountryCity"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_COUNTRY_CITY"
+    LOVName="LOV_DestCountryCity">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AdvPerdiem"
+    PrecisionRule="true"
+    EntityAttrName="AdvPerdiem"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="ADV_PERDIEM"
+    LOVName="LOV_AdvPerdiem">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProjType"
+    PrecisionRule="true"
+    EntityAttrName="ProjType"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="PROJ_TYPE"
+    LOVName="LOV_ProjType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BussTravReqNum"
+    PrecisionRule="true"
+    EntityAttrName="BussTravReqNum"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="BUSS_TRAV_REQ_NUM"
+    LOVName="LOV_BussTravReqNum">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <DISPLAYWIDTH
+          Value="50"/>
+      </SchemaBasedProperties>
+    </Properties>
+    <Dependencies>
+      <Item
+        Value="empIdTRANS"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Other1"
+    PrecisionRule="true"
+    EntityAttrName="Other1"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="OTHER1"/>
+  <ViewAttribute
+    Name="Country_Trans"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(DestCountryCity !=null && CountryROVO1.first()!=null) {
+CountryROVO1.first().getAttribute("CountryName");
+}]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
+    <Dependencies>
+      <Item
+        Value="DestCountryCity"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PerdiemPerDay"
+    PrecisionRule="true"
+    EntityAttrName="PerdiemPerDay"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="PERDIEM_PER_DAY"/>
+  <ViewAttribute
+    Name="TotalPerdiem"
+    PrecisionRule="true"
+    EntityAttrName="TotalPerdiem"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="TOTAL_PERDIEM"/>
+  <ViewAttribute
+    Name="EmpIdVacation"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <TransientExpression
+      Name="ExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+    <RecalcCondition
+      Name="RecalcExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+  </ViewAttribute>
+  <ViewLinkAccessor
+    Name="XxhcmOvertimeHeadersAllVO"
+    ViewLink="SalicVL.overtimeHdrDtl"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="XxhcmOtherExpenseTVO"
+    ViewLink="SalicVL.OverTimeDet_OtherExpenseVL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="XxhcmPurposeOfTrvl_VO"
+    ViewLink="SalicVL.OverTimeDetPurposeOfTrvlVL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

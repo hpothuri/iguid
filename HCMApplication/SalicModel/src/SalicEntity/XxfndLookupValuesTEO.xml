@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxfndLookupValuesTEO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="XXFND_LOOKUP_VALUES_T"
+  AliasName="XxfndLookupValuesTEO"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="LookupValueId"
+    IsNotNull="true"
+    ColumnName="LOOKUP_VALUE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="XXFND_LOOKUP_VALUES_T"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LookupTypeId"
+    ColumnName="LOOKUP_TYPE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LookupValueName"
+    IsNotNull="true"
+    Precision="30"
+    ColumnName="LOOKUP_VALUE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LookupValueNameDisp"
+    IsNotNull="true"
+    Precision="240"
+    ColumnName="LOOKUP_VALUE_NAME_DISP"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LookupValueNameDispTl"
+    Precision="240"
+    ColumnName="LOOKUP_VALUE_NAME_DISP_TL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ChildLookupTypeId"
+    ColumnName="CHILD_LOOKUP_TYPE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Status"
+    Precision="1"
+    ColumnName="STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AccessLevel"
+    Precision="240"
+    ColumnName="ACCESS_LEVEL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LookupAddlValue"
+    Precision="240"
+    ColumnName="LOOKUP_ADDL_VALUE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreatedBy"
+    Precision="60"
+    ColumnName="CREATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="60"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="CreationDate"
+    ColumnName="CREATION_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="11"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LastUpdatedBy"
+    Precision="60"
+    ColumnName="LAST_UPDATED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="60"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LastUpdateDate"
+    ColumnName="LAST_UPDATE_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Timestamp"
+    ColumnType="TIMESTAMP"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="11"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="LastUpdateLogin"
+    Precision="150"
+    ColumnName="LAST_UPDATE_LOGIN"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXFND_LOOKUP_VALUES_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Key
+    Name="SysC0010412">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0010412"/>
+      <Attr Name="_checkCondition" Value='"LOOKUP_VALUE_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="SalicEntity.XxfndLookupValuesTEO.LookupValueId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0010413">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0010413"/>
+      <Attr Name="_checkCondition" Value='"LOOKUP_VALUE_NAME" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="SalicEntity.XxfndLookupValuesTEO.LookupValueName"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0010414">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0010414"/>
+      <Attr Name="_checkCondition"
+        Value='"LOOKUP_VALUE_NAME_DISP" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="SalicEntity.XxfndLookupValuesTEO.LookupValueNameDisp"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="XxfndLookupLookupValuePk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="XXFND_LOOKUP_LOOKUP_VALUE_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item Value="SalicEntity.XxfndLookupValuesTEO.LookupValueId"/>
+    </AttrArray>
+  </Key>
+</Entity>

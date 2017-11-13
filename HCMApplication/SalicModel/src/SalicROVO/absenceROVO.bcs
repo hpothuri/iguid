@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicROVO.absenceROVO
+
+package SalicROVO
+
+import oracle.jbo.script.annotation.VariableExpression;
+
+@VariableExpression(path="BV_PER_ID")
+def BV_PER_ID_VariableScript_Variable()
+{
+adf.context.sessionScope.empfilv
+}
+

@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicROVO.getOverTimeHdrId_ROVO
+
+package SalicROVO
+
+import oracle.jbo.script.annotation.VariableExpression;
+
+@VariableExpression(path="bind_empid")
+def bind_empid_VariableScript_Variable()
+{
+adf.context.sessionScope.empfil
+}
+

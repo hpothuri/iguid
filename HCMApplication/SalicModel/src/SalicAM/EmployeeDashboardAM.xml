@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EmployeeDashboardAM"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true"
+  ComponentClass="SalicAM.EmployeeDashboardAMImpl"
+  ComponentInterface="SalicAM.common.EmployeeDashboardAM"
+  ClientProxyName="SalicAM.client.EmployeeDashboardAMClient">
+  <DesignTime>
+    <Attr Name="_deployType" Value="0"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewUsage
+    Name="XxhcmEmpApprDtlsVO1"
+    ViewObjectName="SalicView.XxhcmEmpApprDtlsVO"/>
+  <ViewUsage
+    Name="XxhcmEmpDashboardReqDtlsVO1"
+    ViewObjectName="SalicView.XxhcmEmpDashboardReqDtlsVO"/>
+  <ViewUsage
+    Name="employeeDashboardROVO1"
+    ViewObjectName="SalicROVO.employeeDashboardROVO"/>
+  <ViewUsage
+    Name="employeeDashboardROVO2"
+    ViewObjectName="SalicROVO.employeeDashboardROVO"/>
+  <ClientInterface>
+    <Method
+      Name="load">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+</AppModule>

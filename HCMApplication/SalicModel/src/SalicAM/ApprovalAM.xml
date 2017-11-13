@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ApprovalAM"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true">
+  <DesignTime>
+    <Attr Name="_deployType" Value="0"/>
+  </DesignTime>
+  <ViewUsage
+    Name="XxApprovalHeadersAllVO1"
+    ViewObjectName="SalicView.XxApprovalHeadersAllVO"/>
+  <ViewUsage
+    Name="XxApprovalLinesAllVO1"
+    ViewObjectName="SalicView.XxApprovalLinesAllVO"/>
+  <ViewUsage
+    Name="XxQpActionHistoryTVO1"
+    ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+  <ViewUsage
+    Name="XxApprovalLinesAllVO2"
+    ViewObjectName="SalicView.XxApprovalLinesAllVO"/>
+  <ViewUsage
+    Name="XxhcmApprSetupHdr_VO1"
+    ViewObjectName="SalicView.XxhcmApprSetupHdr_VO"/>
+  <ViewUsage
+    Name="XxhcmApprSetupDtl_VO1"
+    ViewObjectName="SalicView.XxhcmApprSetupDtl_VO"/>
+  <ViewUsage
+    Name="Lookup_ROVO1"
+    ViewObjectName="SalicROVO.Lookup_ROVO"/>
+  <ViewLinkUsage
+    Name="appHdrDtlsVL1"
+    ViewLinkObjectName="SalicVL.appHdrDtlsVL"
+    SrcViewUsageName="SalicAM.ApprovalAM.XxApprovalHeadersAllVO1"
+    DstViewUsageName="SalicAM.ApprovalAM.XxApprovalLinesAllVO2"
+    Reversed="false"/>
+  <ViewLinkUsage
+    Name="ApprovalSetupHdr_ApprovalSetupDtl_VL1"
+    ViewLinkObjectName="SalicVL.ApprovalSetupHdr_ApprovalSetupDtl_VL"
+    SrcViewUsageName="SalicAM.ApprovalAM.XxhcmApprSetupHdr_VO1"
+    DstViewUsageName="SalicAM.ApprovalAM.XxhcmApprSetupDtl_VO1"
+    Reversed="false"/>
+</AppModule>

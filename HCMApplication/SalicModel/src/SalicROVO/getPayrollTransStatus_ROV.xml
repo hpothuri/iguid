@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="getPayrollTransStatus_ROV"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="SalicROVO.getPayrollTransStatus_ROV_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery>
+    <![CDATA[SELECT   XXFND_LOOKUP_VALUES_T.LOOKUP_VALUE_ID LOOKUP_VALUE_ID, 
+    XXFND_LOOKUP_VALUES_T.LOOKUP_VALUE_NAME LOOKUP_VALUE_NAME, 
+    XXFND_LOOKUP_VALUES_T.LOOKUP_VALUE_NAME_DISP LOOKUP_VALUE_NAME_DISP FROM XXFND_LOOKUP_VALUES_T WHERE LOOKUP_TYPE_ID=(SELECT LOOKUP_TYPE_ID FROM XXFND_LOOKUP_TYPES_T WHERE LOOKUP_TYPE_NAME='PAYROLL_TANS_STATUS' )]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="LookupValueId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="LOOKUP_VALUE_ID"
+    Expression="LOOKUP_VALUE_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LookupValueName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="LOOKUP_VALUE_NAME"
+    Expression="LOOKUP_VALUE_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LookupValueNameDisp"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="LOOKUP_VALUE_NAME_DISP"
+    Expression="LOOKUP_VALUE_NAME_DISP"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="LookupValueId"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

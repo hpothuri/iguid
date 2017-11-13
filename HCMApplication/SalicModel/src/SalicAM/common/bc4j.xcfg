@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="SalicAM.overTimeAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="overTimeAMLocal" ApplicationName="SalicAM.overTimeAM">
+         <Security AppModuleJndiName="SalicAM.overTimeAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="overTimeAMShared" ApplicationName="SalicAM.overTimeAM">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Security AppModuleJndiName="SalicAM.overTimeAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.ManagerDashbordAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ManagerDashbordAMLocal" ApplicationName="SalicAM.ManagerDashbordAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Security AppModuleJndiName="SalicAM.ManagerDashbordAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ManagerDashbordAMShared" ApplicationName="SalicAM.ManagerDashbordAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Security AppModuleJndiName="SalicAM.ManagerDashbordAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.EmployeeDashboardAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="EmployeeDashboardAMLocal" ApplicationName="SalicAM.EmployeeDashboardAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Security AppModuleJndiName="SalicAM.EmployeeDashboardAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="EmployeeDashboardAMShared" ApplicationName="SalicAM.EmployeeDashboardAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Security AppModuleJndiName="SalicAM.EmployeeDashboardAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.ApprovalAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ApprovalAMLocal" ApplicationName="SalicAM.ApprovalAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Custom JDBCDataSource="subcont"/>
+         <Security AppModuleJndiName="SalicAM.ApprovalAM"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ApprovalAMShared" ApplicationName="SalicAM.ApprovalAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java"/>
+         <Custom JDBCDataSource="subcont"/>
+         <Security AppModuleJndiName="SalicAM.ApprovalAM"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.HrAdminAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="HrAdminAMLocal" ApplicationName="SalicAM.HrAdminAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.HrAdminAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="HrAdminAMShared" ApplicationName="SalicAM.HrAdminAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.HrAdminAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.notificationAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="notificationAMLocal" ApplicationName="SalicAM.notificationAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.notificationAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="notificationAMShared" ApplicationName="SalicAM.notificationAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.notificationAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.payRollAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="payRollAMLocal" ApplicationName="SalicAM.payRollAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.payRollAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="payRollAMShared" ApplicationName="SalicAM.payRollAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.payRollAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="SalicAM.manangerDashboardAM"/>
+   <AppModuleConfigBag ApplicationName="SalicAM.ReportAM">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ReportAMLocal" ApplicationName="SalicAM.ReportAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.ReportAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="SalicModel.SalicModel" name="ReportAMShared" ApplicationName="SalicAM.ReportAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="SalicAM.ReportAM"/>
+         <Custom JDBCDataSource="subcont"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

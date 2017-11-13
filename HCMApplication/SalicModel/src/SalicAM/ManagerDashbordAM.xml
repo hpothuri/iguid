@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ManagerDashbordAM"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  ClearCacheOnRollback="true"
+  ComponentClass="SalicAM.ManagerDashbordAMImpl"
+  ComponentInterface="SalicAM.common.ManagerDashbordAM"
+  ClientProxyName="SalicAM.client.ManagerDashbordAMClient">
+  <DesignTime>
+    <Attr Name="_deployType" Value="0"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewUsage
+    Name="XxhcmApprovalDtlsVO1"
+    ViewObjectName="SalicView.XxhcmApprovalDtlsVO"/>
+  <ViewUsage
+    Name="XxhcmManagerReqDtlsVO1"
+    ViewObjectName="SalicView.XxhcmManagerReqDtlsVO"/>
+  <ViewUsage
+    Name="XxQpActionHistoryTVO1"
+    ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+  <ViewUsage
+    Name="XxQpActionHistoryTVO2"
+    ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+  <ViewUsage
+    Name="managerDashbaordROVO1"
+    ViewObjectName="SalicROVO.managerDashbaordROVO"/>
+  <ViewUsage
+    Name="managerDashbaordROVO2"
+    ViewObjectName="SalicROVO.managerDashbaordROVO"/>
+  <ViewUsage
+    Name="managerDashbaordROVO3"
+    ViewObjectName="SalicROVO.managerDashbaordROVO"/>
+  <ViewUsage
+    Name="XxQpActionHistoryTVO4"
+    ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+  <ViewLinkUsage
+    Name="manager_QpActionHistory_VL2"
+    ViewLinkObjectName="SalicVL.manager_QpActionHistory_VL"
+    SrcViewUsageName="SalicAM.ManagerDashbordAM.managerDashbaordROVO1"
+    DstViewUsageName="SalicAM.ManagerDashbordAM.XxQpActionHistoryTVO4"
+    Reversed="false"/>
+  <ClientInterface>
+    <Method
+      Name="load">
+      <Return
+        Type="void"/>
+    </Method>
+  </ClientInterface>
+</AppModule>

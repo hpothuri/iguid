@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxApprovalLinesAllVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  SelectList="XxApprovalLinesAllEO.LINE_ID, 
+       XxApprovalLinesAllEO.APPROVAL_LIST_ID, 
+       XxApprovalLinesAllEO.EMPLOYEE_ID, 
+       XxApprovalLinesAllEO.EMPLOYEE_NAME, 
+       XxApprovalLinesAllEO.APPROVAL_LEVEL, 
+       XxApprovalLinesAllEO.ROWID"
+  FromList="XX_APPROVAL_LINES_ALL XxApprovalLinesAllEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="employeeROVO1"
+    ViewObjectName="SalicROVO.employeeROVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_EmployeeId"
+    ListVOName="employeeROVO1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_EmployeeId_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="EmployeeId"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="EmployeeName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="EmpId"/>
+      <Item Value="EmpName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="EmpNumber"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_EmployeeName"
+    ListVOName="employeeROVO1"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_EmployeeName_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="EmployeeName"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="EmployeeId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="EmpName"/>
+      <Item Value="EmpId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="EmpName"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="findByName"/>
+  </ListBinding>
+  <EntityUsage
+    Name="XxApprovalLinesAllEO"
+    Entity="SalicEntity.XxApprovalLinesAllEO"/>
+  <ViewAttribute
+    Name="LineId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LineId"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="LINE_ID"/>
+  <ViewAttribute
+    Name="ApprovalListId"
+    PrecisionRule="true"
+    EntityAttrName="ApprovalListId"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="APPROVAL_LIST_ID"/>
+  <ViewAttribute
+    Name="EmployeeId"
+    PrecisionRule="true"
+    EntityAttrName="EmployeeId"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="EMPLOYEE_ID"
+    LOVName="LOV_EmployeeId">
+    <Dependencies>
+      <Item
+        Value="EmployeeName"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxApprovalLinesAllVO.EmployeeId_LABEL"/>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EmployeeName"
+    PrecisionRule="true"
+    EntityAttrName="EmployeeName"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="EMPLOYEE_NAME"
+    LOVName="LOV_EmployeeName">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxApprovalLinesAllVO.EmployeeName_LABEL"/>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApprovalLevel"
+    PrecisionRule="true"
+    EntityAttrName="ApprovalLevel"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="APPROVAL_LEVEL">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxApprovalLinesAllVO.ApprovalLevel_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RowID"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="RowID"
+    EntityUsage="XxApprovalLinesAllEO"
+    AliasName="ROWID"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

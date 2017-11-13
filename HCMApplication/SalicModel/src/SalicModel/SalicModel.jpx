@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
+<JboProject xmlns="http://xmlns.oracle.com/bc4j" Name="SalicModel"
+   Version="12.2.1.12.24" SeparateXMLFiles="true"
+            PackageName="SalicModel">
+   <DesignTime>
+      <Attr Name="_appModuleNames3" Value="SalicAM.ApprovalAM"/>
+      <Attr Name="_appModuleNames2" Value="SalicAM.EmployeeDashboardAM"/>
+      <Attr Name="_jprName" Value="../../SalicModel.jpr"/>
+      <Attr Name="_appModuleNames1" Value="SalicAM.ManagerDashbordAM"/>
+      <Attr Name="_appModuleNames0" Value="SalicAM.overTimeAM"/>
+      <Attr Name="_jbo.TypeMapEntries" Value="Java"/>
+      <Attr Name="_NamedConnection" Value="HCM_CLOUD"/>
+      <Attr Name="_appModuleNames4" Value="SalicAM.notificationAM"/>
+   <Attr Name="_appModuleNames4" Value="SalicAM.notificationAM"/>
+      <Attr Name="_appModuleNames5" Value="SalicAM.HrAdminAM"/>
+      <Attr Name="_appModuleNames6" Value="SalicAM.payRollAM"/>
+      <Attr Name="_appModuleNames7" Value="SalicAM.ReportAM"/>
+   </DesignTime>
+   <Containee Name="SalicAM" ObjectType="JboPackage" PackageName="SalicAM">
+      <DesignTime>
+         <Attr Name="_AM" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee Name="SalicEntity" ObjectType="JboPackage"
+              PackageName="SalicEntity">
+      <DesignTime>
+         <Attr Name="_EO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee Name="SalicROVO" ObjectType="JboPackage" PackageName="SalicROVO">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee Name="SalicView" ObjectType="JboPackage" PackageName="SalicView">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee Name="SalicVL" ObjectType="JboPackage" PackageName="SalicVL">
+      <DesignTime>
+         <Attr Name="_VL" Value="true"/>
+      </DesignTime>
+   </Containee>
+</JboProject>
