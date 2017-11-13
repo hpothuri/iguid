@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="PayrollTransfer">
+    <default-activity id="__1">SelectPayrollDeatils</default-activity>
+    <transaction id="__33">
+      <new-transaction/>
+    </transaction>
+    <managed-bean id="__53">
+      <managed-bean-name id="__52">PayrollTransferBean</managed-bean-name>
+      <managed-bean-class id="__51">view.backing.PayrollTransferBean</managed-bean-class>
+      <managed-bean-scope id="__50">request</managed-bean-scope>
+    </managed-bean>
+    <view id="SelectPayrollDeatils">
+      <page>/SelectPayrollDeatils.jsff</page>
+      <train-stop id="__2">
+        <display-name id="__16">Request Selection &amp; Comment</display-name>
+      </train-stop>
+    </view>
+    <task-flow-return id="Save">
+      <outcome id="__6">
+        <name>Save</name>
+        <commit/>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="Cancel">
+      <outcome id="__7">
+        <name>Cancel</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="back">
+      <outcome>
+        <name>back</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome>
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+      
+    </task-flow-call>
+    <train/>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">SelectPayrollDeatils</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__9">toPayrollSave</from-outcome>
+        <to-activity-id id="__5">Save</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__11">
+        <from-outcome id="__12">toPayrollCancel</from-outcome>
+        <to-activity-id id="__10">Cancel</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome>backToMain</from-outcome>
+        <to-activity-id>back</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__14">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id>ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome>ExecuteWithParams</from-outcome>
+        <to-activity-id>overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

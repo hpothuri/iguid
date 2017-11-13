@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="employeedashboard">
+    <default-activity id="__1">load</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name id="__3">backing_EmployeeDashboard</managed-bean-name>
+      <managed-bean-class id="__4">SalicView.backing.EmployeeDashboard</managed-bean-class>
+      <managed-bean-scope id="__2">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1EmployeeDashboard.jsff-->
+    </managed-bean>
+    <view id="EmployeeDashboard">
+      <page>/EmployeeDashboard.jsff</page>
+    </view>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__11">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="load">
+      <method>#{bindings.load.execute}</method>
+      <outcome id="__6">
+        <fixed-outcome>load</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="load1">
+      <method>#{bindings.load.execute}</method>
+      <outcome id="__18">
+        <fixed-outcome>load</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__19">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__12">
+      <from-activity-id id="__13">EmployeeDashboard</from-activity-id>
+      <control-flow-case id="__14">
+        <from-outcome id="__16">edit</from-outcome>
+        <to-activity-id id="__15">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__22">
+      <from-activity-id id="__23">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__26">
+        <from-outcome id="__25">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__24">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">load</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome id="__9">load</from-outcome>
+        <to-activity-id id="__10">EmployeeDashboard</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__30">
+      <from-activity-id id="__31">overtimeAddEditBTFn</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome id="__32">taskFlowReturn1</from-outcome>
+        <to-activity-id id="__38">load1</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__20">
+      <from-activity-id id="__21">load1</from-activity-id>
+      <control-flow-case id="__28">
+        <from-outcome id="__27">load</from-outcome>
+        <to-activity-id id="__29">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__33">
+      <from-activity-id id="__34">Execute</from-activity-id>
+      <control-flow-case id="__36">
+        <from-outcome id="__35">Execute</from-outcome>
+        <to-activity-id id="__37">EmployeeDashboard</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

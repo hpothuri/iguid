@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73"
+                id="overtimeSearchBTF_overtimeSearchBTF_insertRecordsPageDef"
+                Package="SalicView.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables/>
+  <bindings>
+    <action id="insertRecords" RequiresUpdateModel="true" Action="invokeMethod"
+            MethodName="insertRecords" IsViewObjectMethod="false"
+            DataControl="overTimeAMDataControl"
+            InstanceName="overTimeAMDataControl.dataProvider"/>
+  </bindings>
+</pageDefinition>

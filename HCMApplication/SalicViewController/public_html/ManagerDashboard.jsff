@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:group id="g1">
+        <af:panelHeader text="Manager Dashboard" id="ph1"  inlineStyle="height:inherit;width:1310px;border-color:transparent;"
+                     >
+          
+          <af:panelDashboard id="pd1" columns="5" rowHeight="160px"
+                             inlineStyle="width:auto;height:200px;">
+            <af:panelBox text="PanelBox1" id="pb1"
+                         inlineStyle="width:auto; font-weight:bold; vertical-align:inherit; background-image:url(&quot;images/down-arrow.png&quot;); background-position: center; background-repeat:repeat-y; background-color:InactiveBorder;"
+                         ramp="highlight" background="default"
+                         showHeader="never" titleHalign="center"
+                         showDisclosure="false">
+              <f:facet name="toolbar"/>
+              <br/>
+              <br/>
+              <br/>
+              <af:outputLabel value="Total Request" id="ol1"
+                              inlineStyle="font-size:small;color:gray;font-weight:bold;text-align:right;margin-left:40px;margin-top:50px;"/>
+              <af:outputLabel value="12" id="ol6"
+                              inlineStyle="color:#4a85c5; font-size:x-large;margin-left:60px;margin-top:156px;"/>
+            </af:panelBox>
+            <af:panelBox text="PanelBox2" id="pb2"
+                         inlineStyle="width:auto; font-weight:bold; vertical-align:inherit; background-color:InactiveBorder; background-image:url(&quot;images/down-arrow.png&quot;); background-position: center; background-repeat:repeat-y;"
+                         ramp="highlight" background="default"
+                         showHeader="never" titleHalign="center"
+                         showDisclosure="false">
+              <f:facet name="toolbar"/>
+              <br/>
+              <br/>
+              <br/>
+              <af:outputLabel value="Waiting My Approval" id="ol2"
+                              inlineStyle="font-size:small;color:gray;font-weight:bold;text-align:right;margin-left:40px;margin-top:50px;"/>
+              <af:outputLabel value="7" id="ol8"
+                              inlineStyle="color:#4a85c5; font-size:x-large;margin-left:60px;margin-top:156px;"/>
+            </af:panelBox>
+            <af:panelBox text="PanelBox3" id="pb3"
+                         inlineStyle="width:auto; font-weight:bold; vertical-align:inherit; background-color:InactiveBorder; background-image:url(&quot;images/down-arrow.png&quot;); background-position: center;  background-repeat:repeat-y;"
+                         ramp="highlight" background="default"
+                         showHeader="never" titleHalign="center"
+                         showDisclosure="false">
+              <f:facet name="toolbar"/>
+              <br/>
+              <br/>
+              <br/>
+              <af:outputLabel value="Approved" id="ol3"
+                              inlineStyle="font-size:small;color:gray;font-weight:bold;text-align:right;margin-left:40px;margin-top:50px;"/>
+              <af:outputLabel value="3" id="ol9"
+                              inlineStyle="color:#4a85c5; font-size:x-large;margin-left:60px;margin-top:156px;"/>
+            </af:panelBox>
+            <af:panelBox text="PanelBox4" id="pb4"
+                         inlineStyle="width:auto; font-weight:bold; vertical-align:inherit; background-color:InactiveBorder; background-image:url(&quot;images/down-arrow.png&quot;); background-position: center;  background-repeat:repeat-y;"
+                         ramp="highlight" background="default"
+                         showHeader="never" titleHalign="center"
+                         showDisclosure="false">
+              <f:facet name="toolbar"/>
+              <br/>
+              <br/>
+              <br/>
+              <af:outputLabel value="Rejected" id="ol4"
+                              inlineStyle="font-size:small;color:gray;font-weight:bold;text-align:right;margin-left:40px;margin-top:50px;"/>
+              <af:outputLabel value="1" id="ol11"
+                              inlineStyle="color:#4a85c5; font-size:x-large;margin-left:60px;margin-top:156px;"/>
+            </af:panelBox>
+            <af:panelBox text="PanelBox5"
+                         inlineStyle="width:auto; font-weight:bold; vertical-align:inherit; background-color:InactiveBorder; background-image:url(&quot;images/down-arrow.png&quot;); background-position: center;  background-repeat:repeat-y;"
+                         ramp="highlight" background="default"
+                         showHeader="never" titleHalign="center"
+                         showDisclosure="false" id="pb5">
+              <f:facet name="toolbar"/>
+              <br/>
+              <br/>
+              <br/>
+              <af:outputLabel value="Delegated" id="ol5"
+                              inlineStyle="font-size:small;color:gray;font-weight:bold;text-align:right;margin-left:40px;margin-top:50px;"/>
+              <af:outputLabel value="1" id="ol12"
+                              inlineStyle="color:#4a85c5; font-size:x-large;margin-left:60px;margin-top:156px;"/>
+            </af:panelBox>
+          </af:panelDashboard>
+        </af:panelHeader>
+        <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth">
+          <af:toolbar id="t1">
+            <af:inputText label="Find" id="it1" usage="search" autoSubmit="true"
+                          placeholder="Request Number...">
+              <af:clientListener method="submitOTForm" type="keypress"/>
+            </af:inputText>
+            <h:commandButton value="Search" id="cb1"/>
+            <af:spacer width="800" height="10" id="s1"/>
+            <h:commandButton value="Create Overtime Request" action="add"
+                             rendered="false" id="cb2"/>
+          </af:toolbar>
+        </af:panelGroupLayout>
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:panelCollection id="pc1"  styleClass="AFStretchWidth"
+                                inlineStyle="height:440.0px;">
+          <f:facet name="menus"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="statusbar"/>
+          <af:table value="#{bindings.XxQpActionHistoryTVO1.collectionModel}"
+                    var="row" rows="#{bindings.XxQpActionHistoryTVO1.rangeSize}"
+                    emptyText="#{bindings.XxQpActionHistoryTVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    fetchSize="#{bindings.XxQpActionHistoryTVO1.rangeSize}"
+                    rowBandingInterval="0" id="t2" width="1306"
+                    inlineStyle="height:212px;">
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ReqNumber.name}"
+                       sortable="false" headerText="Request Number" id="c1">
+             
+              <h:commandLink value="#{row.ReqNumber}" id="cl1"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.Type.name}"
+                       sortable="false" headerText="Request Type" id="c2">
+              <af:outputText value="#{row.Type}" id="ot3"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproveLevel.name}"
+                       sortable="false" headerText="Action Level" id="c3">
+              <af:outputText value="#{row.ApproveLevel}" id="ot1"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproverUserName.name}"
+                       sortable="false" headerText="Action By" id="c5">
+              <af:outputText value="#{row.ApproverUserName}" id="ot5"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproverFlag.name}"
+                       sortable="false" headerText="Status" id="c6">
+              <af:outputText value="#{row.ApproverFlag}" id="ot4"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproverComments.name}"
+                       sortable="false" headerText="Action Comments" id="c4">
+              <af:outputText value="#{row.ApproverComments}" id="ot6"/>
+            </af:column>
+          </af:table>
+        </af:panelCollection>
+      
+      </af:group>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

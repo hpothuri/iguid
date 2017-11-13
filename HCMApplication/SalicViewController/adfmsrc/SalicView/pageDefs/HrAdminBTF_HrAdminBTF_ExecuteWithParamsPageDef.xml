@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73"
+                id="HrAdminBTF_HrAdminBTF_ExecuteWithParamsPageDef"
+                Package="SalicView.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="XxhcmOvertimeHeadersAllVO1" RangeSize="25"
+              DataControl="overTimeAMDataControl"
+              id="XxhcmOvertimeHeadersAllVO1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="BV_REQ_ID" NDType="java.lang.String"/>
+      <NamedData NDName="BV_EMP_NAME" NDType="java.lang.String"/>
+      <NamedData NDName="BV_EMP_NUM" NDType="java.lang.String"/>
+      <NamedData NDName="BV_GRADE" NDType="java.lang.String"/>
+      <NamedData NDName="BV_ID" NDValue="#{pageFlowScope.RequestNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,259 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth">
+        <af:panelGridLayout id="pgl2">
+          <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+            <af:gridCell marginStart="5px" width="50%" id="gc2">
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="Review and Submit" id="ot1"
+                               inlineStyle="font-weight:bolder; font-size:medium;"/>
+              </af:panelGroupLayout>
+            </af:gridCell>
+            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc1"
+                         halign="end">
+              <af:panelGroupLayout id="pgl6" layout="horizontal">
+                <af:commandButton text="Submit" id="cb1">
+                  <af:showPopupBehavior triggerType="action" popupId="p1"/>
+                </af:commandButton>
+                <af:popup id="p1">
+                  <af:dialog id="d1" title="Warning"
+                             titleIconSource="/Images/warning.png">
+                    <af:panelGroupLayout id="pgl7">
+                      <af:outputLabel value="Are you sure you want to write the file content on HLD?" id="ol1"/>
+                    </af:panelGroupLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:spacer width="5" height="10" id="s1"/>
+                <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                                   id="tbb1"/>
+              </af:panelGroupLayout>
+            </af:gridCell>
+          </af:gridRow>
+        </af:panelGridLayout>
+        <af:panelGroupLayout id="pgl4">
+          <af:panelGridLayout id="pgl5">
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        id="gr2">
+              <af:gridCell marginStart="5px" width="100%" marginEnd="5px"
+                           id="gc3" halign="center">
+                <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                          id="t1"/>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelGroupLayout>
+        <af:panelBox text="Review Payroll Deatils" id="pb1">
+          <f:facet name="toolbar"/>
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar"/>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.payRollObjROVO1.collectionModel}"
+                      var="row" rows="#{bindings.payRollObjROVO1.rangeSize}"
+                      emptyText="#{bindings.payRollObjROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.payRollObjROVO1.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.payRollObjROVO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.payRollObjROVO1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t2" varStatus="vs"
+                      rendered="false">
+              <af:column id="c16" headerText="S.No" align="center">
+                <af:outputText value="#{vs.index+1}" id="ot17"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.Select_Trans.name}"
+                         sortable="false"
+                         headerText="Select"
+                         id="c3" align="center" width="60">
+                <af:outputText value="#{row.Select_Trans}" id="ot5"
+                               rendered="false"/>
+                <af:selectBooleanCheckbox value="#{row.bindings.Select_Trans.inputValue}"
+                                          shortDesc="#{bindings.payRollObjROVO1.hints.Select_Trans.tooltip}"
+                                          id="sbc1" disabled="true"
+                                          simple="true"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.RequestNumber.name}"
+                         sortable="false"
+                         headerText="Request Number"
+                         id="c9" width="200">
+                <af:outputText value="#{row.RequestNumber}" id="ot8"
+                               rendered="true"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.RequestDate.name}"
+                         sortable="false"
+                         headerText="Request Date"
+                         id="c15" width="80">
+                <af:outputText value="#{row.RequestDate}" id="ot13">
+                  <af:convertDateTime pattern="#{bindings.payRollObjROVO1.hints.RequestDate.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column id="c17" headerText="Request Type">
+                <af:outputText value="Over Time" id="ot18"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.EmployeeNumber.name}"
+                         sortable="false"
+                         headerText="Employee Number"
+                         id="c14">
+                <af:outputText value="#{row.EmployeeNumber}" id="ot7"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.EmployeeName.name}"
+                         sortable="false"
+                         headerText="Employee Name"
+                         id="c6" width="200">
+                <af:outputText value="#{row.EmployeeName}" id="ot11"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.Grade.name}"
+                         sortable="false"
+                         headerText="Employee Grade"
+                         id="c10" width="130">
+                <af:outputText value="#{row.Grade}" id="ot15"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.Department.name}"
+                         sortable="false"
+                         headerText="Employee Department"
+                         id="c8" width="200">
+                <af:outputText value="#{row.Department}" id="ot16"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.LineMaganerName.name}"
+                         sortable="false"
+                         headerText="Line Manager Name"
+                         id="c11" width="200">
+                <af:outputText value="#{row.LineMaganerName}" id="ot4"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.Status.name}"
+                         sortable="false"
+                         headerText="Approve Status"
+                         id="c2">
+                <af:outputText value="#{row.Status}" id="ot6"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.PayrollTansStatus.name}"
+                         sortable="false"
+                         headerText="Payroll Transfer Status"
+                         id="c5" width="160">
+                <af:outputText value="#{row.PayrollTansStatus}" id="ot14"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.ApproverUserName.name}"
+                         sortable="false"
+                         headerText="Action By"
+                         id="c13">
+                <af:outputText value="#{row.ApproverUserName}" id="ot3"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.payRollObjROVO1.hints.PayrollTansComments.name}"
+                         sortable="false"
+                         headerText="Payroll Comments"
+                         id="c7" width="300">
+                <af:outputText value="#{row.PayrollTansComments}" id="ot9"
+                               rendered="false"/>
+                <af:inputText value="#{row.bindings.PayrollTansComments.inputValue}"
+                              simple="true"
+                              required="#{bindings.payRollObjROVO1.hints.PayrollTansComments.mandatory}"
+                              columns="300"
+                              maximumLength="#{bindings.payRollObjROVO1.hints.PayrollTansComments.precision}"
+                              shortDesc="#{bindings.payRollObjROVO1.hints.PayrollTansComments.tooltip}"
+                              id="it1" rows="3" disabled="true"
+                              rendered="false">
+                  <f:validator binding="#{row.bindings.PayrollTansComments.validator}"/>
+                </af:inputText>
+                <af:inputText value="#{row.bindings.Comments.inputValue}"
+                              simple="true"
+                              required="#{bindings.payRollObjROVO1.hints.Comments.mandatory}"
+                              columns="300"
+                              maximumLength="#{bindings.payRollObjROVO1.hints.Comments.precision}"
+                              shortDesc="#{bindings.payRollObjROVO1.hints.Comments.tooltip}"
+                              id="it2" rows="3" disabled="true">
+                  <f:validator binding="#{row.bindings.Comments.validator}"/>
+                </af:inputText>
+              </af:column>
+            </af:table>
+            <af:table value="#{bindings.PayrollTransfer_VO1.collectionModel}"
+                      var="row" rows="#{bindings.PayrollTransfer_VO1.rangeSize}"
+                      emptyText="#{bindings.PayrollTransfer_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.PayrollTransfer_VO1.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.PayrollTransfer_VO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.PayrollTransfer_VO1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t3" varStatus="vs">
+              <af:column id="c31" headerText="S.No" align="center" width="30">
+                <af:outputText value="#{vs.index+1}" id="ot20"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.PayrollCheck.name}"
+                         sortable="false" headerText="Select" id="c26"
+                         width="60">
+                <af:selectBooleanCheckbox value="#{row.bindings.PayrollCheck.inputValue}"
+                                          label="#{row.bindings.PayrollCheck.label}"
+                                          shortDesc="#{bindings.PayrollTransfer_VO1.hints.PayrollCheck.tooltip}"
+                                          id="sbc2" disabled="true"
+                                          autoSubmit="true"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.RequestNumber.name}"
+                         sortable="false" headerText="Request Number" id="c21"
+                         width="160">
+                <af:outputText value="#{row.RequestNumber}" id="ot26"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.RequestDate.name}"
+                         sortable="false" headerText="Request Date" id="c24">
+                <af:outputText value="#{row.RequestDate}" id="ot27">
+                  <af:convertDateTime pattern="#{bindings.PayrollTransfer_VO1.hints.RequestDate.format}"/>
+                </af:outputText>
+              </af:column>
+              <af:column id="c32" headerText="Request Type">
+                <af:outputText value="Over Time" id="ot19"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.EmployeeNumber.name}"
+                         sortable="false" headerText="Employee Number" id="c28"
+                         width="140">
+                <af:outputText value="#{row.EmployeeNumber}" id="ot30"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.EmployeeName.name}"
+                         sortable="false" headerText="Employee Name" id="c27"
+                         width="200">
+                <af:outputText value="#{row.EmployeeName}" id="ot23"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.EmployeeGrade.name}"
+                         sortable="false" headerText="Employee Grade" id="c33"
+                         width="130">
+                <af:outputText value="#{row.EmployeeGrade}" id="ot25"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.departmentName.name}"
+                         sortable="false" headerText="Department Name" id="c30"
+                         width="200">
+                <af:outputText value="#{row.departmentName}" id="ot28"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.LineManagerName.name}"
+                         sortable="false" headerText="Line Manager Name"
+                         id="c29" width="200">
+                <af:outputText value="#{row.LineManagerName}" id="ot29"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.PayrollTansStatus.name}"
+                         sortable="false" headerText="Payroll Transfer Status"
+                         id="c22" width="100">
+                <af:outputText value="#{row.PayrollTansStatus}" id="ot24"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.ApproverUserName.name}"
+                         sortable="false" headerText="Action By" id="c34">
+                <af:outputText value="#{row.ApproverUserName}" id="ot22"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.PayrollTransfer_VO1.hints.PayrollTansComments.name}"
+                         sortable="false" headerText="Payroll Tranfer Comments"
+                         id="c18" width="300">
+                <af:outputText value="#{row.PayrollTansComments}" id="ot21"/>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

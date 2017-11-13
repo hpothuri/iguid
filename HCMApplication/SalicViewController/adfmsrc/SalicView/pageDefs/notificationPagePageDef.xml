@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="notificationPagePageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="notificationROVO1" RangeSize="6"
+              DataControl="notificationAMDataControl"
+              id="notificationROVO1Iterator"/>
+    <searchRegion Binds="notificationROVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="notificationROVO1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="notificationROVO1Iterator" id="notificationROVO1">
+      <nodeDefinition DefName="SalicROVO.notificationROVO"
+                      Name="notificationROVO10">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="notificationROVO1Iterator" id="notificationROVO11">
+      <nodeDefinition DefName="SalicROVO.notificationROVO"
+                      Name="notificationROVO110">
+        <AttrNames>
+          <Item Value="RequestDate"/>
+          <Item Value="EmployeeNumber"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="Grade"/>
+          <Item Value="Department"/>
+          <Item Value="LineManagerName"/>
+          <Item Value="Status"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="Description"/>
+          <Item Value="RequestNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

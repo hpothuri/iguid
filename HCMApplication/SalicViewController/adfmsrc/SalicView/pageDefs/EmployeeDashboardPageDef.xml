@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="EmployeeDashboardPageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="employeeDashboardROVO1" RangeSize="6"
+              DataControl="EmployeeDashboardAMDataControl"
+              id="employeeDashboardROVO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="employeeDashboardROVO1Iterator"
+          id="employeeDashboardROVO1">
+      <nodeDefinition DefName="SalicROVO.employeeDashboardROVO"
+                      Name="employeeDashboardROVO10">
+        <AttrNames>
+          <Item Value="RequestDate"/>
+          <Item Value="Status"/>
+          <Item Value="RequestNumber"/>
+          <Item Value="LineApproval"/>
+          <Item Value="RequestType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="employeeDashboardROVO1Iterator"
+          id="employeeDashboardROVO11">
+      <nodeDefinition DefName="SalicROVO.employeeDashboardROVO"
+                      Name="employeeDashboardROVO110">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="LineManagerName"/>
+          <Item Value="Status"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="Description"/>
+          <Item Value="ReqType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

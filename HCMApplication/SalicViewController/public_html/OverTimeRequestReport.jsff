@@ -1,0 +1,529 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:group id="g1">
+        <af:panelGroupLayout layout="scroll"
+                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                             id="pgl1">
+          <af:panelGridLayout id="pgl2">
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        id="gr1">
+              <af:gridCell marginStart="5px" width="50%" id="gc2">
+                <af:outputText value="Over Time Request Report " id="ot1"
+                               inlineStyle="font-weight:bolder; font-size:medium;"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                           id="gc1" halign="end">
+                <af:commandButton text="Back" id="cb1"
+                                  action="goBack"/>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+          <af:panelBox text="Search" id="pb1">
+            <f:facet name="toolbar"/>
+            <af:panelGridLayout id="pgl3">
+              <af:gridRow marginTop="5px" height="auto" id="gr2"
+                          marginBottom="20px">
+                <af:gridCell marginStart="5px" width="17%" id="gc10"
+                             halign="end" valign="middle">
+                  <af:outputText value="Request Type" id="ot16"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc4"
+                             valign="middle">
+                  <af:inputComboboxListOfValues id="typeId"
+                                                popupTitle="Search and Select: #{bindings.Type.hints.label}"
+                                                value="#{bindings.Type.inputValue}"
+                                                label="#{bindings.Type.hints.label}"
+                                                model="#{bindings.Type.listOfValuesModel}"
+                                                required="#{bindings.Type.hints.mandatory}"
+                                                shortDesc="#{bindings.Type.hints.tooltip}"
+                                                simple="true" columns="25"
+                                                contentStyle="width:170.0px"
+                                                inlineStyle="margin-left:5.0px;"
+                                                binding="#{JasperReportBean.requestTypeBND}"
+                                                autoSubmit="true"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc17"
+                             halign="end" valign="middle">
+                  <af:outputText value="Request Date From" id="ot17"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc3"
+                             valign="middle">
+                  <af:inputDate value="#{bindings.FromDate.inputValue}"
+                                required="#{bindings.FromDate.hints.mandatory}"
+                                shortDesc="#{bindings.FromDate.hints.tooltip}"
+                                id="id1" simple="true"
+                                inlineStyle="margin-left:5.0px;"
+                                binding="#{JasperReportBean.requestDateFromBND}"
+                                autoSubmit="true">
+                    <f:validator binding="#{bindings.FromDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.FromDate.format}"/>
+                  </af:inputDate>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" id="gc15"
+                             halign="end" valign="middle">
+                  <af:outputText value="Request Date To" id="ot18"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" marginEnd="5px"
+                             id="gc8" valign="middle">
+                  <af:inputDate value="#{bindings.ToDate.inputValue}"
+                                required="#{bindings.ToDate.hints.mandatory}"
+                                shortDesc="#{bindings.ToDate.hints.tooltip}"
+                                id="id2" simple="true"
+                                inlineStyle="margin-left:5.0px;"
+                                binding="#{JasperReportBean.requestDateToBND}"
+                                autoSubmit="true">
+                    <f:validator binding="#{bindings.ToDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.ToDate.format}"/>
+                  </af:inputDate>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr4"
+                          marginBottom="20px">
+                <af:gridCell marginStart="5px" width="17%" id="gc18"
+                             halign="end" valign="middle">
+                  <af:outputText value="Request Number From" id="ot19"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc19"
+                             valign="middle" rendered="true">
+                  <af:inputListOfValues label="Label 1"
+                                        popupTitle="Search and Result Dialog"
+                                        id="ilov1"
+                                        contentStyle="width:230.0px"
+                                        simple="true"
+                                        inlineStyle="margin-left:5.0px;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc6"
+                             halign="end" valign="middle">
+                  <af:outputText value="Request Number To" id="ot20"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc9"
+                             valign="middle" rendered="true">
+                  <af:inputListOfValues label="Label 2"
+                                        popupTitle="Search and Result Dialog"
+                                        id="ilov2"
+                                        contentStyle="width:230.0px"
+                                        simple="true"
+                                        inlineStyle="margin-left:5.0px;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" id="gc16"
+                             halign="end" valign="middle">
+                  <af:outputText value="Employee Number" id="ot21"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" marginEnd="5px"
+                             id="gc13" valign="middle">
+                  <af:selectOneChoice value="#{bindings.EmpNumber.inputValue}"
+                                      label="#{bindings.EmpNumber.label}"
+                                      shortDesc="#{bindings.EmpNumber.hints.tooltip}"
+                                      id="soc1" simple="true"
+                                      contentStyle="width:200.0px"
+                                      inlineStyle="margin-left:5.0px;"
+                                      required="false"
+                                      binding="#{JasperReportBean.otEmployeeNumber}"
+                                      autoSubmit="true">
+                    <f:selectItems value="#{bindings.EmpNumber.items}"
+                                   id="si1"/>
+                  </af:selectOneChoice>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" marginBottom="20px"
+                          id="gr3">
+                <af:gridCell marginStart="5px" width="17%" id="gc11"
+                             halign="end" valign="middle">
+                  <af:outputText value="Department" id="ot22"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc12"
+                             valign="middle">
+                  <af:selectOneChoice value="#{bindings.Department.inputValue}"
+                                      label="#{bindings.Department.label}"
+                                      required="#{bindings.Department.hints.mandatory}"
+                                      shortDesc="#{bindings.Department.hints.tooltip}"
+                                      id="soc2" simple="true"
+                                      contentStyle="width:230.0px"
+                                      inlineStyle="margin-left:5.0px;"
+                                      binding="#{JasperReportBean.otDepartmentName}"
+                                      autoSubmit="true">
+                    <f:selectItems value="#{bindings.Department.items}"
+                                   id="si2"/>
+                  </af:selectOneChoice>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc7"
+                             halign="end" valign="middle">
+                  <af:outputText value="Line Manager Name" id="ot23"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="17%" id="gc14"
+                             valign="middle">
+                  <af:inputListOfValues id="lineManagerId"
+                                        popupTitle="Search and Select: #{bindings.LineManager.hints.label}"
+                                        value="#{bindings.LineManager.inputValue}"
+                                        label="#{bindings.LineManager.hints.label}"
+                                        model="#{bindings.LineManager.listOfValuesModel}"
+                                        required="#{bindings.LineManager.hints.mandatory}"
+                                        columns="#{bindings.LineManager.hints.displayWidth}"
+                                        shortDesc="#{bindings.LineManager.hints.tooltip}"
+                                        simple="true"
+                                        contentStyle="width:250.0px"
+                                        inlineStyle="margin-left:5.0px;"
+                                        autoSubmit="true"
+                                        binding="#{JasperReportBean.otLineManagerName}">
+                    <f:validator binding="#{bindings.LineManager.validator}"/>
+                  </af:inputListOfValues>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" id="gc5"
+                             halign="end" valign="middle">
+                  <af:outputText value="Approval Status" id="ot24"
+                                 inlineStyle="font-weight:bold;"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="16%" marginEnd="5px"
+                             id="gc20" valign="middle">
+                  <af:selectOneChoice value="#{bindings.Status.inputValue}"
+                                      label="#{bindings.Status.label}"
+                                      required="#{bindings.Status.hints.mandatory}"
+                                      shortDesc="#{bindings.Status.hints.tooltip}"
+                                      id="soc3" simple="true"
+                                      contentStyle="width:170.0px"
+                                      inlineStyle="margin-left:5.0px;"
+                                      binding="#{JasperReportBean.otApprovalStatus}"
+                                      autoSubmit="true">
+                    <f:selectItems value="#{bindings.Status.items}" id="si3"/>
+                  </af:selectOneChoice>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow id="gr5" marginBottom="20px">
+                <af:gridCell id="gc21" valign="middle"/>
+                <af:gridCell id="gc22" valign="middle"/>
+                <af:gridCell id="gc23" valign="middle"/>
+                <af:gridCell id="gc24" valign="middle"/>
+                <af:gridCell id="gc25" columnSpan="2" halign="end"
+                             valign="middle">
+                  <af:commandButton text="Search" id="cb2"
+                                    inlineStyle="margin-left:30px"
+                                    partialSubmit="true"
+                                    partialTriggers="pc1:t1"
+                                    action="#{JasperReportBean.onClickOverTimeSearchButton}"/>
+                  <af:commandButton text="Reset" id="cb3"
+                                    inlineStyle="margin-left:10px"
+                                    partialTriggers="pc1:t1"
+                                    partialSubmit="true"
+                                    action="#{JasperReportBean.onClickOverTimeResetButton}"/>
+                </af:gridCell>
+                <af:gridCell id="gc26" valign="middle"/>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </af:panelBox>
+          <af:panelBox text="Search Result" id="pb2">
+            <f:facet name="toolbar"/>
+            <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+              <f:facet name="menus"/>
+              <f:facet name="toolbar">
+                <af:toolbar id="t2" flex="1">
+                  <af:commandImageLink id="cil1"
+                                       icon="/images/qual_download_48.png"
+                                       shortDesc="Download Report"
+                                       inlineStyle="height:3.0px;">
+                    <af:fileDownloadActionListener method="#{JasperReportBean.onClickPDFReport}"
+                                                   contentType="application/pdf"/>
+                  </af:commandImageLink>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar"/>
+              <af:table value="#{bindings.OverTimeRequestSearch_ROVO1.collectionModel}"
+                        var="row"
+                        rows="#{bindings.OverTimeRequestSearch_ROVO1.rangeSize}"
+                        emptyText="#{bindings.OverTimeRequestSearch_ROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                        fetchSize="6"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.OverTimeRequestSearch_ROVO1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.OverTimeRequestSearch_ROVO1.collectionModel.makeCurrent}"
+                        rowSelection="single" id="t1" varStatus="vs"
+                        scrollPolicy="page" autoHeightRows="0"
+                        binding="#{JasperReportBean.overTimeTableId}"
+                        rendered="true">
+                <af:column id="c14" headerText="S.No" align="center"
+                           width="60" frozen="true">
+                  <af:outputText value="#{vs.index+1}" id="ot15"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.RequestNumber.name}"
+                           sortable="false"
+                           headerText="Request Number"
+                           id="c13" width="200" frozen="true">
+                  <af:outputText value="#{row.RequestNumber}" id="ot7"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.FromDate.name}"
+                           sortable="false"
+                           headerText="Request From Date"
+                           id="c1" width="200" frozen="true">
+                  <af:outputText value="#{row.FromDate}" id="ot8">
+                    <af:convertDateTime pattern="#{bindings.OverTimeRequestSearch_ROVO1.hints.FromDate.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.ToDate.name}"
+                           sortable="false"
+                           headerText="Request To Date"
+                           id="c4" width="200" frozen="true">
+                  <af:outputText value="#{row.ToDate}" id="ot11">
+                    <af:convertDateTime pattern="#{bindings.OverTimeRequestSearch_ROVO1.hints.ToDate.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.Status.name}"
+                           sortable="false"
+                           headerText="Request Status"
+                           id="c2" frozen="true">
+                  <af:outputText value="#{row.Status}" id="ot5"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.EmpId.name}"
+                           sortable="false"
+                           headerText="Employee ID"
+                           id="c9" width="130">
+                  <af:outputText value="#{row.EmpId}" id="ot4"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.EmpNumber.name}"
+                           sortable="false"
+                           headerText="Employee Number"
+                           id="c7" width="200">
+                  <af:outputText value="#{row.EmpNumber}" id="ot3"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.EmpName.name}"
+                           sortable="false"
+                           headerText="Employee Name"
+                           id="c8" width="250">
+                  <af:outputText value="#{row.EmpName}" id="ot2"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.JobTitle.name}"
+                           sortable="false"
+                           headerText="Employee Job Title"
+                           id="c11" width="140">
+                  <af:outputText value="#{row.JobTitle}" id="ot9"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.Grade.name}"
+                           sortable="false"
+                           headerText="Employee Grade"
+                           id="c3" width="140">
+                  <af:outputText value="#{row.Grade}" id="ot13"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.Department.name}"
+                           sortable="false"
+                           headerText="Employee Department"
+                           id="c6" width="200">
+                  <af:outputText value="#{row.Department}" id="ot6"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.LineManager.name}"
+                           sortable="false"
+                           headerText="Line Manager Name"
+                           id="c10" width="250">
+                  <af:outputText value="#{row.LineManager}" id="ot14"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.ApproverUserName.name}"
+                           sortable="false"
+                           headerText="Action By"
+                           id="c12">
+                  <af:outputText value="#{row.ApproverUserName}" id="ot12"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO1.hints.Type.name}"
+                           sortable="false"
+                           headerText="Action Type"
+                           id="c5" align="center">
+                  <af:outputText value="#{row.Type}" id="ot10"/>
+                </af:column>
+              </af:table>
+              <af:table value="#{bindings.OverTimeRequestSearch_ROVO11.collectionModel}"
+                        var="row"
+                        rows="#{bindings.OverTimeRequestSearch_ROVO11.rangeSize}"
+                        emptyText="#{bindings.OverTimeRequestSearch_ROVO11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.OverTimeRequestSearch_ROVO11.rangeSize}"
+                        rowBandingInterval="0" id="t3" rendered="false">
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.label}"
+                           id="c18">
+                  <af:inputText value="#{row.bindings.RequestNumber.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestNumber.tooltip}"
+                                id="it10">
+                    <f:validator binding="#{row.bindings.RequestNumber.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.label}"
+                           id="c16">
+                  <af:inputDate value="#{row.bindings.RequestDate.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.mandatory}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.tooltip}"
+                                id="id3">
+                    <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.OverTimeRequestSearch_ROVO11.hints.RequestDate.format}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.label}"
+                           id="c21">
+                  <af:inputText value="#{row.bindings.Status.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.Status.tooltip}"
+                                id="it7">
+                    <f:validator binding="#{row.bindings.Status.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.label}"
+                           id="c20">
+                  <af:inputText value="#{row.bindings.EmpId.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpId.tooltip}"
+                                id="it6">
+                    <f:validator binding="#{row.bindings.EmpId.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.label}"
+                           id="c26">
+                  <af:inputText value="#{row.bindings.EmpNumber.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpNumber.tooltip}"
+                                id="it9">
+                    <f:validator binding="#{row.bindings.EmpNumber.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.label}"
+                           id="c24">
+                  <af:inputText value="#{row.bindings.EmpName.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.EmpName.tooltip}"
+                                id="it3">
+                    <f:validator binding="#{row.bindings.EmpName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.label}"
+                           id="c25">
+                  <af:inputText value="#{row.bindings.JobTitle.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.JobTitle.tooltip}"
+                                id="it5">
+                    <f:validator binding="#{row.bindings.JobTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.label}"
+                           id="c22">
+                  <af:inputText value="#{row.bindings.Department.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.Department.tooltip}"
+                                id="it11">
+                    <f:validator binding="#{row.bindings.Department.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.label}"
+                           id="c19">
+                  <af:inputText value="#{row.bindings.Grade.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.Grade.tooltip}"
+                                id="it8">
+                    <f:validator binding="#{row.bindings.Grade.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.label}"
+                           id="c23">
+                  <af:inputText value="#{row.bindings.LineManager.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.LineManager.tooltip}"
+                                id="it4">
+                    <f:validator binding="#{row.bindings.LineManager.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.label}"
+                           id="c15">
+                  <af:inputText value="#{row.bindings.ApproverUserName.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.ApproverUserName.tooltip}"
+                                id="it2">
+                    <f:validator binding="#{row.bindings.ApproverUserName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.name}"
+                           sortable="false"
+                           headerText="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.label}"
+                           id="c17">
+                  <af:inputText value="#{row.bindings.Type.inputValue}"
+                                label="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.label}"
+                                required="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.mandatory}"
+                                columns="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.displayWidth}"
+                                maximumLength="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.precision}"
+                                shortDesc="#{bindings.OverTimeRequestSearch_ROVO11.hints.Type.tooltip}"
+                                id="it1">
+                    <f:validator binding="#{row.bindings.Type.validator}"/>
+                  </af:inputText>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelBox>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

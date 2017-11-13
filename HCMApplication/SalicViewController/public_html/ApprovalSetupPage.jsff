@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+       <af:panelGroupLayout
+                           id="pgl1">
+        <af:panelGroupLayout
+                             id="pgl2">
+          <af:panelGridLayout
+                              id="pgl3">
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        id="gr1">
+              <af:gridCell marginStart="5px" width="50%"
+                           id="gc1"/>
+              <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                           id="gc2" halign="end">
+                <af:commandButton text="Save"
+                                  id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{bindings.Commit.execute}"/>
+                <af:spacer width="10" height="10"
+                           id="s1"/>
+                <af:commandButton
+                                  text="Cancel" immediate="true"
+                                  id="cb2" rendered="true"
+                                  actionListener="#{bindings.Rollback.execute}">
+                  <af:resetActionListener/>
+                </af:commandButton>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelGroupLayout>
+        <af:panelBox text="Approval Setup Header"
+                     id="pb1" showDisclosure="false">
+          <f:facet name="toolbar"/>
+          <af:panelCollection
+                              id="pc1" styleClass="AFStretchWidth"
+                              featuresOff="detach">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar
+                          id="t2" flex="1">
+                <af:commandImageLink
+                                     id="cil1"
+                                     icon="/images/add_dis.png"
+                                     partialSubmit="true"
+                                     actionListener="#{bindings.CreateInsert.execute}"/>
+                <af:commandImageLink
+                                     id="cil2" icon="/images/delete_dis.png"
+                                     partialSubmit="true"
+                                     actionListener="#{bindings.Delete.execute}"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.XxhcmApprSetupHdr_VO1.collectionModel}"
+                      var="row"
+                      rows="#{bindings.XxhcmApprSetupHdr_VO1.rangeSize}"
+                      emptyText="#{bindings.XxhcmApprSetupHdr_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="5"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.XxhcmApprSetupHdr_VO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.XxhcmApprSetupHdr_VO1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t1"
+                      partialTriggers="::cil1 ::cil2" varStatus="vs"
+                      scrollPolicy="page" autoHeightRows="0">
+              <af:column id="c6" headerText="S.No" align="center" width="35">
+                <af:outputText value="#{vs.index+1}" id="ot1"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxhcmApprSetupHdr_VO1.hints.RequestType.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxhcmApprSetupHdr_VO1.hints.RequestType.label}"
+                         id="c1" width="300">
+                <af:selectOneChoice value="#{row.bindings.RequestType.inputValue}"
+                                    label="#{row.bindings.RequestType.label}"
+                                    required="#{bindings.XxhcmApprSetupHdr_VO1.hints.RequestType.mandatory}"
+                                    shortDesc="#{bindings.XxhcmApprSetupHdr_VO1.hints.RequestType.tooltip}"
+                                    id="soc1">
+                  <f:selectItems value="#{row.bindings.RequestType.items}"
+                                 id="si1"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxhcmApprSetupHdr_VO1.hints.ApprType.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxhcmApprSetupHdr_VO1.hints.ApprType.label}"
+                         id="c2" width="200">
+                <af:selectOneChoice value="#{row.bindings.ApprType.inputValue}"
+                                    label="#{row.bindings.ApprType.label}"
+                                    required="#{bindings.XxhcmApprSetupHdr_VO1.hints.ApprType.mandatory}"
+                                    shortDesc="#{bindings.XxhcmApprSetupHdr_VO1.hints.ApprType.tooltip}"
+                                    id="soc2">
+                  <f:selectItems value="#{row.bindings.ApprType.items}"
+                                 id="si2"/>
+                </af:selectOneChoice>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+        <af:panelBox text="Approver Setup Details"
+                     id="pb2" showDisclosure="false">
+          <f:facet name="toolbar"/>
+          <af:panelCollection
+                              id="pc2" styleClass="AFStretchWidth"
+                              featuresOff="detach">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar
+                          id="t3" flex="50">
+                <af:commandImageLink
+                                     id="cil3" icon="/images/add_dis.png"
+                                     partialSubmit="true"
+                                     actionListener="#{bindings.CreateInsert1.execute}"/>
+                <af:commandImageLink
+                                     id="cil4" icon="/images/delete_dis.png"
+                                     partialSubmit="true"
+                                     actionListener="#{bindings.Delete1.execute}"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.XxhcmApprSetupDtl_VO1.collectionModel}"
+                      var="row"
+                      rows="#{bindings.XxhcmApprSetupDtl_VO1.rangeSize}"
+                      emptyText="#{bindings.XxhcmApprSetupDtl_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="5"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.XxhcmApprSetupDtl_VO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.XxhcmApprSetupDtl_VO1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t4"
+                      partialTriggers="::cil3 ::cil4 :::pc1:t1" varStatus="vs"
+                      autoHeightRows="0" scrollPolicy="page">
+              <af:column id="c7" headerText="S.No" align="center" width="35">
+                <af:outputText value="#{vs.index+1}" id="ot2"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprGroupId.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprGroupId.label}"
+                         id="c3" width="200">
+                <af:selectOneChoice value="#{row.bindings.ApprGroupId.inputValue}"
+                                    label="#{row.bindings.ApprGroupId.label}"
+                                    required="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprGroupId.mandatory}"
+                                    shortDesc="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprGroupId.tooltip}"
+                                    id="soc4">
+                  <f:selectItems value="#{row.bindings.ApprGroupId.items}"
+                                 id="si4"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxhcmApprSetupDtl_VO1.hints.CustApprGroupId.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxhcmApprSetupDtl_VO1.hints.CustApprGroupId.label}"
+                         id="c5" width="300">
+                <af:selectOneChoice value="#{row.bindings.CustApprGroupId.inputValue}"
+                                    label="#{row.bindings.CustApprGroupId.label}"
+                                    required="#{bindings.XxhcmApprSetupDtl_VO1.hints.CustApprGroupId.mandatory}"
+                                    shortDesc="#{bindings.XxhcmApprSetupDtl_VO1.hints.CustApprGroupId.tooltip}"
+                                    id="soc3">
+                  <f:selectItems value="#{row.bindings.CustApprGroupId.items}"
+                                 id="si3"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.label}"
+                         id="c4">
+                <af:inputText value="#{row.bindings.ApprLevel.inputValue}"
+                              label="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.label}"
+                              required="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.mandatory}"
+                              columns="10"
+                              maximumLength="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.precision}"
+                              shortDesc="#{bindings.XxhcmApprSetupDtl_VO1.hints.ApprLevel.tooltip}"
+                              id="it1">
+                  <f:validator binding="#{row.bindings.ApprLevel.validator}"/>
+                </af:inputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

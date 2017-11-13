@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:group id="g1">
+        <af:panelBox text="Reports" id="pb1"
+                     inlineStyle="height:510.0px;">
+          <f:facet name="toolbar"/>
+          <af:panelGridLayout id="pgl1">
+            <af:gridRow marginTop="5px" height="auto" id="gr3"
+                        marginBottom="40px">
+              <af:gridCell marginStart="5px" width="34%" id="gc6" halign="end">
+                <af:commandLink id="commandLink4" action="toOverTimeRequest">
+                  <af:panelGroupLayout id="panelGroupLayout9" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_calendarbox.png"
+                              id="image4"/>
+                    <af:outputText value="OverTime" id="outputText4"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"
+                                   rendered="true"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" id="gc7"
+                           halign="center">
+                <af:commandLink id="commandLink2">
+                  <af:panelGroupLayout id="panelGroupLayout2" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_airplane.png"
+                              id="image2"/>
+                    <af:outputText value="Travel Request Report"
+                                   id="outputText2"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" marginEnd="5px"
+                           id="gc9" halign="start">
+                <af:commandLink id="commandLink3">
+                  <af:panelGroupLayout id="panelGroupLayout3" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_binders.png"
+                              id="image3"/>
+                    <af:outputText value="Reports" id="outputText3"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow marginTop="5px" height="auto" id="gr2"
+                        marginBottom="40px">
+              <af:gridCell marginStart="5px" width="34%" id="gc1" halign="end">
+                <af:commandLink id="commandLink5">
+                  <af:panelGroupLayout id="panelGroupLayout4" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_checklist.png"
+                              id="image5"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+                <af:outputText value="Reports" id="outputText5"
+                               inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" id="gc3"
+                           halign="center">
+                <af:commandLink id="commandLink6">
+                  <af:panelGroupLayout id="panelGroupLayout5" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_atsymbol.png"
+                              id="image6"/>
+                    <af:outputText value="Reports" id="outputText6"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" marginEnd="5px"
+                           id="gc2" halign="start">
+                <af:commandLink id="commandLink1">
+                  <af:panelGroupLayout id="panelGroupLayout1" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_analytics.png"
+                              id="image1"/>
+                    <af:outputText value="Reports" id="outputText1"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        id="gr1">
+              <af:gridCell marginStart="5px" width="34%" id="gc8" halign="end">
+                <af:commandLink id="commandLink7">
+                  <af:panelGroupLayout id="panelGroupLayout6" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_calendarclipboard.png"
+                              id="image7"/>
+                    <af:outputText value="Reports" id="outputText7"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" id="gc4"
+                           halign="center">
+                <af:commandLink id="commandLink8">
+                  <af:panelGroupLayout id="panelGroupLayout7" layout="vertical"
+                                       halign="center">
+                    <af:image source="/images/grid_dot_book.png" id="image8"/>
+                    <af:outputText value="Reports" id="outputText8"
+                                   inlineStyle="font-size:small; font-weight:bold; color:Black;"/>
+                  </af:panelGroupLayout>
+                </af:commandLink>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="33%" marginEnd="5px"
+                           id="gc5" halign="start"/>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelBox>
+      </af:group>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

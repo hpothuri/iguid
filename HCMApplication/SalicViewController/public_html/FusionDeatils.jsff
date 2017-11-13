@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+    <f:facet name="pageContents">
+      <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth">
+        <af:panelGridLayout id="pgl2">
+          <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr1">
+            <af:gridCell marginStart="5px" width="50%" id="gc2">
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="Review Result" id="ot1"
+                               inlineStyle="font-weight:bolder; font-size:medium;"/>
+              </af:panelGroupLayout>
+            </af:gridCell>
+            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc1"
+                         halign="end">
+              <af:panelGroupLayout id="pgl6" layout="horizontal">
+                <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                                   id="tbb1"/>
+                <af:commandButton text="Close" id="cb1" action="toCancel"/>
+              </af:panelGroupLayout>
+            </af:gridCell>
+          </af:gridRow>
+        </af:panelGridLayout>
+        <af:panelGroupLayout id="pgl4">
+          <af:panelGridLayout id="pgl5">
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        id="gr2">
+              <af:gridCell marginStart="5px" width="100%" marginEnd="5px"
+                           id="gc3" halign="center">
+                <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                          id="t1"/>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelGroupLayout>
+        <af:panelBox text="Fusion Details" id="pb1"
+                     showDisclosure="false" inlineStyle="height:250.4px;">
+          <f:facet name="toolbar"/>
+        </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

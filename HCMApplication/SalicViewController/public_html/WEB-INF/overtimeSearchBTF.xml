@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="overtimeSearchBTF">
+    <default-activity id="__1">Execute1</default-activity>
+    <managed-bean id="__21">
+      <managed-bean-name id="__24">OvertimeSearch</managed-bean-name>
+      <managed-bean-class id="__23">SalicView.backing.OvertimeSearch</managed-bean-class>
+      <managed-bean-scope id="__22">request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__9">
+      <managed-bean-name id="__8">JasperReportBean</managed-bean-name>
+      <managed-bean-class id="__7">JasperReportBean</managed-bean-class>
+      <managed-bean-scope id="__10">request</managed-bean-scope>
+    </managed-bean>
+    <view id="overtimeSearch">
+      <page>/overtimeSearch.jsff</page>
+    </view>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__4">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__31">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute1">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__11">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="insertRecords">
+      <method>#{bindings.insertRecords.execute}</method>
+      <outcome id="__12">
+        <fixed-outcome>insertRecords</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="detailInsertRecord">
+      <case>
+        <expression>#{sessionScope.page eq 'letter'}</expression>
+        <outcome id="__81">detailsInsertRecord</outcome>
+      </case>
+      <case>
+        <expression>#{sessionScope.page eq 'BusinessTrip'}</expression>
+        <outcome id="__82">detailsInsertRecord</outcome>
+      </case>
+      <case>
+        <expression>#{sessionScope.page eq 'BusinessTripCompletion'}</expression>
+        <outcome id="__83">detailsInsertRecord</outcome>
+      </case>
+      <default-outcome>inserIheaderRecord</default-outcome>
+    </router>
+    <method-call id="insertHeaderRecord">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__66">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="insertDetailRecord">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__67">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="router1">
+      <case>
+        <expression>#{sessionScope.page eq 'BusinessTrip'}</expression>
+        <outcome id="__54">defaultOneRecord</outcome>
+      </case>
+      <case>
+        <expression>#{sessionScope.page ne 'BusinessTrip'}</expression>
+        <outcome id="__55">inseetDlt</outcome>
+      </case>
+      <default-outcome>inseetDlt</default-outcome>
+    </router>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__65">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">overtimeSearch</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome id="__25">edit</from-outcome>
+        <to-activity-id id="__5">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome id="__15">add</from-outcome>
+        <to-activity-id id="__14">insertHeaderRecord</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__30">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__28">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__32">
+      <from-activity-id id="__33">overtimeAddEditBTFn</from-activity-id>
+      <control-flow-case id="__36">
+        <from-outcome id="__34">taskFlowReturn1</from-outcome>
+        <to-activity-id id="__35">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__37">
+      <from-activity-id id="__38">Execute</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome id="__40">Execute</from-outcome>
+        <to-activity-id id="__41">overtimeSearch</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__42">
+      <from-activity-id id="__43">Execute1</from-activity-id>
+      <control-flow-case id="__45">
+        <from-outcome id="__44">Execute</from-outcome>
+        <to-activity-id id="__46">overtimeSearch</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">insertRecords</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__19">insertRecords</from-outcome>
+        <to-activity-id id="__18">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__47">
+      <from-activity-id id="__48">detailInsertRecord</from-activity-id>
+      <control-flow-case id="__61">
+        <from-outcome id="__63">inserIheaderRecord</from-outcome>
+        <to-activity-id id="__62">insertRecords</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__69">
+        <from-outcome id="__70">detailsInsertRecord</from-outcome>
+        <to-activity-id id="__68">insertHeaderRecord</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__71">
+      <from-activity-id id="__72">insertHeaderRecord</from-activity-id>
+      <control-flow-case id="__73">
+        <from-outcome id="__74">CreateInsert</from-outcome>
+        <to-activity-id id="__75">insertDetailRecord</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__76">
+      <from-activity-id id="__77">insertDetailRecord</from-activity-id>
+      <control-flow-case id="__79">
+        <from-outcome id="__78">CreateInsert</from-outcome>
+        <to-activity-id id="__80">router1</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__49">
+      <from-activity-id id="__50">router1</from-activity-id>
+      <control-flow-case id="__52">
+        <from-outcome id="__53">inseetDlt</from-outcome>
+        <to-activity-id id="__51">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__90">
+        <from-outcome id="__89">defaultOneRecord</from-outcome>
+        <to-activity-id id="__91">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__84">
+      <from-activity-id id="__85">CreateInsert</from-activity-id>
+      <control-flow-case id="__88">
+        <from-outcome id="__86">CreateInsert</from-outcome>
+        <to-activity-id id="__87">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="managerApprPageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="XxQpActionHistoryTVO1Iterator1" Binds="XxQpActionHistoryTVO4"
+              DataControl="ManagerDashbordAMDataControl" RangeSize="25"/>
+    <iterator Binds="managerDashbaordROVO1" RangeSize="6"
+              DataControl="ManagerDashbordAMDataControl"
+              id="managerDashbaordROVO1Iterator"/>
+    <searchRegion Binds="managerDashbaordROVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="managerDashbaordROVO11Query"/>
+  </executables>
+  <bindings>
+    <methodAction id="load"
+                  InstanceName="ManagerDashbordAMDataControl.dataProvider"
+                  DataControl="ManagerDashbordAMDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="load" IsViewObjectMethod="false"/>
+    <tree IterBinding="managerDashbaordROVO1Iterator"
+          id="managerDashbaordROVO1">
+      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO"
+                      Name="managerDashbaordROVO10">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="Status"/>
+          <Item Value="Description"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="EmployeeNumber"/>
+          <Item Value="LineManagerName"/>
+          <Item Value="Department"/>
+          <Item Value="Grade"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="managerDashbaordROVO1Iterator"
+          id="managerDashbaordROVO11">
+      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO"
+                      Name="managerDashbaordROVO110">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="ReqType"/>
+          <Item Value="Status"/>
+          <Item Value="EmployeeNumber"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="Grade"/>
+          <Item Value="Department"/>
+          <Item Value="LineManagerName"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="Description"/>
+          <Item Value="LineApproval"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

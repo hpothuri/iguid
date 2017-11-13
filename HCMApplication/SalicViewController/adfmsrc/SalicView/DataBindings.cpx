@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.66.73" id="DataBindings" SeparateXMLFiles="false"
+             Package="SalicView" ClientType="Generic">
+   <definitionFactories>
+      <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+               className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+      <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+   </definitionFactories>
+   <pageMap>
+      <page path="/WEB-INF/managerDashboard.xml#managerDashboard@Execute"
+            usageId="SalicView_managerDashboard_managerDashboard_ExecutePageDef"/>
+      <page path="/notificationPage.jsff"
+            usageId="SalicView_notificationPagePageDef"/>
+      <page path="/ManagerDashboard.jsff"
+            usageId="SalicView_ManagerDashboardPageDef"/>
+      <page path="/overtimeSearch.jsff"
+            usageId="SalicView_overtimeSearchPageDef"/>
+      <page path="/Home.jspx" usageId="SalicView_HomePageDef"/>
+      <page path="/employee.jsff" usageId="SalicView_employeePageDef"/>
+      <page path="/overtimeHdr.jsff" usageId="SalicView_overtimeHdrPageDef"/>
+      <page path="/overtimeDetails.jsff"
+            usageId="SalicView_overtimeDetailsPageDef"/>
+      <page path="/EmployeeDashboard.jsff"
+            usageId="SalicView_EmployeeDashboardPageDef"/>
+      <page path="/UserHome.jspx" usageId="SalicView_UserHomePageDef"/>
+      <page path="/Approval.jsff" usageId="SalicView_ApprovalPageDef"/>
+      <page path="/managerAppr.jsff" usageId="SalicView_managerApprPageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@ExecuteWithParams"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_ExecuteWithParamsPageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@Execute"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_ExecutePageDef"/>
+      <page path="/WEB-INF/managerDashboard.xml#managerDashboard@ExecuteWithParams"
+            usageId="SalicView_managerDashboard_managerDashboard_ExecuteWithParamsPageDef"/>
+      <page path="/WEB-INF/managerDashboard.xml#managerDashboard@load"
+            usageId="SalicView_managerDashboard_managerDashboard_loadPageDef"/>
+      <page path="/WEB-INF/managerDashboard.xml#managerDashboard@load1"
+            usageId="SalicView_managerDashboard_managerDashboard_load1PageDef"/>
+      <page path="/HrAdminPage.jsff" usageId="SalicView_HrAdminPagePageDef"/>
+      <page path="/WEB-INF/HrAdminBTF.xml#HrAdminBTF@ExecuteWithParams"
+            usageId="SalicView_HrAdminBTF_HrAdminBTF_ExecuteWithParamsPageDef"/>
+      <page path="/WEB-INF/HrAdminBTF.xml#HrAdminBTF@load"
+            usageId="SalicView_HrAdminBTF_HrAdminBTF_loadPageDef"/>
+      <page path="/WEB-INF/employeedashboard.xml#employeedashboard@ExecuteWithParams"
+            usageId="SalicView_employeedashboard_employeedashboard_ExecuteWithParamsPageDef"/>
+      <page path="/WEB-INF/employeedashboard.xml#employeedashboard@load"
+            usageId="SalicView_employeedashboard_employeedashboard_loadPageDef"/><page path="/WEB-INF/employeedashboard.xml#employeedashboard@load1"
+            usageId="SalicView_employeedashboard_employeedashboard_load1PageDef"/>
+      <page path="/WEB-INF/notificationBTF.xml#notificationBTF@ExecuteWithParams"
+            usageId="SalicView_notificationBTF_notificationBTF_ExecuteWithParamsPageDef"/>
+   <page path="/WEB-INF/payRollBTF.xml#payRollBTF@Execute"
+            usageId="SalicView_payRollBTF_payRollBTF_ExecutePageDef"/>
+      <page path="/payRollPage.jsff" usageId="SalicView_payRollPagePageDef"/>
+      <page path="/WEB-INF/payRollBTF.xml#payRollBTF@load"
+            usageId="SalicView_payRollBTF_payRollBTF_loadPageDef"/>
+      <page path="/SelectPayrollDeatils.jsff"
+            usageId="SalicView_SelectPayrollDeatilsPageDef"/>
+      <page path="/ReviewAndomments.jsff"
+            usageId="SalicView_ReviewAndommentsPageDef"/>
+      <page path="/WEB-INF/employeedashboard.xml#employeedashboard@Execute"
+            usageId="SalicView_employeedashboard_employeedashboard_ExecutePageDef"/>
+      <page path="/OverTimeRequestReport.jsff"
+            usageId="SalicView_OverTimeRequestReportPageDef"/>
+      <page path="/WEB-INF/ReportBTF.xml#ReportBTF@CreateInsert"
+            usageId="SalicView_ReportBTF_ReportBTF_CreateInsertPageDef"/>
+      <page path="/ApprovalSetupPage.jsff"
+            usageId="SalicView_ApprovalSetupPagePageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@Execute1"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_Execute1PageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@insertRecords"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_insertRecordsPageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@insertHeaderRecord"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@insertDetailRecord"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsert1PageDef"/>
+      <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@CreateInsert"
+            usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef1"/>
+      <page path="/WEB-INF/PayrollTransfer.xml#PayrollTransfer@ExecuteWithParams"
+            usageId="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
+   </pageMap>
+   <pageDefinitionUsages>
+      <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
+            path="SalicView.pageDefs.managerDashboard_managerDashboard_ExecutePageDef"/>
+      <page id="SalicView_notificationPagePageDef"
+            path="SalicView.pageDefs.notificationPagePageDef"/>
+      <page id="SalicView_ManagerDashboardPageDef"
+            path="SalicView.pageDefs.ManagerDashboardPageDef"/>
+      <page id="SalicView_overtimeSearchPageDef"
+            path="SalicView.pageDefs.overtimeSearchPageDef"/>
+      <page id="SalicView_HomePageDef" path="SalicView.pageDefs.HomePageDef"/>
+      <page id="SalicView_employeePageDef"
+            path="SalicView.pageDefs.employeePageDef"/>
+      <page id="SalicView_overtimeHdrPageDef"
+            path="SalicView.pageDefs.overtimeHdrPageDef"/>
+      <page id="SalicView_overtimeDetailsPageDef"
+            path="SalicView.pageDefs.overtimeDetailsPageDef"/>
+      <page id="SalicView_EmployeeDashboardPageDef"
+            path="SalicView.pageDefs.EmployeeDashboardPageDef"/>
+      <page id="SalicView_UserHomePageDef"
+            path="SalicView.pageDefs.UserHomePageDef"/>
+      <page id="SalicView_ApprovalPageDef"
+            path="SalicView.pageDefs.ApprovalPageDef"/>
+      <page id="SalicView_managerApprPageDef"
+            path="SalicView.pageDefs.managerApprPageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_ExecuteWithParamsPageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_ExecutePageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_ExecutePageDef"/>
+      <page id="SalicView_managerDashboard_managerDashboard_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.managerDashboard_managerDashboard_ExecuteWithParamsPageDef"/>
+      <page id="SalicView_managerDashboard_managerDashboard_loadPageDef"
+            path="SalicView.pageDefs.managerDashboard_managerDashboard_loadPageDef"/>
+      <page id="SalicView_managerDashboard_managerDashboard_load1PageDef"
+            path="SalicView.pageDefs.managerDashboard_managerDashboard_load1PageDef"/>
+      <page id="SalicView_HrAdminPagePageDef"
+            path="SalicView.pageDefs.HrAdminPagePageDef"/>
+      <page id="SalicView_HrAdminBTF_HrAdminBTF_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.HrAdminBTF_HrAdminBTF_ExecuteWithParamsPageDef"/>
+      <page id="SalicView_HrAdminBTF_HrAdminBTF_loadPageDef"
+            path="SalicView.pageDefs.HrAdminBTF_HrAdminBTF_loadPageDef"/>
+      <page id="SalicView_employeedashboard_employeedashboard_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.employeedashboard_employeedashboard_ExecuteWithParamsPageDef"/>
+      <page id="SalicView_employeedashboard_employeedashboard_loadPageDef"
+            path="SalicView.pageDefs.employeedashboard_employeedashboard_loadPageDef"/><page id="SalicView_employeedashboard_employeedashboard_load1PageDef"
+            path="SalicView.pageDefs.employeedashboard_employeedashboard_load1PageDef"/>
+      <page id="SalicView_notificationBTF_notificationBTF_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.notificationBTF_notificationBTF_ExecuteWithParamsPageDef"/>
+    <page id="SalicView_payRollBTF_payRollBTF_ExecutePageDef"
+            path="SalicView.pageDefs.payRollBTF_payRollBTF_ExecutePageDef"/>
+      <page id="SalicView_payRollPagePageDef"
+            path="SalicView.pageDefs.payRollPagePageDef"/>
+      <page id="SalicView_payRollBTF_payRollBTF_loadPageDef"
+            path="SalicView.pageDefs.payRollBTF_payRollBTF_loadPageDef"/>
+      <page id="SalicView_SelectPayrollDeatilsPageDef"
+            path="SalicView.pageDefs.SelectPayrollDeatilsPageDef"/>
+      <page id="SalicView_ReviewAndommentsPageDef"
+            path="SalicView.pageDefs.ReviewAndommentsPageDef"/>
+      <page id="SalicView_employeedashboard_employeedashboard_ExecutePageDef"
+            path="SalicView.pageDefs.employeedashboard_employeedashboard_ExecutePageDef"/>
+      <page id="SalicView_OverTimeRequestReportPageDef"
+            path="SalicView.pageDefs.OverTimeRequestReportPageDef"/>
+      <page id="SalicView_ReportBTF_ReportBTF_CreateInsertPageDef"
+            path="SalicView.pageDefs.ReportBTF_ReportBTF_CreateInsertPageDef"/>
+      <page id="SalicView_ApprovalSetupPagePageDef"
+            path="SalicView.pageDefs.ApprovalSetupPagePageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_Execute1PageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_Execute1PageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_insertRecordsPageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_insertRecordsPageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsert1PageDef"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_CreateInsert1PageDef"/>
+      <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef1"
+            path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef1"/>
+      <page id="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"
+            path="SalicView.pageDefs.PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
+   </pageDefinitionUsages>
+   <dataControlUsages>
+      <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="ManagerDashbordAMLocal"
+                       syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="overTimeAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="overTimeAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="EmployeeDashboardAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="EmployeeDashboardAMLocal"
+                       syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="ApprovalAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="ApprovalAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="HrAdminAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="HrAdminAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="notificationAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="notificationAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="payRollAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="payRollAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+      <BC4JDataControl id="ReportAMDataControl" Package="SalicAM"
+                       FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                       SupportsTransactions="true" SupportsFindMode="true"
+                       SupportsRangesize="true" SupportsResetState="true"
+                       SupportsSortCollection="true"
+                       Configuration="ReportAMLocal" syncMode="Immediate"
+                       xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+   </dataControlUsages>
+</Application>

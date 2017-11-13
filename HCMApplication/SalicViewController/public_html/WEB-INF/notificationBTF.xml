@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="notificationBTF">
+    <default-activity id="__1">notificationPage</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__4">backing_notificationPage</managed-bean-name>
+      <managed-bean-class id="__5">SalicView.backing.NotificationPage</managed-bean-class>
+      <managed-bean-scope id="__3">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1notificationPage.jsff-->
+    </managed-bean>
+    <managed-bean id="__14">
+      <managed-bean-name id="__13">backing_notificationDetails</managed-bean-name>
+      <managed-bean-class id="__15">SalicView.backing.NotificationDetails</managed-bean-class>
+      <managed-bean-scope id="__16">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1notificationDetails.jsff-->
+    </managed-bean>
+    <view id="notificationPage">
+      <page>/notificationPage.jsff</page>
+    </view>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__6">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">notificationPage</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__11">edit</from-outcome>
+        <to-activity-id id="__9">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id id="__26">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__28">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__27">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__30">
+      <from-activity-id id="__31">overtimeAddEditBTFn</from-activity-id>
+      <control-flow-case id="__33">
+        <from-outcome id="__34">taskFlowReturn1</from-outcome>
+        <to-activity-id id="__32">notificationPage</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:panelStretchLayout 
+                             id="psl1"
+                             styleClass="page-container AFStretchWidth"
+                             inlineStyle="height:590.0px;">
+        <f:facet name="bottom"/>
+        <f:facet name="center">
+          <af:panelGroupLayout 
+                               id="panelGroupLayout1" layout="scroll">
+            <af:panelGroupLayout 
+                                 id="pgl5" layout="horizontal">
+              <af:panelGroupLayout 
+                                   id="pgl4" layout="vertical">
+                <af:spacer width="10" height="2"
+                          
+                           id="s6"/>
+                <af:panelGroupLayout 
+                                     id="pgl6" layout="horizontal">
+                  <af:spacer width="10" height="10"
+                             
+                             id="s7"/>
+                  <af:outputText value="Over Time Information"
+                                
+                                 id="ot1"
+                                 inlineStyle="font-weight:bold; font-size:medium;"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:spacer width="745" height="10"
+                        
+                         id="s5"/>
+                         <af:popup id="p1"
+                                   binding="#{backingBeanScope.backing_overtimeHdr.p1}">
+                <af:dialog id="d1" type="none"
+                           inlineStyle="height:108px; width:350.0px;"
+                           titleIconSource="/images/warning_qualifier.png"
+                           title="Warning">
+                  <af:outputText value="Are you sure you want to Cancel this Information?"
+                                 id="ot2" inlineStyle="font-weight:bold;"/>
+                  <f:facet name="buttonBar">
+                    <af:toolbar id="toolbar1">
+                      <af:spacer width="210" height="10" id="s11"/>
+                      <af:commandButton actionListener="#{bindings.Rollback.execute}"
+                                        text="Ok" immediate="true" id="cb6"
+                                        action="cancel">
+                        <af:resetActionListener/>
+                      </af:commandButton>
+                      <af:spacer width="10" height="10" id="s12"/>
+                      <af:commandButton text="Cancel" id="cb5"
+                                        actionListener="#{backingBeanScope.backing_overtimeHdr.onCloseBGPopup}"/>
+                    </af:toolbar>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+              <af:panelGroupLayout 
+                                   id="panelGroupLayout2" layout="horizontal">
+                <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                                   
+                                   id="tbb1"
+                                   inlineStyle="margin-right:13px;margin-top:10px;"/>
+                                           <af:spacer width="10" height="10"
+                           
+                           id="s10"/>
+                <af:commandButton text="Save &amp; Close"
+                           
+                                  id="cb1" action="save"
+                                  inlineStyle="margin-right:13px;margin-top:10px;"
+                                  actionListener="#{backingBeanScope.backing_overtimeHdr.saveAndCloseACL}"/>
+                <af:spacer width="10" height="10"
+                           
+                           id="s8"/>
+                <af:commandButton text="Save"
+                           
+                                  id="cb2"
+                                  inlineStyle="margin-right:13px;margin-top:10px;"
+                                  actionListener="#{backingBeanScope.backing_overtimeHdr.saveACL}"/>
+                <af:spacer width="10" height="10"
+                           
+                           id="s9"/>
+                <af:commandButton text="Cancel"
+                           
+                                  id="cb3"
+                                  inlineStyle="margin-right:13px;margin-top:10px;">
+                  <af:showPopupBehavior popupId="p1" triggerType="action"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="10"
+                       
+                       id="spacer1"/>
+            <af:separator 
+                          id="separator1" inlineStyle="border-color:#C1C1C1;"/>
+            <af:spacer width="10" height="20"
+                       
+                       id="spacer2" rendered="false"/>
+            <af:panelGroupLayout 
+                                 id="pgl3" styleClass="AFStretchWidth"
+                                 halign="center" layout="horizontal">
+              <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                        
+                        id="t1"
+                        inlineStyle="padding-left:350px;margin-top:30px;"/>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="15"
+                       
+                       id="s1" rendered="false"/>
+            <af:separator id="s2"/>
+            <af:panelBox id="pb2" showDisclosure="false"
+                         inlineStyle="border-color:transparent;">
+              <f:facet name="toolbar"/>
+              <af:panelFormLayout id="pfl1" rows="1"
+                                  inlineStyle="border-color:transparent;"
+                                  labelWidth="200">
+                <af:inputText value="#{bindings.RequestNumber.inputValue}"
+                              label="#{bindings.RequestNumber.hints.label}"
+                              required="#{bindings.RequestNumber.hints.mandatory}"
+                              columns="#{bindings.RequestNumber.hints.displayWidth}"
+                              maximumLength="#{bindings.RequestNumber.hints.precision}"
+                              shortDesc="#{bindings.RequestNumber.hints.tooltip}"
+                              id="it1" contentStyle="width:200px;">
+                  <f:validator binding="#{bindings.RequestNumber.validator}"/>
+                </af:inputText>
+                <af:inputDate value="#{bindings.RequestDate.inputValue}"
+                              label="#{bindings.RequestDate.hints.label}"
+                              required="#{bindings.RequestDate.hints.mandatory}"
+                              shortDesc="#{bindings.RequestDate.hints.tooltip}"
+                              id="id1" contentStyle="width:200px;">
+                  <f:validator binding="#{bindings.RequestDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.RequestDate.format}"/>
+                </af:inputDate>
+              </af:panelFormLayout>
+            </af:panelBox>
+            <af:panelBox text="PanelBox1" id="pb1"
+                         inlineStyle="width:1310px;border-color:transparent;"
+                         styleClass="AFStretchWidth" showHeader="never"
+                         showDisclosure="false">
+              <f:facet name="toolbar"/>
+              <af:panelTabbed position="above" id="pt2"
+                              styleClass="AFStretchWidth"
+                              inlineStyle="height:350.0px;">
+                <af:showDetailItem id="tab1" text="Over Time Lines"
+                                   styleClass="AFStretchWidth"
+                                   inlineStyle="height:350.0px;">
+                  <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                    <f:facet name="menus"/>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t3" flex="50">
+                        <af:commandImageLink actionListener="#{bindings.CreateInsert.execute}"
+                                             disabled="#{!bindings.CreateInsert.enabled}"
+                                             id="cil1"
+                                             icon="/images/add_dis.png"
+                                             partialSubmit="true"/>
+                        <af:commandImageLink actionListener="#{bindings.Delete.execute}"
+                                             disabled="#{!bindings.Delete.enabled}"
+                                             id="cil2"
+                                             icon="/images/delete_dis.png"
+                                             partialSubmit="true"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar"/>
+                    <af:table value="#{bindings.XxhcmOvertimeDetailsAllVO2.collectionModel}"
+                              var="row"
+                              rows="#{bindings.XxhcmOvertimeDetailsAllVO2.rangeSize}"
+                              emptyText="#{bindings.XxhcmOvertimeDetailsAllVO2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                              fetchSize="6" rowBandingInterval="0"
+                              filterModel="#{bindings.XxhcmOvertimeDetailsAllVO2Query.queryDescriptor}"
+                              queryListener="#{bindings.XxhcmOvertimeDetailsAllVO2Query.processQuery}"
+                              filterVisible="true" varStatus="vs"
+                              selectedRowKeys="#{bindings.XxhcmOvertimeDetailsAllVO2.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.XxhcmOvertimeDetailsAllVO2.collectionModel.makeCurrent}"
+                              rowSelection="single" id="t2"
+                              styleClass="AFStretchWidth"
+                              inlineStyle="height:175.0px;" scrollPolicy="page"
+                              autoHeightRows="0" columnStretching="last"
+                              partialTriggers="::cil1 ::cil2">
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeType.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeType.label}"
+                                 id="c6" width="160">
+                        <af:selectOneChoice value="#{row.bindings.OvertimeType.inputValue}"
+                                            label="#{row.bindings.OvertimeType.label}"
+                                            required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeType.mandatory}"
+                                            shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeType.tooltip}"
+                                            id="soc1" simple="true">
+                          <f:selectItems value="#{row.bindings.OvertimeType.items}"
+                                         id="si1"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.label}"
+                                 id="c1" width="160">
+                        <f:facet name="filter">
+                          <af:inputDate value="#{vs.filterCriteria.OvertimeDate}"
+                                        id="id2"/>
+                        </f:facet>
+                        <af:inputDate value="#{row.bindings.OvertimeDate.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.mandatory}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.tooltip}"
+                                      id="id3" autoSubmit="true"
+                                      valueChangeListener="#{backingBeanScope.backing_overtimeHdr.sameDateVCL}"
+                                      binding="#{backingBeanScope.backing_overtimeHdr.id3}">
+                          <f:validator binding="#{row.bindings.OvertimeDate.validator}"/>
+                          <af:convertDateTime pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.format}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.label}"
+                                 id="c3" width="160">
+                        <af:inputText value="#{row.bindings.OvertimeHours.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.tooltip}"
+                                      id="it3" autoSubmit="true"
+                                      valueChangeListener="#{backingBeanScope.backing_overtimeHdr.calcHoursVCL}">
+                          <f:validator binding="#{row.bindings.OvertimeHours.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.label}"
+                                 id="c5" width="160">
+                        <af:inputText value="#{row.bindings.CalculatedHours.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.tooltip}"
+                                      id="it6"
+                                      binding="#{backingBeanScope.backing_overtimeHdr.it6}"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.CalculatedHours.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.label}"
+                                 id="c2" width="160">
+                        <af:inputText value="#{row.bindings.Description.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Description.tooltip}"
+                                      id="it2">
+                          <f:validator binding="#{row.bindings.Description.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.label}"
+                                 id="c7" width="160">
+                        <af:inputText value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Status.tooltip}"
+                                      id="it7">
+                          <f:validator binding="#{row.bindings.Status.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.name}"
+                                 filterable="true" sortable="true"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.label}"
+                                 id="c4" width="160">
+                        <af:inputText value="#{row.bindings.Missions.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.tooltip}"
+                                      id="it5">
+                          <f:validator binding="#{row.bindings.Missions.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </af:panelBox>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="start"/>
+        <f:facet name="top"/>
+      </af:panelStretchLayout>
+    </f:facet>
+  </af:pageTemplate>
+
+</jsp:root>

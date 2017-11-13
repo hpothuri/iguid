@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="overtimeAddEditBTFn">
+    <default-activity id="__1">employee</default-activity>
+    <transaction id="__15">
+      <requires-transaction/>
+    </transaction>
+    <managed-bean id="__19">
+      <managed-bean-name id="__18">backing_employee</managed-bean-name>
+      <managed-bean-class id="__17">SalicView.backing.Employee</managed-bean-class>
+      <managed-bean-scope id="__16">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1employee.jsff-->
+    </managed-bean>
+    <managed-bean id="__23">
+      <managed-bean-name id="__22">backing_overtimeHdr</managed-bean-name>
+      <managed-bean-class id="__21">SalicView.backing.OvertimeHdr</managed-bean-class>
+      <managed-bean-scope id="__20">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1overtimeHdr.jsff-->
+    </managed-bean>
+    <managed-bean id="__26">
+      <managed-bean-name id="__24">backing_overtimeDetails</managed-bean-name>
+      <managed-bean-class id="__25">SalicView.backing.OvertimeDetails</managed-bean-class>
+      <managed-bean-scope id="__27">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1overtimeDetails.jsff-->
+    </managed-bean>
+    <view id="employee">
+      <page>/employee.jsff</page>
+      <train-stop id="__2">
+        <display-name id="__14">Employee Info</display-name>
+      </train-stop>
+    </view>
+    <task-flow-return id="taskFlowReturn1">
+      <outcome id="__5">
+        <name>taskFlowReturn1</name>
+        <commit/>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="taskFlowReturn2">
+      <outcome id="__6">
+        <name>taskFlowReturn2</name>
+        <rollback/>
+      </outcome>
+    </task-flow-return>
+    <train/>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">employee</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__9">save</from-outcome>
+        <to-activity-id id="__7">taskFlowReturn1</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__10">
+        <from-outcome id="__12">cancel</from-outcome>
+        <to-activity-id id="__11">taskFlowReturn2</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

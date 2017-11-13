@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="HrAdminBTF">
+    <default-activity id="__1">load</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__5">backing_HrAdminPage</managed-bean-name>
+      <managed-bean-class id="__2">SalicView.backing.HrAdminPage</managed-bean-class>
+      <managed-bean-scope id="__4">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1HrAdminPage.jsff-->
+    </managed-bean>
+    <managed-bean id="__12">
+      <managed-bean-name id="__19">backing_HrAdminPage2</managed-bean-name>
+      <managed-bean-class id="__20">SalicView.backing.HrAdminPage</managed-bean-class>
+      <managed-bean-scope id="__13">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1HrAdminPage.jsff-->
+    </managed-bean>
+    <managed-bean id="__9">
+      <managed-bean-name id="__7">backing_HrAdminPage3</managed-bean-name>
+      <managed-bean-class id="__8">SalicView.backing.HrAdminPage2</managed-bean-class>
+      <managed-bean-scope id="__6">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1HrAdminPage.jsff-->
+    </managed-bean>
+    <view id="HrAdminPage">
+      <page>/HrAdminPage.jsff</page>
+    </view>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__11">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <method-call id="load">
+      <method>#{bindings.load.execute}</method>
+      <outcome id="__10">
+        <fixed-outcome>load</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__14">
+      <from-activity-id id="__15">HrAdminPage</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome id="__18">edit</from-outcome>
+        <to-activity-id id="__16">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+      <from-activity-id id="__22">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__24">
+        <from-outcome id="__25">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__23">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">overtimeAddEditBTFn</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__30">taskFlowReturn1</from-outcome>
+        <to-activity-id id="__28">HrAdminPage</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id id="__32">load</from-activity-id>
+      <control-flow-case id="__34">
+        <from-outcome id="__35">load</from-outcome>
+        <to-activity-id id="__33">HrAdminPage</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

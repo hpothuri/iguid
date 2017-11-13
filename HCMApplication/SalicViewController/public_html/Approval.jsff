@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <!--oracle-jdev-comment:auto-binding-backing-bean-name:backing_Approval-->
+  <af:panelStretchLayout binding="#{backingBeanScope.backing_Approval.psl1}"
+                         id="psl1" styleClass="page-container AFStretchWidth">
+    <f:facet name="bottom"/>
+    <f:facet name="center">
+      <af:panelGroupLayout binding="#{backingBeanScope.backing_Approval.pgl1}"
+                           id="pgl1">
+        <af:panelGroupLayout binding="#{backingBeanScope.backing_Approval.pgl2}"
+                             id="pgl2">
+          <af:panelGridLayout binding="#{backingBeanScope.backing_Approval.pgl3}"
+                              id="pgl3">
+            <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                        binding="#{backingBeanScope.backing_Approval.gr1}"
+                        id="gr1">
+              <af:gridCell marginStart="5px" width="50%"
+                           binding="#{backingBeanScope.backing_Approval.gc1}"
+                           id="gc1"/>
+              <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                           binding="#{backingBeanScope.backing_Approval.gc2}"
+                           id="gc2" halign="end">
+                <af:commandButton text="Save"
+                                  binding="#{backingBeanScope.backing_Approval.cb1}"
+                                  id="cb1"
+                                  actionListener="#{bindings.Commit.execute}"
+                                  partialSubmit="true"/>
+                <af:spacer width="10" height="10"
+                           binding="#{backingBeanScope.backing_Approval.s1}"
+                           id="s1"/>
+                <af:commandButton text="Save &amp; Close"
+                                  binding="#{backingBeanScope.backing_Approval.cb3}"
+                                  id="cb3"
+                                  actionListener="#{bindings.Commit.execute}"
+                                  action="toSave" rendered="false"/>
+                <af:spacer width="10" height="10"
+                           binding="#{backingBeanScope.backing_Approval.s2}"
+                           id="s2"/>
+                <af:commandButton
+                                  text="Cancel" immediate="true"
+                                  binding="#{backingBeanScope.backing_Approval.cb2}"
+                                  id="cb2" rendered="true"
+                                  actionListener="#{bindings.Rollback.execute}">
+                  <af:resetActionListener/>
+                </af:commandButton>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:panelGroupLayout>
+        <af:panelBox text="Approval Group"
+                     binding="#{backingBeanScope.backing_Approval.pb1}"
+                     id="pb1" showDisclosure="false">
+          <f:facet name="toolbar"/>
+          <af:panelCollection binding="#{backingBeanScope.backing_Approval.pc1}"
+                              id="pc1" styleClass="AFStretchWidth"
+                              featuresOff="detach">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar binding="#{backingBeanScope.backing_Approval.t2}"
+                          id="t2" flex="1">
+                <af:commandImageLink disabled="#{!bindings.CreateInsert.enabled}"
+                                     binding="#{backingBeanScope.backing_Approval.cil1}"
+                                     id="cil1"
+                                     actionListener="#{bindings.CreateInsert.execute}"
+                                     icon="/images/add_dis.png"
+                                     partialSubmit="true"/>
+                <af:commandImageLink actionListener="#{bindings.Delete.execute}"
+                                     disabled="#{!bindings.Delete.enabled}"
+                                     binding="#{backingBeanScope.backing_Approval.cil2}"
+                                     id="cil2" icon="/images/delete_dis.png"
+                                     partialSubmit="true"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table id="md1"
+                      rows="#{bindings.XxApprovalHeadersAllVO1.rangeSize}"
+                      fetchSize="#{bindings.XxApprovalHeadersAllVO1.rangeSize}"
+                      emptyText="#{bindings.XxApprovalHeadersAllVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      var="row"
+                      value="#{bindings.XxApprovalHeadersAllVO1.collectionModel}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.XxApprovalHeadersAllVO1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.XxApprovalHeadersAllVO1.collectionModel.makeCurrent}"
+                      rowSelection="single"
+                      binding="#{backingBeanScope.backing_Approval.md1}"
+                      partialTriggers="::cil1 ::cil2" scrollPolicy="page"
+                      autoHeightRows="0" styleClass="AFStretchWidth"
+                      varStatus="vs">
+              <af:column id="c2" headerText="S.No" align="center" width="30">
+                <af:outputText value="#{vs.index+1}" id="ot1"/>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.label}"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.name}"
+                         sortable="true" id="c8" width="200" rendered="false">
+                <af:inputText value="#{row.bindings.ApprovalListId.inputValue}"
+                              label="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.label}"
+                              required="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.mandatory}"
+                              columns="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.displayWidth}"
+                              maximumLength="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.precision}"
+                              shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListId.tooltip}"
+                              id="it4">
+                  <f:validator binding="#{row.bindings.ApprovalListId.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Approval Group Code"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.name}"
+                         sortable="true" id="c11" width="200">
+                <af:inputText value="#{row.bindings.ApprovalList.inputValue}"
+                              label="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.label}"
+                              required="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.mandatory}"
+                              columns="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.displayWidth}"
+                              maximumLength="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.precision}"
+                              shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalList.tooltip}"
+                              id="it2">
+                  <f:validator binding="#{row.bindings.ApprovalList.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Approval Group Name"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListDesc.name}"
+                         sortable="true" id="c1" width="400">
+                <af:inputText value="#{row.bindings.ApprovalListDesc.inputValue}"
+                              label="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListDesc.label}"
+                              required="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListDesc.mandatory}"
+                              maximumLength="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListDesc.precision}"
+                              shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.ApprovalListDesc.tooltip}"
+                              id="it1" columns="50">
+                  <f:validator binding="#{row.bindings.ApprovalListDesc.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalHeadersAllVO1.hints.Status.label}"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.Status.name}"
+                         sortable="true" id="c5" width="200" rendered="false">
+                <af:selectBooleanCheckbox value="#{row.bindings.Status.inputValue}"
+                                          label="#{row.bindings.Status.label}"
+                                          shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.Status.tooltip}"
+                                          id="sbc1" autoSubmit="true"/>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.label}"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.name}"
+                         sortable="true" id="c12" width="200" rendered="false">
+                <af:inputDate value="#{row.bindings.StartDate.inputValue}"
+                              label="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.label}"
+                              required="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.mandatory}"
+                              shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.tooltip}"
+                              id="id1">
+                  <f:validator binding="#{row.bindings.StartDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.XxApprovalHeadersAllVO1.hints.StartDate.format}"/>
+                </af:inputDate>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.label}"
+                         sortProperty="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.name}"
+                         sortable="true" id="c10" width="200" rendered="false">
+                <af:inputDate value="#{row.bindings.EndDate.inputValue}"
+                              label="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.label}"
+                              required="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.mandatory}"
+                              shortDesc="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.tooltip}"
+                              id="id2">
+                  <f:validator binding="#{row.bindings.EndDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.XxApprovalHeadersAllVO1.hints.EndDate.format}"/>
+                </af:inputDate>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+        <af:panelBox text="Approver Name"
+                     binding="#{backingBeanScope.backing_Approval.pb2}"
+                     id="pb2" showDisclosure="false">
+          <f:facet name="toolbar"/>
+          <af:panelCollection binding="#{backingBeanScope.backing_Approval.pc2}"
+                              id="pc2" styleClass="AFStretchWidth"
+                              featuresOff="detach">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar binding="#{backingBeanScope.backing_Approval.t3}"
+                          id="t3" flex="50">
+                <af:commandImageLink actionListener="#{bindings.CreateInsert1.execute}"
+                                     disabled="#{!bindings.CreateInsert1.enabled}"
+                                     binding="#{backingBeanScope.backing_Approval.cil3}"
+                                     id="cil3" icon="/images/add_dis.png"
+                                     partialSubmit="true"/>
+                <af:commandImageLink actionListener="#{bindings.Delete1.execute}"
+                                     disabled="#{!bindings.Delete1.enabled}"
+                                     binding="#{backingBeanScope.backing_Approval.cil4}"
+                                     id="cil4" icon="/images/delete_dis.png"
+                                     partialSubmit="true"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table partialTriggers="::cil3 ::cil4 :::pc1:md1"
+                      rows="#{bindings.XxApprovalLinesAllVO2.rangeSize}"
+                      fetchSize="#{bindings.XxApprovalLinesAllVO2.rangeSize}"
+                      emptyText="#{bindings.XxApprovalLinesAllVO2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      var="row"
+                      value="#{bindings.XxApprovalLinesAllVO2.collectionModel}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.XxApprovalLinesAllVO2.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.XxApprovalLinesAllVO2.collectionModel.makeCurrent}"
+                      rowSelection="single"
+                      binding="#{backingBeanScope.backing_Approval.t1}" id="t1"
+                      scrollPolicy="page" autoHeightRows="0" varStatus="vs">
+              <af:column id="c9" headerText="S.No" align="center" width="30">
+                <af:outputText value="#{vs.index+1}" id="ot2"/>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalLinesAllVO2.hints.LineId.label}"
+                         sortProperty="#{bindings.XxApprovalLinesAllVO2.hints.LineId.name}"
+                         sortable="false" id="c6" width="200" rendered="false">
+                <af:inputText value="#{row.bindings.LineId.inputValue}"
+                              label="#{bindings.XxApprovalLinesAllVO2.hints.LineId.label}"
+                              required="#{bindings.XxApprovalLinesAllVO2.hints.LineId.mandatory}"
+                              columns="#{bindings.XxApprovalLinesAllVO2.hints.LineId.displayWidth}"
+                              maximumLength="#{bindings.XxApprovalLinesAllVO2.hints.LineId.precision}"
+                              shortDesc="#{bindings.XxApprovalLinesAllVO2.hints.LineId.tooltip}"
+                              id="it8">
+                  <f:validator binding="#{row.bindings.LineId.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column sortProperty="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeName.name}"
+                         sortable="false"
+                         headerText="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeName.label}"
+                         id="c4" width="300">
+                <af:inputListOfValues id="employeeNameId"
+                                      popupTitle="Search and Select: #{bindings.XxApprovalLinesAllVO2.hints.EmployeeName.label}"
+                                      value="#{row.bindings.EmployeeName.inputValue}"
+                                      model="#{row.bindings.EmployeeName.listOfValuesModel}"
+                                      required="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeName.mandatory}"
+                                      shortDesc="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeName.tooltip}"
+                                      autoSubmit="true"
+                                      contentStyle="width:250px">
+                  <f:validator binding="#{row.bindings.EmployeeName.validator}"/>
+                </af:inputListOfValues>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.label}"
+                         sortProperty="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.name}"
+                         sortable="false" id="c13" width="200" rendered="false">
+                <af:inputText value="#{row.bindings.ApprovalListId.inputValue}"
+                              label="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.label}"
+                              required="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.mandatory}"
+                              columns="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.displayWidth}"
+                              maximumLength="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.precision}"
+                              shortDesc="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalListId.tooltip}"
+                              id="it5">
+                  <f:validator binding="#{row.bindings.ApprovalListId.validator}"/>
+                </af:inputText>
+              </af:column>
+              <af:column headerText="Employee Number"
+                         sortProperty="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeId.name}"
+                         sortable="false" id="c7" width="200">
+                <af:selectOneChoice value="#{row.bindings.EmployeeId.inputValue}"
+                                    label="#{row.bindings.EmployeeId.label}"
+                                    required="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeId.mandatory}"
+                                    shortDesc="#{bindings.XxApprovalLinesAllVO2.hints.EmployeeId.tooltip}"
+                                    id="soc1" simple="true" autoSubmit="true"
+                                    readOnly="true"
+                                    partialTriggers="employeeNameId">
+                  <f:selectItems value="#{row.bindings.EmployeeId.items}"
+                                 id="si1"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column headerText="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.label}"
+                         sortProperty="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.name}"
+                         sortable="false" id="c3" width="200">
+                <af:inputText value="#{row.bindings.ApprovalLevel.inputValue}"
+                              label="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.label}"
+                              required="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.mandatory}"
+                              columns="20"
+                              maximumLength="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.precision}"
+                              shortDesc="#{bindings.XxApprovalLinesAllVO2.hints.ApprovalLevel.tooltip}"
+                              id="it9" autoSubmit="true">
+                  <f:validator binding="#{row.bindings.ApprovalLevel.validator}"/>
+                </af:inputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="start"/>
+    <f:facet name="end"/>
+    <f:facet name="top"/>
+  </af:panelStretchLayout>
+</jsp:root>

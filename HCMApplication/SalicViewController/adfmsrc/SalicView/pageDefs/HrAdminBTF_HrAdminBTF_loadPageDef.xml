@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="HrAdminBTF_HrAdminBTF_loadPageDef"
+                Package="SalicView.pageDefs" SkipValidation="true">
+  <parameters/>
+  <executables/>
+  <bindings>
+    <action id="load" RequiresUpdateModel="true" Action="invokeMethod"
+            MethodName="load" IsViewObjectMethod="false"
+            DataControl="HrAdminAMDataControl"
+            InstanceName="HrAdminAMDataControl.dataProvider"/>
+  </bindings>
+</pageDefinition>

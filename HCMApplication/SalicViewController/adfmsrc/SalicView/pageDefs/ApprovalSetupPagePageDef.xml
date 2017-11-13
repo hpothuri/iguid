@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="ApprovalSetupPagePageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="XxhcmApprSetupHdr_VO1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="XxhcmApprSetupHdr_VO1Iterator"/>
+    <iterator Binds="XxhcmApprSetupDtl_VO1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="XxhcmApprSetupDtl_VO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="XxhcmApprSetupHdr_VO1Iterator"
+          id="XxhcmApprSetupHdr_VO1">
+      <nodeDefinition DefName="SalicView.XxhcmApprSetupHdr_VO"
+                      Name="XxhcmApprSetupHdr_VO10">
+        <AttrNames>
+          <Item Value="ApprType"/>
+          <Item Value="RequestType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="XxhcmApprSetupDtl_VO1Iterator"
+          id="XxhcmApprSetupDtl_VO1">
+      <nodeDefinition DefName="SalicView.XxhcmApprSetupDtl_VO"
+                      Name="XxhcmApprSetupDtl_VO10">
+        <AttrNames>
+          <Item Value="ApprLevel"/>
+          <Item Value="CustApprGroupId"/>
+          <Item Value="ApprGroupId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="XxhcmApprSetupHdr_VO1Iterator" id="CreateInsert"
+            InstanceName="ApprovalAMDataControl.XxhcmApprSetupHdr_VO1"
+            DataControl="ApprovalAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="XxhcmApprSetupDtl_VO1Iterator" id="CreateInsert1"
+            InstanceName="ApprovalAMDataControl.XxhcmApprSetupDtl_VO1"
+            DataControl="ApprovalAMDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="Commit" DataControl="ApprovalAMDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ApprovalAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="XxhcmApprSetupHdr_VO1Iterator" id="Delete"
+            InstanceName="ApprovalAMDataControl.XxhcmApprSetupHdr_VO1"
+            DataControl="ApprovalAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action IterBinding="XxhcmApprSetupDtl_VO1Iterator" id="Delete1"
+            InstanceName="ApprovalAMDataControl.XxhcmApprSetupDtl_VO1"
+            DataControl="ApprovalAMDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

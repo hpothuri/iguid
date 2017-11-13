@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="payRollBTF">
+    <default-activity id="__6">load</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__4">backing_payRollPage</managed-bean-name>
+      <managed-bean-class id="__5">SalicView.backing.PayRollPage</managed-bean-class>
+      <managed-bean-scope id="__3">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1payRollPage.jsff-->
+    </managed-bean>
+    <view id="payRollPage">
+      <page>/payRollPage.jsff</page>
+    </view>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__7">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="overtimeAddEditBTFn">
+      <task-flow-reference>
+        <document>/WEB-INF/overtimeAddEditBTFn.xml</document>
+        <id>overtimeAddEditBTFn</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <method-call id="load">
+      <method>#{bindings.load.execute}</method>
+      <outcome id="__23">
+        <fixed-outcome>load</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-call id="PayrollTransfer">
+      <task-flow-reference>
+        <document>/WEB-INF/PayrollTransfer.xml</document>
+        <id>PayrollTransfer</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <control-flow-rule id="__8">
+      <from-activity-id id="__9">payRollPage</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__12">edit</from-outcome>
+        <to-activity-id id="__11">Execute</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__1">
+        <from-outcome id="__30">topayrollTransfer</from-outcome>
+        <to-activity-id id="__29">PayrollTransfer</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__13">
+      <from-activity-id id="__14">Execute</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome id="__16">Execute</from-outcome>
+        <to-activity-id id="__15">overtimeAddEditBTFn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__18">
+      <from-activity-id id="__19">overtimeAddEditBTFn</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__21">taskFlowReturn1</from-outcome>
+        <to-activity-id id="__22">payRollPage</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__24">
+      <from-activity-id id="__25">load</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__28">load</from-outcome>
+        <to-activity-id id="__26">payRollPage</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+                   
+    <f:facet name="pageContents">
+                  <af:group 
+                            id="g1">
+                             <af:panelHeader text="HR Admin Dashboard"
+                                       
+                                        id="ph1">
+                              <f:facet name="context"/>
+                              <f:facet name="menuBar"/>
+                              <f:facet name="toolbar"/>
+                              <f:facet name="legend"/>
+                              <f:facet name="info"/>
+                              <af:panelDashboard 
+                                                 id="pd2"
+                                                 inlineStyle="width:auto;height:200px;"
+                                                 columns="5" rowHeight="195px">
+                                    <af:panelBox text="PanelBox1" id="pb1"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                                                                 <af:resource type="javascript">
+                              function infoletChangeBgColor(actionEvent){ 
+                             var actionComp = actionEvent.getSource();
+   
+       var comppg = AdfPage.PAGE.findComponent('r1:0:pt1:cb1');
+         var pg2 = AdfPage.PAGE.findComponent('r1:0:pt1:cb2');
+         var pg3 = AdfPage.PAGE.findComponent('r1:0:pt1:cb3');
+         var pg4 = AdfPage.PAGE.findComponent('r1:0:pt1:cb4');
+         var pg5 = AdfPage.PAGE.findComponent('r1:0:pt1:cb5');
+         
+         
+       if(actionComp.getProperty("id")=="cb1")
+      {
+      comppg.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+      pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      
+      }   
+      
+      if(actionComp.getProperty("id")=="cb2")
+      {
+      
+        pg2.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+        comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+          pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+       pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+       pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+          
+     
+      }
+      
+      
+      
+      
+       if(actionComp.getProperty("id")=="cb3")
+      {
+        pg3.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+      pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+     
+      }
+      
+       if(actionComp.getProperty("id")=="cb4")
+      {
+          pg4.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+           pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            
+      }
+      
+      
+       if(actionComp.getProperty("id")=="cb5")
+      {
+          pg5.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+           pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+             pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+             comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      }
+      
+      
+                             }
+                        </af:resource>
+                                          <af:panelGroupLayout id="pgl1">
+                                                <af:outputLabel value="Total Request"
+                                                                id="ol1"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl2"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s1"/>
+                                                      <af:outputLabel value="#{pageFlowScope.total}"
+                                                                      id="ol2"
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl3"
+                                                                     halign="center">
+                                                      <af:commandButton id="cb1"
+                                                                        inlineStyle="width:220.0px; background-color:#1a75ff;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        actionListener="#{backingBeanScope.backing_HrAdminPage.onClickFilterTotalStatus}">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox2" id="pb2"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl4"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Pending Approval"
+                                                                id="ol3"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl5"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s2"/>
+                                                      <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      id="ol4"
+                                                                      value="#{pageFlowScope.pending} "/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl6"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb2"
+                                                                        actionListener="#{backingBeanScope.backing_HrAdminPage.onClickFilterPendingStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox3" id="pb3"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl7"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Approved"
+                                                                id="ol5"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl8"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s3"/>
+                                                      <af:outputLabel value="#{pageFlowScope.approved}"
+                                                                      id="ol6"
+                                                                      inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl9"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb3"
+                                                                        actionListener="#{backingBeanScope.backing_HrAdminPage.onClickFilterApprovedStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox4" id="pb4"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl10"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Rejected"
+                                                                id="ol7"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl11"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s4"/>
+                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
+                                                                      id="ol8"
+                                                                      inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl12"
+                                                                     halign="center">
+                                                      <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb4"
+                                                                        actionListener="#{backingBeanScope.backing_HrAdminPage.onClickFilterRejectedStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox5" id="pb5"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl13"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Pending Submission"
+                                                                id="ol9"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl14"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s5"/>
+                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
+                                                                      id="ol10"
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl15"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb5"
+                                                                        actionListener="#{backingBeanScope.backing_HrAdminPage.onClickFilterRejectedStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                              </af:panelDashboard>
+                        </af:panelHeader>
+                        <af:panelBox text="Request Details" id="pb6">
+                              <f:facet name="toolbar"/>
+                              <af:panelCollection id="pc1"
+                                                  styleClass="AFStretchWidth"
+                                                  inlineStyle="height:440.0px;">
+                                    <f:facet name="menus"/>
+                                    <f:facet name="toolbar"/>
+                                    <f:facet name="statusbar"/>
+                                    <af:table value="#{bindings.hrAdminObjROVO11.collectionModel}"
+                                              var="row"
+                                              rows="#{bindings.hrAdminObjROVO11.rangeSize}"
+                                              emptyText="#{bindings.hrAdminObjROVO11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              fetchSize="#{bindings.hrAdminObjROVO11.rangeSize}"
+                                              rowBandingInterval="0" id="t1"
+                                              selectedRowKeys="#{bindings.hrAdminObjROVO11.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.hrAdminObjROVO11.collectionModel.makeCurrent}"
+                                              rowSelection="single">
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO11.hints.RequestNumber.name}"
+                                                     sortable="false"
+                                                     headerText="Request Number"
+                                                     id="c2"/>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO11.hints.RequestDate.name}"
+                                                     sortable="false"
+                                                     headerText="Request Date"
+                                                     id="c3">
+                                                <af:inputDate value="#{row.bindings.RequestDate.inputValue}"
+                                                              label="#{bindings.hrAdminObjROVO11.hints.RequestDate.label}"
+                                                              required="#{bindings.hrAdminObjROVO11.hints.RequestDate.mandatory}"
+                                                              shortDesc="#{bindings.hrAdminObjROVO11.hints.RequestDate.tooltip}"
+                                                              id="id1">
+                                                      <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                                                      <af:convertDateTime pattern="#{bindings.hrAdminObjROVO11.hints.RequestDate.format}"/>
+                                                </af:inputDate>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO11.hints.Status.name}"
+                                                     sortable="false"
+                                                     headerText="Approval Status"
+                                                     id="c1">
+                                                <af:inputText value="#{row.bindings.Status.inputValue}"
+                                                              label="#{bindings.hrAdminObjROVO11.hints.Status.label}"
+                                                              required="#{bindings.hrAdminObjROVO11.hints.Status.mandatory}"
+                                                              columns="#{bindings.hrAdminObjROVO11.hints.Status.displayWidth}"
+                                                              maximumLength="#{bindings.hrAdminObjROVO11.hints.Status.precision}"
+                                                              shortDesc="#{bindings.hrAdminObjROVO11.hints.Status.tooltip}"
+                                                              id="it1">
+                                                      <f:validator binding="#{row.bindings.Status.validator}"/>
+                                                </af:inputText>
+                                          </af:column>
+                                    </af:table>
+                                    <af:table value="#{bindings.hrAdminObjROVO1.collectionModel}"
+                                              var="row"
+                                              rows="#{bindings.hrAdminObjROVO1.rangeSize}"
+                                              emptyText="#{bindings.hrAdminObjROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                              fetchSize="#{bindings.hrAdminObjROVO1.rangeSize}"
+                                              rowBandingInterval="0"
+                                              selectedRowKeys="#{bindings.hrAdminObjROVO1.collectionModel.selectedRow}"
+                                              selectionListener="#{bindings.hrAdminObjROVO1.collectionModel.makeCurrent}"
+                                              rowSelection="single" id="t2"
+                                              varStatus="vs"
+                                              scrollPolicy="page"
+                                              autoHeightRows="0">
+                                          <af:column id="c14" headerText="S.No"
+                                                     width="35" align="center">
+                                                <af:outputText value="#{vs.index+1}"
+                                                               id="ot11"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.RequestNumber.name}"
+                                                     sortable="false"
+                                                     headerText="Request Number"
+                                                     id="c4" width="180">
+                                                <af:outputText value="#{row.RequestNumber}"
+                                                               id="ot6"
+                                                               rendered="false"/>
+                                                <af:commandLink text="#{row.bindings.RequestNumber.inputValue}"
+                                                                id="cl1"
+                                                                action="edit"
+                                                                inlineStyle="font-weight:bold;">
+                                                      <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
+                                                                              to="#{pageFlowScope.RequestNumber}"
+                                                                              type="action"/>
+                                                </af:commandLink>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.RequestDate.name}"
+                                                     sortable="false"
+                                                     headerText="Request Date"
+                                                     id="c11">
+                                                <af:outputText value="#{row.RequestDate}"
+                                                               id="ot8">
+                                                      <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                                                </af:outputText>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.LineApproval.name}"
+                                                     sortable="false"
+                                                     headerText="Request Type"
+                                                     id="c13" align="center">
+                                                <af:outputText value="Overtime"
+                                                               id="ot1"
+                                                               rendered="false"/>
+                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation':row.ReqType eq 'edu'?'Education':row.ReqType eq 'salary'?'Salary':row.ReqType eq 'house'?'House':''}"
+                                                               id="ot13"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.EmployeeNumber.name}"
+                                                     sortable="false"
+                                                     headerText="Employee Number"
+                                                     id="c8" width="150">
+                                                <af:outputText value="#{row.EmployeeNumber}"
+                                                               id="ot2"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.EmployeeName.name}"
+                                                     sortable="false"
+                                                     headerText="Employee Name"
+                                                     id="c10" width="250">
+                                                <af:outputText value="#{row.EmployeeName}"
+                                                               id="ot7"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.Grade.name}"
+                                                     sortable="false"
+                                                     headerText="Employee Grade"
+                                                     id="c6" width="130">
+                                                <af:outputText value="#{row.Grade}"
+                                                               id="ot10"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.Department.name}"
+                                                     sortable="false"
+                                                     headerText="Employee Department"
+                                                     id="c5" width="160">
+                                                <af:outputText value="#{row.Department}"
+                                                               id="ot3"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.LineManagerName.name}"
+                                                     sortable="false"
+                                                     headerText="Line Manager Name "
+                                                     id="c7" width="250">
+                                                <af:outputText value="#{row.LineManagerName}"
+                                                               id="ot5"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.Status.name}"
+                                                     sortable="false"
+                                                     headerText="Approval Status"
+                                                     id="c9" width="120">
+                                                <af:outputText value="#{row.Status eq 'APPROVE' ? 'Approved':row.Status eq 'REJECT'?'Rejected':row.Status}"
+                                                               id="ot4"/>
+                                          </af:column>
+                                          <af:column id="c16"
+                                                     headerText="Payroll Transfer Status"
+                                                     width="150"/>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.ApproverUserName.name}"
+                                                     sortable="false"
+                                                     headerText="Action By"
+                                                     id="c15">
+                                                <af:outputText value="#{row.ApproverUserName}"
+                                                               id="ot12"/>
+                                          </af:column>
+                                          <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.Description.name}"
+                                                     sortable="false"
+                                                     headerText="Approver Comments"
+                                                     id="c12" width="300">
+                                                <af:outputText value="#{row.Description}"
+                                                               id="ot9"/>
+                                          </af:column>
+                                    </af:table>
+                              </af:panelCollection>
+                        </af:panelBox>
+                  </af:group>
+            </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+</jsp:root>

@@ -1,0 +1,639 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:acdc="/appsCloudUIKitDCs"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+   <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                    id="pt1">
+      <f:facet name="pageContents">
+         <af:group id="g2">
+            <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth"
+                                 halign="center" layout="horizontal"
+                                 rendered="false">
+               <af:commandButton text="Add" id="cb7" action="add"
+                                 rendered="false"/>
+            </af:panelGroupLayout>
+            <af:group id="g1"/>
+               <af:panelHeader text="Manager Dashboard"
+                                       
+                                        id="ph1">
+                              <f:facet name="context"/>
+                              <f:facet name="menuBar"/>
+                              <f:facet name="toolbar"/>
+                              <f:facet name="legend"/>
+                              <f:facet name="info"/>
+                              <af:panelDashboard 
+                                                 id="pd2"
+                                                 inlineStyle="width:auto;height:200px;"
+                                                 columns="5" rowHeight="195px">
+                                    <af:panelBox text="PanelBox1" id="pb1"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                                                                 <af:resource type="javascript">
+                              function infoletChangeBgColor(actionEvent){ 
+                             var actionComp = actionEvent.getSource();
+   
+       var comppg = AdfPage.PAGE.findComponent('r1:0:pt1:cb1');
+         var pg2 = AdfPage.PAGE.findComponent('r1:0:pt1:cb2');
+         var pg3 = AdfPage.PAGE.findComponent('r1:0:pt1:cb3');
+         var pg4 = AdfPage.PAGE.findComponent('r1:0:pt1:cb4');
+         var pg5 = AdfPage.PAGE.findComponent('r1:0:pt1:cb5');
+         
+         
+       if(actionComp.getProperty("id")=="cb1")
+      {
+      comppg.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+      pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      
+      }   
+      
+      if(actionComp.getProperty("id")=="cb2")
+      {
+      
+        pg2.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+        comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+          pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+       pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+       pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+          
+     
+      }
+      
+      
+      
+      
+       if(actionComp.getProperty("id")=="cb3")
+      {
+        pg3.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+      pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+         comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+     
+      }
+      
+       if(actionComp.getProperty("id")=="cb4")
+      {
+          pg4.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+           pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            
+      }
+      
+      
+       if(actionComp.getProperty("id")=="cb5")
+      {
+          pg5.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
+       
+           pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+            pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+             pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+             comppg.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
+      }
+      
+      
+                             }
+                        </af:resource>
+                                          <af:panelGroupLayout id="pgl16">
+                                                <af:outputLabel value="Total Request"
+                                                                id="ol1"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"
+                                                                binding="#{ManagerAppr.ol1}"/>
+                                                <af:panelGroupLayout id="pgl2"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s1"/>
+                                                      <af:outputLabel value="#{pageFlowScope.total}"
+                                                                      id="ol2"
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl3"
+                                                                     halign="center">
+                                                      <af:commandButton id="cb1"
+                                                                        inlineStyle="width:220.0px; background-color:#1a75ff;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        actionListener="#{ManagerAppr.onClickTotalStatus}">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox2" id="pb2"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl4"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Pending Approval"
+                                                                id="ol3"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"
+                                                                binding="#{ManagerAppr.ol3}"/>
+                                                <af:panelGroupLayout id="pgl5"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s2"/>
+                                                      <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      id="ol4"
+                                                                      value="#{pageFlowScope.pending} "
+                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl6"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb2"
+                                                                        actionListener="#{ManagerAppr.pendingACL}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox3" id="pb3"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl7"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Approved"
+                                                                id="ol5"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
+                                                                styleClass="InfoTileTitle"
+                                                                binding="#{ManagerAppr.ol5}"/>
+                                                <af:panelGroupLayout id="pgl8"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s3"/>
+                                                      <af:outputLabel value="#{pageFlowScope.approved}"
+                                                                      id="ol6"
+                                                                      inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl9"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb3"
+                                                                        actionListener="#{ManagerAppr.apprInfoletACL}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox4" id="pb4"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl10"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Rejected"
+                                                                id="ol7"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
+                                                                styleClass="InfoTileTitle"
+                                                                binding="#{ManagerAppr.ol7}"
+                                                                partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                <af:panelGroupLayout id="pgl11"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s4"/>
+                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
+                                                                      id="ol8"
+                                                                      inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl12"
+                                                                     halign="center">
+                                                      <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb4"
+                                                                        actionListener="#{ManagerAppr.rejectInfoletACL}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox5" id="pb5"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;"
+                                                 rendered="false">
+                                          <af:panelGroupLayout id="pgl13"
+                                                               layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Pending Submission"
+                                                                id="ol9"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"
+                                                                binding="#{ManagerAppr.ol9}"
+                                                                partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                <af:panelGroupLayout id="pgl14"
+                                                                     layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10"
+                                                                 height="10"
+                                                                 id="s5"/>
+                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
+                                                                      id="ol10"
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl15"
+                                                                     halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue"
+                                                                        id="cb5"
+                                                                        actionListener="#{ManagerAppr.pendingACL}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                              </af:panelDashboard>
+                        </af:panelHeader>
+            <af:panelBox id="pb6"
+                         inlineStyle="height:inherit;width:1310px;border-color:transparent;"
+                         showDisclosure="false" rendered="true"
+                         showHeader="never">
+               <f:facet name="toolbar"/>
+               <af:panelGroupLayout id="pgl17">
+                  <af:panelGroupLayout id="pgl18" layout="horizontal"
+                                       halign="left">
+                     <af:toolbar id="t1">
+                        <af:inputText label="Find" id="it1" usage="search"
+                                      autoSubmit="true"
+                                      binding="#{ManagerAppr.mgrItSearch}"
+                                      placeholder="Request Number...">
+                           <af:clientListener type="keyPress"
+                                              method="submitOTForm1"/>
+                        </af:inputText>
+                        <af:commandButton text="Search" id="cb6"
+                                          actionListener="#{ManagerAppr.onClickMgrDashSearchACL}"/>
+                        <af:spacer width="800" height="10" id="s6"/>
+                        <af:commandButton text="Create Overtime Request"
+                                          id="cb8" action="add"
+                                          rendered="false"/>
+                     </af:toolbar>
+                  </af:panelGroupLayout>
+                  <af:spacer width="10" height="10" id="s7"/>
+                  <af:panelBox text="Request Details" id="pb7">
+                     <f:facet name="toolbar"/>
+                     <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                         inlineStyle="height:440.0px;">
+                        <f:facet name="menus"/>
+                        <f:facet name="toolbar"/>
+                        <f:facet name="statusbar"/>
+                        <af:table value="#{bindings.managerDashbaordROVO1.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.managerDashbaordROVO1.rangeSize}"
+                                  emptyText="#{bindings.managerDashbaordROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.managerDashbaordROVO1.rangeSize}"
+                                  rowBandingInterval="0" id="t3"
+                                  selectedRowKeys="#{bindings.managerDashbaordROVO1.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.managerDashbaordROVO1.collectionModel.makeCurrent}"
+                                  rowSelection="single"
+                                  binding="#{ManagerAppr.mgrTable}"
+                                  columnStretching="last" rendered="false">
+                           <af:column id="c4" headerText="S.No" width="35"
+                                      align="center">
+                              <af:outputText value="#{vs.index+1}" id="ot1"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.RequestNumber.name}"
+                                      sortable="true" headerText="Request No."
+                                      id="c1" width="230">
+                              <af:inputText value="#{row.bindings.RequestNumber.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.RequestNumber.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.RequestNumber.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.RequestNumber.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.RequestNumber.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.RequestNumber.tooltip}"
+                                            id="it2" rendered="false">
+                                 <f:validator binding="#{row.bindings.RequestNumber.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column id="c5" headerText="Request Type"
+                                      align="center">
+                              <af:outputText value="OT" id="ot2"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.RequestDate.name}"
+                                      sortable="true" headerText="Request Date"
+                                      id="c2" width="227">
+                              <af:inputDate value="#{row.bindings.RequestDate.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.RequestDate.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.RequestDate.mandatory}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.RequestDate.tooltip}"
+                                            id="id2" readOnly="true">
+                                 <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                                 <af:convertDateTime pattern="#{bindings.managerDashbaordROVO1.hints.RequestDate.format}"/>
+                              </af:inputDate>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.Status.name}"
+                                      sortable="true"
+                                      headerText="Approval Status" id="c3"
+                                      width="828">
+                              <af:inputText value="#{row.bindings.Status.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.Status.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.Status.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.Status.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.Status.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.Status.tooltip}"
+                                            id="it3">
+                                 <f:validator binding="#{row.bindings.Status.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.Description.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.Description.label}"
+                                      id="c6">
+                              <af:inputText value="#{row.bindings.Description.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.Description.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.Description.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.Description.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.Description.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.Description.tooltip}"
+                                            id="it4">
+                                 <f:validator binding="#{row.bindings.Description.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.EmployeeName.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.EmployeeName.label}"
+                                      id="c8">
+                              <af:inputText value="#{row.bindings.EmployeeName.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.EmployeeName.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.EmployeeName.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.EmployeeName.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.EmployeeName.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.EmployeeName.tooltip}"
+                                            id="it6">
+                                 <f:validator binding="#{row.bindings.EmployeeName.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.label}"
+                                      id="c7">
+                              <af:inputText value="#{row.bindings.EmployeeNumber.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.EmployeeNumber.tooltip}"
+                                            id="it8">
+                                 <f:validator binding="#{row.bindings.EmployeeNumber.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.LineManagerName.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.LineManagerName.label}"
+                                      id="c9">
+                              <af:inputText value="#{row.bindings.LineManagerName.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.LineManagerName.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.LineManagerName.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.LineManagerName.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.LineManagerName.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.LineManagerName.tooltip}"
+                                            id="it7">
+                                 <f:validator binding="#{row.bindings.LineManagerName.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.Department.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.Department.label}"
+                                      id="c10">
+                              <af:inputText value="#{row.bindings.Department.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.Department.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.Department.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.Department.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.Department.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.Department.tooltip}"
+                                            id="it5">
+                                 <f:validator binding="#{row.bindings.Department.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO1.hints.Grade.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO1.hints.Grade.label}"
+                                      id="c11">
+                              <af:inputText value="#{row.bindings.Grade.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO1.hints.Grade.label}"
+                                            required="#{bindings.managerDashbaordROVO1.hints.Grade.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO1.hints.Grade.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO1.hints.Grade.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO1.hints.Grade.tooltip}"
+                                            id="it9">
+                                 <f:validator binding="#{row.bindings.Grade.validator}"/>
+                              </af:inputText>
+                           </af:column>
+                        </af:table>
+                        <af:table value="#{bindings.managerDashbaordROVO11.collectionModel}"
+                                  var="row"
+                                  rows="#{bindings.managerDashbaordROVO11.rangeSize}"
+                                  emptyText="#{bindings.managerDashbaordROVO11.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                  fetchSize="#{bindings.managerDashbaordROVO11.rangeSize}"
+                                  rowBandingInterval="0"
+                                  selectedRowKeys="#{bindings.managerDashbaordROVO11.collectionModel.selectedRow}"
+                                  selectionListener="#{bindings.managerDashbaordROVO11.collectionModel.makeCurrent}"
+                                  rowSelection="single" id="t2" varStatus="vs"
+                                  scrollPolicy="page" autoHeightRows="0"
+                                  binding="#{ManagerAppr.t2}"
+                                  partialTriggers="cmi1 cmi2"
+                                  filterModel="#{bindings.managerDashbaordROVO11Query.queryDescriptor}"
+                                  queryListener="#{bindings.managerDashbaordROVO11Query.processQuery}">
+                           <af:column id="c22" headerText="S.No" align="center"
+                                      width="35" frozen="true">
+                              <af:outputText value="#{vs.index+1}" id="ot3"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.RequestNumber.name}"
+                                      sortable="true"
+                                      headerText="Request Number" id="c16"
+                                      width="200" frozen="true"
+                                      filterable="true">
+                              <af:inputText value="#{row.bindings.RequestNumber.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO11.hints.RequestNumber.label}"
+                                            required="#{bindings.managerDashbaordROVO11.hints.RequestNumber.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO11.hints.RequestNumber.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO11.hints.RequestNumber.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO11.hints.RequestNumber.tooltip}"
+                                            id="it17" rendered="false">
+                                 <f:validator binding="#{row.bindings.RequestNumber.validator}"/>
+                              </af:inputText>
+                              <af:commandLink text="#{row.bindings.RequestNumber.inputValue}"
+                                              id="cl1"
+                                              inlineStyle="font-weight:bold;"
+                                              action="ot">
+                                 <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.RequestNumber}"/>
+                              </af:commandLink>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.RequestDate.name}"
+                                      sortable="true" headerText="Request Date"
+                                      id="c20" width="100" align="center"
+                                      frozen="true" filterable="true">
+                              <af:inputDate value="#{row.bindings.RequestDate.inputValue}"
+                                            label="#{bindings.managerDashbaordROVO11.hints.RequestDate.label}"
+                                            required="#{bindings.managerDashbaordROVO11.hints.RequestDate.mandatory}"
+                                            shortDesc="#{bindings.managerDashbaordROVO11.hints.RequestDate.tooltip}"
+                                            id="id1">
+                                 <f:validator binding="#{row.bindings.RequestDate.validator}"/>
+                                 <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                              </af:inputDate>
+                              <f:facet name="filter">
+                                 <af:inputDate value="#{vs.filterCriteria.RequestDate}"
+                                               id="id3"/>
+                              </f:facet>
+                           </af:column>
+                           <af:column id="c23" headerText="Request Type"
+                                      align="center" frozen="true"
+                                      sortable="true"
+                                      sortProperty="#{bindings.managerDashbaordROVO11.hints.ReqType.name}"
+                                      filterable="true" width="130">
+                              <af:outputText value="Overtime" id="ot12"
+                                             rendered="false"/>
+                              <af:selectOneChoice value="#{row.bindings.ReqType.inputValue}"
+                                                  label="#{row.bindings.ReqType.label}"
+                                                  required="#{bindings.managerDashbaordROVO11.hints.ReqType.mandatory}"
+                                                  shortDesc="#{bindings.managerDashbaordROVO11.hints.ReqType.tooltip}"
+                                                  id="soc1" readOnly="true">
+                                 <f:selectItems value="#{row.bindings.ReqType.items}" id="si1"/>
+                                 <f:validator binding="#{row.bindings.ReqType.validator}"/>
+                              </af:selectOneChoice>
+                           </af:column>
+                           <af:column id="c24" headerText="Action"
+                                      frozen="true">
+                              <af:menuBar id="mb1"
+                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }">
+                                 <af:menu id="m1" icon="/images/goup_dis.png">
+                                    <af:commandMenuItem text="Approve" id="cmi1"
+                                                        actionListener="#{ManagerAppr.approveACL}"/>
+                                    <af:commandMenuItem text="Reject" id="cmi2"
+                                                        actionListener="#{ManagerAppr.rejectACL}"/>
+                                 </af:menu>
+                              </af:menuBar>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Status.name}"
+                                      sortable="false"
+                                      headerText="Approval Status" id="c12"
+                                      width="120" filterable="true">
+                              <af:outputText value="#{row.Status}" id="ot10"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.EmployeeNumber.name}"
+                                      sortable="false"
+                                      headerText="Employee Number" id="c14"
+                                      width="120" align="center"
+                                      filterable="true">
+                              <af:outputText value="#{row.EmployeeNumber}"
+                                             id="ot11"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.EmployeeName.name}"
+                                      sortable="false"
+                                      headerText="Employee Name" id="c19"
+                                      width="200" filterable="true">
+                              <af:outputText value="#{row.EmployeeName}"
+                                             id="ot5"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Grade.name}"
+                                      sortable="false"
+                                      headerText="Employee Grade" id="c15"
+                                      width="130" filterable="true">
+                              <af:outputText value="#{row.Grade}" id="ot7"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Department.name}"
+                                      sortable="false"
+                                      headerText="Employee Department" id="c21"
+                                      width="150" filterable="true">
+                              <af:outputText value="#{row.Department}"
+                                             id="ot6"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.LineManagerName.name}"
+                                      sortable="false"
+                                      headerText="Line Manager Name" id="c17"
+                                      width="250" filterable="true">
+                              <af:outputText value="#{row.LineManagerName}"
+                                             id="ot4"/>
+                           </af:column>
+                           <af:column id="column1" headerText="Action By"
+                                      width="150"
+                                      sortProperty="#{bindings.managerDashbaordROVO11.hints.ApproverUserName.name}"
+                                      filterable="true" sortable="false">
+                              <af:outputText value="#{row.ApproverUserName}"
+                                             id="ot13"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Description.name}"
+                                      sortable="false"
+                                      headerText="Approver Comments" id="c18"
+                                      width="300" filterable="true">
+                              <af:outputText value="#{row.Description}"
+                                             id="ot8"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.LineApproval.name}"
+                                      sortable="false"
+                                      headerText="#{bindings.managerDashbaordROVO11.hints.LineApproval.label}"
+                                      id="c13" rendered="false"
+                                      filterable="true">
+                              <af:outputText value="#{row.LineApproval}"
+                                             id="ot9"/>
+                           </af:column>
+                        </af:table>
+                     </af:panelCollection>
+                  </af:panelBox>
+               </af:panelGroupLayout>
+            </af:panelBox>
+         </af:group>
+      </f:facet>
+      <f:facet name="footerStart"/>
+      <f:facet name="footer"/>
+      <f:facet name="footerEnd"/>
+      <f:facet name="startPanel"/>
+      <f:facet name="endPanel"/>
+      <f:facet name="headerStart"/>
+      <f:facet name="header"/>
+      <f:facet name="headerEnd"/>
+   </af:pageTemplate>
+</jsp:root>

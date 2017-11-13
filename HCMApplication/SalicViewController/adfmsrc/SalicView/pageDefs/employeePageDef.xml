@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="employeePageDef"
+                Package="SalicView.pageDefs">
+   <parameters/>
+   <executables>
+      <iterator id="XxhcmOvertimeDetailsAllVO2Iterator1"
+                Binds="XxhcmOvertimeDetailsAllVO2"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <variableIterator id="variables"/>
+      <iterator Binds="XxhcmOvertimeHeadersAllVO1" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmOvertimeHeadersAllVO1Iterator"/>
+      <iterator Binds="XxhcmOvertimeDetailsAllVO2" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmOvertimeDetailsAllVO2Iterator"/>
+      <searchRegion Binds="XxhcmOvertimeDetailsAllVO2Iterator" Criteria=""
+                    Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                    id="XxhcmOvertimeDetailsAllVO2Query"/>
+      <iterator Binds="XxQpActionHistoryTVO1" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxQpActionHistoryTVO1Iterator"/>
+      <iterator Binds="XxhcmMasterAttachment_VO2" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmMasterAttachment_VO2Iterator"/>
+      <iterator id="XxhcmOvertimeHeadersAllVO1Iterator1"
+                Binds="XxhcmOvertimeHeadersAllVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="XxhcmOvertimeDetailsAllVO1Iterator"
+                Binds="XxhcmOvertimeDetailsAllVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="XxhcmOvertimeHeadersAllVO1Iterator2"
+                Binds="XxhcmOvertimeHeadersAllVO2"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="absenceROVO1Iterator" Binds="absenceROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childValidationROVO1Iterator" Binds="childValidationROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childSemROVO1Iterator" Binds="childSemROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childSemCheckROVO1Iterator" Binds="childSemCheckROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="hireROVO1Iterator" Binds="hireROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="ethnicROVO1Iterator" Binds="ethnicROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="salaryROVO1Iterator" Binds="salaryROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="XxhcmOvertimeDetailsAllVO1Iterator1"
+                Binds="XxhcmOvertimeDetailsAllVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+<iterator Binds="XxhcmPurposeOfTrvl_VO1" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmPurposeOfTrvl_VO1Iterator"/>
+      <iterator Binds="XxhcmOtherExpenseTVO1" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmOtherExpenseTVO1Iterator"/>
+      <iterator Binds="XxhcmAttachmentsTVO1" RangeSize="25"
+                DataControl="overTimeAMDataControl"
+                id="XxhcmAttachmentsTVO1Iterator"/>
+      <iterator id="OnValidateStartDateEndDateROVO1Iterator"
+                Binds="OnValidateStartDateEndDateROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="CheckEmployeeReqExistsROVO1Iterator" Binds="CheckEmployeeReqExistsROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="ValidateSalAdvROVO1Iterator" Binds="ValidateSalAdvROVO1" DataControl="overTimeAMDataControl"
+                RangeSize="25"/>
+   </executables>
+   <bindings>
+      <listOfValues StaticList="false"
+                    IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                    Uses="LOV_employeeNameTRANS" id="employeeNameTRANS"/>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="EmpId">
+         <AttrNames>
+            <Item Value="EmpId"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="empNumberTRANS">
+         <AttrNames>
+            <Item Value="empNumberTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="jobTitleTRANS">
+         <AttrNames>
+            <Item Value="jobTitleTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="departmentTRANS">
+         <AttrNames>
+            <Item Value="departmentTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="gradeTRANS">
+         <AttrNames>
+            <Item Value="gradeTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="lineManagerTRANS">
+         <AttrNames>
+            <Item Value="lineManagerTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <action IterBinding="XxhcmOvertimeDetailsAllVO2Iterator" id="CreateInsert"
+              InstanceName="overTimeAMDataControl.XxhcmOvertimeDetailsAllVO2"
+              DataControl="overTimeAMDataControl" RequiresUpdateModel="true"
+              Action="createInsertRow"/>
+      <action IterBinding="XxhcmOvertimeDetailsAllVO2Iterator" id="Delete"
+              InstanceName="overTimeAMDataControl.XxhcmOvertimeDetailsAllVO2"
+              DataControl="overTimeAMDataControl" RequiresUpdateModel="false"
+              Action="removeCurrentRow"/>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="RequestNumber">
+         <AttrNames>
+            <Item Value="RequestNumber"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="RequestDate">
+         <AttrNames>
+            <Item Value="RequestDate"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="Status">
+         <AttrNames>
+            <Item Value="Status"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
+                       id="Description">
+         <AttrNames>
+            <Item Value="Description"/>
+         </AttrNames>
+      </attributeValues>
+      <action id="Rollback" DataControl="overTimeAMDataControl"
+              RequiresUpdateModel="false" Action="rollbackTransaction"/>
+      <action id="Commit" DataControl="overTimeAMDataControl"
+              RequiresUpdateModel="true" Action="commitTransaction"/>
+      <tree IterBinding="XxhcmOvertimeDetailsAllVO2Iterator"
+            id="XxhcmOvertimeDetailsAllVO2">
+         <nodeDefinition DefName="SalicView.XxhcmOvertimeDetailsAllVO"
+                         Name="XxhcmOvertimeDetailsAllVO20">
+            <AttrNames>
+               <Item Value="OvertimeType"/>
+               <Item Value="OvertimeDate"/>
+               <Item Value="OvertimeHours"/>
+               <Item Value="CalculatedHours"/>
+               <Item Value="Status"/>
+               <Item Value="Description"/>
+               <Item Value="Missions"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <tree IterBinding="XxQpActionHistoryTVO1Iterator"
+            id="XxQpActionHistoryTVO1">
+         <nodeDefinition DefName="SalicView.XxQpActionHistoryTVO"
+                         Name="XxQpActionHistoryTVO10">
+            <AttrNames>
+               <Item Value="ApproveLevel"/>
+               <Item Value="ApproverUserName"/>
+               <Item Value="ApproverComments"/>
+               <Item Value="ApproverFlag"/>
+               <Item Value="Type"/>
+               <Item Value="LastUpdateDate"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator"
+                       id="OTHoursTRANS">
+         <AttrNames>
+            <Item Value="OTHoursTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <tree IterBinding="XxhcmMasterAttachment_VO2Iterator"
+            id="XxhcmMasterAttachment_VO2">
+         <nodeDefinition DefName="SalicView.XxhcmMasterAttachment_VO"
+                         Name="XxhcmMasterAttachment_VO20">
+            <AttrNames>
+               <Item Value="FileName"/>
+               <Item Value="FileType"/>
+               <Item Value="Description"/>
+               <Item Value="Attachment"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <action IterBinding="XxhcmMasterAttachment_VO2Iterator" id="CreateInsert1"
+              RequiresUpdateModel="true" Action="createInsertRow"/>
+      <action IterBinding="XxhcmMasterAttachment_VO2Iterator" id="Delete1"
+              RequiresUpdateModel="false" Action="removeCurrentRow"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="AdvAmt">
+         <AttrNames>
+            <Item Value="AdvAmt"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Comments">
+         <AttrNames>
+            <Item Value="Comments"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Months">
+         <AttrNames>
+            <Item Value="Months"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Note">
+         <AttrNames>
+            <Item Value="Note"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Missions">
+         <AttrNames>
+            <Item Value="Missions"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="ActAmt">
+         <AttrNames>
+            <Item Value="ActAmt"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Age">
+         <AttrNames>
+            <Item Value="Age"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="AvlAmt">
+         <AttrNames>
+            <Item Value="AvlAmt"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="InvDate">
+         <AttrNames>
+            <Item Value="InvDate"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="InvNum">
+         <AttrNames>
+            <Item Value="InvNum"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="InvTotal">
+         <AttrNames>
+            <Item Value="InvTotal"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="MaxAmt">
+         <AttrNames>
+            <Item Value="MaxAmt"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="School">
+         <AttrNames>
+            <Item Value="School"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Schoolgrade">
+         <AttrNames>
+            <Item Value="Schoolgrade"/>
+         </AttrNames>
+      </attributeValues>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="SalPeriod"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"
+            StaticList="false" Uses="LOV_SalPeriod">
+         <AttrNames>
+            <Item Value="SalPeriod"/>
+         </AttrNames>
+      </list>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="Grade"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"
+            StaticList="true">
+         <AttrNames>
+            <Item Value="Grade"/>
+         </AttrNames>
+         <ValueList>
+            <Item Value="1"/>
+            <Item Value="2"/>
+            <Item Value="3"/>
+            <Item Value="4"/>
+            <Item Value="5"/>
+            <Item Value="6"/>
+            <Item Value="7"/>
+            <Item Value="8"/>
+            <Item Value="9"/>
+            <Item Value="10"/>
+            <Item Value="11"/>
+            <Item Value="12"/>
+         </ValueList>
+      </list>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="empIdTRANS">
+         <AttrNames>
+            <Item Value="empIdTRANS"/>
+         </AttrNames>
+      </attributeValues>
+      <listOfValues StaticList="false"
+                    IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                    Uses="LOV_Leave" id="Leave"/>
+      <listOfValues StaticList="false"
+                    IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                    Uses="LOV_childTRANS" id="childTRANS"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="Semester"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"
+            StaticList="true">
+         <AttrNames>
+            <Item Value="Semester"/>
+         </AttrNames>
+         <ValueList>
+            <Item Value="Semester 1"/>
+            <Item Value="Semester 2"/>
+         </ValueList>
+      </list>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_LetterTo" id="LetterTo" DTSupportsMRU="false"
+            SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_LetterType" id="LetterType" DTSupportsMRU="false"
+            SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Other">
+         <AttrNames>
+            <Item Value="Other"/>
+         </AttrNames>
+      </attributeValues>
+      <tree IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+            id="XxhcmOvertimeDetailsAllVO21">
+         <nodeDefinition DefName="SalicView.XxhcmOvertimeDetailsAllVO"
+                         Name="XxhcmOvertimeDetailsAllVO210">
+            <AttrNames>
+               <Item Value="InvDate"/>
+               <Item Value="childTRANS"/>
+               <Item Value="Grade" Binds="Grade"/>
+               <Item Value="ActAmt"/>
+               <Item Value="School"/>
+               <Item Value="Age"/>
+               <Item Value="Semester" Binds="Semester"/>
+               <Item Value="MaxAmt"/>
+               <Item Value="AvlAmt"/>
+               <Item Value="InvNum"/>
+               <Item Value="InvTotal"/>
+               <Item Value="Child"/>
+               <Item Value="Schoolgrade"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <action IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+              id="CreateInsert2" RequiresUpdateModel="true"
+              Action="createInsertRow"/>
+      <action IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="Delete2"
+              RequiresUpdateModel="false" Action="removeCurrentRow"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_TripType" id="TripType" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="AirlineTicketType">
+         <AttrNames>
+            <Item Value="AirlineTicketType"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="StartDate">
+         <AttrNames>
+            <Item Value="StartDate"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="EndDate">
+         <AttrNames>
+            <Item Value="EndDate"/>
+         </AttrNames>
+      </attributeValues>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_DestCategory" id="DestCategory" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="NumberOfDays">
+         <AttrNames>
+            <Item Value="NumberOfDays"/>
+         </AttrNames>
+      </attributeValues>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_ExitRerentryVisa" id="ExitRerentryVisa"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_DestVisaRequired" id="DestVisaRequired"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_DestCountryCity" id="DestCountryCity" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Description1">
+         <AttrNames>
+            <Item Value="Description"/>
+         </AttrNames>
+      </attributeValues>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_AdvPerdiem" id="AdvPerdiem" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_ProjType" id="ProjType" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_BussTravReqNum" id="BussTravReqNum" DTSupportsMRU="true"
+            SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Other1">
+         <AttrNames>
+            <Item Value="Other1"/>
+         </AttrNames>
+      </attributeValues>
+      <tree IterBinding="XxhcmPurposeOfTrvl_VO1Iterator"
+            id="XxhcmPurposeOfTrvl_VO1">
+         <nodeDefinition DefName="SalicView.XxhcmPurposeOfTrvl_VO"
+                         Name="XxhcmPurposeOfTrvl_VO10">
+            <AttrNames>
+               <Item Value="PurposeTrvlId"/>
+               <Item Value="ReqDtlsId"/>
+               <Item Value="StartDate"/>
+               <Item Value="EndDate"/>
+               <Item Value="Activity"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <action IterBinding="XxhcmPurposeOfTrvl_VO1Iterator" id="CreateInsert3"
+              RequiresUpdateModel="true" Action="createInsertRow"/>
+      <action IterBinding="XxhcmPurposeOfTrvl_VO1Iterator" id="Delete3"
+              RequiresUpdateModel="false" Action="removeCurrentRow"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="Country_Trans">
+         <AttrNames>
+            <Item Value="Country_Trans"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="PerdiemPerDay">
+         <AttrNames>
+            <Item Value="PerdiemPerDay"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="TotalPerdiem">
+         <AttrNames>
+            <Item Value="TotalPerdiem"/>
+         </AttrNames>
+      </attributeValues>
+      <tree IterBinding="XxhcmOtherExpenseTVO1Iterator"
+            id="XxhcmOtherExpenseTVO1">
+         <nodeDefinition DefName="SalicView.XxhcmOtherExpenseTVO"
+                         Name="XxhcmOtherExpenseTVO10">
+            <AttrNames>
+               <Item Value="TotalAmount"/>
+               <Item Value="Currency"/>
+               <Item Value="ExchnRate"/>
+               <Item Value="ExpenseId"/>
+               <Item Value="ExpnDesc"/>
+               <Item Value="OtherExpn"/>
+               <Item Value="ReqDtlsId"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <action IterBinding="XxhcmOtherExpenseTVO1Iterator" id="CreateInsert4"
+              RequiresUpdateModel="true" Action="createInsertRow"/>
+      <tree IterBinding="XxhcmAttachmentsTVO1Iterator"
+            id="XxhcmAttachmentsTVO1">
+         <nodeDefinition DefName="SalicView.XxhcmAttachmentsTVO"
+                         Name="XxhcmAttachmentsTVO10">
+            <AttrNames>
+               <Item Value="AttachDesc"/>
+               <Item Value="AttachFile"/>
+               <Item Value="AttachFileType"/>
+               <Item Value="AttachmentId"/>
+            </AttrNames>
+         </nodeDefinition>
+      </tree>
+      <action IterBinding="XxhcmAttachmentsTVO1Iterator" id="CreateInsert5"
+              RequiresUpdateModel="true" Action="createInsertRow"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
+            Uses="LOV_AirlineTicketType" id="AirlineTicketType1"
+            DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmAttachmentsTVO1Iterator"
+                       id="AttachDesc">
+         <AttrNames>
+            <Item Value="AttachDesc"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="OrigStartDate">
+         <AttrNames>
+            <Item Value="OrigStartDate"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
+                       id="OrigEndDate">
+         <AttrNames>
+            <Item Value="OrigEndDate"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="CheckEmployeeReqExistsROVO1Iterator" id="Reccount">
+         <AttrNames>
+            <Item Value="Reccount"/>
+         </AttrNames>
+      </attributeValues>
+      <methodAction id="getAirTicketType" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getAirTicketType"
+                    IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.getAirTicketType.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.getAirTicketType_getAirTicketType_dataControl_dataProvider_getAirTicketType_result">
+         <NamedData NDName="grade" NDValue="#{bindings.gradeTRANS.inputValue}" NDType="java.lang.String"/>
+         <NamedData NDName="dest" NDType="java.lang.String"/>
+      </methodAction>
+      <methodAction id="getOTGradeEligibility" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="getOTGradeEligibility" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.getOTGradeEligibility.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.getOTGradeEligibility_getOTGradeEligibility_dataControl_dataProvider_getOTGradeEligibility_result">
+         <NamedData NDName="grade" NDType="java.lang.String"/>
+      </methodAction>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="EmpIdVacation">
+         <AttrNames>
+            <Item Value="EmpIdVacation"/>
+         </AttrNames>
+      </attributeValues>
+      <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_BussTravReqNum"
+                    id="BussTravReqNum1"/>
+   </bindings>
+</pageDefinition>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="HrAdminPagePageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="HRAdminROVO1" RangeSize="25"
+              DataControl="HrAdminAMDataControl" id="HRAdminROVO1Iterator"/>
+    <searchRegion Binds="HRAdminROVO1Iterator" Criteria="HRAdminROVOCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="HRAdminROVO1Query"/>
+    <iterator Binds="HrAdminROVO2" RangeSize="25"
+              DataControl="HrAdminAMDataControl" id="HrAdminROVO2Iterator"/>
+    <iterator Binds="hrAdminObjROVO1" RangeSize="6"
+              DataControl="HrAdminAMDataControl" id="hrAdminObjROVO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="HRAdminROVO1Iterator" id="HRAdminROVO1">
+      <nodeDefinition DefName="SalicROVO.HRAdminROVO" Name="HRAdminROVO10">
+        <AttrNames>
+          <Item Value="ReqNumber"/>
+          <Item Value="Type"/>
+          <Item Value="ApproveLevel"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="ApproverFlag"/>
+          <Item Value="ApproverComments"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="HRAdminROVO1Iterator" id="HRAdminROVO11">
+      <nodeDefinition DefName="SalicROVO.HRAdminROVO" Name="HRAdminROVO110">
+        <AttrNames>
+          <Item Value="ActionHistoryId"/>
+          <Item Value="HeaderId"/>
+          <Item Value="ApproveLevel"/>
+          <Item Value="ApproverId"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="ApproverComments"/>
+          <Item Value="ApproverFlag"/>
+          <Item Value="Type"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreationDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdateDate"/>
+          <Item Value="LastUpdateLogin"/>
+          <Item Value="Page"/>
+          <Item Value="ReqNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="HrAdminROVO2Iterator" id="HrAdminROVO2">
+      <nodeDefinition DefName="SalicROVO.HrAdminROVO" Name="HrAdminROVO20">
+        <AttrNames>
+          <Item Value="ActionHistoryId"/>
+          <Item Value="HeaderId"/>
+          <Item Value="ApproveLevel"/>
+          <Item Value="ApproverId"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="ApproverComments"/>
+          <Item Value="ApproverFlag"/>
+          <Item Value="Type"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreationDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdateDate"/>
+          <Item Value="LastUpdateLogin"/>
+          <Item Value="Page"/>
+          <Item Value="ReqNumber"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="hrAdminObjROVO1Iterator" id="hrAdminObjROVO11">
+      <nodeDefinition DefName="SalicROVO.hrAdminObjROVO"
+                      Name="hrAdminObjROVO110">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="hrAdminObjROVO1Iterator" id="hrAdminObjROVO1">
+      <nodeDefinition DefName="SalicROVO.hrAdminObjROVO"
+                      Name="hrAdminObjROVO10">
+        <AttrNames>
+          <Item Value="RequestNumber"/>
+          <Item Value="RequestDate"/>
+          <Item Value="EmployeeNumber"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="Grade"/>
+          <Item Value="Department"/>
+          <Item Value="LineManagerName"/>
+          <Item Value="Status"/>
+          <Item Value="Description"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="ReqType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

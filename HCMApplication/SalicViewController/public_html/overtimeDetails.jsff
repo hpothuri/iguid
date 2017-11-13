@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:group binding="#{backingBeanScope.backing_overtimeDetails.g1}"
+                id="g1">
+        <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                           binding="#{backingBeanScope.backing_overtimeDetails.tbb1}"
+                           id="tbb1"/>
+        <af:commandButton text="Save"
+                          binding="#{backingBeanScope.backing_overtimeDetails.cb2}"
+                          id="cb2" action="save"/>
+        <af:train value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
+                  binding="#{backingBeanScope.backing_overtimeDetails.t1}"
+                  id="t1"/>
+        <af:commandButton actionListener="#{bindings.CreateInsert.execute}"
+                          text="CreateInsert"
+                          disabled="#{!bindings.CreateInsert.enabled}"
+                          binding="#{backingBeanScope.backing_overtimeDetails.cb1}"
+                          id="cb1"/>
+        <af:panelFormLayout binding="#{backingBeanScope.backing_overtimeDetails.pfl1}"
+                            id="pfl1">
+          <af:inputText value="#{bindings.Status.inputValue}"
+                        label="#{bindings.Status.hints.label}"
+                        required="#{bindings.Status.hints.mandatory}"
+                        columns="#{bindings.Status.hints.displayWidth}"
+                        maximumLength="#{bindings.Status.hints.precision}"
+                        shortDesc="#{bindings.Status.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it7}"
+                        id="it7">
+            <f:validator binding="#{bindings.Status.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Description.inputValue}"
+                        label="#{bindings.Description.hints.label}"
+                        required="#{bindings.Description.hints.mandatory}"
+                        columns="#{bindings.Description.hints.displayWidth}"
+                        maximumLength="#{bindings.Description.hints.precision}"
+                        shortDesc="#{bindings.Description.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it8}"
+                        id="it8">
+            <f:validator binding="#{bindings.Description.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.OvertimeHours.inputValue}"
+                        label="#{bindings.OvertimeHours.hints.label}"
+                        required="#{bindings.OvertimeHours.hints.mandatory}"
+                        columns="#{bindings.OvertimeHours.hints.displayWidth}"
+                        maximumLength="#{bindings.OvertimeHours.hints.precision}"
+                        shortDesc="#{bindings.OvertimeHours.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it9}"
+                        id="it9">
+            <f:validator binding="#{bindings.OvertimeHours.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.OvertimeHours.format}"/>
+          </af:inputText>
+          <af:inputDate value="#{bindings.OvertimeDate.inputValue}"
+                        label="#{bindings.OvertimeDate.hints.label}"
+                        required="#{bindings.OvertimeDate.hints.mandatory}"
+                        shortDesc="#{bindings.OvertimeDate.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.id2}"
+                        id="id2">
+            <f:validator binding="#{bindings.OvertimeDate.validator}"/>
+            <af:convertDateTime pattern="#{bindings.OvertimeDate.format}"/>
+          </af:inputDate>
+          <af:inputText value="#{bindings.OvertimeType.inputValue}"
+                        label="#{bindings.OvertimeType.hints.label}"
+                        required="#{bindings.OvertimeType.hints.mandatory}"
+                        columns="#{bindings.OvertimeType.hints.displayWidth}"
+                        maximumLength="#{bindings.OvertimeType.hints.precision}"
+                        shortDesc="#{bindings.OvertimeType.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it10}"
+                        id="it10">
+            <f:validator binding="#{bindings.OvertimeType.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.CalculatedHours.inputValue}"
+                        label="#{bindings.CalculatedHours.hints.label}"
+                        required="#{bindings.CalculatedHours.hints.mandatory}"
+                        columns="#{bindings.CalculatedHours.hints.displayWidth}"
+                        maximumLength="#{bindings.CalculatedHours.hints.precision}"
+                        shortDesc="#{bindings.CalculatedHours.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it11}"
+                        id="it11">
+            <f:validator binding="#{bindings.CalculatedHours.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CalculatedHours.format}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Missions.inputValue}"
+                        label="#{bindings.Missions.hints.label}"
+                        required="#{bindings.Missions.hints.mandatory}"
+                        columns="#{bindings.Missions.hints.displayWidth}"
+                        maximumLength="#{bindings.Missions.hints.precision}"
+                        shortDesc="#{bindings.Missions.hints.tooltip}"
+                        binding="#{backingBeanScope.backing_overtimeDetails.it12}"
+                        id="it12">
+            <f:validator binding="#{bindings.Missions.validator}"/>
+          </af:inputText>
+        </af:panelFormLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="footerStart"/>
+    <f:facet name="footer"/>
+    <f:facet name="footerEnd"/>
+    <f:facet name="startPanel"/>
+    <f:facet name="endPanel"/>
+    <f:facet name="headerStart"/>
+    <f:facet name="header"/>
+    <f:facet name="headerEnd"/>
+  </af:pageTemplate>
+  <!--oracle-jdev-comment:auto-binding-backing-bean-name:backing_overtimeDetails-->
+</jsp:root>

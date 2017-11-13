@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="ApprovalPageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="XxApprovalHeadersAllVO1" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="XxApprovalHeadersAllVO1Iterator"/>
+    <iterator Binds="XxApprovalLinesAllVO2" RangeSize="25"
+              DataControl="ApprovalAMDataControl"
+              id="XxApprovalLinesAllVO2Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="XxApprovalHeadersAllVO1Iterator"
+          id="XxApprovalHeadersAllVO1">
+      <nodeDefinition DefName="SalicView.XxApprovalHeadersAllVO"
+                      Name="XxApprovalHeadersAllVO10">
+        <AttrNames>
+          <Item Value="ApprovalListId"/>
+          <Item Value="ApprovalList"/>
+          <Item Value="ApprovalListDesc"/>
+          <Item Value="Status"/>
+          <Item Value="StartDate"/>
+          <Item Value="EndDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="XxApprovalLinesAllVO2Iterator"
+          id="XxApprovalLinesAllVO2">
+      <nodeDefinition DefName="SalicView.XxApprovalLinesAllVO"
+                      Name="XxApprovalLinesAllVO20">
+        <AttrNames>
+          <Item Value="LineId"/>
+          <Item Value="EmployeeName"/>
+          <Item Value="ApprovalListId"/>
+          <Item Value="EmployeeId"/>
+          <Item Value="ApprovalLevel"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="XxApprovalHeadersAllVO1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="XxApprovalHeadersAllVO1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="XxApprovalLinesAllVO2Iterator" id="CreateInsert1"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="XxApprovalLinesAllVO2Iterator" id="Delete1"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ApprovalAMDataControl"/>
+    <action id="Rollback" DataControl="ApprovalAMDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

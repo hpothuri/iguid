@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Dashboard">
+    <default-activity id="__1">DashBoard</default-activity>
+    <managed-bean id="__12">
+      <managed-bean-name id="__14">backing_DashBoard</managed-bean-name>
+      <managed-bean-class id="__15">SalicView.backing.DashBoard</managed-bean-class>
+      <managed-bean-scope id="__13">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1DashBoard.jspx-->
+    </managed-bean>
+    <managed-bean id="__26">
+      <managed-bean-name id="__25">backing_UserHome</managed-bean-name>
+      <managed-bean-class id="__27">SalicView.backing.UserHome</managed-bean-class>
+      <managed-bean-scope id="__24">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1UserHome.jspx-->
+    </managed-bean>
+    <managed-bean id="__29">
+      <managed-bean-name id="__30">UserHome</managed-bean-name>
+      <managed-bean-class id="__31">SalicView.backing.UserHome</managed-bean-class>
+      <managed-bean-scope id="__28">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="DashBoard">
+      <page>/DashBoard.jspx</page>
+    </view>
+    <view id="Home">
+      <page>/Home.jspx</page>
+    </view>
+    <view id="UserHome">
+      <page>/UserHome.jspx</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">DashBoard</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__6">home</from-outcome>
+        <to-activity-id id="__5">Home</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__17">
+        <from-outcome id="__18">gotoUser</from-outcome>
+        <to-activity-id id="__16">UserHome</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">Home</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__11">dashboard</from-outcome>
+        <to-activity-id id="__9">DashBoard</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__19">
+      <from-activity-id id="__20">UserHome</from-activity-id>
+      <control-flow-case id="__22">
+        <from-outcome id="__23">dashBoard</from-outcome>
+        <to-activity-id id="__21">DashBoard</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+  </task-flow-definition>
+</adfc-config>
