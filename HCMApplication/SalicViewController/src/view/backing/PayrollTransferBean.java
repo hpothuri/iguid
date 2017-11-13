@@ -758,7 +758,7 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Vacation Allowance Payment|SA Legislative Data Group|" + i +
-                                "|Comments|" + curr.getAttribute("Missions") + "\n";
+                                "|Remarks|" + curr.getAttribute("Missions") + "\n";
                             System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
                             System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
@@ -1131,18 +1131,21 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i + "|Amount|" +
                                 curr.getAttribute("ActAmt") + "\n";
+                            
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
                                 "|Invoice Number|" + curr.getAttribute("InvNum") + "\n";
+                            
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
-                                "|Invoice Date|" + curr.getAttribute("InvDate") !=null ? dateFormat1.format(curr.getAttribute("InvDate")) : null + "\n";
+                                "|Invoice Date|" + dateFormat1.format(curr.getAttribute("InvDate")) + "\n";
+                            
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
@@ -1338,6 +1341,12 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
                                 "|Advance Month|" + curr.getAttribute("SalPeriod") + "\n";
+                            dtl +=
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "|";
+                            dtl +=
+                                st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
+                                "|Salary Period|" + st + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
