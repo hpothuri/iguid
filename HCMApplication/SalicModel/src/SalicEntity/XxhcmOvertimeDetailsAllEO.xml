@@ -4,7 +4,7 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeDetailsAllEO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_OVERTIME_DETAILS_ALL"
@@ -81,7 +81,7 @@
     Name="OvertimeDate"
     ColumnName="OVERTIME_DATE"
     SQLType="TIMESTAMP"
-    Type="oracle.jbo.domain.Date"
+    Type="java.sql.Date"
     ColumnType="DATE"
     TableName="XXHCM_OVERTIME_DETAILS_ALL">
     <DesignTime>
