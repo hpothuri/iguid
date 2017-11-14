@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="childrenROVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -24,7 +24,6 @@
     Type="oracle.jbo.domain.Number">
     <TransientExpression
       Name="VariableScript"
-      trustMode="trusted"
       CodeSourceName="childrenROVO"/>
   </Variable>
   <Variable
@@ -35,13 +34,12 @@
     Name="BV_NAME"
     Kind="viewcriteria"
     Type="java.lang.String"/>
-  <SQLQuery>
-    <![CDATA[SELECT HDR.PERSON_ID,HDR.CONTACT_PERSON_ID CHILD_PERSON_ID,HDR.DISPLAY_NAME CHILD_NAME,PERS.DISPLAY_NAME FATHER_NAME,
-  nvl((SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID),0) AGE
-FROM XXSTG_CHILD HDR,XXSTG_PERSON PERS
-WHERE HDR.PERSON_ID = PERS.PERSON_ID
-and (SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID)<=19]]>
-  </SQLQuery>
+  <SQLQuery><![CDATA[SELECT HDR.PERSON_ID,HDR.CONTACT_PERSON_ID CHILD_PERSON_ID,HDR.DISPLAY_NAME CHILD_NAME,PERS.DISPLAY_NAME FATHER_NAME,  
+  nvl((SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID),0) AGE  
+FROM XXSTG_CHILD HDR,XXSTG_PERSON PERS  
+WHERE HDR.PERSON_ID = PERS.PERSON_ID  
+and (SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID)>=4 
+and (SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID)<=19]]></SQLQuery>
   <ViewAttribute
     Name="PersonId"
     IsUpdateable="false"
