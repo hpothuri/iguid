@@ -848,7 +848,7 @@
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.label}"
-                                 id="c27">
+                                 id="c27" rendered="false">
                         <af:inputText value="#{row.bindings.Schoolgrade.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.mandatory}"

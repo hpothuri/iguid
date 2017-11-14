@@ -155,6 +155,12 @@ FROM
     <DesignTime>
       <Attr Name="_DisplaySize" Value="240"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="100"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="Grade"
