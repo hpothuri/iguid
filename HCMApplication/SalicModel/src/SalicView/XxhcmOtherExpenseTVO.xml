@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOtherExpenseTVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOtherExpenseEO.ATTRIBUTE10, 
        XxhcmOtherExpenseEO.ATTRIBUTE2, 
@@ -32,14 +32,34 @@
   FromList="XXHCM_OTHER_EXPENSE XxhcmOtherExpenseEO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <Properties>
     <SchemaBasedProperties>
       <LABEL
         ResId="SalicView.XxhcmOtherExpenseTVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <ViewAccessor
+    Name="CurrencyListROVO1"
+    ViewObjectName="SalicROVO.CurrencyListROVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_Currency"
+    ListVOName="CurrencyListROVO1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Currency"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="FromCurrency"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FromCurrency"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <EntityUsage
     Name="XxhcmOtherExpenseEO"
     Entity="SalicEntity.XxhcmOtherExpenseEO"/>
@@ -137,7 +157,15 @@
     PrecisionRule="true"
     EntityAttrName="Currency"
     EntityUsage="XxhcmOtherExpenseEO"
-    AliasName="CURRENCY"/>
+    AliasName="CURRENCY"
+    LOVName="LOV_Currency">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="ExchnRate"
     PrecisionRule="true"
@@ -192,13 +220,13 @@
     EntityAttrName="TotalAmount"
     EntityUsage="XxhcmOtherExpenseEO"
     AliasName="TOTAL_AMOUNT"/>
-  <ResourceBundle>
-    <PropertiesBundle
-      PropertiesFile="SalicModel.SalicModelBundle"/>
-  </ResourceBundle>
   <ViewLinkAccessor
     Name="XxhcmAttachmentsTVO"
     ViewLink="SalicVL.OtherExpense_AttachmentVl"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
 </ViewObject>

@@ -135,6 +135,7 @@ public class Employee {
     private RichSelectOneChoice bussTravelReqNo;
     private RichInputListOfValues leaveLov;
     private RichInputListOfValues bussTrReq1;
+    private RichInputText prDM;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -760,6 +761,7 @@ public class Employee {
       JUCtrlListBinding lov = 
            (JUCtrlListBinding)bindings.get("BussTravReqNum1");
       lov.getListIterBinding().getViewObject().setNamedWhereClauseParam("bind_empid", ADFContext.getCurrent().getSessionScope().get("empfil"));
+        lov.getListIterBinding().getViewObject().executeQuery();
     }
 
     public void onPopupLaunch(LaunchPopupEvent launchPopupEvent) {
@@ -941,25 +943,19 @@ public class Employee {
         }
 
         else if ("BusinessTripCompletion".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-            ViewObject otHdrVO =
-                ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
             //EmployeeId
 
-            System.err.println("--------------------------" +
-                               otHdrVO.getCurrentRow().getAttribute("EmpId"));
-            if (valueChangeEvent.getNewValue() != null) {
-                //Object object =
-                
+               //Object object =
+               valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
                 ADFContext.getCurrent().getSessionScope().put("empfil",
-                                                              otHdrVO.getCurrentRow().getAttribute("EmpId"));
+                                                              variationSearchVo.getCurrentRow().getAttribute("EmpId"));
 
                 JUCtrlListBinding listBinding =
                                 (JUCtrlListBinding)ADFUtils.getBindingContainer().get("BussTravReqNum1");
                             listBinding.getListIterBinding().executeQuery();
                 AdfFacesContext.getCurrentInstance().addPartialTarget(bussTrReq1);
                 
-            }
-
+            
 
             DateFormat dateFormat =
                 new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
@@ -997,6 +993,13 @@ public class Employee {
             Date date = new Date();
             //        System.out.println(dateFormat.format(date));
             //        System.out.println(dateFormat.format(date));
+            valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            ADFContext.getCurrent().getSessionScope().put("empfil",
+                                                          variationSearchVo.getCurrentRow().getAttribute("EmpId"));
+
+            JUCtrlListBinding listBinding =
+                            (JUCtrlListBinding)ADFUtils.getBindingContainer().get("childTRANS");
+                        listBinding.getListIterBinding().executeQuery();
             dateFormat.getTimeInstance().format(date);
             variationSearchVo.getCurrentRow().setAttribute("RequestNumber",
                                                            dateFormat.format(date) +
@@ -1512,6 +1515,8 @@ public class Employee {
                     otHdrVO.getCurrentRow().setAttribute("ReqType", "letter");
                     ADFUtils.findOperation("Commit").execute();
                     returnActivity = "save";
+                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
+                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     JSFUtils.addFacesInformationMessage("Information Saved Successfully");
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide HR Letter Details!..");
@@ -1591,6 +1596,8 @@ public class Employee {
                     } else {
                         ADFUtils.findOperation("Commit").execute();
                         returnActivity = "save";
+                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
+                                         otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                         JSFUtils.addFacesInformationMessage("Information Saved Successfully");
                     }
 
@@ -1605,16 +1612,17 @@ public class Employee {
             else if ("BusinessTripCompletion".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
 
 //XxhcmAttachmentsTVO1
-                
+                Boolean isError =false;
                 //XxhcmOtherExpenseTVO1Iterator
                 //XxhcmAttachmentsTVO1Iterator
                 if(ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getEstimatedRowCount() > 0){
                     if(ADFUtils.findIterator("XxhcmAttachmentsTVO1Iterator").getEstimatedRowCount() ==0){
                      JSFUtils.addFacesErrorMessage("Please add attachments for expense records");
+                        isError = true;
                      returnActivity = null;   
                     }
-                }else{
-                if (lineVO.first() != null) {
+                }
+                if (lineVO.first() != null && !isError) {
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
                     otHdrVO.getCurrentRow().setAttribute("ReqType",
@@ -1638,12 +1646,14 @@ public class Employee {
 
                     ADFUtils.findOperation("Commit").execute();
                     returnActivity = "save";
+                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
+                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     JSFUtils.addFacesInformationMessage("Information Saved Successfully");
-                } else {
+                } else if(lineVO.first() == null && !isError){
                     JSFUtils.addFacesInformationMessage("Please provide Business Trip Completion Details!..");
 
                 }
-                }
+                
 
             }
         }
@@ -3096,10 +3106,32 @@ public class Employee {
             ViewObject otHdrVO =
                 ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
             
-            oracle.binding.OperationBinding op = ADFUtils.findOperation("name");
-            op.getParamsMap().put("bind_dest", oldRow.getAttribute("DestCategory"));
-                    op.getParamsMap().put("bind_grade", otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
+            oracle.binding.OperationBinding op = ADFUtils.findOperation("getPerDMRate");
+            op.getParamsMap().put("dest", oldRow.getAttribute("DestCategory"));
+                    op.getParamsMap().put("grade", otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
                     oracle.jbo.domain.Number perdiem =(oracle.jbo.domain.Number)op.execute();
+                    if(perdiem!=null)
+                    currRow.setAttribute("PerdiemPerDay", perdiem.bigDecimalValue());
+                    AdfFacesContext.getCurrentInstance().addPartialTarget(prDM);
+            ViewObject lineVO =
+                ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+            String noOfDays =
+                lineVO.getCurrentRow().getAttribute("NumberOfDays") == null ? "0" :
+                lineVO.getCurrentRow().getAttribute("NumberOfDays").toString();
+            String perdimday =
+                lineVO.getCurrentRow().getAttribute("PerdiemPerDay") == null ?
+                "0" :
+                lineVO.getCurrentRow().getAttribute("PerdiemPerDay").toString();
+
+            BigDecimal NoofDays = new BigDecimal(noOfDays);
+            BigDecimal Perdiem = new BigDecimal(perdimday);
+
+            BigDecimal Total = NoofDays.multiply(Perdiem);
+
+            this.totPerdiem.setValue(Total);
+            AdfFacesContext.getCurrentInstance().addPartialTarget(this.noOfDays);
+            AdfFacesContext.getCurrentInstance().addPartialTarget(this.totPerdiem);
+
         }
 
 
@@ -3136,13 +3168,13 @@ public class Employee {
                 System.err.println("temp Objetc" + temp);
                 if (temp != null) {
                     String descCat = temp.toString();
-                    if (descCat.equalsIgnoreCase("MID_EAST")) {
+                    if (descCat.equalsIgnoreCase("GCC")) {
                         diff = diff + 1;
                         this.noOfDays.setValue(diff);
-                    } else if (descCat.equalsIgnoreCase("Others")) {
+                    } else if (descCat.equalsIgnoreCase("Other Countries")) {
                         diff = diff + 2;
                         this.noOfDays.setValue(diff);
-                    } else if (descCat.equalsIgnoreCase("INS_SAUDI")) {
+                    } else if (descCat.equalsIgnoreCase("Saudi Arabia")) {
                         this.noOfDays.setValue(diff);
                     }
                     AdfFacesContext.getCurrentInstance().addPartialTarget(this.noOfDays);
@@ -3226,6 +3258,8 @@ public class Employee {
         oracle.binding.OperationBinding op = ADFUtils.findOperation("getAirTicketType");
         op.getParamsMap().put("dest", valueChangeEvent.getNewValue());
         String tCType = (String)op.execute();
+        ADFContext.getCurrent().getPageFlowScope().put("airTicket",tCType);
+        
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         lineVO.getCurrentRow().setAttribute("AirlineTicketType",tCType);
@@ -3345,5 +3379,37 @@ public class Employee {
 
     public RichInputListOfValues getBussTrReq1() {
         return bussTrReq1;
+    }
+
+    public void setPrDM(RichInputText prDM) {
+        this.prDM = prDM;
+    }
+
+    public RichInputText getPrDM() {
+        return prDM;
+    }
+
+    public void changeCurrency(ValueChangeEvent valueChangeEvent) {
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("getCurrwncyRate");
+        op.getParamsMap().put("fromcurr", valueChangeEvent.getNewValue());
+                op.getParamsMap().put("grade", otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
+                oracle.jbo.domain.Number currRate =(oracle.jbo.domain.Number)op.execute();
+                if(currRate!=null){
+        ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("ExchnRate", currRate.bigDecimalValue());
+                }else{
+JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date");
+                }
+    }
+
+    public void changeExpAmount(ValueChangeEvent valueChangeEvent) {
+        BigDecimal inputAmt = (BigDecimal)valueChangeEvent.getNewValue();
+        BigDecimal exchRate = (BigDecimal)ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().getAttribute("ExchnRate");
+        if(inputAmt!=null)
+        ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("TotalAmount", inputAmt.multiply(exchRate));
     }
 }

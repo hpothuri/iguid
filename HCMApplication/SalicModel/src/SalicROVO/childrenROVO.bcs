@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicROVO.childrenROVO
+
+package SalicROVO
+
+import oracle.jbo.script.annotation.VariableExpression;
+
+@VariableExpression(path="BV_FATH_ID")
+def BV_FATH_ID_VariableScript_Variable()
+{
+adf.context.sessionScope.empfil
+}
+

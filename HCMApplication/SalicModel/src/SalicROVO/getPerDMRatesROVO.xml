@@ -55,7 +55,7 @@
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
+    Type="oracle.jbo.domain.Number"
     ColumnType="NUMBER"
     AliasName="PERDIEM"
     Expression="PERDIEM"

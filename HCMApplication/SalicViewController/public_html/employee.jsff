@@ -1308,20 +1308,10 @@
                           <af:outputLabel value="Business Travel Request Number" id="ol17"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc32">
-                          <af:outputText value="#{bindings.empIdTRANS.inputValue}" partialTriggers="employeeNameTRANSId" visible = "false" id="ot22"/>
-                          <af:selectOneChoice value="#{bindings.BussTravReqNum.inputValue}"
-                                              label="#{bindings.BussTravReqNum.label}"
-                                              required="#{bindings.BussTravReqNum.hints.mandatory}"
-                                              shortDesc="#{bindings.BussTravReqNum.hints.tooltip}"
-                                              id="soc161" simple="true"
-                                              valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
-                                              partialTriggers="employeeNameTRANSId"
-                                              autoSubmit="true"
-                                              binding="#{backingBeanScope.backing_employee.bussTravelReqNo}"
-                                              rendered="false">
-                            <f:selectItems value="#{bindings.BussTravReqNum.items}"
-                                           id="si16"/>
-                          </af:selectOneChoice>
+                          <af:inputText value="#{bindings.empIdTRANS.inputValue}" partialTriggers="employeeNameTRANSId"
+                                        visible="false" id="ot22" label="Label 22"/>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" width="25%" id="gc34">
                           <af:inputListOfValues id="soc16"
                                                 popupTitle="Search and Select: #{bindings.BussTravReqNum1.hints.label}"
                                                 value="#{bindings.BussTravReqNum1.inputValue}"
@@ -1330,20 +1320,19 @@
                                                 required="#{bindings.BussTravReqNum1.hints.mandatory}"
                                                 columns="#{bindings.BussTravReqNum1.hints.displayWidth}"
                                                 valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
-                                              partialTriggers="employeeNameTRANSId"
-                                              autoSubmit="true"
-                                                shortDesc="#{bindings.BussTravReqNum1.hints.tooltip}"
+                                                partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
+                                                simple="true" shortDesc="#{bindings.BussTravReqNum1.hints.tooltip}"
                                                 contentStyle="width:150px;"
                                                 binding="#{backingBeanScope.backing_employee.bussTrReq1}"
                                                 launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
                             <f:validator binding="#{bindings.BussTravReqNum1.validator}"/>
                           </af:inputListOfValues>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc34"/>
                         <af:gridCell marginStart="5px" width="25%"
                                      marginEnd="5px" id="gc31"/>
                       </af:gridRow>
                     </af:panelGridLayout>
+                    <af:spacer width="10" height="15" id="s13"/>
                     <af:panelGridLayout id="panelGridLayout1">
                       <af:gridRow marginTop="12px" height="auto" id="gridRow3">
                         <af:gridCell marginStart="5px" width="25%"
@@ -1721,7 +1710,8 @@
                                         maximumLength="#{bindings.PerdiemPerDay.hints.precision}"
                                         shortDesc="#{bindings.PerdiemPerDay.hints.tooltip}"
                                         id="it43" autoSubmit="true"
-                                        valueChangeListener="#{backingBeanScope.backing_employee.onChangePerdim}">
+                                        valueChangeListener="#{backingBeanScope.backing_employee.onChangePerdim}"
+                                        binding="#{backingBeanScope.backing_employee.prDM}" disabled="true">
                             <f:validator binding="#{bindings.PerdiemPerDay.validator}"/>
                           </af:inputText>
                         </af:gridCell>
@@ -1789,7 +1779,8 @@
                                         required="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.mandatory}"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.precision}"
-                                        shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.tooltip}" id="it47">
+                                        shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.tooltip}" id="it47"
+                                        autoSubmit="true">
                             <f:validator binding="#{row.bindings.ExpnDesc.validator}"/>
                           </af:inputText>
                         </af:column>
@@ -1803,9 +1794,21 @@
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.tooltip}"
-                                        id="it51">
+                                        id="itx51" rendered="false"
+                                        valueChangeListener="#{backingBeanScope.backing_employee.changeCurrency}"
+                                        autoSubmit="true">
                             <f:validator binding="#{row.bindings.Currency.validator}"/>
                           </af:inputText>
+                          <af:selectOneChoice value="#{row.bindings.Currency.inputValue}"
+                                              label="#{row.bindings.Currency.label}"
+                                              valueChangeListener="#{backingBeanScope.backing_employee.changeCurrency}"
+                                            autoSubmit="true"
+                                              required="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.mandatory}"
+                                              shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.tooltip}"
+                                              id="it51" valuePassThru="true">
+                            <f:selectItems value="#{row.bindings.Currency.items}" id="si16"/>
+                            <f:validator binding="#{row.bindings.Currency.validator}"/>
+                          </af:selectOneChoice>
                         </af:column>
                         <af:column sortProperty="#{bindings.XxhcmOtherExpenseTVO1.hints.ExchnRate.name}"
                                    sortable="false"
@@ -1817,7 +1820,7 @@
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.ExchnRate.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.ExchnRate.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.ExchnRate.tooltip}"
-                                        id="it49">
+                                        id="it49" disabled="true" partialTriggers="it51">
                             <f:validator binding="#{row.bindings.ExchnRate.validator}"/>
                           </af:inputText>
                         </af:column>
@@ -1828,7 +1831,9 @@
                                         required="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.mandatory}"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.precision}"
-                                        shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.tooltip}" id="it48">
+                                        shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.tooltip}" id="it48"
+                                        valueChangeListener="#{backingBeanScope.backing_employee.changeExpAmount}"
+                                        autoSubmit="true">
                             <f:validator binding="#{row.bindings.OtherExpn.validator}"/>
                           </af:inputText>
                         </af:column>
@@ -1855,7 +1860,7 @@
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.TotalAmount.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.TotalAmount.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.TotalAmount.tooltip}"
-                                        id="it46">
+                                        id="it46" disabled="true" partialTriggers="it48">
                             <f:validator binding="#{row.bindings.TotalAmount.validator}"/>
                           </af:inputText>
                         </af:column>

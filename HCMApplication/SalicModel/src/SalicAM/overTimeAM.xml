@@ -81,7 +81,11 @@
       ViewObjectName="SalicROVO.getPerDMRatesROVO"/>
    <ViewUsage
       Name="GetCurrencyROVO1"
-      ViewObjectName="SalicROVO.GetCurrencyROVO"/>
+      ViewObjectName="SalicROVO.GetCurrencyROVO">
+      <ViewCriteriaUsage
+         Name="GetCurrencyROVOCriteria"
+         FullName="SalicROVO.GetCurrencyROVO.GetCurrencyROVOCriteria"/>
+   </ViewUsage>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

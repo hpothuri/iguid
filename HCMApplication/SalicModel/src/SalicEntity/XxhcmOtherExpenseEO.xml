@@ -4,16 +4,12 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOtherExpenseEO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_OTHER_EXPENSE"
   AliasName="XxhcmOtherExpenseEO"
-  BindingStyle="OracleName"
-  UseGlueCode="false">
-  <DesignTime>
-    <AttrArray Name="_publishEvents"/>
-  </DesignTime>
+  BindingStyle="OracleName">
   <Attribute
     Name="ExpenseId"
     ColumnName="EXPENSE_ID"
@@ -42,7 +38,7 @@
     Precision="200"
     ColumnName="OTHER_EXPN"
     SQLType="VARCHAR"
-    Type="java.lang.String"
+    Type="java.math.BigDecimal"
     ColumnType="VARCHAR2"
     TableName="XXHCM_OTHER_EXPENSE">
     <DesignTime>
@@ -76,7 +72,7 @@
     Name="Currency"
     ColumnName="CURRENCY"
     SQLType="NUMERIC"
-    Type="java.math.BigDecimal"
+    Type="java.lang.String"
     ColumnType="NUMBER"
     TableName="XXHCM_OTHER_EXPENSE">
     <DesignTime>

@@ -12,7 +12,11 @@
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
-  <SQLQuery><![CDATA[select from_currency,to_currency,conversion_date,conversion_rate from XXSTG_GL_DAILY_RATES where conversion_date = sysdate]]></SQLQuery>
+  <Variable
+    Name="bind_from"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <SQLQuery><![CDATA[select from_currency,to_currency,conversion_date,conversion_rate from XXSTG_GL_DAILY_RATES where trunc(conversion_date) = trunc(sysdate)]]></SQLQuery>
   <ViewAttribute
     Name="FromCurrency"
     IsUpdateable="false"
@@ -57,11 +61,54 @@
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
+    Type="oracle.jbo.domain.Number"
     ColumnType="NUMBER"
     AliasName="CONVERSION_RATE"
     Expression="CONVERSION_RATE"
     SQLType="NUMERIC"/>
+  <ViewCriteria
+    Name="GetCurrencyROVOCriteria"
+    ViewObjectName="SalicROVO.GetCurrencyROVO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="GetCurrencyROVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="FromCurrency"
+        ViewAttribute="FromCurrency"
+        Operator="="
+        Conjunction="AND"
+        Value=":bind_from"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ToCurrency"
+        ViewAttribute="ToCurrency"
+        Operator="="
+        Conjunction="AND"
+        Value="SAR"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="FromCurrency"/>
     <Item Value="ToCurrency"/>

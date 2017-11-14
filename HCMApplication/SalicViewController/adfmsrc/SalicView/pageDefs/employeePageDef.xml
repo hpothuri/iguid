@@ -417,9 +417,6 @@
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
             Uses="LOV_ProjType" id="ProjType" DTSupportsMRU="true"
             SelectItemValueMode="ListObject"/>
-      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false"
-            Uses="LOV_BussTravReqNum" id="BussTravReqNum" DTSupportsMRU="true"
-            SelectItemValueMode="ListObject"/>
       <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
                        id="Other1">
          <AttrNames>
@@ -467,7 +464,7 @@
                          Name="XxhcmOtherExpenseTVO10">
             <AttrNames>
                <Item Value="TotalAmount"/>
-               <Item Value="Currency"/>
+               <Item Value="Currency" Binds="Currency"/>
                <Item Value="ExchnRate"/>
                <Item Value="ExpenseId"/>
                <Item Value="ExpnDesc"/>
@@ -538,5 +535,21 @@
       </attributeValues>
       <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_BussTravReqNum"
                     id="BussTravReqNum1"/>
+      <methodAction id="getPerDMRate" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getPerDMRate"
+                    IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.getPerDMRate.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.getPerDMRate_getPerDMRate_dataControl_dataProvider_getPerDMRate_result">
+         <NamedData NDName="dest" NDType="java.lang.String"/>
+         <NamedData NDName="grade" NDType="java.lang.String"/>
+      </methodAction>
+      <methodAction id="getCurrwncyRate" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getCurrwncyRate"
+                    IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.getCurrwncyRate.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.getCurrwncyRate_getCurrwncyRate_dataControl_dataProvider_getCurrwncyRate_result">
+         <NamedData NDName="fromcurr" NDType="java.lang.String"/>
+         <NamedData NDName="grade" NDType="java.lang.String"/>
+      </methodAction>
+      <list Uses="LOV_Currency" StaticList="false" IterBinding="XxhcmOtherExpenseTVO1Iterator" id="Currency"
+            SelectItemValueMode="ListObject"/>
    </bindings>
 </pageDefinition>
