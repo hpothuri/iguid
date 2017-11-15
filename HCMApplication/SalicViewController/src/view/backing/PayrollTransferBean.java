@@ -340,14 +340,14 @@ public class PayrollTransferBean {
                             
                             
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_OTH|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
                                 "|Overtime Hours|" + dd.toString() + "\n";
                             
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_OTT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
@@ -355,7 +355,7 @@ public class PayrollTransferBean {
                             
                             // MISSION
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_MIS|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
@@ -363,7 +363,7 @@ public class PayrollTransferBean {
                             
                             // OT DATE
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_OTD|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
@@ -372,7 +372,7 @@ public class PayrollTransferBean {
                             
                             // CalculatedHours
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_THR|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
@@ -676,6 +676,192 @@ public class PayrollTransferBean {
                         }
                     }
                 }
+                
+                int j = 1;
+                hdr = "";
+                dtl = "";
+
+                if (cu.getAttribute("Attribute2") != null) {
+                    if (cu.getAttribute("Attribute2").equals("Y")) {
+                        String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
+                        String emp = (String) cu.getAttribute("EmployeeNumber");
+
+
+                        //persId
+                        ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
+                        personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
+                        personVO.executeQuery();
+                        BigDecimal perNum = (BigDecimal) personVO.first().getAttribute("PersonNumber");
+                        //random doc number
+                        genraterandomString(emp);
+                        Random rand = new Random();
+                        docname = generatedString;
+                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        FileName = reqNum;
+                        Calendar calendar = Calendar.getInstance();
+
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
+
+                        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+                        int numOfDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+                        String st = dateFormat1.format(calendar.getTime());
+
+                        calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
+                        String end = dateFormat1.format(calendar.getTime());
+
+                        ViewCriteria vc = payRollDtlVO.createViewCriteria();
+                        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
+                        vcr.setAttribute("ReqId", cu.getAttribute("ReqId"));
+                        vc.addRow(vcr);
+                        payRollDtlVO.applyViewCriteria(vc);
+                        payRollDtlVO.executeQuery();
+
+                        RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
+                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        while (dtlRS.hasNext()) {
+                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            int n = rand.nextInt(9999999) + 1;
+                            hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
+                            hdr +=
+                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j + "|E|H\n";
+
+                            dtl +=
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_REQ|" + n + "|E" + perNum +
+                                "|";
+                            dtl +=
+                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
+                                "|Request Number|" + reqNum + "\n";
+                            Row curr = dtlRS.next();
+                            /*Number dd = (Number)curr.getAttribute("OvertimeHours");
+                                                      dd.toString();
+                                                      String type = null;
+                                                      if(curr.getAttribute("OvertimeType").equals("OT_HOL")){
+                                                          type = "Holiday";
+                                                      }
+                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WD")){
+                                                          type = "Weekday";
+                                                      }
+                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WE")){
+                                                          type = "Weekend";
+                                                      }*/
+                            dtl +=
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "|";
+                            dtl +=
+                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
+                                "|Installments|" + curr.getAttribute("Months") + "\n";
+
+                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            j++;
+                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                        }
+                        j = 0;
+
+                        base64code = fileACL(hdr, dtl, FileName);
+
+                        java.util.Date date = new java.util.Date();
+                        SimpleDateFormat dateFormat =
+                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
+                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                        long t = date.getTime();
+                        java.util.Date expDate;
+
+                        expDate = new java.util.Date(t + (10 * 600));
+
+                        java.util.Date plusOne;
+
+
+                        plusOne = new java.util.Date(t + (24 * 3600000));
+
+                        String createdTS = dateFormat.format(date);
+                        String expiresTS = dateFormat.format(expDate);
+
+                        pp =
+                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
+                            "   <soapenv:Header>\n" +
+                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
+                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
+                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welcome@123</wsse:Password>\n" +
+                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
+                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
+                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
+                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
+                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
+                            "            <!--Optional:-->\n" +
+                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
+                            "            <!--Optional:-->\n" +
+                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
+                            "            <!--Optional:-->\n" +
+                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
+                            "            <!--Optional:-->\n" +
+                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
+                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
+                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
+                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+
+                        hdl =
+                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
+                            "   <soapenv:Header>\n" +
+                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
+                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
+                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welcome@123</wsse:Password>\n" +
+                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
+                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
+                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
+                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+                        try {
+                            callWebservice();
+                            callHDL();
+
+                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
+                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
+                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
+                            impl.executeQuery();
+                            if (hdrVO.first() != null) {
+                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                } else {
+                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                }
+                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                } else {
+                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                }
+                                //                           hdrVO.executeQuery();
+                                ADFUtils.findOperation("Commit").execute();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.err.println(e);
+                        }
+                    }
+                }
+                
             } else if ("vacation".equals(cu.getAttribute("ReqType"))) {
                 int i = 1;
                 hdr = "";
@@ -735,18 +921,7 @@ public class PayrollTransferBean {
                                 st + "|" + end + "|Vacation Allowance Payment|SA Legislative Data Group|" + i +
                                 "|Request Number|" + reqNum + "\n";
                             Row curr = dtlRS.next();
-                            /*Number dd = (Number)curr.getAttribute("OvertimeHours");
-                                                      dd.toString();
-                                                      String type = null;
-                                                      if(curr.getAttribute("OvertimeType").equals("OT_HOL")){
-                                                          type = "Holiday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WD")){
-                                                          type = "Weekday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WE")){
-                                                          type = "Weekend";
-                                                      }*/
+                         
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
                                 "|";
@@ -867,195 +1042,7 @@ public class PayrollTransferBean {
                         }
                     }
                 }
-                int j = 1;
-                hdr = "";
-                dtl = "";
-
-                if (cu.getAttribute("Attribute2") != null) {
-                    if (cu.getAttribute("Attribute2").equals("Y")) {
-                        String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
-                        String emp = (String) cu.getAttribute("EmployeeNumber");
-
-
-                        //persId
-                        ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
-                        personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
-                        personVO.executeQuery();
-                        BigDecimal perNum = (BigDecimal) personVO.first().getAttribute("PersonNumber");
-                        //random doc number
-                        genraterandomString(emp);
-                        Random rand = new Random();
-                        docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
-                        FileName = reqNum;
-                        Calendar calendar = Calendar.getInstance();
-
-                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
-
-                        calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-                        int numOfDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                        String st = dateFormat1.format(calendar.getTime());
-
-                        calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
-                        String end = dateFormat1.format(calendar.getTime());
-
-                        ViewCriteria vc = payRollDtlVO.createViewCriteria();
-                        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
-                        vcr.setAttribute("ReqId", cu.getAttribute("ReqId"));
-                        vc.addRow(vcr);
-                        payRollDtlVO.applyViewCriteria(vc);
-                        payRollDtlVO.executeQuery();
-
-                        RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
-                        while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
-                            int n = rand.nextInt(9999999) + 1;
-                            hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
-                            hdr +=
-                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j + "|E|H\n";
-
-                            dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_REQ|" + n + "|E" + perNum +
-                                "|";
-                            dtl +=
-                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
-                                "|Request Number|" + reqNum + "\n";
-                            Row curr = dtlRS.next();
-                            /*Number dd = (Number)curr.getAttribute("OvertimeHours");
-                                                      dd.toString();
-                                                      String type = null;
-                                                      if(curr.getAttribute("OvertimeType").equals("OT_HOL")){
-                                                          type = "Holiday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WD")){
-                                                          type = "Weekday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WE")){
-                                                          type = "Weekend";
-                                                      }*/
-                            dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
-                                "|";
-                            dtl +=
-                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
-                                "|Installments|" + curr.getAttribute("Months") + "\n";
-                            dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
-                                "|";
-                            dtl +=
-                                st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
-                                "|Remarks|" + curr.getAttribute("Comments") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
-                            j++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
-                        }
-                        j = 0;
-
-                        base64code = fileACL(hdr, dtl, FileName);
-
-                        java.util.Date date = new java.util.Date();
-                        SimpleDateFormat dateFormat =
-                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
-                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-                        long t = date.getTime();
-                        java.util.Date expDate;
-
-                        expDate = new java.util.Date(t + (10 * 600));
-
-                        java.util.Date plusOne;
-
-
-                        plusOne = new java.util.Date(t + (24 * 3600000));
-
-                        String createdTS = dateFormat.format(date);
-                        String expiresTS = dateFormat.format(expDate);
-
-                        pp =
-                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welcome@123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
-                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
-                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
-                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
-                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-
-                        hdl =
-                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welcome@123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
-                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
-                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-                        try {
-                            callWebservice();
-                            callHDL();
-
-                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
-                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
-                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
-                            impl.executeQuery();
-                            if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                }
-                                //                           hdrVO.executeQuery();
-                                ADFUtils.findOperation("Commit").execute();
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
-                        }
-                    }
-                }
+               
             } else if ("edu".equals(cu.getAttribute("ReqType"))) {
                 int i = 1;
                 hdr = "";
@@ -1126,34 +1113,34 @@ public class PayrollTransferBean {
                                                           type = "Weekend";
                                                       }*/
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_AMT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i + "|Amount|" +
                                 curr.getAttribute("ActAmt") + "\n";
                             
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_INN|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
                                 "|Invoice Number|" + curr.getAttribute("InvNum") + "\n";
                             
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_IDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
                                 "|Invoice Date|" + dateFormat1.format(curr.getAttribute("InvDate")) + "\n";
                             
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_CNM|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
                                 "|Child Name|" + curr.getAttribute("childTRANS") + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_SEM|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i + "|Semester|" +
@@ -1296,7 +1283,7 @@ public class PayrollTransferBean {
 
                         int numOfDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-                        String st = dateFormat1.format(calendar.getTime());
+                        String st = dateFormat1.format(calendar.getTime());                        
 
                         calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
                         String end = dateFormat1.format(calendar.getTime());
@@ -1323,30 +1310,22 @@ public class PayrollTransferBean {
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
                                 "|Request Number|" + reqNum + "\n";
                             Row curr = dtlRS.next();
-                            /*Number dd = (Number)curr.getAttribute("OvertimeHours");
-                                                      dd.toString();
-                                                      String type = null;
-                                                      if(curr.getAttribute("OvertimeType").equals("OT_HOL")){
-                                                          type = "Holiday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WD")){
-                                                          type = "Weekday";
-                                                      }
-                                                      else if (curr.getAttribute("OvertimeType").equals("OT_WE")){
-                                                          type = "Weekend";
-                                                      }*/
+                           
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
                                 "|Advance Month|" + curr.getAttribute("SalPeriod") + "\n";
+                            
+                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM/dd/yy");
+                            String salPeriod = dateFormat2.format(calendar.getTime());
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_SPD|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
-                                "|Salary Period|" + st + "\n";
+                                "|Salary Period|" + salPeriod + " 00:00:00" + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
@@ -1710,31 +1689,31 @@ public class PayrollTransferBean {
                             Row curr = dtlRS.next();
                            
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_PRJ|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
                                 "|Project|" + curr.getAttribute("ProjType") + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_REG|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
                                 "|Region|" + curr.getAttribute("DestCategory") + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_FDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
                                 "|From Date|" + dateFormat1.format(curr.getAttribute("StartDate"))+ "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
                                 "|To Date|" + dateFormat1.format(curr.getAttribute("EndDate")) + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDS|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
@@ -1909,49 +1888,49 @@ public class PayrollTransferBean {
                             Row curr = dtlRS.next();
                            
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_HRS|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_PRJ|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|Project|" + curr.getAttribute("ProjType") + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_REG|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|Region|" + curr.getAttribute("DestCategory") + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_FDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|From Date|" +  dateFormat1.format(curr.getAttribute("StartDate")) + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|To Date|" + dateFormat1.format(curr.getAttribute("EndDate")) + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDS|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|Trip Description|" + curr.getAttribute("Description")  + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADF|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|Adv Date From|" + dateFormat1.format(curr.getAttribute("OrigStartDate"))  + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
                                 "|Adv Date To|" +  dateFormat1.format(curr.getAttribute("OrigEndDate")) + "\n";
                             dtl +=
-                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
+                                "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADN|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
