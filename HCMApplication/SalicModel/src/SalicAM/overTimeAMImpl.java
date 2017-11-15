@@ -425,7 +425,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 endYear = year;
             }
             claimedVO.setbindStartDate("01-09-"+startYear);
-            claimedVO.setbindStartDate("31-08-"+endYear);
+            claimedVO.setbindEndDate("31-08-"+endYear);
             claimedVO.setbindChildId(childId);
             claimedVO.executeQuery();
             if(claimedVO.getEstimatedRowCount() > 0){
