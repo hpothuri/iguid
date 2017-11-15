@@ -266,7 +266,8 @@ public class PayrollTransferBean {
         ViewObject payRollDtlVO = ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         ViewObject hdrVO = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
 
-
+        SimpleDateFormat hcmDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       
         RowSetIterator rs = payRollVO.createRowSetIterator(null);
         while (rs.hasNext()) {
             Row cu = rs.next();
@@ -367,7 +368,7 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i +
-                                "|Overtime Date|" + dateFormat1.format(curr.getAttribute("OvertimeDate")) + "\n";
+                                "|Overtime Date|" + hcmDateFormat.format(curr.getAttribute("OvertimeDate")) + "\n";
                             
                             
                             // CalculatedHours
@@ -1131,7 +1132,7 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i +
-                                "|Invoice Date|" + dateFormat1.format(curr.getAttribute("InvDate")) + "\n";
+                                "|Invoice Date|" + hcmDateFormat.format(curr.getAttribute("InvDate")) + "\n";
                             
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_CNM|" + n + "|E" + perNum +
@@ -1318,14 +1319,14 @@ public class PayrollTransferBean {
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
                                 "|Advance Month|" + curr.getAttribute("SalPeriod") + "\n";
                             
-                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM/dd/yy");
+                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             String salPeriod = dateFormat2.format(calendar.getTime());
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_SPD|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
-                                "|Salary Period|" + salPeriod + " 00:00:00" + "\n";
+                                "|Salary Period|" + salPeriod + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TYP|" + n + "|E" + perNum +
                                 "|";
@@ -1700,18 +1701,20 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
                                 "|Region|" + curr.getAttribute("DestCategory") + "\n";
+                            
+                            
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_FDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
-                                "|From Date|" + dateFormat1.format(curr.getAttribute("StartDate"))+ "\n";
+                                "|From Date|" + hcmDateFormat.format(curr.getAttribute("StartDate"))+ "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Advance Perdiem Business Trip Payment|SA Legislative Data Group|" + i +
-                                "|To Date|" + dateFormat1.format(curr.getAttribute("EndDate")) + "\n";
+                                "|To Date|" + hcmDateFormat.format(curr.getAttribute("EndDate")) + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDS|" + n + "|E" + perNum +
                                 "|";
@@ -1904,13 +1907,13 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|From Date|" +  dateFormat1.format(curr.getAttribute("StartDate")) + "\n";
+                                "|From Date|" +  hcmDateFormat.format(curr.getAttribute("StartDate")) + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|To Date|" + dateFormat1.format(curr.getAttribute("EndDate")) + "\n";
+                                "|To Date|" + hcmDateFormat.format(curr.getAttribute("EndDate")) + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_TDS|" + n + "|E" + perNum +
                                 "|";
@@ -1922,13 +1925,13 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Date From|" + dateFormat1.format(curr.getAttribute("OrigStartDate"))  + "\n";
+                                "|Adv Date From|" + hcmDateFormat.format(curr.getAttribute("OrigStartDate"))  + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADT|" + n + "|E" + perNum +
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Date To|" +  dateFormat1.format(curr.getAttribute("OrigEndDate")) + "\n";
+                                "|Adv Date To|" +  hcmDateFormat.format(curr.getAttribute("OrigEndDate")) + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADN|" + n + "|E" + perNum +
                                 "|";
