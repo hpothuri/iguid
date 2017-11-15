@@ -1005,6 +1005,11 @@ public class Employee {
                                                            dateFormat.format(date) +
                                                            "-EA-" +
                                                            variationSearchVo.getCurrentRow().getAttribute("ReqId"));
+            
+            BigDecimal empId = ((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+            BigDecimal maxAmt = fetchMaxAmountForEmployee(empId);
+            line.getCurrentRow().setAttribute("MaxAmt", maxAmt);
+            line.getCurrentRow().setAttribute("AvlAmt", maxAmt);
         }
         //        variationSearchVo.executeQuery();
 
@@ -1068,6 +1073,13 @@ public class Employee {
         AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
         AdfFacesContext.getCurrentInstance().addPartialTarget(attTable);
         //        System.err.println("emp id --> "+variationSearchVo.getCurrentRow().getAttribute("EmpId"));
+    }
+    
+    private BigDecimal fetchMaxAmountForEmployee(BigDecimal empId){
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("fetchMaxAmountForEmployee");
+        op.getParamsMap().put("empId", empId);
+        BigDecimal maxAmt = (BigDecimal) op.execute();
+        return maxAmt;
     }
     
     public void addMessageToComponent(String errorMsg){
@@ -3411,5 +3423,53 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         BigDecimal exchRate = (BigDecimal)ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().getAttribute("ExchnRate");
         if(inputAmt!=null)
         ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("TotalAmount", inputAmt.multiply(exchRate));
+    }
+
+    public void addNewChildRow(ActionEvent actionEvent) {
+        ViewObject variationSearchVo =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("CreateInsert2");
+        op.execute();
+        BigDecimal empId = ((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+        BigDecimal maxAmt = fetchMaxAmountForEmployee(empId);
+        lineVO.getCurrentRow().setAttribute("MaxAmt", maxAmt);
+        lineVO.getCurrentRow().setAttribute("AvlAmt", maxAmt);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
+    }
+    
+//    public BigDecimal fetchAvlAmountForChild(BigDecimal childId, java.sql.Date invDate, BigDecimal maxAmt){
+
+
+    public void invDateVC(ValueChangeEvent valueChangeEvent) {
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
+                                    (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
+        lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
+    }
+    
+    private BigDecimal calculateAvlAmtForChild(BigDecimal childId, java.sql.Date invDate, BigDecimal maxAmt){
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("fetchAvlAmountForChild");
+        op.getParamsMap().put("childId", childId);
+        op.getParamsMap().put("invDate", invDate);
+        op.getParamsMap().put("maxAmt", maxAmt);
+        BigDecimal avlAmt = (BigDecimal) op.execute();
+        return avlAmt;
+    }
+
+    public void childVC(ValueChangeEvent valueChangeEvent) {
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
+                                    (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
+        lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
 }

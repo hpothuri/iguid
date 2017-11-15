@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CheckClaimedAmountVO"
+  Version="12.2.1.16.48"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="SalicROVO.CheckClaimedAmountVORowImpl"
+  ComponentClass="SalicROVO.CheckClaimedAmountVOImpl"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="SalicROVO.CheckClaimedAmountVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="bindStartDate"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bindEndDate"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bindChildId"
+    Kind="where"
+    Type="java.math.BigDecimal"/>
+  <SQLQuery><![CDATA[select sum(act_amt) claimed_amount from XXHCM_OVERTIME_DETAILS_ALL 
+where Inv_date BETWEEN TO_DATE(:bindStartDate,'DD-MM-YYYY') AND TO_DATE(:bindEndDate, 'DD-MM-YYYY') 
+and CONTACTPERSONID = :bindChildId]]></SQLQuery>
+  <ViewAttribute
+    Name="ClaimedAmount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="CLAIMED_AMOUNT"
+    Expression="CLAIMED_AMOUNT"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="ClaimedAmount"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

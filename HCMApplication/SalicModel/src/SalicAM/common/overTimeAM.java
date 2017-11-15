@@ -1,5 +1,9 @@
 package SalicAM.common;
 
+import java.math.BigDecimal;
+
+import java.sql.Date;
+
 import oracle.jbo.ApplicationModule;
 import oracle.jbo.domain.Number;
 // ---------------------------------------------------------------------
@@ -13,7 +17,12 @@ public interface overTimeAM extends ApplicationModule {
 
     String getOTGradeEligibility(String grade);
 
+
     Number getCurrwncyRate(String fromcurr, String grade);
 
     Number getPerDMRate(String dest, String grade);
+
+    BigDecimal fetchMaxAmountForEmployee(BigDecimal empId);
+
+    BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt);
 }

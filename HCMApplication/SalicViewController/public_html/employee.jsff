@@ -646,8 +646,7 @@
                     <f:facet name="menus"/>
                     <f:facet name="toolbar">
                       <af:toolbar id="t8" flex="50">
-                        <af:commandImageLink actionListener="#{bindings.CreateInsert2.execute}"
-                                             disabled="#{!bindings.CreateInsert2.enabled}"
+                        <af:commandImageLink actionListener="#{backingBeanScope.backing_employee.addNewChildRow}"
                                              id="cil7"
                                              icon="/images/add_dis.png"/>
                         <af:commandImageLink
@@ -679,7 +678,8 @@
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}"
-                                      id="id2">
+                                      id="id2" autoSubmit="true"
+                                      valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}">
                           <f:validator binding="#{row.bindings.InvDate.validator}"/>
                           <af:convertDateTime pattern="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.format}"/>
                         </af:inputDate>
@@ -695,7 +695,8 @@
                                               columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.displayWidth}"
                                               shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.tooltip}"
                                               autoSubmit="true" required="true"
-                                              binding="#{backingBeanScope.backing_employee.childTRANS}">
+                                              binding="#{backingBeanScope.backing_employee.childTRANS}"
+                                              valueChangeListener="#{backingBeanScope.backing_employee.childVC}">
                           <f:validator binding="#{row.bindings.childTRANS.validator}"/>
                         </af:inputListOfValues>
                       </af:column>

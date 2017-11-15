@@ -551,5 +551,20 @@
       </methodAction>
       <list Uses="LOV_Currency" StaticList="false" IterBinding="XxhcmOtherExpenseTVO1Iterator" id="Currency"
             SelectItemValueMode="ListObject"/>
+      <methodAction id="fetchMaxAmountForEmployee" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="fetchMaxAmountForEmployee" IsViewObjectMethod="false"
+                    DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.fetchMaxAmountForEmployee.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.fetchMaxAmountForEmployee_fetchMaxAmountForEmployee_dataControl_dataProvider_fetchMaxAmountForEmployee_result">
+         <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
+      </methodAction>
+      <methodAction id="fetchAvlAmountForChild" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="fetchAvlAmountForChild" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.fetchAvlAmountForChild.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.fetchAvlAmountForChild_fetchAvlAmountForChild_dataControl_dataProvider_fetchAvlAmountForChild_result">
+         <NamedData NDName="childId" NDType="java.math.BigDecimal"/>
+         <NamedData NDName="invDate" NDType="java.sql.Date"/>
+         <NamedData NDName="maxAmt" NDType="java.math.BigDecimal"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

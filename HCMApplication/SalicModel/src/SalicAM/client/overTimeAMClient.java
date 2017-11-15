@@ -2,6 +2,10 @@ package SalicAM.client;
 
 import SalicAM.common.overTimeAM;
 
+import java.math.BigDecimal;
+
+import java.sql.Date;
+
 import oracle.jbo.domain.Number;
 
 import oracle.jbo.client.remote.ApplicationModuleImpl;
@@ -18,6 +22,22 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
     public overTimeAMClient() {
     }
 
+
+    public BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "fetchAvlAmountForChild",
+                                        new String[] { "java.math.BigDecimal", "java.sql.Date",
+                                                       "java.math.BigDecimal" },
+                                        new Object[] { childId, invDate, maxAmt });
+        return (BigDecimal) _ret;
+    }
+
+    public BigDecimal fetchMaxAmountForEmployee(BigDecimal empId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "fetchMaxAmountForEmployee", new String[] { "java.math.BigDecimal" },
+                                        new Object[] { empId });
+        return (BigDecimal) _ret;
+    }
 
     public String getAirTicketType(String grade, String dest) {
         Object _ret =
