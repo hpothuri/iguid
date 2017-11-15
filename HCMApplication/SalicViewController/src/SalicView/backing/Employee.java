@@ -468,6 +468,16 @@ public class Employee {
         } else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             ViewObject attVo =
                 ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
+            ViewObject lineCurrVO =
+                ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+            BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+            Boolean isValid = validateForMaxThreeChilds(empId,
+                                          (java.sql.Date) lineCurrVO.getCurrentRow().getAttribute("InvDate"),
+                                                        (BigDecimal) lineCurrVO.getCurrentRow().getAttribute("Contactpersonid"));
+            if(isValid == null || !isValid){
+                JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+                return;
+            }
             if (attVo.first() != null) {
                 if (lineVO.first() != null) {
                     otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -476,7 +486,6 @@ public class Employee {
                     JSFUtils.addFacesInformationMessage("Information Saved Successfully");
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide Education Allowance Details!..");
-
                 }
                 //            ViewObject childValidVO =
                 //                ADFUtils.findIterator("childValidationROVO1Iterator").getViewObject();
@@ -3446,10 +3455,19 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
                                     (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
                                     (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
         lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
+        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+        Boolean isValid = validateForMaxThreeChilds(empId,
+                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
+        if(isValid == null || !isValid){
+            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+        }
         AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
     
@@ -3466,10 +3484,29 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
                                     (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
                                     (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
         lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
+        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+        Boolean isValid = validateForMaxThreeChilds(empId,
+                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
+        if(isValid == null || !isValid){
+            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+        }
         AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
+    }
+    
+//    public Boolean validateThreeChildsPerYear(BigDecimal empId, java.sql.Date invDate, BigDecimal childId){
+    private Boolean validateForMaxThreeChilds(BigDecimal empId, java.sql.Date invDate, BigDecimal childId){
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("validateThreeChildsPerYear");
+        op.getParamsMap().put("childId", childId);
+        op.getParamsMap().put("invDate", invDate);
+        op.getParamsMap().put("empId", empId);
+        Boolean isValid = (Boolean) op.execute();
+        return isValid;
     }
 }

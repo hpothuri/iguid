@@ -73,4 +73,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         Object _ret = this.riInvokeExportedMethod(this, "insertRecords", null, null);
         return;
     }
+
+    public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "validateThreeChildsPerYear",
+                                        new String[] { "java.math.BigDecimal", "java.sql.Date",
+                                                       "java.math.BigDecimal" },
+                                        new Object[] { empId, invDate, childId });
+        return (Boolean) _ret;
+    }
 }

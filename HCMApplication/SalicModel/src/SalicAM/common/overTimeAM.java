@@ -25,4 +25,6 @@ public interface overTimeAM extends ApplicationModule {
     BigDecimal fetchMaxAmountForEmployee(BigDecimal empId);
 
     BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt);
+
+    Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId);
 }

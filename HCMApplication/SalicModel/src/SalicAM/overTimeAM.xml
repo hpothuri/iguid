@@ -92,6 +92,9 @@
    <ViewUsage
       Name="CheckClaimedAmountVO1"
       ViewObjectName="SalicROVO.CheckClaimedAmountVO"/>
+   <ViewUsage
+      Name="CheckChildsForEmployeeInYearVO1"
+      ViewObjectName="SalicROVO.CheckChildsForEmployeeInYearVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"
@@ -279,6 +282,104 @@
          <Return
             Name="_return_type_"
             Type="void"/>
+      </Method>
+      <Method
+         Name="fetchAvlAmountForChild"
+         MethodName="fetchAvlAmountForChild">
+         <Return
+            Name="_return_type_"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="childId"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="invDate"
+            Type="java.sql.Date"/>
+         <Parameter
+            Name="maxAmt"
+            Type="java.math.BigDecimal"/>
+      </Method>
+      <Method
+         Name="fetchMaxAmountForEmployee"
+         MethodName="fetchMaxAmountForEmployee">
+         <Return
+            Name="_return_type_"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="empId"
+            Type="java.math.BigDecimal"/>
+      </Method>
+      <Method
+         Name="getAirTicketType"
+         MethodName="getAirTicketType">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="dest"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getCurrwncyRate"
+         MethodName="getCurrwncyRate">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.domain.Number"/>
+         <Parameter
+            Name="fromcurr"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getOTGradeEligibility"
+         MethodName="getOTGradeEligibility">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getPerDMRate"
+         MethodName="getPerDMRate">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.domain.Number"/>
+         <Parameter
+            Name="dest"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="insertRecords"
+         MethodName="insertRecords">
+         <Return
+            Name="_return_type_"
+            Type="void"/>
+      </Method>
+      <Method
+         Name="validateThreeChildsPerYear"
+         MethodName="validateThreeChildsPerYear">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.Boolean"/>
+         <Parameter
+            Name="empId"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="invDate"
+            Type="java.sql.Date"/>
+         <Parameter
+            Name="childId"
+            Type="java.math.BigDecimal"/>
       </Method>
    </ClientInterface>
 </AppModule>

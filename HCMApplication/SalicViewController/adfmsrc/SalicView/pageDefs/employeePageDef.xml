@@ -566,5 +566,14 @@
          <NamedData NDName="invDate" NDType="java.sql.Date"/>
          <NamedData NDName="maxAmt" NDType="java.math.BigDecimal"/>
       </methodAction>
+      <methodAction id="validateThreeChildsPerYear" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="validateThreeChildsPerYear" IsViewObjectMethod="false"
+                    DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.validateThreeChildsPerYear.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.validateThreeChildsPerYear_validateThreeChildsPerYear_dataControl_dataProvider_validateThreeChildsPerYear_result">
+         <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
+         <NamedData NDName="invDate" NDType="java.sql.Date"/>
+         <NamedData NDName="childId" NDType="java.math.BigDecimal"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

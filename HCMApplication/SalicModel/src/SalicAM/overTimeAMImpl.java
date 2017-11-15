@@ -2,6 +2,7 @@ package SalicAM;
 
 import SalicAM.common.overTimeAM;
 
+import SalicROVO.CheckChildsForEmployeeInYearVOImpl;
 import SalicROVO.CheckClaimedAmountVOImpl;
 import SalicROVO.CheckGradeAllowanceVOImpl;
 import SalicROVO.ValidateSalAdvROVOImpl;
@@ -446,5 +447,46 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public CheckClaimedAmountVOImpl getCheckClaimedAmountVO1() {
         return (CheckClaimedAmountVOImpl) findViewObject("CheckClaimedAmountVO1");
+    }
+
+    /**
+     * Container's getter for CheckChildsForEmployeeInYearVO1.
+     * @return CheckChildsForEmployeeInYearVO1
+     */
+    public CheckChildsForEmployeeInYearVOImpl getCheckChildsForEmployeeInYearVO1() {
+        return (CheckChildsForEmployeeInYearVOImpl) findViewObject("CheckChildsForEmployeeInYearVO1");
+    }
+    
+    public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId){
+        CheckChildsForEmployeeInYearVOImpl childsVO = getCheckChildsForEmployeeInYearVO1();
+        childsVO.setbindEmpId(empId);
+        if(invDate != null && empId != null && childId != null){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(invDate);
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+            Integer startYear = 0;
+            Integer endYear = 0;
+            if(month >= 9){
+                startYear = year;
+                endYear = year+1;
+            }
+            else{
+                startYear = year-1;
+                endYear = year;
+            }
+            childsVO.setbindStartDate("01-09-"+startYear);
+            childsVO.setbindEndDate("31-08-"+endYear);
+            childsVO.executeQuery();
+            if(childsVO.getEstimatedRowCount() > 0){
+                oracle.jbo.Row[] rows = childsVO.getFilteredRows("ChildId", childId);
+                if(rows != null && rows.length == 0){
+                    if(childsVO.getEstimatedRowCount() == 3){
+                        return Boolean.FALSE;
+                    }
+                }
+            }
+        }
+        return Boolean.TRUE;
     }
 }
