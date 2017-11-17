@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="payRollAM"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.payRollAMImpl"
@@ -44,6 +44,9 @@
   <ViewUsage
     Name="personROVO1"
     ViewObjectName="SalicROVO.personROVO"/>
+  <ViewUsage
+    Name="XxhcmOtherExpenseTVO1"
+    ViewObjectName="SalicView.XxhcmOtherExpenseTVO"/>
   <ViewLinkUsage
     Name="payTransOtDtlVL1"
     ViewLinkObjectName="SalicVL.payTransOtDtlVL"

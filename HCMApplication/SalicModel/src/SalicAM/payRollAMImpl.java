@@ -170,4 +170,12 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
     public ViewObjectImpl getpersonROVO1() {
         return (ViewObjectImpl)findViewObject("personROVO1");
     }
+
+    /**
+     * Container's getter for XxhcmOtherExpenseTVO1.
+     * @return XxhcmOtherExpenseTVO1
+     */
+    public ViewObjectImpl getXxhcmOtherExpenseTVO1() {
+        return (ViewObjectImpl) findViewObject("XxhcmOtherExpenseTVO1");
+    }
 }

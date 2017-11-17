@@ -23,6 +23,8 @@
               DataControl="payRollAMDataControl" RangeSize="25"/>
     <iterator id="personROVO1Iterator" Binds="personROVO1"
               DataControl="payRollAMDataControl" RangeSize="25"/>
+    <iterator id="XxhcmOtherExpenseTVO1Iterator" Binds="XxhcmOtherExpenseTVO1" DataControl="payRollAMDataControl"
+              RangeSize="25"/>
   </executables>
   <bindings>
     <tree IterBinding="payRollObjROVO1Iterator" id="payRollObjROVO1">
