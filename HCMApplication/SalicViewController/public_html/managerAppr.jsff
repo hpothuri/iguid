@@ -305,19 +305,19 @@
                   <af:panelGroupLayout id="pgl18" layout="horizontal"
                                        halign="left">
                      <af:toolbar id="t1">
-                        <af:inputText label="Find" id="it1" usage="search"
-                                      autoSubmit="true"
-                                      binding="#{ManagerAppr.mgrItSearch}"
-                                      placeholder="Request Number...">
-                           <af:clientListener type="keyPress"
-                                              method="submitOTForm1"/>
-                        </af:inputText>
-                        <af:commandButton text="Search" id="cb6"
-                                          actionListener="#{ManagerAppr.onClickMgrDashSearchACL}"/>
-                        <af:spacer width="800" height="10" id="s6"/>
-                        <af:commandButton text="Create Overtime Request"
-                                          id="cb8" action="add"
-                                          rendered="false"/>
+                        <af:subform id="s8" defaultCommand="cb6">
+                           <af:panelGroupLayout id="pgl19" layout="horizontal">
+                              <af:inputText label="Find" id="it1" usage="search" autoSubmit="true"
+                                            binding="#{ManagerAppr.mgrItSearch}" placeholder="Request Number...">
+                                 <!--<af:clientListener type="keyPress"
+                                              method="submitOTForm1"/>-->
+                              </af:inputText>
+                              <af:commandButton text="Search" id="cb6"
+                                                actionListener="#{ManagerAppr.onClickMgrDashSearchACL}"/>
+                              <af:spacer width="800" height="10" id="s6"/>
+                              <af:commandButton text="Create Overtime Request" id="cb8" action="add" rendered="false"/>
+                           </af:panelGroupLayout>
+                        </af:subform>
                      </af:toolbar>
                   </af:panelGroupLayout>
                   <af:spacer width="10" height="10" id="s7"/>
@@ -326,7 +326,16 @@
                      <af:panelCollection id="pc1" styleClass="AFStretchWidth"
                                          inlineStyle="height:440.0px;">
                         <f:facet name="menus"/>
-                        <f:facet name="toolbar"/>
+                        <f:facet name="toolbar">
+                           <af:toolbar id="t4">
+                              <af:button text="Approve" id="b1" actionListener="#{ManagerAppr.approveACL}"
+                                         disabled="#{bindings.Status.inputValue eq 'APPROVE' ? 'true' : 'false' or bindings.Status.inputValue eq 'REJECT'? 'true' :'false'}"
+                                         partialTriggers="t2"/>
+                              <af:button text="Reject" id="b2" actionListener="#{ManagerAppr.rejectACL}"
+                                         disabled="#{bindings.Status.inputValue eq 'APPROVE' ? 'true' : 'false' or bindings.Status.inputValue eq 'REJECT'? 'true' :'false'}"
+                                         partialTriggers="t2"/>
+                           </af:toolbar>
+                        </f:facet>
                         <f:facet name="statusbar"/>
                         <af:table value="#{bindings.managerDashbaordROVO1.collectionModel}"
                                   var="row"
@@ -546,7 +555,7 @@
                               </af:selectOneChoice>
                            </af:column>
                            <af:column id="c24" headerText="Action"
-                                      frozen="true">
+                                      frozen="true" rendered="false">
                               <af:menuBar id="mb1"
                                           disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }">
                                  <af:menu id="m1" icon="/images/goup_dis.png">

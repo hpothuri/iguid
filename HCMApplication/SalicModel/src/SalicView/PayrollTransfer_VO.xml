@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="PayrollTransfer_VO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.APPROVAL_TEMPLATE_ID, 
        XxhcmOvertimeHeadersAllEO.APPROVER_USER_NAME, 
@@ -40,8 +40,7 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false"
-  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED'">
+  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED' AND XxhcmOvertimeHeadersAllEO.REQUEST_NUMBER NOT LIKE '%HRL%'">
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -50,13 +49,15 @@
   </Properties>
   <ViewAccessor
     Name="employeeROVO"
-    ViewObjectName="SalicROVO.employeeROVO">
+    ViewObjectName="SalicROVO.employeeROVO"
+    RowLevelBinds="true">
     <ViewCriteriaUsage
       Name="findById"
       FullName="SalicROVO.employeeROVO.findById"/>
     <ParameterMap>
       <PIMap Variable="BV_EMP_ID">
-        <TransientExpression><![CDATA[EmpId]]></TransientExpression>
+        <TransientExpression
+          Name="BindVariable"><![CDATA[EmpId]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -74,6 +75,7 @@
     <AttrArray Name="AttrNames">
       <Item Value="PayrollTansStatus"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
       <Item Value="LookupValueName"/>
     </AttrArray>
@@ -272,10 +274,6 @@
     EntityAttrName="Status"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="STATUS"/>
-  <ResourceBundle>
-    <PropertiesBundle
-      PropertiesFile="SalicModel.SalicModelBundle"/>
-  </ResourceBundle>
   <ViewAttribute
     Name="EmployeeName"
     IsSelected="false"
@@ -285,11 +283,13 @@
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("EmpName")
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -310,11 +310,13 @@ employeeROVO.first().getAttribute("EmpName")
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("EmpNumber")
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -335,11 +337,13 @@ employeeROVO.first().getAttribute("EmpNumber")
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("Department")
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -360,11 +364,13 @@ employeeROVO.first().getAttribute("Department")
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("LineManagerName")
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -385,11 +391,13 @@ employeeROVO.first().getAttribute("LineManagerName")
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[true]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("Grade")
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -407,7 +415,8 @@ employeeROVO.first().getAttribute("Grade")
     EntityAttrName="PayrollTransDate"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="PAYROLL_TRANS_DATE">
-    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[adf.currentDate]]></TransientExpression>
   </ViewAttribute>
   <ViewAttribute
     Name="ReqType"
@@ -420,4 +429,8 @@ employeeROVO.first().getAttribute("Grade")
     ViewLink="SalicVL.payTransOtDtlVL"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="SalicModel.SalicModelBundle"/>
+  </ResourceBundle>
 </ViewObject>
