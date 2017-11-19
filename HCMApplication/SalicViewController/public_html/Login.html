@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>Employee Self Service is loading..</title>
+    <script src="js/jquery-3.2.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      function load()
+      {
+          setTimeZoneInCookie();
+          var xc="/ess/LoginServlet?jwt_tkn="+QueryString.jwt;
+          var result = jQuery.ajax(
+          {
+            url : xc, type : "POST", async : false, data : ""
+          });
+
+          var finalVal = jQuery.parseJSON(result.responseText);
+          if (finalVal.authenticated.toUpperCase() == "Y")
+          {
+            document.loginForm.j_username.value = finalVal.userName.toUpperCase();
+            document.loginForm.j_password.value = finalVal.password;
+            document.forms[0].submit();
+          }
+          else
+          {
+           alert(finalVal.error);
+           window.location=finalVal.redirecturl;
+          }
+          
+          
+       }
+   </script>
+  </head>
+  <body onload="load()">
+    <form method="POST" action="j_security_check" name="loginForm">
+      <input type="hidden" name="j_username" value=""/>
+      <input type="hidden" name="j_password" value=""/>
+    </form>
+  </body>
+</html>
