@@ -1,11 +1,17 @@
 package view.session;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+
 import view.session.LoginBean;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.faces.application.FacesMessage;
+
 import javax.xml.namespace.QName;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
@@ -19,6 +25,10 @@ import javax.xml.ws.Service.Mode;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.SOAPBinding;
 import oracle.adf.share.logging.ADFLogger;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -30,6 +40,7 @@ public class UserService
   private String password;
   private String jwtUserToken;
   private String userServiceEndPoint;
+  private String empUrl = "https://eepz-test.hcm.em2.oraclecloud.com/hcmCoreApi/resources/11.12.1.0/emps/";
   
   public UserService(String userServiceEndPoint, String username, String password)
   {
@@ -245,14 +256,84 @@ public class UserService
     
     return nodeValue;
   }
+
+    public ArrayList<RolePojo> fetchRoles(String username, String password, String personId) {
+        ArrayList<RolePojo> roles = new ArrayList<RolePojo>();
+        try {
+            HttpResponse<JsonNode> output =
+                RestHelper.invokeJsonRequestViaUnirestClient(username, password, null,
+                                                             empUrl + "?q=PersonId=" + personId, "REST_SERVICE_GET",
+                                                             "application/json", null, true);
+            System.out.println(output);
+
+            String href = null;
+            if (output != null) {
+                JsonNode body = output.getBody();
+                JSONObject object = body.getObject();
+                JSONArray items = object.getJSONArray("items");
+                for (int i = 0; i < items.length(); i++) {
+                    JSONObject currItem = items.getJSONObject(i);
+                    JSONArray links = currItem.getJSONArray("links");
+                    for (int j = 0; j < links.length(); j++) {
+                        JSONObject currObject = links.getJSONObject(j);
+                        if (currObject.getString("name").equalsIgnoreCase("roles")) {
+                            href = currObject.getString("href");
+                        }
+                    }
+                }
+
+                String roleRestUrl = href + "?onlyData=true&limit=1000&fields=RoleName,RoleCommonName";
+                output =
+                    RestHelper.invokeJsonRequestViaUnirestClient(username, password, null, roleRestUrl,
+                                                                 "REST_SERVICE_GET", "application/json", null, true);
+
+                if (output != null) {
+                    body = output.getBody();
+                    object = body.getObject();
+                    items = object.getJSONArray("items");
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject item = items.getJSONObject(i);
+                        String roleName = item.getString("RoleName");
+                        String roleCommonName = item.getString("RoleCommonName");
+                        RolePojo role = new RolePojo(roleName, roleCommonName);
+                        roles.add(role);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
   
-  public static void main(String[] args)
-    throws Exception
+//    https://eepz-test.hcm.em2.oraclecloud.com/hcmCoreApi/resources/11.12.1.0/emps/?q=PersonId=300000009808202
+//  https://eepz-test.hcm.em2.oraclecloud.com:443/hcmCoreApi/resources/11.12.1.0/emps/00020000000EACED00057708000110D93204694A0000004AACED00057372000D6A6176612E73716C2E4461746514FA46683F3566970200007872000E6A6176612E7574696C2E44617465686A81014B597419030000787077080000015FCC6CC00078/child/roles?onlyData=true&limit=1000&fields=RoleName,RoleCommonName
+  
+  public static void main(String[] args) throws Exception
   {
-      String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6InVLOUVtMTR3S3pDd0FPMFRaNmpjRDJaMHppayIsImtpZCI6InRydXN0c2VydmljZSJ9.eyJleHAiOjE1MTEwMjM1ODQsInN1YiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpc3MiOiJ3d3cub3JhY2xlLmNvbSIsInBybiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpYXQiOjE1MTEwMDkxODR9.uBtWWyvY1iUUN00B74y4Ef39wInkc4RiTqOK7IXNx4oNcA3MjGpGD3WurxqSHosDvPLsEth8Fl2o1Iz5HXdm59ipzM1v8vElWuXh-tYuSv_yXqvGpY5AnYGU02UfocjT7Q5gEB5W5mVeNI9SFB0-kS_Y9oL1BKqolrgr2-C95ik5sbZNIdCrHuIlAWk_2l7726HNZ-S650FDBoibcP51IupoKMu9ZMiyTg2aldISs1iXn5yLp9xyVuT4IwZtPJ6ZCikoOuBIeHCs9SgMSSOCvPPv6KfU-Oa0Hz9Pn2YO9m5SyRPjeHb6Rw1TG3tmhiWqMoRnLc5oWDt-8VTd68LPKg";
-    UserService mm = new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService", token);
-    
-    mm.findSelfUserDetails(new LoginBean());
+//      String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6InVLOUVtMTR3S3pDd0FPMFRaNmpjRDJaMHppayIsImtpZCI6InRydXN0c2VydmljZSJ9.eyJleHAiOjE1MTEwMjM1ODQsInN1YiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpc3MiOiJ3d3cub3JhY2xlLmNvbSIsInBybiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpYXQiOjE1MTEwMDkxODR9.uBtWWyvY1iUUN00B74y4Ef39wInkc4RiTqOK7IXNx4oNcA3MjGpGD3WurxqSHosDvPLsEth8Fl2o1Iz5HXdm59ipzM1v8vElWuXh-tYuSv_yXqvGpY5AnYGU02UfocjT7Q5gEB5W5mVeNI9SFB0-kS_Y9oL1BKqolrgr2-C95ik5sbZNIdCrHuIlAWk_2l7726HNZ-S650FDBoibcP51IupoKMu9ZMiyTg2aldISs1iXn5yLp9xyVuT4IwZtPJ6ZCikoOuBIeHCs9SgMSSOCvPPv6KfU-Oa0Hz9Pn2YO9m5SyRPjeHb6Rw1TG3tmhiWqMoRnLc5oWDt-8VTd68LPKg";
+//    UserService mm = new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService", token);
+//    
+//    mm.findSelfUserDetails(new LoginBean());
+      UserService serv = new UserService(null, "paas.user@salic.com", "Welcome@123");
+      serv.fetchRoles(serv.getUsername(), serv.getPassword(), "300000009808202");
   }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
 
