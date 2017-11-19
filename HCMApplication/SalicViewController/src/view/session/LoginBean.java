@@ -1,5 +1,9 @@
 package view.session;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class LoginBean {
     public LoginBean() {
         super();
@@ -10,52 +14,55 @@ public class LoginBean {
      private String authenticated = null;
      private String error = null;
      private String redirecturl = null;
-     private String PersonId;
-     private String PersonNumber;
+     private String personId;
+     private String personNumber;
      private String hcmUserId;
      private String hcmUserName;
-     private String UserGUID;
-     private String ActiveFlag;
-     private String UserDistinguishedName;
-     private String Title;
-     private String LastName;
-     private String FirstName;
-     private String MiddleNames;
-     private String DisplayName;
-     private String Suffix;
-     private String Honors;
-     private String PreNameAdjunct;
-     private String KnownAs;
-     private String EmailAddress;
-     private String PhoneId;
-     private String PhoneAreaCode;
-     private String PhoneCountryCodeNumber;
-     private String PhoneNumber;
-     private String Language;
-     private String DateFormat;
-     private String TimeFormat;
-     private String Currency;
-     private String GroupingSeparator;
-     private String DecimalSeparator;
-     private String TimeZone;
-     private String ClientEncoding;
-     private String Territory;
-     private String FontSize;
-     private String AccessibilityMode;
-     private String ColorContrast;
-     private String ServerTime;
-     private String ServerTimeForUserInfo;
-     private String BusinessUnitId;
-     private String BusinessUnitName;
-     private String LegalEntityName;
-     private String PersonTypeId;
-     private String SystemPersonType;
-     private String UserPersonType;
-     private String JobName;
-     private String DepartmentName;
-     private String LocationTownOrCity;
-     private String LocationPostalCode;
-     private String LocationCountry;
+     private String userGUID;
+     private String activeFlag;
+     private String userDistinguishedName;
+     private String title;
+     private String lastName;
+     private String firstName;
+     private String middleNames;
+     private String displayName;
+     private String suffix;
+     private String honors;
+     private String preNameAdjunct;
+     private String knownAs;
+     private String emailAddress;
+     private String phoneId;
+     private String phoneAreaCode;
+     private String phoneCountryCodeNumber;
+     private String phoneNumber;
+     private String language;
+     private String dateFormat;
+     private String timeFormat;
+     private String currency;
+     private String groupingSeparator;
+     private String decimalSeparator;
+     private String timeZone;
+     private String clientEncoding;
+     private String territory;
+     private String fontSize;
+     private String accessibilityMode;
+     private String colorContrast;
+     private String serverTime;
+     private String serverTimeForUserInfo;
+     private String businessUnitId;
+     private String businessUnitName;
+     private String legalEntityName;
+     private String personTypeId;
+     private String systemPersonType;
+     private String userPersonType;
+     private String jobName;
+     private String departmentName;
+     private String locationTownOrCity;
+     private String locationPostalCode;
+     private String locationCountry;
+     private Map<String,Boolean> roles = new HashMap<String,Boolean>();
+     private List<RolePojo> roleList;
+
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -97,20 +104,20 @@ public class LoginBean {
         return redirecturl;
     }
 
-    public void setPersonId(String PersonId) {
-        this.PersonId = PersonId;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public String getPersonId() {
-        return PersonId;
+        return personId;
     }
 
-    public void setPersonNumber(String PersonNumber) {
-        this.PersonNumber = PersonNumber;
+    public void setPersonNumber(String personNumber) {
+        this.personNumber = personNumber;
     }
 
     public String getPersonNumber() {
-        return PersonNumber;
+        return personNumber;
     }
 
     public void setHcmUserId(String hcmUserId) {
@@ -129,339 +136,355 @@ public class LoginBean {
         return hcmUserName;
     }
 
-    public void setUserGUID(String UserGUID) {
-        this.UserGUID = UserGUID;
+    public void setUserGUID(String userGUID) {
+        this.userGUID = userGUID;
     }
 
     public String getUserGUID() {
-        return UserGUID;
+        return userGUID;
     }
 
-    public void setActiveFlag(String ActiveFlag) {
-        this.ActiveFlag = ActiveFlag;
+    public void setActiveFlag(String activeFlag) {
+        this.activeFlag = activeFlag;
     }
 
     public String getActiveFlag() {
-        return ActiveFlag;
+        return activeFlag;
     }
 
-    public void setUserDistinguishedName(String UserDistinguishedName) {
-        this.UserDistinguishedName = UserDistinguishedName;
+    public void setUserDistinguishedName(String userDistinguishedName) {
+        this.userDistinguishedName = userDistinguishedName;
     }
 
     public String getUserDistinguishedName() {
-        return UserDistinguishedName;
+        return userDistinguishedName;
     }
 
-    public void setTitle(String Title) {
-        this.Title = Title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setMiddleNames(String MiddleNames) {
-        this.MiddleNames = MiddleNames;
+    public void setMiddleNames(String middleNames) {
+        this.middleNames = middleNames;
     }
 
     public String getMiddleNames() {
-        return MiddleNames;
+        return middleNames;
     }
 
-    public void setDisplayName(String DisplayName) {
-        this.DisplayName = DisplayName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getDisplayName() {
-        return DisplayName;
+        return displayName;
     }
 
-    public void setSuffix(String Suffix) {
-        this.Suffix = Suffix;
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
     }
 
     public String getSuffix() {
-        return Suffix;
+        return suffix;
     }
 
-    public void setHonors(String Honors) {
-        this.Honors = Honors;
+    public void setHonors(String honors) {
+        this.honors = honors;
     }
 
     public String getHonors() {
-        return Honors;
+        return honors;
     }
 
-    public void setPreNameAdjunct(String PreNameAdjunct) {
-        this.PreNameAdjunct = PreNameAdjunct;
+    public void setPreNameAdjunct(String preNameAdjunct) {
+        this.preNameAdjunct = preNameAdjunct;
     }
 
     public String getPreNameAdjunct() {
-        return PreNameAdjunct;
+        return preNameAdjunct;
     }
 
-    public void setKnownAs(String KnownAs) {
-        this.KnownAs = KnownAs;
+    public void setKnownAs(String knownAs) {
+        this.knownAs = knownAs;
     }
 
     public String getKnownAs() {
-        return KnownAs;
+        return knownAs;
     }
 
-    public void setEmailAddress(String EmailAddress) {
-        this.EmailAddress = EmailAddress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getEmailAddress() {
-        return EmailAddress;
+        return emailAddress;
     }
 
-    public void setPhoneId(String PhoneId) {
-        this.PhoneId = PhoneId;
+    public void setPhoneId(String phoneId) {
+        this.phoneId = phoneId;
     }
 
     public String getPhoneId() {
-        return PhoneId;
+        return phoneId;
     }
 
-    public void setPhoneAreaCode(String PhoneAreaCode) {
-        this.PhoneAreaCode = PhoneAreaCode;
+    public void setPhoneAreaCode(String phoneAreaCode) {
+        this.phoneAreaCode = phoneAreaCode;
     }
 
     public String getPhoneAreaCode() {
-        return PhoneAreaCode;
+        return phoneAreaCode;
     }
 
-    public void setPhoneCountryCodeNumber(String PhoneCountryCodeNumber) {
-        this.PhoneCountryCodeNumber = PhoneCountryCodeNumber;
+    public void setPhoneCountryCodeNumber(String phoneCountryCodeNumber) {
+        this.phoneCountryCodeNumber = phoneCountryCodeNumber;
     }
 
     public String getPhoneCountryCodeNumber() {
-        return PhoneCountryCodeNumber;
+        return phoneCountryCodeNumber;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
     }
 
-    public void setLanguage(String Language) {
-        this.Language = Language;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public String getLanguage() {
-        return Language;
+        return language;
     }
 
-    public void setDateFormat(String DateFormat) {
-        this.DateFormat = DateFormat;
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
     }
 
     public String getDateFormat() {
-        return DateFormat;
+        return dateFormat;
     }
 
-    public void setTimeFormat(String TimeFormat) {
-        this.TimeFormat = TimeFormat;
+    public void setTimeFormat(String timeFormat) {
+        this.timeFormat = timeFormat;
     }
 
     public String getTimeFormat() {
-        return TimeFormat;
+        return timeFormat;
     }
 
-    public void setCurrency(String Currency) {
-        this.Currency = Currency;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getCurrency() {
-        return Currency;
+        return currency;
     }
 
-    public void setGroupingSeparator(String GroupingSeparator) {
-        this.GroupingSeparator = GroupingSeparator;
+    public void setGroupingSeparator(String groupingSeparator) {
+        this.groupingSeparator = groupingSeparator;
     }
 
     public String getGroupingSeparator() {
-        return GroupingSeparator;
+        return groupingSeparator;
     }
 
-    public void setDecimalSeparator(String DecimalSeparator) {
-        this.DecimalSeparator = DecimalSeparator;
+    public void setDecimalSeparator(String decimalSeparator) {
+        this.decimalSeparator = decimalSeparator;
     }
 
     public String getDecimalSeparator() {
-        return DecimalSeparator;
+        return decimalSeparator;
     }
 
-    public void setTimeZone(String TimeZone) {
-        this.TimeZone = TimeZone;
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 
     public String getTimeZone() {
-        return TimeZone;
+        return timeZone;
     }
 
-    public void setClientEncoding(String ClientEncoding) {
-        this.ClientEncoding = ClientEncoding;
+    public void setClientEncoding(String clientEncoding) {
+        this.clientEncoding = clientEncoding;
     }
 
     public String getClientEncoding() {
-        return ClientEncoding;
+        return clientEncoding;
     }
 
-    public void setTerritory(String Territory) {
-        this.Territory = Territory;
+    public void setTerritory(String territory) {
+        this.territory = territory;
     }
 
     public String getTerritory() {
-        return Territory;
+        return territory;
     }
 
-    public void setFontSize(String FontSize) {
-        this.FontSize = FontSize;
+    public void setFontSize(String fontSize) {
+        this.fontSize = fontSize;
     }
 
     public String getFontSize() {
-        return FontSize;
+        return fontSize;
     }
 
-    public void setAccessibilityMode(String AccessibilityMode) {
-        this.AccessibilityMode = AccessibilityMode;
+    public void setAccessibilityMode(String accessibilityMode) {
+        this.accessibilityMode = accessibilityMode;
     }
 
     public String getAccessibilityMode() {
-        return AccessibilityMode;
+        return accessibilityMode;
     }
 
-    public void setColorContrast(String ColorContrast) {
-        this.ColorContrast = ColorContrast;
+    public void setColorContrast(String colorContrast) {
+        this.colorContrast = colorContrast;
     }
 
     public String getColorContrast() {
-        return ColorContrast;
+        return colorContrast;
     }
 
-    public void setServerTime(String ServerTime) {
-        this.ServerTime = ServerTime;
+    public void setServerTime(String serverTime) {
+        this.serverTime = serverTime;
     }
 
     public String getServerTime() {
-        return ServerTime;
+        return serverTime;
     }
 
-    public void setServerTimeForUserInfo(String ServerTimeForUserInfo) {
-        this.ServerTimeForUserInfo = ServerTimeForUserInfo;
+    public void setServerTimeForUserInfo(String serverTimeForUserInfo) {
+        this.serverTimeForUserInfo = serverTimeForUserInfo;
     }
 
     public String getServerTimeForUserInfo() {
-        return ServerTimeForUserInfo;
+        return serverTimeForUserInfo;
     }
 
-    public void setBusinessUnitId(String BusinessUnitId) {
-        this.BusinessUnitId = BusinessUnitId;
+    public void setBusinessUnitId(String businessUnitId) {
+        this.businessUnitId = businessUnitId;
     }
 
     public String getBusinessUnitId() {
-        return BusinessUnitId;
+        return businessUnitId;
     }
 
-    public void setBusinessUnitName(String BusinessUnitName) {
-        this.BusinessUnitName = BusinessUnitName;
+    public void setBusinessUnitName(String businessUnitName) {
+        this.businessUnitName = businessUnitName;
     }
 
     public String getBusinessUnitName() {
-        return BusinessUnitName;
+        return businessUnitName;
     }
 
-    public void setLegalEntityName(String LegalEntityName) {
-        this.LegalEntityName = LegalEntityName;
+    public void setLegalEntityName(String legalEntityName) {
+        this.legalEntityName = legalEntityName;
     }
 
     public String getLegalEntityName() {
-        return LegalEntityName;
+        return legalEntityName;
     }
 
-    public void setPersonTypeId(String PersonTypeId) {
-        this.PersonTypeId = PersonTypeId;
+    public void setPersonTypeId(String personTypeId) {
+        this.personTypeId = personTypeId;
     }
 
     public String getPersonTypeId() {
-        return PersonTypeId;
+        return personTypeId;
     }
 
-    public void setSystemPersonType(String SystemPersonType) {
-        this.SystemPersonType = SystemPersonType;
+    public void setSystemPersonType(String systemPersonType) {
+        this.systemPersonType = systemPersonType;
     }
 
     public String getSystemPersonType() {
-        return SystemPersonType;
+        return systemPersonType;
     }
 
-    public void setUserPersonType(String UserPersonType) {
-        this.UserPersonType = UserPersonType;
+    public void setUserPersonType(String userPersonType) {
+        this.userPersonType = userPersonType;
     }
 
     public String getUserPersonType() {
-        return UserPersonType;
+        return userPersonType;
     }
 
-    public void setJobName(String JobName) {
-        this.JobName = JobName;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     public String getJobName() {
-        return JobName;
+        return jobName;
     }
 
-    public void setDepartmentName(String DepartmentName) {
-        this.DepartmentName = DepartmentName;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getDepartmentName() {
-        return DepartmentName;
+        return departmentName;
     }
 
-    public void setLocationTownOrCity(String LocationTownOrCity) {
-        this.LocationTownOrCity = LocationTownOrCity;
+    public void setLocationTownOrCity(String locationTownOrCity) {
+        this.locationTownOrCity = locationTownOrCity;
     }
 
     public String getLocationTownOrCity() {
-        return LocationTownOrCity;
+        return locationTownOrCity;
     }
 
-    public void setLocationPostalCode(String LocationPostalCode) {
-        this.LocationPostalCode = LocationPostalCode;
+    public void setLocationPostalCode(String locationPostalCode) {
+        this.locationPostalCode = locationPostalCode;
     }
 
     public String getLocationPostalCode() {
-        return LocationPostalCode;
+        return locationPostalCode;
     }
 
-    public void setLocationCountry(String LocationCountry) {
-        this.LocationCountry = LocationCountry;
+    public void setLocationCountry(String locationCountry) {
+        this.locationCountry = locationCountry;
     }
 
     public String getLocationCountry() {
-        return LocationCountry;
+        return locationCountry;
+    }
+
+    public void setRoleList(List<RolePojo> roleList) {
+        this.roleList = roleList;
+    }
+
+    public List<RolePojo> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoles(Map<String, Boolean> roles) {
+        this.roles = roles;
+    }
+
+    public Map<String, Boolean> getRoles() {
+        return roles;
     }
 }

@@ -206,6 +206,30 @@
       <value n="j2eeWebAppName" v="SalicHcm-SalicViewController-webapp"/>
       <value n="j2eeWebContextRoot" v="ess"/>
    </hash>
+   <hash n="oracle.jdeveloper.model.PathsConfiguration">
+      <hash n="javaContentSet">
+         <list n="constituent-sets">
+            <hash>
+               <url n="content-folder-url" path="public_html/view/servlet/"/>
+               <list n="pattern-filters">
+                  <string v="+view/servlet/"/>
+               </list>
+               <list n="url-path">
+                  <url path="public_html/"/>
+               </list>
+            </hash>
+            <hash>
+               <list n="pattern-filters">
+                  <string v="+**"/>
+               </list>
+               <list n="url-path">
+                  <url path="src/"/>
+               </list>
+            </hash>
+         </list>
+         <list n="url-path"/>
+      </hash>
+   </hash>
    <hash n="oracle.jdeveloper.runner.RunConfigurations">
       <hash n="runConfigurationDefinitions">
          <hash n="Default">
@@ -413,6 +437,10 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
+            <value n="id" v="Gson-2.2.2.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
             <value n="id" v="Unirest-java-1.4.7.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -609,6 +637,15 @@
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Okhttp-3.8.1.jar"/>
                <value n="id" v="Okhttp-3.8.1.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url path="../gson-2.2.2.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Gson-2.2.2.jar"/>
+               <value n="id" v="Gson-2.2.2.jar"/>
                <value n="locked" v="true"/>
             </hash>
             <hash>
@@ -890,6 +927,10 @@
          </hash>
          <hash>
             <value n="id" v="BC4J Oracle Domains"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Gson-2.2.2.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>

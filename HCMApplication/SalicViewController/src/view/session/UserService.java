@@ -230,6 +230,7 @@ public class UserService
     }
     catch (Exception ue)
     {
+        logger.info("Error while calling self user: " + ue.getMessage());
       throw ue;
     }
   }
@@ -258,14 +259,16 @@ public class UserService
   }
 
     public ArrayList<RolePojo> fetchRoles(String username, String password, String personId) {
+        logger.info("personId : " + personId);
         ArrayList<RolePojo> roles = new ArrayList<RolePojo>();
         try {
             HttpResponse<JsonNode> output =
                 RestHelper.invokeJsonRequestViaUnirestClient(username, password, null,
                                                              empUrl + "?q=PersonId=" + personId, "REST_SERVICE_GET",
                                                              "application/json", null, true);
-            System.out.println(output);
-
+            
+            logger.info("Rest response : " + output);
+            
             String href = null;
             if (output != null) {
                 JsonNode body = output.getBody();
@@ -286,7 +289,9 @@ public class UserService
                 output =
                     RestHelper.invokeJsonRequestViaUnirestClient(username, password, null, roleRestUrl,
                                                                  "REST_SERVICE_GET", "application/json", null, true);
-
+                
+                logger.info("Rest response : " + output);
+                
                 if (output != null) {
                     body = output.getBody();
                     object = body.getObject();
@@ -302,6 +307,7 @@ public class UserService
             }
 
         } catch (Exception e) {
+            logger.info("Error while calling rest service for roles : " + e.getMessage());
             e.printStackTrace();
         }
         return roles;
@@ -312,12 +318,16 @@ public class UserService
   
   public static void main(String[] args) throws Exception
   {
-//      String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6InVLOUVtMTR3S3pDd0FPMFRaNmpjRDJaMHppayIsImtpZCI6InRydXN0c2VydmljZSJ9.eyJleHAiOjE1MTEwMjM1ODQsInN1YiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpc3MiOiJ3d3cub3JhY2xlLmNvbSIsInBybiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpYXQiOjE1MTEwMDkxODR9.uBtWWyvY1iUUN00B74y4Ef39wInkc4RiTqOK7IXNx4oNcA3MjGpGD3WurxqSHosDvPLsEth8Fl2o1Iz5HXdm59ipzM1v8vElWuXh-tYuSv_yXqvGpY5AnYGU02UfocjT7Q5gEB5W5mVeNI9SFB0-kS_Y9oL1BKqolrgr2-C95ik5sbZNIdCrHuIlAWk_2l7726HNZ-S650FDBoibcP51IupoKMu9ZMiyTg2aldISs1iXn5yLp9xyVuT4IwZtPJ6ZCikoOuBIeHCs9SgMSSOCvPPv6KfU-Oa0Hz9Pn2YO9m5SyRPjeHb6Rw1TG3tmhiWqMoRnLc5oWDt-8VTd68LPKg";
-//    UserService mm = new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService", token);
-//    
-//    mm.findSelfUserDetails(new LoginBean());
-      UserService serv = new UserService(null, "paas.user@salic.com", "Welcome@123");
-      serv.fetchRoles(serv.getUsername(), serv.getPassword(), "300000009808202");
+      String token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1dCI6InVLOUVtMTR3S3pDd0FPMFRaNmpjRDJaMHppayIsImtpZCI6InRydXN0c2VydmljZSJ9.eyJleHAiOjE1MTExMDUzODksInN1YiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpc3MiOiJ3d3cub3JhY2xlLmNvbSIsInBybiI6IlBBQVMuVVNFUkBTQUxJQy5DT00iLCJpYXQiOjE1MTEwOTA5ODl9.q_PDpudBqo04NPA6fWvSFX2GAFpEOiWP3E48xhshVDQ_Fz-A2tPfOdy9oEHdxlgmYwfLiFfAJ_Kih9R4UgEkcssWTPs5xxDsF70eIBjWveUUo_d9qi54B-utVN4OEMKSli-bMglkuPZEkjRLEwXyrFBOxf_28h68J17mNIlkxSpF9VdI5RoZ7vbkHc2hukIL2xqgAxyKuLDTYwnPlvgHszGLA_0Fkwvkpufcq-9NWQ2RDW1ak3FxtA-ruwemxrVsgE7RWZpA0vU5MM31PvxrehKiAQbDhZ5oGzGb9WZzqSIKzwngnEIyrYQlgd6UbtyOWb31FbWBzYHdpKD_9HjcAQ";
+    UserService mm = new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService", token);
+      LoginBean loginBean  = null;
+      loginBean =   mm.findSelfUserDetails(new LoginBean());
+//      UserService serv = new UserService(null, "paas.user@salic.com", "Welcome@123");
+      //"300000009808202"
+      List<RolePojo> roles = mm.fetchRoles("paas.user@salic.com", "Welcome@123", loginBean.getPersonId());
+      
+      for(RolePojo role : roles)
+       System.err.println(role.getRoleName());
   }
 
     public void setUsername(String username) {

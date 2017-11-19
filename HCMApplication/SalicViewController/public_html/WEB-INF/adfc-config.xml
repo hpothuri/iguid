@@ -6,4 +6,9 @@
     <managed-bean-scope id="__4">backingBean</managed-bean-scope>
     <!--oracle-jdev-comment:managed-bean-jsp-link:1Home.jspx-->
   </managed-bean>
+  <managed-bean id="__5">
+    <managed-bean-name>loginBean</managed-bean-name>
+    <managed-bean-class>view.session.LoginBean</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
 </adfc-config>
