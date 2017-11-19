@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
                     }
 
                     // redirect to Dashboard
-                    httpServletResponse.sendRedirect("/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml");
+                    httpServletResponse.sendRedirect("/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml");
                 } else {
                     raiseException(loginBean, "User doesn't sufficient roles to access the application.", null);
 
