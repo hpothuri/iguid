@@ -63,9 +63,9 @@ public class LoginServlet extends HttpServlet {
                     loginBean.setAuthenticated("Y");
                     loginBean.setRoleList(roles);
                     for(RolePojo currRole : roles){
-                        loginBean.getRoles().put(currRole.getRoleName(), true);
+                        loginBean.getRoles().put(currRole.getRoleCommonName(), true);
                         _logger.info("Role Name : " + currRole.getRoleName());
-                        System.err.println("Role Name : " + currRole.getRoleName());
+                        System.err.println("Role Code : " + currRole.getRoleCommonName());
                     }
 
                     // redirect to Dashboard

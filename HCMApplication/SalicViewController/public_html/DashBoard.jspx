@@ -15,194 +15,7 @@
             <af:panelGroupLayout id="pgl11" binding="#{backingBeanScope.backing_DashBoard.pgl11}" layout="vertical"
                                  halign="center" styleClass="AFStretchWidth" inlineStyle="margin-top : 20px;">
               <af:panelGridLayout id="pgl6">
-                <af:gridRow marginTop="5px" height="100px" id="gr1">
-                  <af:gridCell marginStart="5px" width="200px" id="gc5" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.cl1}" id="cl1" action="gotoUser">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.pgl1}" id="pgl1"
-                                           layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_airplane.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.i1}" id="i1"/>
-                        <af:outputText value="Menu" binding="#{backingBeanScope.backing_DashBoard.ot1}" id="ot1"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/Menu_BTF.xml#Menu_BTF'}" to="#{pageFlowScope.taskId}"
-                                              type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc6" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink1}" id="commandLink1"
-                                    action="gotoUser">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout2}"
-                                           id="panelGroupLayout2" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_analytics.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image1}" id="image1"/>
-                        <af:outputText value="Menu Access" binding="#{backingBeanScope.backing_DashBoard.outputText1}"
-                                       id="outputText1" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/MenuAccess_BTF.xml#MenuAccess_BTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc3" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink2}" id="commandLink2"
-                                    action="gotoUser">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout4}"
-                                           id="panelGroupLayout4" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_atsymbol.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image2}" id="image2"/>
-                        <af:outputText value="Look Up" binding="#{backingBeanScope.backing_DashBoard.outputText2}"
-                                       id="outputText2" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener to="#{pageFlowScope.taskId}" type="action"
-                                              from="#{'/WEB-INF/LookUp.xml#LookUp'}"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc8" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink3}" id="commandLink3"
-                                    action="home">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout7}"
-                                           id="panelGroupLayout7" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_binders.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image3}" id="image3"/>
-                        <af:outputText value="Over Time Request"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText3}" id="outputText3"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                      <af:setPropertyListener from="ot" to="#{sessionScope.page}" type="action"/>
-                      <af:setPropertyListener from="ot" to="#{sessionScope.type}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc7" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink4}" id="commandLink4"
-                                    action="home">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout9}"
-                                           id="panelGroupLayout9" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_book.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image4}" id="image4"/>
-                        <af:outputText value="Employee Dashboard"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText4}" id="outputText4"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/employeedashboard.xml#employeedashboard'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                      <af:setPropertyListener from="emp" to="#{sessionScope.page}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                </af:gridRow>
-                <af:gridRow marginTop="5px" height="100px" id="gr4">
-                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc9" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink5}" id="commandLink5"
-                                    action="home">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout11}"
-                                           id="panelGroupLayout11" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_calendarbox.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image5}" id="image5"/>
-                        <af:outputText value="Manager Dashboard"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText5}" id="outputText5"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/managerDashboard.xml#managerDashboard'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                      <af:setPropertyListener from="mng" to="#{sessionScope.page}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc11" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink6}" id="commandLink6"
-                                    action="home">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout14}"
-                                           id="panelGroupLayout14" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_checklist.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image6}" id="image6"/>
-                        <af:outputText value="Approval Group"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText6}" id="outputText6"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/ApprovalBTF.xml#ApprovalBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc10" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink7}" id="commandLink7"
-                                    action="home">
-                      <af:setPropertyListener from="#{'/WEB-INF/notificationBTF.xml#notificationBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout16}"
-                                           id="panelGroupLayout16" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_group.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image7}" id="image7"/>
-                        <af:outputText value="Notification" binding="#{backingBeanScope.backing_DashBoard.outputText7}"
-                                       id="outputText7" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc12" halign="center">
-                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink8}" id="commandLink8"
-                                    action="home">
-                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout18}"
-                                           id="panelGroupLayout18" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_ledgerclock_rtl.png"
-                                  binding="#{backingBeanScope.backing_DashBoard.image8}" id="image8"/>
-                        <af:outputText value="HRAdmin Dashboard"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText8}" id="outputText8"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/HrAdminBTF.xml#HrAdminBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gc4" halign="center">
-                    <af:commandLink id="commandLink9" action="home">
-                      <af:panelGroupLayout id="panelGroupLayout19" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_trophy.png" id="image9"/>
-                        <af:outputText value="PayRoll Dashboard" id="outputText9"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/payRollBTF.xml#payRollBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                </af:gridRow>
-                <af:gridRow marginTop="5px" height="100px" id="gr2">
-                  <af:gridCell marginStart="5px" width="200px" id="gc2" halign="center">
-                    <af:commandLink id="commandLink10" action="home">
-                      <af:panelGroupLayout id="panelGroupLayout22" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_toolbox.png" id="image101"/>
-                        <af:outputText value="Report" id="outputText10"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/ReportBTF.xml#ReportBTF'}" to="#{pageFlowScope.taskId}"
-                                              type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc1" halign="center">
-                    <af:commandLink id="cl2">
-                      <af:panelGroupLayout id="pgl2" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_truck.png" id="i2"/>
-                        <af:outputText value="Setup" id="ot2"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/ReportBTF.xml#ReportBTF'}" to="#{pageFlowScope.taskId}"
-                                              type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" id="gridCell1" halign="center"
-                               binding="#{backingBeanScope.backing_DashBoard.gridCell1}">
-                    <af:commandLink id="commandLink11" action="home"
-                                    binding="#{backingBeanScope.backing_DashBoard.commandLink11}">
-                      <af:panelGroupLayout id="pgl312" layout="vertical" halign="center"
-                                           binding="#{backingBeanScope.backing_DashBoard.pgl312}">
-                        <af:image source="/images/grid_dot_calendarconfigure_rtl.png" id="image10"
-                                  binding="#{backingBeanScope.backing_DashBoard.image10}"/>
-                        <af:outputText value="Approval Setup" id="outputText11"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"
-                                       binding="#{backingBeanScope.backing_DashBoard.outputText11}"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/ApprovalSetupBTF.xml#ApprovalSetupBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
+                <af:gridRow marginTop="5px" height="100px" marginBottom="5px" id="gr3">
                   <af:gridCell marginStart="5px" width="200px" id="gridCell2" halign="center"
                                binding="#{backingBeanScope.backing_DashBoard.gridCell2}">
                     <af:commandLink id="cl3" action="home">
@@ -217,22 +30,6 @@
                       <af:setPropertyListener from="house" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
                   </af:gridCell>
-                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gridCell3" halign="center"
-                               binding="#{backingBeanScope.backing_DashBoard.gridCell3}">
-                    <af:commandLink id="cl4" action="home">
-                      <af:panelGroupLayout id="pgl4" layout="vertical" halign="center">
-                        <af:image source="/images/grid_dot_toolbox.png" id="i4"/>
-                        <af:outputText value="Vacation Allowance" id="ot4"
-                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
-                      </af:panelGroupLayout>
-                      <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
-                                              to="#{pageFlowScope.taskId}" type="action"/>
-                      <af:setPropertyListener from="vacation" to="#{sessionScope.page}" type="action"/>
-                      <af:setPropertyListener from="vacation" to="#{sessionScope.type}" type="action"/>
-                    </af:commandLink>
-                  </af:gridCell>
-                </af:gridRow>
-                <af:gridRow marginTop="5px" height="100px" marginBottom="5px" id="gr3">
                   <af:gridCell binding="#{backingBeanScope.backing_DashBoard.gc13}" id="gc13" width="200px"
                                marginStart="5px" halign="center">
                     <af:commandLink id="cl5" action="home">
@@ -279,6 +76,39 @@
                       <af:setPropertyListener from="letter" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
                   </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc8" halign="center">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink3}" id="commandLink3"
+                                    action="home">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout7}"
+                                           id="panelGroupLayout7" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_binders.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image3}" id="image3"/>
+                        <af:outputText value="Over Time Request"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText3}" id="outputText3"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="ot" to="#{sessionScope.page}" type="action"/>
+                      <af:setPropertyListener from="ot" to="#{sessionScope.type}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="100px" id="gr1">
+                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gridCell3" halign="center"
+                               binding="#{backingBeanScope.backing_DashBoard.gridCell3}">
+                    <af:commandLink id="cl4" action="home">
+                      <af:panelGroupLayout id="pgl4" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_toolbox.png" id="i4"/>
+                        <af:outputText value="Vacation Allowance" id="ot4"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="vacation" to="#{sessionScope.page}" type="action"/>
+                      <af:setPropertyListener from="vacation" to="#{sessionScope.type}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
                   <af:gridCell binding="#{backingBeanScope.backing_DashBoard.gridCell4}" id="gridCell4" width="200px"
                                marginStart="5px" halign="center">
                     <af:commandLink id="commandLink13" action="home"
@@ -313,6 +143,186 @@
                                               to="#{pageFlowScope.taskId}" type="action"/>
                       <af:setPropertyListener from="BusinessTripCompletion" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="BusinessTripCompletion" to="#{sessionScope.type}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc7" halign="center">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink4}" id="commandLink4"
+                                    action="home">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout9}"
+                                           id="panelGroupLayout9" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_book.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image4}" id="image4"/>
+                        <af:outputText value="Employee Dashboard"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText4}" id="outputText4"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/employeedashboard.xml#employeedashboard'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="emp" to="#{sessionScope.page}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc9" halign="center">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink5}" id="commandLink5"
+                                    action="home">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout11}"
+                                           id="panelGroupLayout11" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_calendarbox.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image5}" id="image5"/>
+                        <af:outputText value="Manager Dashboard"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText5}" id="outputText5"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/managerDashboard.xml#managerDashboard'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="mng" to="#{sessionScope.page}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="100px" id="gr4">
+                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc12" halign="center"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN'] || sessionScope.loginBean.roles['SALIC_HR_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink8}" id="commandLink8"
+                                    action="home">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout18}"
+                                           id="panelGroupLayout18" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_ledgerclock_rtl.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image8}" id="image8"/>
+                        <af:outputText value="HRAdmin Dashboard"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText8}" id="outputText8"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/HrAdminBTF.xml#HrAdminBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc4" halign="center"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN'] || sessionScope.loginBean.roles['SALIC_PAYROLL_ADMIN']}">
+                    <af:commandLink id="commandLink9" action="home">
+                      <af:panelGroupLayout id="panelGroupLayout19" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_trophy.png" id="image9"/>
+                        <af:outputText value="PayRoll Dashboard" id="outputText9"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/payRollBTF.xml#payRollBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc11" halign="center"
+                  rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink6}" id="commandLink6"
+                                    action="home">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout14}"
+                                           id="panelGroupLayout14" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_checklist.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image6}" id="image6"/>
+                        <af:outputText value="Approval Group"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText6}" id="outputText6"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/ApprovalBTF.xml#ApprovalBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gridCell1" halign="center"
+                               binding="#{backingBeanScope.backing_DashBoard.gridCell1}"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink id="commandLink11" action="home"
+                                    binding="#{backingBeanScope.backing_DashBoard.commandLink11}">
+                      <af:panelGroupLayout id="pgl312" layout="vertical" halign="center"
+                                           binding="#{backingBeanScope.backing_DashBoard.pgl312}">
+                        <af:image source="/images/grid_dot_calendarconfigure_rtl.png" id="image10"
+                                  binding="#{backingBeanScope.backing_DashBoard.image10}"/>
+                        <af:outputText value="Approval Setup" id="outputText11"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"
+                                       binding="#{backingBeanScope.backing_DashBoard.outputText11}"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/ApprovalSetupBTF.xml#ApprovalSetupBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc10" halign="center"
+                  rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink7}" id="commandLink7"
+                                    action="home">
+                      <af:setPropertyListener from="#{'/WEB-INF/notificationBTF.xml#notificationBTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout16}"
+                                           id="panelGroupLayout16" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_group.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image7}" id="image7"/>
+                        <af:outputText value="Notification" binding="#{backingBeanScope.backing_DashBoard.outputText7}"
+                                       id="outputText7" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                    </af:commandLink>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="100px" id="gr2">
+                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc3" halign="center"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink2}" id="commandLink2"
+                                    action="gotoUser">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout4}"
+                                           id="panelGroupLayout4" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_atsymbol.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image2}" id="image2"/>
+                        <af:outputText value="Look Up" binding="#{backingBeanScope.backing_DashBoard.outputText2}"
+                                       id="outputText2" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener to="#{pageFlowScope.taskId}" type="action"
+                                              from="#{'/WEB-INF/LookUp.xml#LookUp'}"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc2" halign="center"
+                  rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink id="commandLink10" action="home">
+                      <af:panelGroupLayout id="panelGroupLayout22" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_toolbox.png" id="image101"/>
+                        <af:outputText value="Report" id="outputText10"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/ReportBTF.xml#ReportBTF'}" to="#{pageFlowScope.taskId}"
+                                              type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc1" halign="center"
+                  rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink id="cl2">
+                      <af:panelGroupLayout id="pgl2" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_truck.png" id="i2"/>
+                        <af:outputText value="Setup" id="ot2"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/ReportBTF.xml#ReportBTF'}" to="#{pageFlowScope.taskId}"
+                                              type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc5" halign="center"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.cl1}" id="cl1" action="gotoUser">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.pgl1}" id="pgl1"
+                                           layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_airplane.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.i1}" id="i1"/>
+                        <af:outputText value="Menu" binding="#{backingBeanScope.backing_DashBoard.ot1}" id="ot1"
+                                       inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/Menu_BTF.xml#Menu_BTF'}" to="#{pageFlowScope.taskId}"
+                                              type="action"/>
+                    </af:commandLink>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="200px" id="gc6" halign="center"
+                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                    <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink1}" id="commandLink1"
+                                    action="gotoUser">
+                      <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout2}"
+                                           id="panelGroupLayout2" layout="vertical" halign="center">
+                        <af:image source="/images/grid_dot_analytics.png"
+                                  binding="#{backingBeanScope.backing_DashBoard.image1}" id="image1"/>
+                        <af:outputText value="Menu Access" binding="#{backingBeanScope.backing_DashBoard.outputText1}"
+                                       id="outputText1" inlineStyle="color:White; font-size:small; font-weight:bold;"/>
+                      </af:panelGroupLayout>
+                      <af:setPropertyListener from="#{'/WEB-INF/MenuAccess_BTF.xml#MenuAccess_BTF'}"
+                                              to="#{pageFlowScope.taskId}" type="action"/>
                     </af:commandLink>
                   </af:gridCell>
                 </af:gridRow>
