@@ -335,12 +335,11 @@
                                       id="it6" autoSubmit="true"
                                       valueChangeListener="#{backingBeanScope.backing_employee.calcHoursVCL}"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
-                                      partialTriggers="soc1">
+                                      partialTriggers="soc1 id1">
                           <f:validator binding="#{row.bindings.OvertimeHours.validator}"/>
                           <af:convertNumber groupingUsed="false"
                                             pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.format}"/>
-                          <af:validateLongRange minimum="1"
-                                                maximum="#{row.bindings.OvertimeType.inputValue ne 1?16:24}"/>
+                          
                         </af:inputText>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.name}" sortable="true"
@@ -387,7 +386,7 @@
                                   maximumLength="#{bindings.AdvAmt.hints.precision}"
                                   shortDesc="#{bindings.AdvAmt.hints.tooltip}"
                                   id="it8" contentStyle="width:200px;"
-                                  partialTriggers="employeeNameTRANSId" disabled="true">
+                                  partialTriggers="employeeNameTRANSId" readOnly="true">
                       <f:validator binding="#{bindings.AdvAmt.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.Comments.inputValue}"
@@ -483,6 +482,14 @@
                       <f:selectItems value="#{bindings.SalPeriod.items}"
                                      id="si2"/>
                     </af:selectOneChoice>
+                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="#{bindings.SalaryDate.hints.mandatory}"
+                                  columns="#{bindings.SalaryDate.hints.displayWidth}"
+                                  label="Advance Date"
+                                  disabled="#{sessionScope.mode eq 'edit'}"
+                                  shortDesc="#{bindings.SalaryDate.hints.tooltip}" id="id11" autoSubmit="true">
+                      <f:validator binding="#{bindings.SalaryDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.SalaryDate.format}"/>
+                      </af:inputDate>
                     <af:inputText value="#{bindings.Missions.inputValue}"
                                   label="Comments"
                                   required="#{bindings.Missions.hints.mandatory}"
@@ -833,7 +840,7 @@
                         </af:inputText>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.name}"
-                                 sortable="false"
+                                 sortable="false" rendered="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.label}"
                                  id="c31">
                         <af:inputText value="#{row.bindings.Child.inputValue}"
@@ -870,12 +877,12 @@
                                         label="#{bindings.LetterTo.label}"
                                         required="#{bindings.LetterTo.hints.mandatory}"
                                         shortDesc="#{bindings.LetterTo.hints.tooltip}"
-                                        id="soc6" contentStyle="width:200px">
+                                        id="soc6" contentStyle="width:200px" autoSubmit="true">
                       <f:selectItems value="#{bindings.LetterTo.items}"
                                      id="si6"/>
                     </af:selectOneChoice>
                     <af:selectOneChoice value="#{bindings.LetterType.inputValue}"
-                                        label="#{bindings.LetterType.label}"
+                                        label="#{bindings.LetterType.label}" 
                                         required="#{bindings.LetterType.hints.mandatory}"
                                         shortDesc="#{bindings.LetterType.hints.tooltip}"
                                         id="soc5" contentStyle="width:200px">
@@ -883,7 +890,7 @@
                                      id="si5"/>
                     </af:selectOneChoice>
                     <af:inputText value="#{bindings.Other.inputValue}"
-                                  label="Others (Arabic)"
+                                  label="Others (Arabic)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS'}"
                                   required="#{bindings.Other.hints.mandatory}"
                                   maximumLength="#{bindings.Other.hints.precision}"
                                   shortDesc="#{bindings.Other.hints.tooltip}"
@@ -891,7 +898,7 @@
                       <f:validator binding="#{bindings.Other.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.Other1.inputValue}"
-                                  label="Other (English)"
+                                  label="Other (English)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS'}"
                                   required="#{bindings.Other1.hints.mandatory}"
                                   columns="#{bindings.Other1.hints.displayWidth}"
                                   maximumLength="#{bindings.Other1.hints.precision}"
@@ -1308,11 +1315,11 @@
                                      halign="end">
                           <af:outputLabel value="Business Travel Request Number" id="ol17"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc32">
+                        <af:gridCell marginStart="1px" width="1%" id="gc32">
                           <af:inputText value="#{bindings.empIdTRANS.inputValue}" partialTriggers="employeeNameTRANSId"
                                         visible="false" id="ot22" label="Label 22"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc34">
+                        <af:gridCell marginStart="2px" width="45%" id="gc34">
                           <af:inputListOfValues id="soc16"
                                                 popupTitle="Search and Select: #{bindings.BussTravReqNum1.hints.label}"
                                                 value="#{bindings.BussTravReqNum1.inputValue}"
@@ -1333,7 +1340,6 @@
                                      marginEnd="5px" id="gc31"/>
                       </af:gridRow>
                     </af:panelGridLayout>
-                    <af:spacer width="10" height="15" id="s13"/>
                     <af:panelGridLayout id="panelGridLayout1">
                       <af:gridRow marginTop="12px" height="auto" id="gridRow3">
                         <af:gridCell marginStart="5px" width="25%"
@@ -1349,9 +1355,10 @@
                                               shortDesc="#{bindings.TripType.hints.tooltip}"
                                               id="selectOneChoice1"
                                               simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.TripType.items}"
                                            id="selectItems1"/>
                           </af:selectOneChoice>
@@ -1372,6 +1379,7 @@
                                         maximumLength="#{bindings.AirlineTicketType.hints.precision}"
                                         shortDesc="#{bindings.AirlineTicketType.hints.tooltip}"
                                         id="inputText1"
+                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                         contentStyle="width:200px" partialTriggers="soc16"
                                         readOnly="true">
                             <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
@@ -1437,6 +1445,7 @@
                                         id="id9" 
                                         partialTriggers="soc16"
                                         autoSubmit="true"
+                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}">
                             <f:validator binding="#{bindings.OrigStartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
@@ -1455,6 +1464,7 @@
                                         shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
                                         id="id10" 
                                         partialTriggers="soc16"
+                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
                             <f:validator binding="#{bindings.OrigEndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>
@@ -1477,9 +1487,10 @@
                                               id="selectOneChoice2"
                                               simple="true"
                                               contentStyle="width:200px"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.DestCategory.items}"
                                            id="selectItems2"/>
                           </af:selectOneChoice>
@@ -1499,7 +1510,7 @@
                                         columns="#{bindings.NumberOfDays.hints.displayWidth}"
                                         maximumLength="#{bindings.NumberOfDays.hints.precision}"
                                         shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
-                                        id="inputText2"
+                                        id="inputText2" 
                                         contentStyle="width:200px" partialTriggers="soc16"
                                         binding="#{backingBeanScope.backing_employee.bstNoOfDays}"
                                         readOnly="true">
@@ -1522,9 +1533,10 @@
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
                                               id="selectOneChoice3"
                                               simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.ExitRerentryVisa.items}"
                                            id="selectItems3"/>
                           </af:selectOneChoice>
@@ -1544,9 +1556,10 @@
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
                                               id="selectOneChoice4"
                                               simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.DestVisaRequired.items}"
                                            id="selectItems4"/>
                           </af:selectOneChoice>
@@ -1568,10 +1581,11 @@
                                               shortDesc="#{bindings.DestCountryCity.hints.tooltip}"
                                               id="selectOneChoice5"
                                               simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCount}"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.DestCountryCity.items}"
                                            id="selectItems5"/>
                           </af:selectOneChoice>
@@ -1591,10 +1605,11 @@
                                               shortDesc="#{bindings.ProjType.hints.tooltip}"
                                               id="selectOneChoice6"
                                               simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
-                                              disabled="false"
+                                              
                                               partialTriggers="soc16"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.ProjType.items}"
                                            id="selectItems6"/>
                           </af:selectOneChoice>
@@ -1615,10 +1630,11 @@
                                               required="#{bindings.AdvPerdiem.hints.mandatory}"
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
-                                              simple="true"
+                                              simple="true" 
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
-                                              readOnly="true">
+                                              >
                             <f:selectItems value="#{bindings.AdvPerdiem.items}"
                                            id="selectItems7"/>
                           </af:selectOneChoice>
@@ -1705,7 +1721,7 @@
                         <af:gridCell marginStart="5px" width="25%"
                                      marginEnd="5px" id="gc21" valign="middle">
                           <af:inputText value="#{bindings.PerdiemPerDay.inputValue}"
-                                        simple="true"
+                                        simple="true" 
                                         required="#{bindings.PerdiemPerDay.hints.mandatory}"
                                         columns="#{bindings.PerdiemPerDay.hints.displayWidth}"
                                         maximumLength="#{bindings.PerdiemPerDay.hints.precision}"

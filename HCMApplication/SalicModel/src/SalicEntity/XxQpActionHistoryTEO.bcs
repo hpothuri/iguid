@@ -1,0 +1,19 @@
+//Groovy Scripts for SalicEntity.XxQpActionHistoryTEO
+
+package SalicEntity
+
+import oracle.jbo.script.annotation.TransientValueExpression;
+
+@TransientValueExpression(attributeName="CreationDate")
+def CreationDate_ExpressionScript_Expression()
+{
+adf.currentDateTime
+}
+
+
+@TransientValueExpression(attributeName="LastUpdateDate")
+def LastUpdateDate_ExpressionScript_Expression()
+{
+adf.currentDateTime
+}
+

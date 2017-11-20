@@ -72,7 +72,8 @@
        XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM, 
        XxhcmOvertimeDetailsAllEO.OTHER1, 
        XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY, 
-       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM"
+       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM, 
+       XxhcmOvertimeDetailsAllEO.SALARY_DATE"
   FromList="XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -527,8 +528,9 @@
   <ListBinding
     Name="LOV_SalPeriod"
     ListVOName="GetCurrentAndNextMonthROVO1"
-    NullValueFlag="none"
-    MRUCount="0">
+    NullValueFlag="start"
+    MRUCount="0"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}">
     <AttrArray Name="AttrNames">
       <Item Value="SalPeriod"/>
     </AttrArray>
@@ -1309,6 +1311,19 @@ CountryROVO1.first().getAttribute("CountryName");
     <RecalcCondition
       Name="RecalcExpressionScript"
       CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SalaryDate"
+    PrecisionRule="true"
+    EntityAttrName="SalaryDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SALARY_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"

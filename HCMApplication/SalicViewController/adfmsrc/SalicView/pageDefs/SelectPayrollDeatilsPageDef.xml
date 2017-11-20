@@ -47,7 +47,7 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
-    <attributeValues IterBinding="payRollObjROVO2Iterator"
+    <attributeValues IterBinding="PayrollTransfer_VO1Iterator"
                      id="PayrollTansComments">
       <AttrNames>
         <Item Value="PayrollTansComments"/>

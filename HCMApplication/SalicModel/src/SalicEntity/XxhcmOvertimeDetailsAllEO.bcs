@@ -1,0 +1,27 @@
+//Groovy Scripts for SalicEntity.XxhcmOvertimeDetailsAllEO
+
+package SalicEntity
+
+import oracle.jbo.script.annotation.ValidatorConditionExpression;
+import oracle.jbo.script.annotation.ValidatorExpression;
+
+@ValidatorConditionExpression(name="OvertimeHoursRule0", attributeName="OvertimeHours")
+def OvertimeHours_OvertimeHoursRule0_OnConditionScript_OnCondition()
+{
+OvertimeType == 'OT_WD'
+}
+
+
+@ValidatorConditionExpression(name="OvertimeHoursRule1", attributeName="OvertimeHours")
+def OvertimeHours_OvertimeHoursRule1_OnConditionScript_OnCondition()
+{
+OvertimeType == 'OT_WE'
+}
+
+
+@ValidatorExpression(name="SalaryDateRule0", attributeName="SalaryDate")
+def SalaryDate_SalaryDateRule0_ValidationRuleScript_ValidationRule()
+{
+adf.currentDate
+}
+

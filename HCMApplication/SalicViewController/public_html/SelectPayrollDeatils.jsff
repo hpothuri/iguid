@@ -312,7 +312,7 @@
                               columns="#{bindings.PayrollTansComments.hints.displayWidth}"
                               maximumLength="#{bindings.PayrollTansComments.hints.precision}"
                               shortDesc="#{bindings.PayrollTansComments.hints.tooltip}"
-                              id="it3">
+                              id="it3" autoSubmit="true">
                   <f:validator binding="#{bindings.PayrollTansComments.validator}"/>
                 </af:inputText>
               </af:column>

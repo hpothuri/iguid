@@ -10,10 +10,11 @@
   DBObjectName="XXHCM_OVERTIME_DETAILS_ALL"
   AliasName="XxhcmOvertimeDetailsAllEO"
   BindingStyle="OracleName"
-  UseGlueCode="false">
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation"
+  RowClass="SalicEntity.XxhcmOvertimeDetailsAllEOImpl">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access"/>
-    <AttrArray Name="_publishEvents"/>
+    <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <Attribute
     Name="ReqDtlsId"
@@ -28,7 +29,8 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
-    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("xxhcm_ot_req_dtls_id_s",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[(new oracle.jbo.server.SequenceImpl("xxhcm_ot_req_dtls_id_s",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="ReqId"
@@ -76,6 +78,32 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
+    <validation:RangeValidationBean
+      Name="OvertimeHoursRule0"
+      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_0"
+      OnAttribute="OvertimeHours"
+      OperandType="LITERAL"
+      Inverse="false"
+      MinValue="1"
+      MaxValue="16">
+      <validation:OnCondition
+        Name="OnConditionScript"
+        trustMode="untrusted"
+        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+    </validation:RangeValidationBean>
+    <validation:RangeValidationBean
+      Name="OvertimeHoursRule1"
+      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_1"
+      OnAttribute="OvertimeHours"
+      OperandType="LITERAL"
+      Inverse="false"
+      MinValue="1"
+      MaxValue="24">
+      <validation:OnCondition
+        Name="OnConditionScript"
+        trustMode="untrusted"
+        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+    </validation:RangeValidationBean>
   </Attribute>
   <Attribute
     Name="OvertimeDate"
@@ -845,6 +873,26 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="4000"/>
     </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="SalaryDate"
+    ColumnName="SALARY_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL">
+    <validation:CompareValidationBean
+      Name="SalaryDateRule0"
+      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.SalaryDate_Rule_0"
+      OnAttribute="SalaryDate"
+      OperandType="EXPR"
+      Inverse="false"
+      CompareType="GREATERTHAN">
+      <validation:TransientExpression
+        Name="ValidationRuleScript"
+        trustMode="untrusted"
+        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+    </validation:CompareValidationBean>
   </Attribute>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"

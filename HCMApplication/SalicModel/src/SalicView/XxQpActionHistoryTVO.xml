@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxQpActionHistoryTVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxQpActionHistoryTEO.ACTION_HISTORY_ID, 
        XxQpActionHistoryTEO.HEADER_ID, 
@@ -26,16 +26,21 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false"
-  Where="XxQpActionHistoryTEO.PAGE='OT'"
+  Where="XxQpActionHistoryTEO.PAGE=:p_req_typ and XxQpActionHistoryTEO.HEADER_ID=:p_req_id"
   OrderBy="XxQpActionHistoryTEO.APPROVE_LEVEL DESC">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
-  </DesignTime>
   <Variable
     Name="BV_USR_NM"
     Kind="viewcriteria"
     Type="java.lang.String"/>
+  <Variable
+    Name="p_req_typ"
+    Kind="where"
+    Type="java.lang.String"
+    DefaultValue="NA"/>
+  <Variable
+    Name="p_req_id"
+    Kind="where"
+    Type="java.math.BigDecimal"/>
   <EntityUsage
     Name="XxQpActionHistoryTEO"
     Entity="SalicEntity.XxQpActionHistoryTEO"/>
@@ -197,7 +202,7 @@
     ViewObjectName="SalicView.XxQpActionHistoryTVO"
     Conjunction="AND"
     Mode="3">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"

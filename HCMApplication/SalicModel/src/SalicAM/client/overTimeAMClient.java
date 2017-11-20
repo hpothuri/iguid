@@ -74,6 +74,15 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void populateApproversForReqest(String reqNumber, Number empId, String reqType, Number req_id) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "populateApproversForReqest",
+                                        new String[] { "java.lang.String", "oracle.jbo.domain.Number",
+                                                       "java.lang.String", "oracle.jbo.domain.Number" },
+                                        new Object[] { reqNumber, empId, reqType, req_id });
+        return;
+    }
+
     public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validateThreeChildsPerYear",

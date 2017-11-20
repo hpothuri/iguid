@@ -556,12 +556,20 @@
                            </af:column>
                            <af:column id="c24" headerText="Action"
                                       frozen="true" rendered="false">
-                              <af:menuBar id="mb1"
+                              <af:panelGroupLayout id="pgl19" layout="horizontal">
+                                 <af:link id="cmi1" actionListener="#{ManagerAppr.approveACL}"
+                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }"
+                                          icon="/images/qual_approved_32_full.png"/>
+                                 <af:link id="cmi2" actionListener="#{ManagerAppr.rejectACL}"
+                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }"
+                                          icon="/images/qual_reject_32_full.png"/>
+                              </af:panelGroupLayout>
+                              <af:menuBar id="mb1" rendered="false"
                                           disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }">
                                  <af:menu id="m1" icon="/images/goup_dis.png">
-                                    <af:commandMenuItem text="Approve" id="cmi1"
+                                    <af:commandMenuItem text="Approve" id="cmi1v"
                                                         actionListener="#{ManagerAppr.approveACL}"/>
-                                    <af:commandMenuItem text="Reject" id="cmi2"
+                                    <af:commandMenuItem text="Reject" id="cmi2b"
                                                         actionListener="#{ManagerAppr.rejectACL}"/>
                                  </af:menu>
                               </af:menuBar>

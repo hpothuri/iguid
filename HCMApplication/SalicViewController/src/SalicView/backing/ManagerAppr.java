@@ -5,6 +5,8 @@ import SalicView.backing.Utils.ADFUtils;
 import SalicView.backing.Utils.DBUtils;
 import SalicView.backing.Utils.JSFUtils;
 
+import java.math.BigDecimal;
+
 import java.sql.SQLException;
 
 import javax.faces.event.ActionEvent;
@@ -25,6 +27,8 @@ import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.ViewObjectImpl;
 
 import oracle.jdbc.internal.OracleTypes;
+
+import view.session.LoginBean;
 
 public class ManagerAppr {
     private RichOutputLabel totaReq;
@@ -116,13 +120,54 @@ public class ManagerAppr {
 
     }
 
+
+
+    public void updateApproveRejection(Object header_id, String approver_flag,
+                                String User) {
+        String str = null;
+        Number hdrId = null;
+        String userName = User;
+        try {
+            hdrId = new Number(header_id);
+        } catch (SQLException e) {
+        }
+        ViewObject mgrVo =
+            ADFUtils.findIterator("managerDashbaordROVO1Iterator").getViewObject();
+        
+        //XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC
+        LoginBean  lb = (LoginBean)JSFUtils.getFromSession("LoginBean");
+        
+        BigDecimal empId = new BigDecimal(lb.getPersonId());
+        BigDecimal ownerReqId =(BigDecimal)mgrVo.getCurrentRow().getAttribute("EmpId");
+        String reqType = (String)mgrVo.getCurrentRow().getAttribute("ReqType");
+        
+        ApplicationModuleImpl am =
+            (ApplicationModuleImpl)ADFUtils.getApplicationModuleForDataControl(null);
+        dobProcArgs = new Object[][] { { "IN", approver_flag, OracleTypes.VARCHAR }, //0
+                    { "IN", hdrId, OracleTypes.NUMBER }, //1
+                    { "IN", empId, OracleTypes.NUMBER }, //2
+                    { "IN", ownerReqId, OracleTypes.NUMBER },
+                    { "IN", reqType, OracleTypes.VARCHAR }
+                    } ;
+        try {
+            System.err.println("==11====");
+            DBUtils.callDBStoredProcedure(am.getDBTransaction(),
+                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?)",
+                                          dobProcArgs);
+            System.err.println("==22====");
+        } catch (SQLException e) {
+            System.err.println("===EXE==" + e.toString());
+        }
+        
+    }
+
     public void approveACL(ActionEvent actionEvent) {
         ViewObject mgrVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator1").getViewObject();
         //        mgrVO.getCurrentRow().getAttribute("");
-        update_approve(mgrVO.first().getAttribute("HeaderId"), "Y",
-                       (String)mgrVO.first().getAttribute("ReqNumber"),
-                       (String)mgrVO.first().getAttribute("ApproverUserName"));
+        updateApproveRejection(mgrVO.first().getAttribute("HeaderId"), "Y",
+                       (String)mgrVO.first().getAttribute("ReqNumber")
+                       );
         mgrVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
         OperationBinding ob =

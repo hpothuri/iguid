@@ -278,7 +278,7 @@
          </AttrNames>
       </attributeValues>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="SalPeriod"
-            DTSupportsMRU="true" SelectItemValueMode="ListObject"
+            DTSupportsMRU="true"
             StaticList="false" Uses="LOV_SalPeriod">
          <AttrNames>
             <Item Value="SalPeriod"/>
@@ -574,6 +574,20 @@
          <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
          <NamedData NDName="invDate" NDType="java.sql.Date"/>
          <NamedData NDName="childId" NDType="java.math.BigDecimal"/>
+      </methodAction>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="SalaryDate">
+         <AttrNames>
+            <Item Value="SalaryDate"/>
+         </AttrNames>
+      </attributeValues>
+      <methodAction id="populateApproversForReqest" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="populateApproversForReqest" IsViewObjectMethod="false"
+                    DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.populateApproversForReqest.dataControl.dataProvider">
+         <NamedData NDName="reqNumber" NDType="java.lang.String"/>
+         <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+         <NamedData NDName="reqType" NDType="java.lang.String"/>
+         <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
       </methodAction>
    </bindings>
 </pageDefinition>

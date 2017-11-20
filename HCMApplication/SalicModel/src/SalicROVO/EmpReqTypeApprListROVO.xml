@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EmpReqTypeApprListROVO"
+  Version="12.2.1.12.24"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="p_req_type"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_EMP_ID"
+    Kind="where"
+    Type="oracle.jbo.domain.Number"/>
+  <SQLQuery><![CDATA[SELECT EMP_ID,APPR_LEVEL,EMPLOYEE_NAME,APPR_TYPE FROM (SELECT XALA.EMPLOYEE_ID EMP_ID,  
+                XAsd.APPR_LEVEL,  
+                XALA.EMPLOYEE_NAME,   
+                XASH.APPR_TYPE  
+           FROM XXHCM_APPR_SETUP_HDR XASH,  
+                XXHCM_APPR_SETUP_DTL XASD,  
+                XX_APPROVAL_HEADERS_ALL XAHA,  
+                XX_APPROVAL_LINES_ALL XALA  
+                WHERE XASH.APPR_HDR_ID= XASD.APPR_HDR_ID AND XASH.REQUEST_TYPE=:p_req_type  
+                AND XASD.CUST_APPR_GROUP_ID=XAHA.APPROVAL_LIST_ID  
+                AND XAHA.APPROVAL_LIST_ID=XALA.APPROVAL_LIST_ID  
+                AND SYSDATE BETWEEN START_DATE AND END_DATE  
+    AND APPR_TYPE='Approval'   
+        UNION ALL  
+                SELECT EMP_ID, 98 APPROVAL_LEVEL, EMP_NAME , 'Approval' APPR_TYPE FROM XXSTG_EMPLOYEE_DETAILS WHERE EMP_ID =   
+         (SELECT MANAGER_ID  FROM XXSTG_MANAGER WHERE PERSON_ID= :p_EMP_ID and exists (SELECT 1 FROM XXSTG_JOB_LEVEL WHERE PERSON_ID = :p_EMP_ID AND JOB_LEVEL = 1))  
+        UNION ALL  
+               SELECT EMP_ID, 99 APPROVAL_LEVEL, EMP_NAME , 'Approval' APPR_TYPE FROM XXSTG_EMPLOYEE_DETAILS WHERE EMP_ID =  
+                    (SELECT MANAGER_ID FROM XXSTG_MANAGER WHERE MANAGER_ID =   
+         (SELECT MANAGER_ID  FROM XXSTG_MANAGER WHERE PERSON_ID= :p_EMP_ID and exists (SELECT 1 FROM XXSTG_JOB_LEVEL WHERE  PERSON_ID = EMP_ID AND JOB_LEVEL > 1)))) --EMP_ID NOT IN (SELECT EMP_ID FROM XX_QP_ACTION_HISTORY_T WHERE HEADER_ID = P_REQ_ID AND (APPROVER_COMMENTS <> 'APPROVED' OR APPROVER_COMMENTS <> 'FYI')  
+union all  
+SELECT * FROM (SELECT XALA.EMPLOYEE_ID EMP_ID,  
+                XAsd.APPR_LEVEL,  
+                XALA.EMPLOYEE_NAME,  
+                XASH.APPR_TYPE  
+           FROM XXHCM_APPR_SETUP_HDR XASH,  
+                XXHCM_APPR_SETUP_DTL XASD,  
+                XX_APPROVAL_HEADERS_ALL XAHA,  
+                XX_APPROVAL_LINES_ALL XALA  
+                WHERE XASH.APPR_HDR_ID= XASD.APPR_HDR_ID AND XASH.REQUEST_TYPE=:p_req_type  
+                AND XASD.CUST_APPR_GROUP_ID(+)=XAHA.APPROVAL_LIST_ID  
+                AND XAHA.APPROVAL_LIST_ID=XALA.APPROVAL_LIST_ID  
+                AND SYSDATE BETWEEN START_DATE AND END_DATE  
+    AND APPR_TYPE='FYI')  
+UNION all  
+    SELECT EMP_ID, (select appr_level from XXHCM_APPR_SETUP_HDR XASH, XXHCM_APPR_SETUP_DTL XASD where request_type = :p_req_type and appr_type = 'Approval'   
+and xash.appr_hdr_id = xasd.appr_hdr_id  
+and appr_group_id = 100012  
+)  APPROVAL_LEVEL, EMP_NAME EMPloyee_NAME , 'Approval' APPR_TYPE FROM XXSTG_EMPLOYEE_DETAILS WHERE EMP_ID =   
+         (SELECT MANAGER_ID  FROM XXSTG_MANAGER WHERE PERSON_ID= :p_EMP_ID and exists (select appr_level from XXHCM_APPR_SETUP_HDR XASH, XXHCM_APPR_SETUP_DTL XASD where request_type = :p_req_type and appr_type = 'Approval'   
+and xash.appr_hdr_id = xasd.appr_hdr_id  
+and appr_group_id = 100012  
+))]]></SQLQuery>
+  <ViewAttribute
+    Name="EmpId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="BIGINT"
+    AliasName="EMP_ID"
+    Expression="EMP_ID"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="ApprovalLevel"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="APPROVAL_LEVEL"
+    Expression="APPROVAL_LEVEL"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="EmployeeName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="245"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="EMPLOYEE_NAME"
+    Expression="EMPLOYEE_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="245"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApprType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APPR_TYPE"
+    Expression="APPR_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="EmpId"/>
+    <Item Value="ApprovalLevel"/>
+    <Item Value="ApprType"/>
+  </AttrArray>
+</ViewObject>

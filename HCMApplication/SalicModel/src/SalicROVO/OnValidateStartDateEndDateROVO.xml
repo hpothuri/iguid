@@ -4,12 +4,11 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OnValidateStartDateEndDateROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -24,26 +23,21 @@
     Kind="viewcriteria"
     Type="java.lang.String"/>
   <Variable
-    Name="P_STARTDATE"
-    Kind="viewcriteria"
-    Type="java.lang.String"/>
-  <Variable
-    Name="P_ENDDATE"
-    Kind="viewcriteria"
-    Type="java.lang.String"/>
-  <SQLQuery>
-    <![CDATA[SELECT
-OVERTIME.REQ_ID,                      
-OVERTIME.EMP_ID,                        
-OVERTIME.REQUEST_NUMBER ,                   
-OVERTIME.REQUEST_DATE,
-LINE.START_DATE,
-LINE.END_DATE
-FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,
-XXHCM_OVERTIME_DETAILS_ALL LINE
-WHERE
-OVERTIME.REQ_ID=LINE.REQ_ID]]>
-  </SQLQuery>
+    Name="p_startdate1"
+    Kind="where"
+    Type="oracle.jbo.domain.Date"/>
+  <SQLQuery><![CDATA[SELECT    
+OVERTIME.REQ_ID,                          
+OVERTIME.EMP_ID,                            
+OVERTIME.REQUEST_NUMBER ,                       
+OVERTIME.REQUEST_DATE,    
+LINE.START_DATE,    
+LINE.END_DATE    
+FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,    
+XXHCM_OVERTIME_DETAILS_ALL LINE    
+WHERE    
+OVERTIME.REQ_ID=LINE.REQ_ID    
+and :p_startdate1 between trunc(LINE.START_DATE) and LINE.END_DATE]]></SQLQuery>
   <ViewAttribute
     Name="ReqId"
     IsUpdateable="false"
@@ -65,7 +59,7 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
     IsPersistent="false"
     IsNotNull="true"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
+    Type="oracle.jbo.domain.Number"
     ColumnType="NUMBER"
     AliasName="EMP_ID"
     Expression="EMP_ID"
@@ -98,7 +92,7 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
     ColumnType="DATE"
     AliasName="REQUEST_DATE"
     Expression="REQUEST_DATE"
-    SQLType="TIMESTAMP">
+    SQLType="DATE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
@@ -108,11 +102,11 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.sql.Date"
+    Type="oracle.jbo.domain.Date"
     ColumnType="DATE"
     AliasName="START_DATE"
     Expression="START_DATE"
-    SQLType="TIMESTAMP">
+    SQLType="DATE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
@@ -122,11 +116,11 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.sql.Date"
+    Type="oracle.jbo.domain.Date"
     ColumnType="DATE"
     AliasName="END_DATE"
     Expression="END_DATE"
-    SQLType="TIMESTAMP">
+    SQLType="DATE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
@@ -135,7 +129,7 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
     Name="ValidateEmpDates"
     ViewObjectName="SalicROVO.OnValidateStartDateEndDateROVO"
     Conjunction="AND">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"
@@ -164,22 +158,6 @@ OVERTIME.REQ_ID=LINE.REQ_ID]]>
         Conjunction="AND"
         Required="Optional"
         Value=":P_EMP"
-        IsBindVarValue="true"/>
-      <ViewCriteriaItem
-        Name="StartDate"
-        ViewAttribute="StartDate"
-        Operator="ONORAFTER"
-        Conjunction="AND"
-        Required="Optional"
-        Value=":P_STARTDATE"
-        IsBindVarValue="true"/>
-      <ViewCriteriaItem
-        Name="OnValidateStartDateEndDateROVOCriteria_vcrow47_EndDate"
-        ViewAttribute="EndDate"
-        Operator="ONORBEFORE"
-        Conjunction="AND"
-        Required="Optional"
-        Value=":P_ENDDATE"
         IsBindVarValue="true"/>
     </ViewCriteriaRow>
   </ViewCriteria>

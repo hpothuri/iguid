@@ -4,17 +4,12 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxQpActionHistoryTEO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XX_QP_ACTION_HISTORY_T"
   AliasName="XxQpActionHistoryTEO"
-  BindingStyle="OracleName"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access"/>
-    <AttrArray Name="_publishEvents"/>
-  </DesignTime>
+  BindingStyle="OracleName">
   <Attribute
     Name="ActionHistoryId"
     ColumnName="ACTION_HISTORY_ID"
@@ -132,6 +127,10 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="11"/>
     </DesignTime>
+    <TransientExpression
+      Name="ExpressionScript"
+      trustMode="trusted"
+      CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
     Name="LastUpdatedBy"
@@ -157,6 +156,10 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="11"/>
     </DesignTime>
+    <TransientExpression
+      Name="ExpressionScript"
+      trustMode="trusted"
+      CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
     Name="LastUpdateLogin"

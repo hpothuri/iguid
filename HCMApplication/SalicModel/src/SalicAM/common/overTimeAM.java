@@ -27,4 +27,6 @@ public interface overTimeAM extends ApplicationModule {
     BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt);
 
     Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId);
+
+    void populateApproversForReqest(String reqNumber, Number empId, String reqType, Number req_id);
 }

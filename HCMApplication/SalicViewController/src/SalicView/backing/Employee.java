@@ -1,5 +1,7 @@
 package SalicView.backing;
 
+import java.sql.SQLException;
+
 import SalicView.backing.Utils.ADFUtils;
 import SalicView.backing.Utils.DBUtils;
 import SalicView.backing.Utils.GeneralUtils;
@@ -88,6 +90,7 @@ import oracle.adf.view.rich.component.rich.nav.RichCommandButton;
 
 import oracle.adf.view.rich.event.LaunchPopupEvent;
 
+import oracle.binding.AttributeBinding;
 import oracle.binding.BindingContainer;
 
 import oracle.jbo.ViewCriteriaManager;
@@ -749,12 +752,23 @@ public class Employee {
     }
 
     public void calcHoursVCL(ValueChangeEvent vce) {
-        if (vce.getNewValue() != null) {
-            Number otHours = (Number)vce.getNewValue();
-            Number calcHours = otHours.multiply(1.5);
-            it6.setValue(calcHours);
-            AdfFacesContext.getCurrentInstance().addPartialTarget(it6);
-        }
+//        if (vce.getNewValue() != null) {
+//            
+//            Number otHours = (Number)vce.getNewValue();
+//            Row row = ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getCurrentRow();
+//            String overtype = (String)row.getAttribute("OvertimeType");
+//            if(overtype.equalsIgnoreCase("OT_WD") && otHours.intValue() > 16  || otHours.intValue() <= 0){
+//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid overtime hours. Enter hours between 1 to 16");                
+//                return;
+//            }
+//            if(overtype.equalsIgnoreCase("OT_WE") && (otHours.intValue() > 24 || otHours.intValue() <= 0)){
+//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid overtime hours. Enter hours between 1 to 16");                
+//                return;
+//            }
+//            Number calcHours = otHours.multiply(1.5);
+//            it6.setValue(calcHours);
+//            AdfFacesContext.getCurrentInstance().addPartialTarget(it6);
+//        }
     }
 
     public void setIt6(RichInputText it6) {
@@ -789,8 +803,9 @@ public class Employee {
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-            valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
             
             //validateEmpHousingAdvEligibility
             String errorMsg = validateEmpHousingAdvEligibility((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
@@ -834,7 +849,7 @@ public class Employee {
 
 
         } else if ("ot".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-            valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
             String errorMsg = validateEmpOverTimeEligibility((String)variationSearchVo.getCurrentRow().getAttribute("gradeTRANS"));
             if(errorMsg!=null){
                 empLov.setValue(valueChangeEvent.getNewValue());
@@ -858,7 +873,7 @@ public class Employee {
                                                            "-OT-" +
                                                            variationSearchVo.getCurrentRow().getAttribute("ReqId"));
         } else if ("vacation".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-            valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
             String errorMsg = validateEmpVacationEligibility((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
             if(errorMsg!=null){
                 empLov.setValue(valueChangeEvent.getNewValue());
@@ -909,7 +924,7 @@ public class Employee {
             //                        }
 
         } else if ("salary".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-            valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+            //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
             String errorMsg = validateEmployeeSalaryAdvanceEligibility((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
             if(errorMsg!=null){
                 empLov.setValue(valueChangeEvent.getNewValue());
@@ -955,7 +970,7 @@ public class Employee {
             //EmployeeId
 
                //Object object =
-               valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+               //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
                 ADFContext.getCurrent().getSessionScope().put("empfil",
                                                               variationSearchVo.getCurrentRow().getAttribute("EmpId"));
 
@@ -1046,6 +1061,7 @@ public class Employee {
 
             lineVO.getCurrentRow().setAttribute("SalPeriod", Month);
             AdfFacesContext.getCurrentInstance().addPartialTarget(soc2);
+            //String reqNumber,oracle.jbo.domain.Number empId,String reqType
             //            ViewObject hdr1 =
             //                ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator2").getViewObject();
             //            ViewCriteria vc=hdr1.createViewCriteria();
@@ -1076,6 +1092,15 @@ public class Employee {
             //                                           AdfFacesContext.getCurrentInstance().addPartialTarget(soc2);
             //                                       }
         }
+        
+        //populateApproversForReqest
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        //RequestNumber
+        op.getParamsMap().put("reqNumber", variationSearchVo.getCurrentRow().getAttribute("RequestNumber"));
+        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
+        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        op.getParamsMap().put("req_id", variationSearchVo.getCurrentRow().getAttribute("ReqId"));
+        op.execute();
         //        lineVO.executeQuery();
         //        attVO.createRow();
         //        attVO.executeQuery();
@@ -1538,7 +1563,7 @@ public class Employee {
                     returnActivity = "save";
                     approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
                                      otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    JSFUtils.addFacesInformationMessage("Information Saved Successfully");
+                    JSFUtils.addFacesInformationMessage("Request submitted successfully");
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide HR Letter Details!..");
 
@@ -1591,7 +1616,7 @@ public class Employee {
                     String endDate =
                         lineVO.getCurrentRow().getAttribute("EndDate").toString();
                     SimpleDateFormat sdfSource =
-                        new SimpleDateFormat("dd-MM-yy");
+                        new SimpleDateFormat("yyyy-MM-dd");
 
                     Date date1 = null;
                     Date date2 = null;
@@ -1607,19 +1632,21 @@ public class Employee {
                     }
                     ovo.setNamedWhereClauseParam("P_EMP",
                                                  otHdrVO.getCurrentRow().getAttribute("EmpId"));
-                    ovo.setNamedWhereClauseParam("P_STARTDATE", date1);
-                    ovo.setNamedWhereClauseParam("P_ENDDATE", date2);
+                    ovo.setNamedWhereClauseParam("p_startdate1", new oracle.jbo.domain.Date(new java.sql.Date(date1.getTime())));
+
+                    
                     ovo.executeQuery();
                     System.err.println("-----Count" +
                                        ovo.getEstimatedRowCount());
                     if (ovo.getEstimatedRowCount() > 0) {
-                        JSFUtils.addFacesInformationMessage("Already this Resource had booked in these dates, please provide different Dates");
+                        JSFUtils.addFacesErrorMessage("Already this Resource had booked in these dates, please provide different Dates");
+                        returnActivity = null;
                     } else {
                         ADFUtils.findOperation("Commit").execute();
                         returnActivity = "save";
                         approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
                                          otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                        JSFUtils.addFacesInformationMessage("Information Saved Successfully");
+                        JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
                     }
 
 
@@ -1669,7 +1696,7 @@ public class Employee {
                     returnActivity = "save";
                     approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
                                      otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    JSFUtils.addFacesInformationMessage("Information Saved Successfully");
+                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
                 } else if(lineVO.first() == null && !isError){
                     JSFUtils.addFacesInformationMessage("Please provide Business Trip Completion Details!..");
 
@@ -1695,8 +1722,8 @@ public class Employee {
     public void dayfInderVCL(ValueChangeEvent dayy) {
 
         String result = checkDuplicateOverTimeDate(dayy.getNewValue());
-        oracle.jbo.domain.Date day1 =
-            (oracle.jbo.domain.Date)dayy.getNewValue();
+        java.sql.Date day1 =
+            (java.sql.Date)dayy.getNewValue();
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         ViewObject hdr1 =
@@ -1723,9 +1750,9 @@ public class Employee {
 
                 Calendar calendar = Calendar.getInstance();
                 Date date = calendar.getTime();
-                oracle.jbo.domain.Date domaiDay =
-                    (oracle.jbo.domain.Date)dayy.getNewValue();
-                java.sql.Date sqldate = domaiDay.dateValue();
+                java.sql.Date domaiDay =
+                    (java.sql.Date)dayy.getNewValue();
+                java.sql.Date sqldate = (java.sql.Date)dayy.getNewValue();
                 date = new Date(sqldate.getTime());
                 Date day = date;
                 //        System.out.println(new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime()));
@@ -2531,7 +2558,7 @@ public class Employee {
         ViewObject vc =
             view.backing.ADFUtils.findIterator("XxhcmAttachmentsTVO1Iterator").getViewObject();
         BlobDomain blob =
-            (BlobDomain)vc.getCurrentRow().getAttribute("AttachFileType");
+            (BlobDomain)vc.getCurrentRow().getAttribute("AttachFile");
         try {
             IOUtils.copy(blob.getInputStream(), outputStream);
             blob.closeInputStream();
@@ -3416,6 +3443,14 @@ public class Employee {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        BindingContainer container = BindingContext.getCurrent().getCurrentBindingsEntry();  
+           valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());  
+           AttributeBinding attrIdBinding = (AttributeBinding)container.getControlBinding("Currency");  
+           //Deptno is ID of an Attribute Binding in pageDef 
+          
+           String Id = (String)attrIdBinding.getInputValue();  
+           System.out.println("selected currency =>"+Id);
         oracle.binding.OperationBinding op = ADFUtils.findOperation("getCurrwncyRate");
         op.getParamsMap().put("fromcurr", valueChangeEvent.getNewValue());
                 op.getParamsMap().put("grade", otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
