@@ -100,6 +100,7 @@ public class DashBoard {
     private RichPanelGroupLayout pgl10;
     private RichImage image13;
     private RichOutputText outputText14;
+    private RichPanelGroupLayout pgl11;
 
 
     public void setF1(RichForm f1) {
@@ -811,5 +812,13 @@ public class DashBoard {
 
     public RichOutputText getOutputText14() {
         return outputText14;
+    }
+
+    public void setPgl11(RichPanelGroupLayout pgl11) {
+        this.pgl11 = pgl11;
+    }
+
+    public RichPanelGroupLayout getPgl11() {
+        return pgl11;
     }
 }

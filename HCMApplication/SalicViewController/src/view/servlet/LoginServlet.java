@@ -32,8 +32,8 @@ public class LoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        _logger.info("doPost######START#######");
-
+        _logger.info("doGet######START#######");
+        System.out.println("doGet######START#######");
         String jwtUserToken = null;
         LoginBean loginBean = null;
         ArrayList<RolePojo> roles = null;
@@ -42,6 +42,7 @@ public class LoginServlet extends HttpServlet {
             loginBean = new LoginBean();
         }
         jwtUserToken = httpServletRequest.getParameter("jwt_tkn");
+        System.out.println("jwtUserToken : " + jwtUserToken);
         System.err.println("jwtUserToken : " + jwtUserToken);
         _logger.info("jwtUserToken : " + jwtUserToken);
         UserService svc =
@@ -52,21 +53,26 @@ public class LoginServlet extends HttpServlet {
             svc.findSelfUserDetails(loginBean);
             loginBean.setUserName(loginBean.getHcmUserName());
             _logger.info("UserName : " + loginBean.getUserName());
+            System.err.println("UserName : " + loginBean.getUserName());
             if (loginBean.getUserName() != null) {
                 roles = svc.fetchRoles("paas.user@salic.com", "Welcome@123", loginBean.getPersonId());
 
                 if (roles != null && roles.size() > 0) {
                     _logger.info("Roles size : " + roles != null ? roles.size()+"" : "0");
+                    System.err.println("Roles size : " + roles != null ? roles.size()+"" : "0");
                     loginBean.setAuthenticated("Y");
                     loginBean.setRoleList(roles);
                     for(RolePojo currRole : roles){
                         loginBean.getRoles().put(currRole.getRoleName(), true);
                         _logger.info("Role Name : " + currRole.getRoleName());
+                        System.err.println("Role Name : " + currRole.getRoleName());
                     }
 
                     // redirect to Dashboard
+                    System.err.println("Redirecting to dashboard");
                     httpServletResponse.sendRedirect("/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml");
                 } else {
+                    
                     raiseException(loginBean, "User doesn't sufficient roles to access the application.", null);
 
                     loginBean.setAuthenticated("N");
@@ -105,6 +111,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             loginBean.setError(msg + ".Exception Details : " + exp.getMessage());
             _logger.info("Error while populating login bean: " + exp.getMessage());
+            System.err.println(msg + ".Exception Details : " + exp.getMessage());
         }
     }
 

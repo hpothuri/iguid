@@ -268,7 +268,7 @@ public class UserService
                                                              "application/json", null, true);
             
             logger.info("Rest response : " + output);
-            
+            System.out.println("Rest response : " + output);
             String href = null;
             if (output != null) {
                 JsonNode body = output.getBody();
@@ -291,7 +291,7 @@ public class UserService
                                                                  "REST_SERVICE_GET", "application/json", null, true);
                 
                 logger.info("Rest response : " + output);
-                
+                System.out.println("Rest response : " + output);
                 if (output != null) {
                     body = output.getBody();
                     object = body.getObject();
