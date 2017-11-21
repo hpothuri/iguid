@@ -1041,46 +1041,35 @@
                           </af:inputText>
                         </af:gridCell>
                       </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto" id="gr4">
-                        <af:gridCell marginStart="5px" width="25%" id="gc20"
+                      <af:gridRow marginTop="12px" height="auto"
+                                  marginBottom="5px" id="gr21">
+                        <af:gridCell marginStart="5px" width="25%" id="gc141"
                                      halign="end" valign="middle">
-                          <af:outputLabel value="Exit Reentry Visa" id="ol8"/>
+                          <af:outputLabel value="Destination Country"
+                                          id="ol101"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc18"
+                        <af:gridCell marginStart="5px" width="25%" id="gc111"
                                      valign="middle">
-                          <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
-                                              label="#{bindings.ExitRerentryVisa.label}"
-                                              required="#{bindings.ExitRerentryVisa.hints.mandatory}"
-                                              shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
-                                              id="soc11" simple="true"
-                                              contentStyle="width:200px">
-                            <f:selectItems value="#{bindings.ExitRerentryVisa.items}"
-                                           id="si11"/>
+                          <af:selectOneChoice value="#{bindings.DestCountryId.inputValue}"
+                                              label="#{bindings.DestCountryId.label}"
+                                              required="#{bindings.DestCountryId.hints.mandatory}"
+                                              shortDesc="#{bindings.DestCountryId.hints.tooltip}"
+                                              id="soc131" simple="true" partialTriggers="soc10"
+                                              contentStyle="width:200px"
+                                              autoSubmit="true">
+                            <f:selectItems value="#{bindings.DestCountryId.items}"
+                                           id="si131"/>
                           </af:selectOneChoice>
+                          <af:outputText value="#{bindings.Country_Trans.inputValue}"
+                                         id="ot201" partialTriggers="soc13"
+                                         rendered="false"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc11"
-                                     halign="end" valign="middle">
-                          <af:outputLabel value="Destination Visa Required"
-                                          id="ol9"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gc15" valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
-                                              label="#{bindings.DestVisaRequired.label}"
-                                              required="#{bindings.DestVisaRequired.hints.mandatory}"
-                                              shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
-                                              id="soc12" simple="true"
-                                              contentStyle="width:200px">
-                            <f:selectItems value="#{bindings.DestVisaRequired.items}"
-                                           id="si12"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                      </af:gridRow>
+                        </af:gridRow>
                       <af:gridRow marginTop="12px" height="auto"
                                   marginBottom="5px" id="gr2">
                         <af:gridCell marginStart="5px" width="25%" id="gc14"
                                      halign="end" valign="middle">
-                          <af:outputLabel value="Destination: Country - City"
+                          <af:outputLabel value="Destination City"
                                           id="ol10"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc1"
@@ -1091,7 +1080,7 @@
                                               shortDesc="#{bindings.DestCountryCity.hints.tooltip}"
                                               id="soc13" simple="true"
                                               contentStyle="width:200px"
-                                              autoSubmit="true"
+                                              autoSubmit="true" partialTriggers="soc131"
                                               binding="#{backingBeanScope.backing_employee.btDestCountryCity}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}">
                             <f:selectItems value="#{bindings.DestCountryCity.items}"
@@ -1117,6 +1106,32 @@
                                               readOnly="#{sessionScope.mode=='edit'?'true':'false'}">
                             <f:selectItems value="#{bindings.ProjType.items}"
                                            id="si15"/>
+                          </af:selectOneChoice>
+                        </af:gridCell>
+                      </af:gridRow>
+                      <af:gridRow marginTop="12px" height="auto" id="gr4">
+                        <af:gridCell marginStart="5px" width="25%" id="gc20" halign="end" valign="middle">
+                          <af:outputLabel value="Exit Reentry Visa" id="ol8"/>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" width="25%" id="gc18" valign="middle">
+                          <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
+                                              label="#{bindings.ExitRerentryVisa.label}"
+                                              required="#{bindings.ExitRerentryVisa.hints.mandatory}"
+                                              shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="soc11"
+                                              simple="true" contentStyle="width:200px">
+                            <f:selectItems value="#{bindings.ExitRerentryVisa.items}" id="si11"/>
+                          </af:selectOneChoice>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" width="25%" id="gc11" halign="end" valign="middle">
+                          <af:outputLabel value="Destination Visa Required" id="ol9"/>
+                        </af:gridCell>
+                        <af:gridCell marginStart="5px" width="25%" marginEnd="5px" id="gc15" valign="middle">
+                          <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
+                                              label="#{bindings.DestVisaRequired.label}"
+                                              required="#{bindings.DestVisaRequired.hints.mandatory}"
+                                              shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="soc12"
+                                              simple="true" contentStyle="width:200px">
+                            <f:selectItems value="#{bindings.DestVisaRequired.items}" id="si12"/>
                           </af:selectOneChoice>
                         </af:gridCell>
                       </af:gridRow>

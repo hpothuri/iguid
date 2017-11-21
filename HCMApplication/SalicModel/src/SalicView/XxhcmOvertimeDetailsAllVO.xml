@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeDetailsAllVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID, 
        XxhcmOvertimeDetailsAllEO.REQ_ID, 
@@ -246,7 +246,18 @@
   <ViewAccessor
     Name="CityCountryROVO1"
     ViewObjectName="SalicROVO.CityCountryROVO"
-    RowLevelBinds="true"/>
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="filterByCountry"
+      FullName="SalicROVO.CityCountryROVO.filterByCountry"/>
+    <ParameterMap>
+      <PIMap Variable="bindCountryId">
+        <TransientExpression
+          trustMode="untrusted"
+          Name="ExpressionScript"><![CDATA[DestCountryId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <ViewAccessor
     Name="Lookup_AirlineTicketType"
     ViewObjectName="SalicROVO.Lookup_ROVO"
@@ -263,6 +274,33 @@
     Name="LetterTOROVO1"
     ViewObjectName="SalicROVO.LetterTOROVO"
     RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CountryVA"
+    ViewObjectName="SalicROVO.CityCountryROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="filterByRegionId"
+      FullName="SalicROVO.CityCountryROVO.filterByRegionId"/>
+    <ParameterMap>
+      <PIMap Variable="bindRegionId">
+        <TransientExpression
+          trustMode="untrusted"
+          Name="ExpressionScript"><![CDATA[DestRegionId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="CountriesVA"
+    ViewObjectName="SalicROVO.CountryROVO"
+    RowLevelBinds="true">
+    <ParameterMap>
+      <PIMap Variable="bindRegionId">
+        <TransientExpression
+          trustMode="untrusted"
+          Name="ExpressionScript"><![CDATA[DestRegionId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <ListBinding
     Name="LOV_OvertimeType"
     ListVOName="otTypeROVA"
@@ -383,8 +421,12 @@
       <Item Value="DestCategory"/>
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="DestRegionId"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="LookupValueName"/>
+      <Item Value="LookupValueId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
@@ -444,7 +486,6 @@
       <Item Value="CityId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="CountryName"/>
       <Item Value="CityName"/>
     </AttrArray>
     <DisplayCriteria/>
@@ -560,6 +601,24 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Engname"/>
       <Item Value="Arbname"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestCountryId"
+    ListVOName="CountriesVA"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestCountryId"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CountryId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CountryName"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -1157,6 +1216,8 @@ return null;
       <SchemaBasedProperties>
         <CONTROLTYPE
           Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -1323,6 +1384,36 @@ CountryROVO1.first().getAttribute("CountryName");
       <SchemaBasedProperties>
         <LABEL
           ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestRegionId"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="DestCountryId"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"
+    LOVName="LOV_DestCountryId">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountryId_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

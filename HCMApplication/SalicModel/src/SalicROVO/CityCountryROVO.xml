@@ -4,12 +4,13 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CityCountryROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  FetchSize="50"
+  FetchMode="FETCH_AS_NEEDED">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -19,9 +20,17 @@
         ResId="SalicROVO.CityCountryROVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery>
-    <![CDATA[select country.COUNTRY_ID,country.COUNTRY_CODE,country.COUNTRY_NAME,city.CITY_ID,city.CITY_NAME from COUNTRY country,CITY city where country.COUNTRY_ID=city.COUNTRY_ID]]>
-  </SQLQuery>
+  <Variable
+    Name="bindRegionId"
+    Kind="viewcriteria"
+    Type="java.math.BigDecimal"
+    DefaultValue="-1"/>
+  <Variable
+    Name="bindCountryId"
+    Kind="viewcriteria"
+    Type="java.math.BigDecimal"
+    DefaultValue="-1"/>
+  <SQLQuery><![CDATA[select country.COUNTRY_ID,country.COUNTRY_CODE,country.COUNTRY_NAME,city.CITY_ID,city.CITY_NAME,country.DEST_CAT_LOOKUP_VALUE_ID from COUNTRY country,CITY city where country.COUNTRY_ID=city.COUNTRY_ID]]></SQLQuery>
   <ViewAttribute
     Name="CountryId"
     IsUpdateable="false"
@@ -101,6 +110,88 @@
       <Attr Name="_DisplaySize" Value="255"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="DestCatLookupValueId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="DEST_CAT_LOOKUP_VALUE_ID"
+    Expression="DEST_CAT_LOOKUP_VALUE_ID"
+    SQLType="NUMERIC"/>
+  <ViewCriteria
+    Name="filterByRegionId"
+    ViewObjectName="SalicROVO.CityCountryROVO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CityCountryROVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="DestCatLookupValueId"
+        ViewAttribute="DestCatLookupValueId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindRegionId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="filterByCountry"
+    ViewObjectName="SalicROVO.CityCountryROVO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CityCountryROVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="CountryId"
+        ViewAttribute="CountryId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindCountryId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="CityId"/>
   </AttrArray>
