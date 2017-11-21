@@ -129,7 +129,6 @@
     </DesignTime>
     <TransientExpression
       Name="ExpressionScript"
-      trustMode="trusted"
       CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
@@ -158,7 +157,6 @@
     </DesignTime>
     <TransientExpression
       Name="ExpressionScript"
-      trustMode="trusted"
       CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
@@ -205,6 +203,18 @@
     TableName="XX_QP_ACTION_HISTORY_T">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ApprType"
+    Precision="20"
+    ColumnName="APPR_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XX_QP_ACTION_HISTORY_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
     </DesignTime>
   </Attribute>
   <Key

@@ -21,7 +21,8 @@
        XxQpActionHistoryTEO.LAST_UPDATE_LOGIN, 
        XxQpActionHistoryTEO.ROWID, 
        XxQpActionHistoryTEO.PAGE, 
-       XxQpActionHistoryTEO.REQ_NUMBER"
+       XxQpActionHistoryTEO.REQ_NUMBER, 
+       XxQpActionHistoryTEO.APPR_TYPE"
   FromList="XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -197,6 +198,12 @@
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewAttribute
+    Name="ApprType"
+    PrecisionRule="true"
+    EntityAttrName="ApprType"
+    EntityUsage="XxQpActionHistoryTEO"
+    AliasName="APPR_TYPE"/>
   <ViewCriteria
     Name="XxQpActionHistoryTVOCriteria"
     ViewObjectName="SalicView.XxQpActionHistoryTVO"

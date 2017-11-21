@@ -98,6 +98,25 @@
    <ViewUsage
       Name="EmpReqTypeApprListROVO1"
       ViewObjectName="SalicROVO.EmpReqTypeApprListROVO"/>
+   <ViewUsage
+      Name="getApprovalSetupDetailsROVO1"
+      ViewObjectName="SalicROVO.getApprovalSetupDetailsROVO"/>
+   <ViewUsage
+      Name="getApprovalGrpDetailsROVO1"
+      ViewObjectName="SalicROVO.getApprovalGrpDetailsROVO"/>
+   <ViewUsage
+      Name="GetJobLevelROVO1"
+      ViewObjectName="SalicROVO.GetJobLevelROVO"/>
+   <ViewUsage
+      Name="GetManagerDetailsROVO1"
+      ViewObjectName="SalicROVO.GetManagerDetailsROVO"/>
+   <ViewUsage
+      Name="employeeROVO1"
+      ViewObjectName="SalicROVO.employeeROVO">
+      <ViewCriteriaUsage
+         Name="findById"
+         FullName="SalicROVO.employeeROVO.findById"/>
+   </ViewUsage>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

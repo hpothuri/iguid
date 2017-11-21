@@ -5,8 +5,15 @@ import SalicAM.common.overTimeAM;
 import SalicROVO.CheckChildsForEmployeeInYearVOImpl;
 import SalicROVO.CheckClaimedAmountVOImpl;
 import SalicROVO.CheckGradeAllowanceVOImpl;
+import SalicROVO.GetJobLevelROVOImpl;
+import SalicROVO.GetJobLevelROVORowImpl;
+import SalicROVO.GetManagerDetailsROVOImpl;
 import SalicROVO.ValidateSalAdvROVOImpl;
 
+
+import SalicROVO.getApprovalGrpDetailsROVOImpl;
+import SalicROVO.getApprovalSetupDetailsROVOImpl;
+import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
 import java.math.BigDecimal;
 
@@ -523,6 +530,92 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         
         return reqty;
     }
+    
+    
+    public void populateApproversForReqestTypeNew(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+        BigDecimal empIdB = empId.bigDecimalValue();
+        int apprSeqNew = 0;
+        ViewObject approvSetup = getgetApprovalSetupDetailsROVO1();
+        approvSetup.setNamedWhereClauseParam("p_appr_type", "Approval");
+        approvSetup.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
+        approvSetup.executeQuery();
+        RowSetIterator rsi  = null;
+        Integer jobLevelInt = null;
+        String JobLevel = null;
+        ViewObject empJobLev = getGetJobLevelROVO1();
+        empJobLev.setNamedWhereClauseParam("p_emp_id", empIdB);
+        empJobLev.executeQuery();
+        if(empJobLev.hasNext()){
+            JobLevel =  (String)empJobLev.first().getAttribute("JobLevel");
+            jobLevelInt = Integer.parseInt("JobLevel");
+        }
+        try {
+            rsi = approvSetup.createRowSetIterator("apprSetup");
+            rsi.reset();
+            while (rsi.hasNext()) {
+                getApprovalSetupDetailsROVORowImpl apprSetRow = (getApprovalSetupDetailsROVORowImpl)rsi.next();
+                BigDecimal ApprLevel = apprSetRow.getApprLevel();
+                BigDecimal ApprGroupId= apprSetRow.getApprGroupId();
+                BigDecimal CustApprGroupId= apprSetRow.getCustApprGroupId();
+                BigDecimal managerId = null;
+                String managerName = null;
+                //Superwiser
+                if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
+                    ViewObject empManager = getGetManagerDetailsROVO1();
+                    empManager.setNamedWhereClauseParam("p_emp_id", empIdB);
+                    empManager.executeQuery();
+                    if(empManager.hasNext()){
+                        managerId =  (BigDecimal)empManager.first().getAttribute("ManagerId");
+                        //BV_EMP_ID
+                        ViewObject empManagerDet = getemployeeROVO1();
+                        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID", empIdB);
+                        empManagerDet.executeQuery();
+                        if(empManager.hasNext()){
+                            managerName =(String)empManagerDet.first().getAttribute("EmpName");
+                        }
+                        Row vonew = getXxQpActionHistoryTVO1().createRow();
+                        //xx_qp_action_history_s
+//                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+//                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
+//                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
+//                        vonew.setAttribute("ApproveLevel", apprRow.getAttribute("ApprovalLevel"));
+//                        vonew.setAttribute("ApproverId", ((oracle.jbo.domain.Number)apprRow.getAttribute("EmpId")).bigDecimalValue());
+//                        vonew.setAttribute("ApproverUserName", apprRow.getAttribute("EmployeeName"));
+//                        vonew.setAttribute("ApproverComments", null);
+//                        vonew.setAttribute("ApproverFlag", null);
+//                        
+//                        vonew.setAttribute("Type", "H");
+//                        vonew.setAttribute("Page", getDecodedReqType(reqType));
+//                        vonew.setAttribute("ApprType", apprRow.getAttribute("ApprType"));
+//                        vonew.setAttribute("CreatedBy", "sam");
+//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+//                        vonew.setAttribute("LastUpdatedBy", "sam");
+//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+//                        vonew.setAttribute("LastUpdateLogin", "sam");
+//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+//                        vonew.setAttribute("ReqNumber", reqNumber);
+//                        getXxQpActionHistoryTVO1().insertRow(vonew);
+                        
+                        
+                    }
+                    
+                }
+                //Custom Approval group
+                if(ApprGroupId.compareTo(new BigDecimal(100011)) == 0){
+                    
+                }
+
+            }
+            rsi.closeRowSetIterator();
+        } catch (Exception e) {
+            if(rsi!=null){
+                rsi.closeRowSetIterator();  
+            }
+        }
+    }
+    
+    
+    
     public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
         ViewObject approvList = getEmpReqTypeApprListROVO1();
         approvList.setNamedWhereClauseParam("p_EMP_ID", empId);
@@ -544,7 +637,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             vonew.setAttribute("ApproverFlag", null);
             
             vonew.setAttribute("Type", "H");
-            vonew.setAttribute("Page", reqType);
+            vonew.setAttribute("Page", getDecodedReqType(reqType));
+            vonew.setAttribute("ApprType", apprRow.getAttribute("ApprType"));
             vonew.setAttribute("CreatedBy", "sam");
             //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
             vonew.setAttribute("LastUpdatedBy", "sam");
@@ -559,6 +653,46 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
         getXxQpActionHistoryTVO1().executeQuery();
+    }
+
+    /**
+     * Container's getter for getApprovalSetupDetailsROVO1.
+     * @return getApprovalSetupDetailsROVO1
+     */
+    public getApprovalSetupDetailsROVOImpl getgetApprovalSetupDetailsROVO1() {
+        return (getApprovalSetupDetailsROVOImpl) findViewObject("getApprovalSetupDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for getApprovalGrpDetailsROVO1.
+     * @return getApprovalGrpDetailsROVO1
+     */
+    public getApprovalGrpDetailsROVOImpl getgetApprovalGrpDetailsROVO1() {
+        return (getApprovalGrpDetailsROVOImpl) findViewObject("getApprovalGrpDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for GetJobLevelROVO1.
+     * @return GetJobLevelROVO1
+     */
+    public GetJobLevelROVOImpl getGetJobLevelROVO1() {
+        return (GetJobLevelROVOImpl) findViewObject("GetJobLevelROVO1");
+    }
+
+    /**
+     * Container's getter for GetManagerDetailsROVO1.
+     * @return GetManagerDetailsROVO1
+     */
+    public GetManagerDetailsROVOImpl getGetManagerDetailsROVO1() {
+        return (GetManagerDetailsROVOImpl) findViewObject("GetManagerDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for employeeROVO1.
+     * @return employeeROVO1
+     */
+    public ViewObjectImpl getemployeeROVO1() {
+        return (ViewObjectImpl) findViewObject("employeeROVO1");
     }
 }
 

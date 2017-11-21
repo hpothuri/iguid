@@ -301,6 +301,7 @@
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="AnnualLeave"/>
+      <Item Value="Duration"/>
     </AttrArray>
     <DisplayCriteria
       Name="findById"
