@@ -42,6 +42,8 @@ import oracle.jbo.ApplicationModule;
 import oracle.jbo.Key;
 import oracle.jbo.Row;
 import oracle.jbo.ViewObject;
+import oracle.jbo.server.ApplicationModuleImpl;
+import oracle.jbo.server.DBTransaction;
 import oracle.jbo.uicli.binding.JUCtrlValueBinding;
 
 import org.apache.commons.collections.MultiMap;
@@ -529,6 +531,11 @@ public class ADFUtils implements java.io.Serializable {
        
         }
         return appModule;
+    }
+    
+    public static DBTransaction getDBTransaction(String amName){
+        ApplicationModuleImpl am = (ApplicationModuleImpl) getApplicationModuleForDataControl(amName);
+        return am.getDBTransaction();
     }
 
     /**

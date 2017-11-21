@@ -50,7 +50,7 @@ import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewCriteriaRow;
 import oracle.jbo.ViewObject;
-
+import view.common.GenerateEmailTemplate;
 
 import oracle.jbo.domain.Number;
 import oracle.jbo.server.ApplicationModuleImpl;
@@ -71,7 +71,9 @@ import java.io.OutputStream;
 import java.text.ParseException;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.el.ELContext;
@@ -96,6 +98,8 @@ import oracle.binding.BindingContainer;
 import oracle.jbo.ViewCriteriaManager;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.uicli.binding.JUCtrlListBinding;
+
+import view.pojo.EmailRequestPojo;
 
 public class Employee {
 
@@ -1094,13 +1098,13 @@ public class Employee {
         }
         
         //populateApproversForReqest
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
-        //RequestNumber
-        op.getParamsMap().put("reqNumber", variationSearchVo.getCurrentRow().getAttribute("RequestNumber"));
-        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
-        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
-        op.getParamsMap().put("req_id", variationSearchVo.getCurrentRow().getAttribute("ReqId"));
-        op.execute();
+//        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+//        //RequestNumber
+//        op.getParamsMap().put("reqNumber", variationSearchVo.getCurrentRow().getAttribute("RequestNumber"));
+//        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
+//        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+//        op.getParamsMap().put("req_id", variationSearchVo.getCurrentRow().getAttribute("ReqId"));
+//        op.execute();
         //        lineVO.executeQuery();
         //        attVO.createRow();
         //        attVO.executeQuery();
@@ -1279,15 +1283,159 @@ public class Employee {
                     AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
                     AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
                     returnActivity = "save";
-
+                    
+                    
+                    //code to prepare email template for submitted employee
+                    
+//                    EmailRequestPojo emailReq = new EmailRequestPojo();
+//                    emailReq.setRequestId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
+//                    emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+//                    emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).stringValue());
+//                    emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("employeeNameTRANS"));
+//                    
+//                    ArrayList<String> toRecepients = new ArrayList<String>();
+//                    
+//                    Row[] rows = ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject().getFilteredRows("ApproveLevel", new BigDecimal(1));
+//                    if(rows != null && rows.length > 0){
+//                        for(Row row : rows){
+//                            toRecepients.add((String)row.getAttribute("ApproverUserName"));
+//                        }
+//                    }
+//                    
+//                    String[] to = { "salic.paasadmn@gmail.com" }; //TODO get logged in user email
+//                    emailReq.setToEmail(to);
+//                    emailReq.setToEmpName(emailReq.getEmpName());
+////                    emailReq.setToEmail((String[]) toRecepients.toArray());
+//                    
+//                    emailReq.setMessage("Your <b> overtime request </b> is submitted and pending for HR varification with hereunder information:");
+//                    emailReq.setSubject("Overtime request (" + emailReq.getRequestNo() +") is submitted for approval, Pending for HR varification.");
+//                    
+//                    ArrayList<String> tableContentCols = new ArrayList<String>();
+//                    tableContentCols.add("Overtime Date");
+//                    tableContentCols.add("Overtime Type");
+//                    tableContentCols.add("Overtime Hours");
+//                    tableContentCols.add("Calculated Hours");
+//                    tableContentCols.add("Description");
+//                    
+//                    emailReq.setTableContentColumns(tableContentCols);
+//                    
+//                    emailReq.setDetailsQuery("select OVERTIME_DATE,OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +emailReq.getRequestId());
+//                    
+//                    LinkedHashMap<String, String> tableColumnDatatypes = new LinkedHashMap<String, String>();
+//                    tableColumnDatatypes.put("OVERTIME_DATE", "DATE");
+//                    tableColumnDatatypes.put("OVERTIME_TYPE", "STRING");
+//                    tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
+//                    tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
+//                    tableColumnDatatypes.put("MISSIONS", "STRING");
+//                    emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+//                    
+//                    LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    
+//                    Map<String, String> emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"),
+//                                  emailHapmap.get("body"));
+//                    
+//                    //Code to prepare template for HR approval
+//                    String loggedInUserName = emailReq.getEmpName();
+//                    String[] hrUsers = { "salic.paasadmn@gmail.com" }; //TODO get hr user email
+//                    String hrUserName = "Test Hr User"; //TODO get hr user name
+//                    emailReq.setToEmpName(hrUserName);
+//                    emailReq.setToEmail(hrUsers);
+//                    emailReq.setSubject("Overtime request ("+emailReq.getRequestNo()+") is pending for HR verification");
+//                    emailReq.setMessage("Overtime request <b>(" + emailReq.getRequestNo() +")</b> is submitted by <b>"+loggedInUserName+"</b>and  needs your verification with hereunder information:");
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("Verified", "");
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email for HR approval
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"),
+//                                  emailHapmap.get("body"));
+//                
+//                    //Code to prepare template for Manager approval
+//                    String[] managerUsers = { "salic.paasadmn@gmail.com" }; //TODO get manager email 
+//                    String mgrUserName = "Test Manager User"; //TODO get manager user name
+//                    emailReq.setToEmpName(mgrUserName);
+//                    emailReq.setToEmail(managerUsers);
+//                    emailReq.setSubject("Action required for overtime request("+emailReq.getRequestNo()+") of "+emailReq.getEmpName());
+//                    emailReq.setMessage("<b> Overtime request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpId()+") </b> is pending for your approval with hereunder details:"); 
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("Approve", "");
+//                    actionButtons.put("Reject", "");
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email for Manager approval
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+//                    
+//                    //Code to prepare template for post first level approval for employee
+//                    String[] employeeUsers = { "salic.paasadmn@gmail.com" }; //TODO get employee email
+//                    String firstLevelApproverName = "First Level Approver"; //TODO get first level approver name
+//                    String secondLevelApproverName = "Second Level Approver"; //TODO get second level approver name
+//                    emailReq.setToEmpName(emailReq.getEmpName());
+//                    emailReq.setToEmail(employeeUsers);
+//                    emailReq.setSubject("Overtime request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+"  pending with "+secondLevelApproverName);
+//                    emailReq.setMessage("<b> Overtime request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email for post first level approval for employee
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+//                    
+//                    //Code to prepare template for Payroll after all approval
+//                    String[] payrollUsers = { "salic.paasadmn@gmail.com" }; //TODO get payroll email
+//                    String payrollUserName = "Test Payroll User"; //TODO get payroll user name
+//                    emailReq.setToEmail(payrollUsers);
+//                    emailReq.setToEmpName(payrollUserName);
+//                    emailReq.setSubject("Overtime request("+emailReq.getRequestNo()+") is approved and pending for payroll process");
+//                    emailReq.setMessage("Your <b> Overtime request </b>is approved. HR Payroll will take action to  process this request in payroll with hereunder information:");
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email for Payroll after all approval
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+//                    
+//                    //Code for preparing template after rejection (to user)
+//                    String[] currentUser = { "salic.paasadmn@gmail.com" }; //TODO get employee email
+//                    String rejecterName = "Test Rejecter";//TODO get rejecter username
+//                    String rejectReason = "You are not eligible for thes days"; //TODO get reject reason
+//                    emailReq.setToEmpName(emailReq.getEmpName());
+//                    emailReq.setToEmail(currentUser);
+//                    emailReq.setSubject("Overtime request("+emailReq.getRequestNo()+") is rejected by "+rejecterName);
+//                    emailReq.setMessage("Your <b> Overtime request </b>is rejected by "+rejecterName+" with hereunder information: <br> <b>Reject reason</b> : "+rejectReason);
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email after rejection (to user)
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+//                    
+//                    //Code for preparing template after all approvals
+//                    String[] empUser = { "salic.paasadmn@gmail.com" }; //TODO get employee email
+//                    emailReq.setToEmpName(emailReq.getEmpName());
+//                    emailReq.setToEmail(empUser);
+//                    emailReq.setSubject("Overtime request("+emailReq.getRequestNo()+") under payment proccess");
+//                    emailReq.setMessage("Your <b> Overtime request </b>is transferred to payroll and under payment  proccess with hereunder information:");
+//                    actionButtons = new LinkedHashMap<String, String>();
+//                    actionButtons.put("More Info", "");
+//                    emailReq.setActionButtons(actionButtons);
+//                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
+//                    
+//                    //Code for Sending email after all approvals
+//                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
                 }
                 
-                //        ViewCriteria vc=variationSearchVo.createViewCriteria();
-                //        ViewCriteriaRow vcr=vc.createViewCriteriaRow();
-                //        vcr.setAttribute("RequestNumber", "");
-                //        vc.addRow(vcr);
-                //        variationSearchVo.applyViewCriteria(vc);
-                //        variationSearchVo.executeQuery();
             } else if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
 
                 //                    ViewObject otHdrVO =
