@@ -28,11 +28,11 @@ public class GenerateEmailTemplate {
         super();
     }
 
-//    private static String FROM_USER = "salic.paasadmn@gmail.com";
-//    private static String FROM_USER_PASSWORD = "Admin1234";
+    private static String FROM_USER = "salic.paasadmn@gmail.com";
+    private static String FROM_USER_PASSWORD = "Admin1234";
     
-    private static String FROM_USER = "nitish744@gmail.com";
-    private static String FROM_USER_PASSWORD = "julietromeo";
+//    private static String FROM_USER = "";
+//    private static String FROM_USER_PASSWORD = "";
 
     public static Map<String, String> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
         Map<String, String> emailHapmap = new HashMap<String, String>();

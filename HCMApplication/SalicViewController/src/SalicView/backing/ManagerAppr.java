@@ -199,6 +199,12 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
         refresh();
+        
+        //send emails
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "A");
+        op.execute();
+        
     }
 
     public void rejectACL(ActionEvent actionEvent) {
@@ -217,6 +223,10 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
         refresh();
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "R");
+        op.execute();
     }
 
     public void refresh() {

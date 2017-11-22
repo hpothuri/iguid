@@ -7,4 +7,6 @@ import oracle.jbo.ApplicationModule;
 // ---------------------------------------------------------------------
 public interface ManagerDashbordAM extends ApplicationModule {
     void load();
+
+    void prepareMailTemplateAndSend(String approveOrReject);
 }

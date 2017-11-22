@@ -17,7 +17,14 @@ public class ManagerDashbordAMClient extends ApplicationModuleImpl implements Ma
     }
 
     public void load() {
-        Object _ret = this.riInvokeExportedMethod(this,"load",null,null);
+        Object _ret = this.riInvokeExportedMethod(this, "load", null, null);
+        return;
+    }
+
+    public void prepareMailTemplateAndSend(String approveOrReject) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "prepareMailTemplateAndSend", new String[] { "java.lang.String" },
+                                        new Object[] { approveOrReject });
         return;
     }
 }

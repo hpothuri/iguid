@@ -556,7 +556,7 @@
                            </af:column>
                            <af:column id="c24" headerText="Action"
                                       frozen="true" rendered="false">
-                              <af:panelGroupLayout id="pgl19" layout="horizontal">
+                              <af:panelGroupLayout id="pgl20" layout="horizontal">
                                  <af:link id="cmi1" actionListener="#{ManagerAppr.approveACL}"
                                           disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }"
                                           icon="/images/qual_approved_32_full.png"/>

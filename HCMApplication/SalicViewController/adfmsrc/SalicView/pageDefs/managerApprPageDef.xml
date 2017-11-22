@@ -62,5 +62,11 @@
         <Item Value="Status"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="prepareMailTemplateAndSend" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
+                  DataControl="ManagerDashbordAMDataControl"
+                  InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
+      <NamedData NDName="approveOrReject" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>
