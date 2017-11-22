@@ -1,4 +1,4 @@
-package view.pojo;
+package common.pojo;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -1707,92 +1707,17 @@ public class Employee {
             }
             
         }
-        EmailRequestPojo emailReq = new EmailRequestPojo();
-        emailReq.setRequestId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
-        emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-        emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).stringValue());
-        emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("employeeNameTRANS"));
-
-        ArrayList<String> toRecepients = new ArrayList<String>();
-
-        Row[] rows = ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator")
-                             .getViewObject()
-                             .getFilteredRows("ApproveLevel", new BigDecimal(1));
-        if (rows != null && rows.length > 0) {
-            for (Row row : rows) {
-                toRecepients.add((String) row.getAttribute("ApproverUserName"));
-            }
-        }
-//
-//        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-//        emailReq.setToEmail(to);
-//        emailReq.setToEmpName(emailReq.getEmpName());
-//        //                    emailReq.setToEmail((String[]) toRecepients.toArray());
-//
-//        emailReq.setMessage("Your <b> "+getDecodedReqType((String)ADFContext.getCurrent().getSessionScope().get("page")) +"</b> is submitted and pending for HR varification with hereunder information:");
-//        emailReq.setSubject(getDecodedReqType((String)ADFContext.getCurrent().getSessionScope().get("page"))+" ("+ emailReq.getRequestNo() +
-//                            ") is submitted for approval, Pending for HR varification.");
-//        LinkedHashMap<String, String> tableColumnDatatypes = null;
-//        String reqPage = (String)ADFContext.getCurrent().getSessionScope().get("page");
-//        ArrayList<String> tableContentCols = new ArrayList<String>();
-//        if(reqPage.equalsIgnoreCase("ot"))   {
-//        tableContentCols.add("Overtime Date");
-//        tableContentCols.add("Overtime Type");
-//        tableContentCols.add("Overtime Hours");
-//        tableContentCols.add("Calculated Hours");
-//        tableContentCols.add("Description");
-//
-//        emailReq.setTableContentColumns(tableContentCols);
-//
-//    
-//        emailReq.setDetailsQuery("select OVERTIME_DATE,OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
-//                                 emailReq.getRequestId());
-//        
-//        tableColumnDatatypes = new LinkedHashMap<String, String>();
-//        tableColumnDatatypes.put("OVERTIME_DATE", "DATE");
-//        tableColumnDatatypes.put("OVERTIME_TYPE", "STRING");
-//        tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
-//        tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
-//        tableColumnDatatypes.put("MISSIONS", "STRING");
-//        emailReq.setTableColumnDatatypes(tableColumnDatatypes);
-//
-//        }
-//        LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
-//        actionButtons.put("More Info", "");
-//        emailReq.setActionButtons(actionButtons);
-//        Map<String, String> emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, ADFUtils.getDBTransaction("overTimeAMDataControl"));
-//                            
-//                            //Code for Sending email
-//        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"),
-//                                          emailHapmap.get("body"));
+    
+        
+        //TODO
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.execute();
                             
         return returnActivity;
 
     }
 
-    public String getDecodedReqType(String reqType){
-        String reqty = null;
-        if(reqType.equalsIgnoreCase("ot"))
-            return "Over Time";       
-        if(reqType.equalsIgnoreCase("salary"))
-            return "Salary In Advance";
-        if(reqType.equalsIgnoreCase("BusinessTrip"))
-            return "Business Trip";
-        if(reqType.equalsIgnoreCase("BusinessTripCompletion"))
-            return "Business Trip Completion";
-        if(reqType.equalsIgnoreCase("edu"))
-            return "Education Allowance";
-        if(reqType.equalsIgnoreCase("letter"))
-            return "HR Letter";
-        if(reqType.equalsIgnoreCase("vacation"))
-            return "Vacation Allowance";
-        if(reqType.equalsIgnoreCase("house"))
-            return "Housing Adavce";
-        
-        //house
-        
-        return reqty;
-    }
     public void createOtLineACL(ActionEvent actionEvent) {
         ADFUtils.invokeEL("#{bindings.CreateInsert.execute}");
 

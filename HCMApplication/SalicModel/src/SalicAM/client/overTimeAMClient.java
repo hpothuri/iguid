@@ -83,6 +83,11 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void prepareMailTemplateAndSend() {
+        Object _ret = this.riInvokeExportedMethod(this, "prepareMailTemplateAndSend", null, null);
+        return;
+    }
+
     public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validateThreeChildsPerYear",

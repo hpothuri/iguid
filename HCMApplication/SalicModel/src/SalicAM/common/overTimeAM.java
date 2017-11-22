@@ -29,4 +29,6 @@ public interface overTimeAM extends ApplicationModule {
     Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId);
 
     void populateApproversForReqest(String reqNumber, Number empId, String reqType, Number req_id);
+
+    void prepareMailTemplateAndSend();
 }

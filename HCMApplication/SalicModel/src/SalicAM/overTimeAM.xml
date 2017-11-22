@@ -2,7 +2,7 @@
 <!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
 <!---->
 <AppModule xmlns="http://xmlns.oracle.com/bc4j" Name="overTimeAM"
-   Version="12.2.1.12.24" InheritPersonalization="merge"
+   Version="12.2.1.16.48" InheritPersonalization="merge"
            ClearCacheOnRollback="true"
            ClientProxyName="SalicAM.client.overTimeAMClient"
            ComponentClass="SalicAM.overTimeAMImpl"
@@ -421,6 +421,130 @@
          <Parameter
             Name="req_id"
             Type="oracle.jbo.domain.Number"/>
+      </Method>
+      <Method
+         Name="fetchAvlAmountForChild"
+         MethodName="fetchAvlAmountForChild">
+         <Return
+            Name="_return_type_"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="childId"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="invDate"
+            Type="java.sql.Date"/>
+         <Parameter
+            Name="maxAmt"
+            Type="java.math.BigDecimal"/>
+      </Method>
+      <Method
+         Name="fetchMaxAmountForEmployee"
+         MethodName="fetchMaxAmountForEmployee">
+         <Return
+            Name="_return_type_"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="empId"
+            Type="java.math.BigDecimal"/>
+      </Method>
+      <Method
+         Name="getAirTicketType"
+         MethodName="getAirTicketType">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="dest"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getCurrwncyRate"
+         MethodName="getCurrwncyRate">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.domain.Number"/>
+         <Parameter
+            Name="fromcurr"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getOTGradeEligibility"
+         MethodName="getOTGradeEligibility">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="getPerDMRate"
+         MethodName="getPerDMRate">
+         <Return
+            Name="_return_type_"
+            Type="oracle.jbo.domain.Number"/>
+         <Parameter
+            Name="dest"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="grade"
+            Type="java.lang.String"/>
+      </Method>
+      <Method
+         Name="insertRecords"
+         MethodName="insertRecords">
+         <Return
+            Name="_return_type_"
+            Type="void"/>
+      </Method>
+      <Method
+         Name="populateApproversForReqest"
+         MethodName="populateApproversForReqest">
+         <Return
+            Name="_return_type_"
+            Type="void"/>
+         <Parameter
+            Name="reqNumber"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="empId"
+            Type="oracle.jbo.domain.Number"/>
+         <Parameter
+            Name="reqType"
+            Type="java.lang.String"/>
+         <Parameter
+            Name="req_id"
+            Type="oracle.jbo.domain.Number"/>
+      </Method>
+      <Method
+         Name="prepareMailTemplateAndSend"
+         MethodName="prepareMailTemplateAndSend">
+         <Return
+            Name="_return_type_"
+            Type="void"/>
+      </Method>
+      <Method
+         Name="validateThreeChildsPerYear"
+         MethodName="validateThreeChildsPerYear">
+         <Return
+            Name="_return_type_"
+            Type="java.lang.Boolean"/>
+         <Parameter
+            Name="empId"
+            Type="java.math.BigDecimal"/>
+         <Parameter
+            Name="invDate"
+            Type="java.sql.Date"/>
+         <Parameter
+            Name="childId"
+            Type="java.math.BigDecimal"/>
       </Method>
    </ClientInterface>
 </AppModule>

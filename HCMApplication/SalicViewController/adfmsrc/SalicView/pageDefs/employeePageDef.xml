@@ -595,5 +595,9 @@
             id="DestCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
       <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountryCity"
                     id="DestCountryCity1"/>
+      <methodAction id="prepareMailTemplateAndSend" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
+                    DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider"/>
    </bindings>
 </pageDefinition>

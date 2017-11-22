@@ -1,4 +1,4 @@
-package view.common;
+package common;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import javax.mail.internet.MimeMessage;
 
 import oracle.jbo.server.DBTransaction;
 
-import view.pojo.EmailRequestPojo;
+import common.pojo.EmailRequestPojo;
 
 
 public class GenerateEmailTemplate {
@@ -28,11 +28,11 @@ public class GenerateEmailTemplate {
         super();
     }
 
-    private static String FROM_USER = "salic.paasadmn@gmail.com";
-    private static String FROM_USER_PASSWORD = "Admin1234";
+//    private static String FROM_USER = "salic.paasadmn@gmail.com";
+//    private static String FROM_USER_PASSWORD = "Admin1234";
     
-//    private static String FROM_USER = "";
-//    private static String FROM_USER_PASSWORD = "";
+    private static String FROM_USER = "nitish744@gmail.com";
+    private static String FROM_USER_PASSWORD = "julietromeo";
 
     public static Map<String, String> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
         Map<String, String> emailHapmap = new HashMap<String, String>();
