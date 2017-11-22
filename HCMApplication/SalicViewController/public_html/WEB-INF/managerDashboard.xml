@@ -18,6 +18,7 @@
       <managed-bean-class id="__10">SalicView.backing.ManagerAppr</managed-bean-class>
       <managed-bean-scope id="__13">request</managed-bean-scope>
     </managed-bean>
+    <initializer>#{ManagerAppr.taskFlowInitializer}</initializer>
     <view id="managerAppr">
       <page>/managerAppr.jsff</page>
     </view>

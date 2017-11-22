@@ -15,6 +15,8 @@ import SalicROVO.getApprovalGrpDetailsROVOImpl;
 import SalicROVO.getApprovalSetupDetailsROVOImpl;
 import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
+import SalicROVO.getApprovalGrpDetailsROVORowImpl;
+//grpRec
 import java.math.BigDecimal;
 
 import oracle.adf.share.ADFContext;
@@ -532,7 +534,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     }
     
     
-    public void populateApproversForReqestTypeNew(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+    public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
         BigDecimal empIdB = empId.bigDecimalValue();
         int apprSeqNew = 0;
         ViewObject approvSetup = getgetApprovalSetupDetailsROVO1();
@@ -540,6 +542,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         approvSetup.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
         approvSetup.executeQuery();
         RowSetIterator rsi  = null;
+        RowSetIterator rsigrpDet = null;
         Integer jobLevelInt = null;
         String JobLevel = null;
         ViewObject empJobLev = getGetJobLevelROVO1();
@@ -547,7 +550,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         empJobLev.executeQuery();
         if(empJobLev.hasNext()){
             JobLevel =  (String)empJobLev.first().getAttribute("JobLevel");
-            jobLevelInt = Integer.parseInt("JobLevel");
+            jobLevelInt = Integer.parseInt(JobLevel);
         }
         try {
             rsi = approvSetup.createRowSetIterator("apprSetup");
@@ -568,92 +571,164 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         managerId =  (BigDecimal)empManager.first().getAttribute("ManagerId");
                         //BV_EMP_ID
                         ViewObject empManagerDet = getemployeeROVO1();
-                        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID", empIdB);
+                        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
                         empManagerDet.executeQuery();
-                        if(empManager.hasNext()){
+                        if(empManagerDet.hasNext()){
                             managerName =(String)empManagerDet.first().getAttribute("EmpName");
                         }
                         Row vonew = getXxQpActionHistoryTVO1().createRow();
                         //xx_qp_action_history_s
-//                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
-//                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
-//                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
-//                        vonew.setAttribute("ApproveLevel", apprRow.getAttribute("ApprovalLevel"));
-//                        vonew.setAttribute("ApproverId", ((oracle.jbo.domain.Number)apprRow.getAttribute("EmpId")).bigDecimalValue());
-//                        vonew.setAttribute("ApproverUserName", apprRow.getAttribute("EmployeeName"));
-//                        vonew.setAttribute("ApproverComments", null);
-//                        vonew.setAttribute("ApproverFlag", null);
-//                        
-//                        vonew.setAttribute("Type", "H");
-//                        vonew.setAttribute("Page", getDecodedReqType(reqType));
-//                        vonew.setAttribute("ApprType", apprRow.getAttribute("ApprType"));
-//                        vonew.setAttribute("CreatedBy", "sam");
-//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
-//                        vonew.setAttribute("LastUpdatedBy", "sam");
-//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
-//                        vonew.setAttribute("LastUpdateLogin", "sam");
-//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
-//                        vonew.setAttribute("ReqNumber", reqNumber);
-//                        getXxQpActionHistoryTVO1().insertRow(vonew);
+                        apprSeqNew = apprSeqNew + 1;
+                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
+                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
+                        vonew.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                        vonew.setAttribute("ApproverId", managerId);
+                        vonew.setAttribute("ApproverUserName", managerName);
+                        vonew.setAttribute("ApproverComments", null);
+                        vonew.setAttribute("ApproverFlag", null);
                         
+                        vonew.setAttribute("Type", "H");
+                        vonew.setAttribute("Page", getDecodedReqType(reqType));
+                        vonew.setAttribute("ApprType", "Approval");
+                        vonew.setAttribute("CreatedBy", empIdB.toString());
+                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                        vonew.setAttribute("LastUpdatedBy", empIdB.toString());
+                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                        vonew.setAttribute("LastUpdateLogin", empIdB.toString());
+                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                        vonew.setAttribute("ReqNumber", reqNumber);
+                        getXxQpActionHistoryTVO1().insertRow(vonew);
                         
-                    }
-                    
+                        if(jobLevelInt == 2){     
+                            
+                            ViewObject empSManager = getGetManagerDetailsROVO1();
+                            empSManager.setNamedWhereClauseParam("p_emp_id", managerId);
+                            empSManager.executeQuery();
+                            if(empSManager.hasNext()){
+                                managerId =  (BigDecimal)empSManager.first().getAttribute("ManagerId");
+                                //BV_EMP_ID
+                                ViewObject empSManagerDet = getemployeeROVO1();
+                                empSManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
+                                empSManagerDet.executeQuery();
+                                if(empSManagerDet.hasNext()){
+                                    managerName =(String)empSManagerDet.first().getAttribute("EmpName");
+                                }else{
+                                    managerName = null;
+                                }
+                                Row vonew1 = getXxQpActionHistoryTVO1().createRow();
+                                //xx_qp_action_history_s
+                                apprSeqNew = apprSeqNew + 1;
+                                SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                                vonew1.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+                                vonew1.setAttribute("HeaderId", req_id.bigDecimalValue());
+                                vonew1.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                                vonew1.setAttribute("ApproverId", managerId);
+                                vonew1.setAttribute("ApproverUserName", managerName);
+                                vonew1.setAttribute("ApproverComments", null);
+                                vonew1.setAttribute("ApproverFlag", null);
+                                
+                                vonew1.setAttribute("Type", "H");
+                                vonew1.setAttribute("Page", getDecodedReqType(reqType));
+                                vonew1.setAttribute("ApprType", "Approval");
+                                vonew1.setAttribute("CreatedBy", empIdB.toString());
+                                //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                                vonew1.setAttribute("LastUpdatedBy", empIdB.toString());
+                                //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                                vonew1.setAttribute("LastUpdateLogin", empIdB.toString());
+                                //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                                vonew1.setAttribute("ReqNumber", reqNumber);
+                                getXxQpActionHistoryTVO1().insertRow(vonew1);
+                            }
+                        }
+                    }                    
                 }
                 //Custom Approval group
                 if(ApprGroupId.compareTo(new BigDecimal(100011)) == 0){
-                    
+                    ViewObject approvgrpDet = getgetApprovalGrpDetailsROVO1();
+                    approvgrpDet.setNamedWhereClauseParam("p_cust_group_id", CustApprGroupId);
+                    approvgrpDet.executeQuery(); 
+                    rsigrpDet = approvgrpDet.createRowSetIterator("grp");
+                    while(rsigrpDet.hasNext()){
+                        getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();
+                        Row vonewgrp = getXxQpActionHistoryTVO1().createRow();
+                        //xx_qp_action_history_s
+                        apprSeqNew = apprSeqNew + 1;
+                        SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                        vonewgrp.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+                        vonewgrp.setAttribute("HeaderId", req_id.bigDecimalValue());
+                        vonewgrp.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                        vonewgrp.setAttribute("ApproverId", grpRec.getEmployeeId());
+                        vonewgrp.setAttribute("ApproverUserName", grpRec.getEmployeeName());
+                        vonewgrp.setAttribute("ApproverComments", null);
+                        vonewgrp.setAttribute("ApproverFlag", null);
+                        
+                        vonewgrp.setAttribute("Type", "H");
+                        vonewgrp.setAttribute("Page", getDecodedReqType(reqType));
+                        vonewgrp.setAttribute("ApprType", "Approval");
+                        vonewgrp.setAttribute("CreatedBy", empIdB.toString());
+                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                        vonewgrp.setAttribute("LastUpdatedBy", empIdB.toString());
+                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                        vonewgrp.setAttribute("LastUpdateLogin", empIdB.toString());
+                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                        vonewgrp.setAttribute("ReqNumber", reqNumber);
+                        getXxQpActionHistoryTVO1().insertRow(vonewgrp);                         
+                    }
+                    rsigrpDet.closeRowSetIterator();
                 }
-
             }
             rsi.closeRowSetIterator();
         } catch (Exception e) {
             if(rsi!=null){
                 rsi.closeRowSetIterator();  
             }
+            if(rsigrpDet!=null){
+                rsigrpDet.closeRowSetIterator(); 
+            }
         }
     }
     
     
     
-    public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
-        ViewObject approvList = getEmpReqTypeApprListROVO1();
-        approvList.setNamedWhereClauseParam("p_EMP_ID", empId);
-        approvList.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
-        approvList.executeQuery();
-        RowSetIterator rsi = approvList.createRowSetIterator("appr");
-        rsi.reset();
-        while(rsi.hasNext()){
-            Row apprRow = rsi.next();
-            Row vonew = getXxQpActionHistoryTVO1().createRow();
-            //xx_qp_action_history_s
-            SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
-            vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
-            vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
-            vonew.setAttribute("ApproveLevel", apprRow.getAttribute("ApprovalLevel"));
-            vonew.setAttribute("ApproverId", ((oracle.jbo.domain.Number)apprRow.getAttribute("EmpId")).bigDecimalValue());
-            vonew.setAttribute("ApproverUserName", apprRow.getAttribute("EmployeeName"));
-            vonew.setAttribute("ApproverComments", null);
-            vonew.setAttribute("ApproverFlag", null);
-            
-            vonew.setAttribute("Type", "H");
-            vonew.setAttribute("Page", getDecodedReqType(reqType));
-            vonew.setAttribute("ApprType", apprRow.getAttribute("ApprType"));
-            vonew.setAttribute("CreatedBy", "sam");
-            //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
-            vonew.setAttribute("LastUpdatedBy", "sam");
-            //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
-            vonew.setAttribute("LastUpdateLogin", "sam");
-            //ReqNumber	String	REQ_NUMBER	XxQpActionHistoryTEO	Show	
-            vonew.setAttribute("ReqNumber", reqNumber);
-            getXxQpActionHistoryTVO1().insertRow(vonew);
-            
-        }
-        rsi.closeRowSetIterator();                              
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
-        getXxQpActionHistoryTVO1().executeQuery();
-    }
+//    public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+//        ViewObject approvList = getEmpReqTypeApprListROVO1();
+//        approvList.setNamedWhereClauseParam("p_EMP_ID", empId);
+//        approvList.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
+//        approvList.executeQuery();
+//        RowSetIterator rsi = approvList.createRowSetIterator("appr");
+//        rsi.reset();
+//        while(rsi.hasNext()){
+//            Row apprRow = rsi.next();
+//            Row vonew = getXxQpActionHistoryTVO1().createRow();
+//            //xx_qp_action_history_s
+//            SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+//            vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
+//            vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
+//            vonew.setAttribute("ApproveLevel", apprRow.getAttribute("ApprovalLevel"));
+//            vonew.setAttribute("ApproverId", ((oracle.jbo.domain.Number)apprRow.getAttribute("EmpId")).bigDecimalValue());
+//            vonew.setAttribute("ApproverUserName", apprRow.getAttribute("EmployeeName"));
+//            vonew.setAttribute("ApproverComments", null);
+//            vonew.setAttribute("ApproverFlag", null);
+//            
+//            vonew.setAttribute("Type", "H");
+//            vonew.setAttribute("Page", getDecodedReqType(reqType));
+//            vonew.setAttribute("ApprType", apprRow.getAttribute("ApprType"));
+//            vonew.setAttribute("CreatedBy", "sam");
+//            //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+//            vonew.setAttribute("LastUpdatedBy", "sam");
+//            //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+//            vonew.setAttribute("LastUpdateLogin", "sam");
+//            //ReqNumber	String	REQ_NUMBER	XxQpActionHistoryTEO	Show	
+//            vonew.setAttribute("ReqNumber", reqNumber);
+//            getXxQpActionHistoryTVO1().insertRow(vonew);
+//            
+//        }
+//        rsi.closeRowSetIterator();                              
+//        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
+//        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
+//        getXxQpActionHistoryTVO1().executeQuery();
+//    }
 
     /**
      * Container's getter for getApprovalSetupDetailsROVO1.

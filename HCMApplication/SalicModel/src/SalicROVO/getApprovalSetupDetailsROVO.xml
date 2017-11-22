@@ -24,13 +24,13 @@
     Name="p_appr_type"
     Kind="where"
     Type="java.lang.String"/>
-  <SQLQuery><![CDATA[SELECT XASD.appr_level,XASD.appr_group_id,XASD.CUST_APPR_GROUP_ID  
-  FROM XXHCM_APPR_SETUP_HDR XASH,  
-    XXHCM_APPR_SETUP_DTL XASD  
-  WHERE XASH.APPR_HDR_ID     = XASD.APPR_HDR_ID  
-  AND XASH.REQUEST_TYPE      =:p_req_type  
-  AND APPR_TYPE=:p_appr_type 
-  order by XASD.appr_level]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT XASD.appr_level,XASD.appr_group_id,XASD.CUST_APPR_GROUP_ID   
+  FROM XXHCM_APPR_SETUP_HDR XASH,   
+    XXHCM_APPR_SETUP_DTL XASD   
+  WHERE XASH.APPR_HDR_ID     = XASD.APPR_HDR_ID   
+  AND XASH.REQUEST_TYPE      =:p_req_type   
+  AND APPR_TYPE=:p_appr_type  
+  order by XASD.appr_level asc]]></SQLQuery>
   <ViewAttribute
     Name="ApprLevel"
     IsUpdateable="false"

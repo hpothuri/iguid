@@ -2,6 +2,8 @@ package SalicAM;
 
 import SalicAM.common.ManagerDashbordAM;
 
+import java.math.BigDecimal;
+
 import oracle.adf.share.ADFContext;
 
 import oracle.jbo.ViewCriteria;
@@ -47,9 +49,18 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         return (ViewObjectImpl)findViewObject("XxQpActionHistoryTVO1");
     }
     public void load(){
-        ViewObject mgrVo=this.getmanagerDashbaordROVO2();
-        System.err.println("total request "+mgrVo.getEstimatedRowCount());
+//        ADFContext aDFContext = ADFContext.getCurrent();
+//        aDFContext.getPageFlowScope().put("mempId",empId);
         ADFContext aDFContext = ADFContext.getCurrent();
+        BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
+        ViewObject mgrVo1=this.getmanagerDashbaordROVO1();
+        mgrVo1.setNamedWhereClauseParam("p_emp_logged_in", empId);
+        mgrVo1.executeQuery();
+        
+        ViewObject mgrVo=this.getmanagerDashbaordROVO2();
+        mgrVo.setNamedWhereClauseParam("p_emp_logged_in", empId);
+        System.err.println("total request "+mgrVo.getEstimatedRowCount());
+        
         aDFContext.getPageFlowScope().put("total", mgrVo.getEstimatedRowCount());
         
         ViewCriteria vc=mgrVo.createViewCriteria();
@@ -83,7 +94,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         ViewCriteriaRow vccccr=vcccc.createViewCriteriaRow();
         vccccr.setAttribute("RequestNumber", "");
         vcccc.addRow(vccccr);
-        mgrVo.applyViewCriteria(vcccc);
+        mgrVo.applyViewCriteria(null);
         mgrVo.executeQuery();
         //        mgrVo.getEstimatedRowCount();
 //        AdfFacesContext.getCurrentInstance().addPartialTarget(totaReq);

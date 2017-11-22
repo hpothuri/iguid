@@ -26,6 +26,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>                                               
                       <af:setPropertyListener from="house" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="house" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -40,6 +41,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="salary" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="salary" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -54,6 +56,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="edu" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="edu" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -72,6 +75,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="letter" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="letter" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -89,6 +93,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="ot" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="ot" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -105,6 +110,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="vacation" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="vacation" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -123,6 +129,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="BusinessTrip" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="BusinessTrip" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>
@@ -141,6 +148,7 @@
                       </af:panelGroupLayout>
                       <af:setPropertyListener from="#{'/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
+                      <af:setPropertyListener from="#{loginBean.personId}" to="#{sessionScope.personId}" type="action"/>
                       <af:setPropertyListener from="BusinessTripCompletion" to="#{sessionScope.page}" type="action"/>
                       <af:setPropertyListener from="BusinessTripCompletion" to="#{sessionScope.type}" type="action"/>
                     </af:commandLink>

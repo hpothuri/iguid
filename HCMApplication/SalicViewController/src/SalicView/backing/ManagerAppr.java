@@ -13,6 +13,7 @@ import javax.faces.event.ActionEvent;
 
 import oracle.adf.model.OperationBinding;
 import oracle.adf.share.ADFContext;
+import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
@@ -29,6 +30,7 @@ import oracle.jbo.server.ViewObjectImpl;
 import oracle.jdbc.internal.OracleTypes;
 
 import view.session.LoginBean;
+import view.session.UserService;
 
 public class ManagerAppr {
     private RichOutputLabel totaReq;
@@ -41,10 +43,21 @@ public class ManagerAppr {
     private RichOutputLabel ol7;
     private RichOutputLabel ol9;
     private RichTable t2;
-
+    static ADFLogger logger = ADFLogger.createADFLogger(ManagerAppr.class);
     public ManagerAppr() {
     }
 
+    public void taskFlowInitializer(){
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        logger.log("session bean accessed ==>"+usersb);
+        logger.log("person id accessed ==>"+usersb.getPersonId());
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        
+                ADFContext aDFContext = ADFContext.getCurrent();
+                aDFContext.getPageFlowScope().put("mempId",empId);
+        
+    }
     private RichInputText mgrItSearch;
     private RichTable mgrTable;
 
