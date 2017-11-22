@@ -4,7 +4,7 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeDetailsAllEO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_OVERTIME_DETAILS_ALL"
@@ -893,6 +893,29 @@
         trustMode="untrusted"
         CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
     </validation:CompareValidationBean>
+  </Attribute>
+  <Attribute
+    Name="DestRegion"
+    ColumnName="DEST_REGION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL"
+    Precision="100">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="DestCountry"
+    ColumnName="DEST_COUNTRY"
+    SQLType="NUMERIC"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
   </Attribute>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"

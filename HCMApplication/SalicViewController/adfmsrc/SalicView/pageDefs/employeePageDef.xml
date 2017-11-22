@@ -591,5 +591,9 @@
       </methodAction>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountryId"
             id="DestCountryId" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountry"
+            id="DestCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountryCity"
+                    id="DestCountryCity1"/>
    </bindings>
 </pageDefinition>

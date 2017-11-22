@@ -73,7 +73,9 @@
        XxhcmOvertimeDetailsAllEO.OTHER1, 
        XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY, 
        XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM, 
-       XxhcmOvertimeDetailsAllEO.SALARY_DATE"
+       XxhcmOvertimeDetailsAllEO.SALARY_DATE, 
+       XxhcmOvertimeDetailsAllEO.DEST_REGION, 
+       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY"
   FromList="XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -297,7 +299,7 @@
       <PIMap Variable="bindRegionId">
         <TransientExpression
           trustMode="untrusted"
-          Name="ExpressionScript"><![CDATA[DestRegionId]]></TransientExpression>
+          Name="ExpressionScript"><![CDATA[DestRegion]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -422,7 +424,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="DerivedAttrNames">
-      <Item Value="DestRegionId"/>
+      <Item Value="DestRegion"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="LookupValueName"/>
@@ -475,9 +477,9 @@
     Name="LOV_DestCountryCity"
     ListVOName="CityCountryROVO1"
     ListRangeSize="-1"
-    NullValueFlag="start"
-    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
-    MRUCount="0">
+    NullValueFlag="none"
+    MRUCount="0"
+    ComboRowCountHint="10">
     <AttrArray Name="AttrNames">
       <Item Value="DestCountryCity"/>
     </AttrArray>
@@ -488,7 +490,8 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="CityName"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Name="searchForCity"/>
   </ListBinding>
   <ListBinding
     Name="LOV_AdvPerdiem"
@@ -615,6 +618,28 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
+      <Item Value="CountryId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CountryName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestCountry"
+    ListVOName="CountriesVA"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestCountry"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="DestCountryId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CountryId"/>
       <Item Value="CountryId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -1214,10 +1239,10 @@ return null;
     LOVName="LOV_DestCategory">
     <Properties>
       <SchemaBasedProperties>
-        <CONTROLTYPE
-          Value="choice"/>
         <AUTOSUBMIT
           Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -1267,7 +1292,7 @@ return null;
         <AUTOSUBMIT
           Value="true"/>
         <CONTROLTYPE
-          Value="choice"/>
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -1412,6 +1437,30 @@ CountryROVO1.first().getAttribute("CountryName");
           Value="true"/>
         <LABEL
           ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountryId_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestRegion"
+    PrecisionRule="true"
+    EntityAttrName="DestRegion"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_REGION"/>
+  <ViewAttribute
+    Name="DestCountry"
+    PrecisionRule="true"
+    EntityAttrName="DestCountry"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_COUNTRY"
+    LOVName="LOV_DestCountry">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountry_LABEL"/>
         <CONTROLTYPE
           Value="choice"/>
       </SchemaBasedProperties>

@@ -136,13 +136,13 @@ public class Employee {
     private RichInputDate bstEdDt;
     private RichSelectOneChoice bstDestCateLOV;
     private RichInputText bstNoOfDays;
-    private RichSelectOneChoice bstDestCount;
     private RichSelectOneChoice btAirtickTyp;
-    private RichSelectOneChoice btDestCountryCity;
     private RichSelectOneChoice bussTravelReqNo;
     private RichInputListOfValues leaveLov;
     private RichInputListOfValues bussTrReq1;
     private RichInputText prDM;
+    private RichInputListOfValues btDestCountryCity;
+    private RichInputListOfValues bstDestCount;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -3503,28 +3503,12 @@ public class Employee {
         return bstNoOfDays;
     }
 
-    public void setBstDestCount(RichSelectOneChoice bstDestCount) {
-        this.bstDestCount = bstDestCount;
-    }
-
-    public RichSelectOneChoice getBstDestCount() {
-        return bstDestCount;
-    }
-
     public void setBtAirtickTyp(RichSelectOneChoice btAirtickTyp) {
         this.btAirtickTyp = btAirtickTyp;
     }
 
     public RichSelectOneChoice getBtAirtickTyp() {
         return btAirtickTyp;
-    }
-
-    public void setBtDestCountryCity(RichSelectOneChoice btDestCountryCity) {
-        this.btDestCountryCity = btDestCountryCity;
-    }
-
-    public RichSelectOneChoice getBtDestCountryCity() {
-        return btDestCountryCity;
     }
 
     public void onChangeAirTicketType(ValueChangeEvent valueChangeEvent) {
@@ -3691,5 +3675,21 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         op.getParamsMap().put("empId", empId);
         Boolean isValid = (Boolean) op.execute();
         return isValid;
+    }
+
+    public void setBtDestCountryCity(RichInputListOfValues btDestCountryCity) {
+        this.btDestCountryCity = btDestCountryCity;
+    }
+
+    public RichInputListOfValues getBtDestCountryCity() {
+        return btDestCountryCity;
+    }
+
+    public void setBstDestCount(RichInputListOfValues bstDestCount) {
+        this.bstDestCount = bstDestCount;
+    }
+
+    public RichInputListOfValues getBstDestCount() {
+        return bstDestCount;
     }
 }

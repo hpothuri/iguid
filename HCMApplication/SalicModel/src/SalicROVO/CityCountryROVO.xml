@@ -92,6 +92,10 @@
       <SchemaBasedProperties>
         <AUTOSUBMIT
           Value="true"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <LABEL
+          ResId="SalicROVO.CityCountryROVO.CityId_LABEL"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -109,6 +113,14 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="255"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <LABEL
+          ResId="SalicROVO.CityCountryROVO.CityName_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="DestCatLookupValueId"
@@ -190,6 +202,60 @@
         Value=":bindCountryId"
         IsBindVarValue="true"
         Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="searchForCity"
+    ViewObjectName="SalicROVO.CityCountryROVO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="CityCountryROVOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="CityCountryROVOCriteria_CityCountryROVOCriteria_row_0_CityId"
+        ViewAttribute="CityId"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional">
+        <Properties>
+          <SchemaBasedProperties>
+            <DISPLAYWIDTH
+              Value="20"/>
+          </SchemaBasedProperties>
+        </Properties>
+      </ViewCriteriaItem>
+      <ViewCriteriaItem
+        Name="CityCountryROVOCriteria_CityCountryROVOCriteria_row_0_CityName"
+        ViewAttribute="CityName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional">
+        <Properties>
+          <SchemaBasedProperties>
+            <DISPLAYWIDTH
+              Value="20"/>
+          </SchemaBasedProperties>
+        </Properties>
+      </ViewCriteriaItem>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

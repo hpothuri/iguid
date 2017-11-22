@@ -732,6 +732,26 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             }
         }
         ,
+        DestRegion {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getDestRegion();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setDestRegion((String) value);
+            }
+        }
+        ,
+        DestCountry {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getDestCountry();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setDestCountry((BigDecimal) value);
+            }
+        }
+        ,
         XxhcmOvertimeHeadersAllVO {
             protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
                 return obj.getXxhcmOvertimeHeadersAllVO();
@@ -768,6 +788,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             return vals;
         }
     }
+
 
     public static final int REQDTLSID = AttributesEnum.ReqDtlsId.index();
     public static final int REQID = AttributesEnum.ReqId.index();
@@ -840,6 +861,8 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static final int BUSSTRAVREQNUM = AttributesEnum.BussTravReqNum.index();
     public static final int OTHER1 = AttributesEnum.Other1.index();
     public static final int SALARYDATE = AttributesEnum.SalaryDate.index();
+    public static final int DESTREGION = AttributesEnum.DestRegion.index();
+    public static final int DESTCOUNTRY = AttributesEnum.DestCountry.index();
     public static final int XXHCMOVERTIMEHEADERSALLVO = AttributesEnum.XxhcmOvertimeHeadersAllVO.index();
 
     /**
@@ -854,6 +877,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static synchronized EntityDefImpl getDefinitionObject() {
         return EntityDefImpl.findDefObject("SalicEntity.XxhcmOvertimeDetailsAllEO");
     }
+
 
     /**
      * Gets the attribute value for ReqDtlsId, using the alias name ReqDtlsId.
@@ -1977,6 +2001,38 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
      */
     public void setSalaryDate(Date value) {
         setAttributeInternal(SALARYDATE, value);
+    }
+
+    /**
+     * Gets the attribute value for DestRegion, using the alias name DestRegion.
+     * @return the value of DestRegion
+     */
+    public String getDestRegion() {
+        return (String) getAttributeInternal(DESTREGION);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for DestRegion.
+     * @param value value to set the DestRegion
+     */
+    public void setDestRegion(String value) {
+        setAttributeInternal(DESTREGION, value);
+    }
+
+    /**
+     * Gets the attribute value for DestCountry, using the alias name DestCountry.
+     * @return the value of DestCountry
+     */
+    public BigDecimal getDestCountry() {
+        return (BigDecimal) getAttributeInternal(DESTCOUNTRY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for DestCountry.
+     * @param value value to set the DestCountry
+     */
+    public void setDestCountry(BigDecimal value) {
+        setAttributeInternal(DESTCOUNTRY, value);
     }
 
     /**
