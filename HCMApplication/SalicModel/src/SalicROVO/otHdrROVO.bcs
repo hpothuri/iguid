@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicROVO.otHdrROVO
+
+package SalicROVO
+
+import oracle.jbo.script.annotation.VariableExpression;
+
+@VariableExpression(path="empidLoggedIn")
+def empidLoggedIn_VariableScript_Variable()
+{
+adf.context.sessionScope.personId
+}
+
