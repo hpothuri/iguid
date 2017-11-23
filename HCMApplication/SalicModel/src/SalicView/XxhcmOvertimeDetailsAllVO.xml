@@ -422,7 +422,8 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="CityName"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Name="searchForCity"/>
   </ListBinding>
   <ListBinding
     Name="LOV_AdvPerdiem"

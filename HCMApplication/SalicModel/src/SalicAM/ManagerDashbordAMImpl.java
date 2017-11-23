@@ -194,6 +194,7 @@ String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         BigDecimal approveLevel = null;
         String firstLevelApproverName = "";
         String secondLevelApproverName = "";
+        String rejectReason = "";
         
         ArrayList<String> tableContentCols = new ArrayList<String>();
         LinkedHashMap<String, String> tableColumnDatatypes = null;
@@ -228,6 +229,7 @@ String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         if(rows != null && rows.length > 0){
             approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
             firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+            rejectReason = (String)rows[0].getAttribute("ApproverComments");
             BigDecimal nextLevel = approveLevel.add(new BigDecimal(1));
             rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", nextLevel);
             if(rows != null && rows.length > 0){
@@ -302,7 +304,6 @@ String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         }
         }
         else if(approveOrReject != null && "R".equalsIgnoreCase(approveOrReject)){
-            String rejectReason = ""; //TODO fetch reject reason
             String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
             emailReq.setToEmail(to);
             emailReq.setToEmpName(emailReq.getEmpName());
