@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicView.XxQpActionHistoryTVO
+
+package SalicView
+
+import oracle.jbo.script.annotation.VariableExpression;
+
+@VariableExpression(path="p_req_typ")
+def p_req_typ_VariableScript_Variable()
+{
+adf.context.sessionScope.page!=null?adf.context.sessionScope.page : 'NA'
+}
+

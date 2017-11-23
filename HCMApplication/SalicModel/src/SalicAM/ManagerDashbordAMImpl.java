@@ -2,11 +2,20 @@ package SalicAM;
 
 import SalicAM.common.ManagerDashbordAM;
 
+import SalicROVO.GetJobLevelROVOImpl;
+import SalicROVO.GetManagerDetailsROVOImpl;
+import SalicROVO.getApprovalGrpDetailsROVOImpl;
+import SalicROVO.getApprovalGrpDetailsROVORowImpl;
+import SalicROVO.getApprovalSetupDetailsROVOImpl;
+import SalicROVO.getApprovalSetupDetailsROVORowImpl;
+
 import common.GenerateEmailTemplate;
 
 import common.pojo.EmailRequestPojo;
 
 import java.math.BigDecimal;
+
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,10 +24,12 @@ import java.util.Map;
 import oracle.adf.share.ADFContext;
 
 import oracle.jbo.Row;
+import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewCriteriaRow;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
+import oracle.jbo.server.SequenceImpl;
 import oracle.jbo.server.ViewLinkImpl;
 import oracle.jbo.server.ViewObjectImpl;
 // ---------------------------------------------------------------------
@@ -171,7 +182,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         emailReq.setEmpId(((BigDecimal) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
-
+String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         ArrayList<String> toRecepients = new ArrayList<String>();
         
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
@@ -280,9 +291,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
-                
-                //TODO: fetcch FYI list and send all approvers are over code.
-            }
+                //empNameR
+                    try {
+                        sendFYINotification(emailReq.getRequestNo(), new oracle.jbo.domain.Number(emailReq.getEmpId()),
+                                            reqPage, new oracle.jbo.domain.Number(emailReq.getRequestId()), empNameR);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
         }
         }
         else if(approveOrReject != null && "R".equalsIgnoreCase(approveOrReject)){
@@ -305,6 +321,213 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         }
     }
     
+    
+    public void sendFYINotification(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id,String empRName){
+        BigDecimal empIdB = empId.bigDecimalValue();
+        int apprSeqNew = 0;
+        ViewObject approvSetup = getgetApprovalSetupDetailsROVO1();
+        approvSetup.setNamedWhereClauseParam("p_appr_type", "FYI");
+        approvSetup.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
+        approvSetup.executeQuery();
+        RowSetIterator rsi  = null;
+        RowSetIterator rsigrpDet = null;
+        Integer jobLevelInt = null;
+        String JobLevel = null;
+        ViewObject empJobLev = getGetJobLevelROVO1();
+        empJobLev.setNamedWhereClauseParam("p_emp_id", empIdB);
+        empJobLev.executeQuery();
+        if(empJobLev.hasNext()){
+            JobLevel =  (String)empJobLev.first().getAttribute("JobLevel");
+            jobLevelInt = Integer.parseInt(JobLevel);
+        }
+        try {
+            rsi = approvSetup.createRowSetIterator("apprSetup");
+            rsi.reset();
+            while (rsi.hasNext()) {
+                getApprovalSetupDetailsROVORowImpl apprSetRow = (getApprovalSetupDetailsROVORowImpl)rsi.next();
+                BigDecimal ApprLevel = apprSetRow.getApprLevel();
+                BigDecimal ApprGroupId= apprSetRow.getApprGroupId();
+                BigDecimal CustApprGroupId= apprSetRow.getCustApprGroupId();
+                BigDecimal managerId = null;
+                String managerName = null;
+                //Superwiser
+                if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
+                    ViewObject empManager = getGetManagerDetailsROVO1();
+                    empManager.setNamedWhereClauseParam("p_emp_id", empIdB);
+                    empManager.executeQuery();
+                    if(empManager.hasNext()){
+                        managerId =  (BigDecimal)empManager.first().getAttribute("ManagerId");
+                        //BV_EMP_ID
+                        ViewObject empManagerDet = getemployeeROVO1();
+                        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
+                        empManagerDet.executeQuery();
+                        if(empManagerDet.hasNext()){
+                            managerName =(String)empManagerDet.first().getAttribute("EmpName");
+                        }
+                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                        EmailRequestPojo emailReq = new EmailRequestPojo();
+                        emailReq.setRequestNo(reqNumber);
+                        emailReq.setToEmail(to);
+                        emailReq.setToEmpName(managerName);
+                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") is approved successfully.");
+                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                        LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons.put("More Info", "");
+                        emailReq.setActionButtons(actionButtons);
+                        Map<String, String> emailHapmap =
+                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                        //Code for Sending email for second approver
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+//                        Row vonew = getXxQpActionHistoryTVO1().createRow();
+//                        //xx_qp_action_history_s
+//                        apprSeqNew = apprSeqNew + 1;
+//                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+//                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
+//                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
+//                        vonew.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+//                        vonew.setAttribute("ApproverId", managerId);
+//                        vonew.setAttribute("ApproverUserName", managerName);
+//                        vonew.setAttribute("ApproverComments", null);
+//                        vonew.setAttribute("ApproverFlag", null);
+//                        
+//                        vonew.setAttribute("Type", "H");
+//                        vonew.setAttribute("Page", getStringBasedOnReqType(reqType));
+//                        vonew.setAttribute("ApprType", "Approval");
+//                        vonew.setAttribute("CreatedBy", empIdB.toString());
+//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+//                        vonew.setAttribute("LastUpdatedBy", empIdB.toString());
+//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+//                        vonew.setAttribute("LastUpdateLogin", empIdB.toString());
+//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+//                        vonew.setAttribute("ReqNumber", reqNumber);
+//                        getXxQpActionHistoryTVO1().insertRow(vonew);
+                        
+                        if(jobLevelInt == 2){     
+                            
+                            ViewObject empSManager = getGetManagerDetailsROVO1();
+                            empSManager.setNamedWhereClauseParam("p_emp_id", managerId);
+                            empSManager.executeQuery();
+                            if(empSManager.hasNext()){
+                                managerId =  (BigDecimal)empSManager.first().getAttribute("ManagerId");
+                                //BV_EMP_ID
+                                ViewObject empSManagerDet = getemployeeROVO1();
+                                empSManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
+                                empSManagerDet.executeQuery();
+                                if(empSManagerDet.hasNext()){
+                                    managerName =(String)empSManagerDet.first().getAttribute("EmpName");
+                                }else{
+                                    managerName = null;
+                                }
+//                                Row vonew1 = getXxQpActionHistoryTVO1().createRow();
+//                                //xx_qp_action_history_s
+//                                apprSeqNew = apprSeqNew + 1;
+//                                SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+//                                vonew1.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+//                                vonew1.setAttribute("HeaderId", req_id.bigDecimalValue());
+//                                vonew1.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+//                                vonew1.setAttribute("ApproverId", managerId);
+//                                vonew1.setAttribute("ApproverUserName", managerName);
+//                                vonew1.setAttribute("ApproverComments", null);
+//                                vonew1.setAttribute("ApproverFlag", null);
+//                                
+//                                vonew1.setAttribute("Type", "H");
+//                                vonew1.setAttribute("Page", getStringBasedOnReqType(reqType));
+//                                vonew1.setAttribute("ApprType", "Approval");
+//                                vonew1.setAttribute("CreatedBy", empIdB.toString());
+//                                //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+//                                vonew1.setAttribute("LastUpdatedBy", empIdB.toString());
+//                                //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+//                                vonew1.setAttribute("LastUpdateLogin", empIdB.toString());
+//                                //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+//                                vonew1.setAttribute("ReqNumber", reqNumber);
+//                                getXxQpActionHistoryTVO1().insertRow(vonew1);
+                        //String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                        emailReq = new EmailRequestPojo();
+                        emailReq.setToEmail(to);
+                                emailReq.setRequestNo(reqNumber);
+                        emailReq.setToEmpName(managerName);
+                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
+                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                        actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons.put("More Info", "");
+                        emailReq.setActionButtons(actionButtons);
+                        emailHapmap =
+                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                        //Code for Sending email for second approver
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                            }
+                        }
+                    }                    
+                }
+                //Custom Approval group
+                if(ApprGroupId.compareTo(new BigDecimal(100011)) == 0){
+                    ViewObject approvgrpDet = getgetApprovalGrpDetailsROVO1();
+                    approvgrpDet.setNamedWhereClauseParam("p_cust_group_id", CustApprGroupId);
+                    approvgrpDet.executeQuery(); 
+                    rsigrpDet = approvgrpDet.createRowSetIterator("grp");
+                    while(rsigrpDet.hasNext()){
+                        getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();
+//                        Row vonewgrp = getXxQpActionHistoryTVO1().createRow();
+//                        //xx_qp_action_history_s
+//                        apprSeqNew = apprSeqNew + 1;
+//                        SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+//                        vonewgrp.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+//                        vonewgrp.setAttribute("HeaderId", req_id.bigDecimalValue());
+//                        vonewgrp.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+//                        vonewgrp.setAttribute("ApproverId", grpRec.getEmployeeId());
+//                        vonewgrp.setAttribute("ApproverUserName", grpRec.getEmployeeName());
+//                        vonewgrp.setAttribute("ApproverComments", null);
+//                        vonewgrp.setAttribute("ApproverFlag", null);
+//                        
+//                        vonewgrp.setAttribute("Type", "H");
+//                        vonewgrp.setAttribute("Page", getStringBasedOnReqType(reqType));
+//                        vonewgrp.setAttribute("ApprType", "Approval");
+//                        vonewgrp.setAttribute("CreatedBy", empIdB.toString());
+//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+//                        vonewgrp.setAttribute("LastUpdatedBy", empIdB.toString());
+//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+//                        vonewgrp.setAttribute("LastUpdateLogin", empIdB.toString());
+//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+//                        vonewgrp.setAttribute("ReqNumber", reqNumber);
+//                        getXxQpActionHistoryTVO1().insertRow(vonewgrp);   
+                        
+                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                        EmailRequestPojo emailReq = new EmailRequestPojo();
+                        emailReq.setToEmail(to);
+                        emailReq.setRequestNo(reqNumber);
+                        emailReq.setToEmpName(grpRec.getEmployeeName());
+                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
+                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                        LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons = new LinkedHashMap<String, String>();
+                        actionButtons.put("More Info", "");
+                        emailReq.setActionButtons(actionButtons);
+                        Map<String, String> emailHapmap =
+                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                        //Code for Sending email for second approver
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                    }
+                    rsigrpDet.closeRowSetIterator();
+                }
+            }
+            rsi.closeRowSetIterator();
+        } catch (Exception e) {
+            if(rsi!=null){
+                rsi.closeRowSetIterator();  
+            }
+            if(rsigrpDet!=null){
+                rsigrpDet.closeRowSetIterator(); 
+            }
+        }
+    }
     private String getStringBasedOnReqType(String reqType){
         String reqty = null;
         if(reqType.equalsIgnoreCase("ot"))
@@ -351,5 +574,45 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         //house
         
         return reqty;
+    }
+
+    /**
+     * Container's getter for getApprovalSetupDetailsROVO1.
+     * @return getApprovalSetupDetailsROVO1
+     */
+    public getApprovalSetupDetailsROVOImpl getgetApprovalSetupDetailsROVO1() {
+        return (getApprovalSetupDetailsROVOImpl) findViewObject("getApprovalSetupDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for getApprovalGrpDetailsROVO1.
+     * @return getApprovalGrpDetailsROVO1
+     */
+    public getApprovalGrpDetailsROVOImpl getgetApprovalGrpDetailsROVO1() {
+        return (getApprovalGrpDetailsROVOImpl) findViewObject("getApprovalGrpDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for GetJobLevelROVO1.
+     * @return GetJobLevelROVO1
+     */
+    public GetJobLevelROVOImpl getGetJobLevelROVO1() {
+        return (GetJobLevelROVOImpl) findViewObject("GetJobLevelROVO1");
+    }
+
+    /**
+     * Container's getter for GetManagerDetailsROVO1.
+     * @return GetManagerDetailsROVO1
+     */
+    public GetManagerDetailsROVOImpl getGetManagerDetailsROVO1() {
+        return (GetManagerDetailsROVOImpl) findViewObject("GetManagerDetailsROVO1");
+    }
+
+    /**
+     * Container's getter for employeeROVO1.
+     * @return employeeROVO1
+     */
+    public ViewObjectImpl getemployeeROVO1() {
+        return (ViewObjectImpl) findViewObject("employeeROVO1");
     }
 }

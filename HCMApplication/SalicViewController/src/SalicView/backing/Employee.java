@@ -50,7 +50,7 @@ import oracle.jbo.RowSetIterator;
 import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewCriteriaRow;
 import oracle.jbo.ViewObject;
-import view.common.GenerateEmailTemplate;
+
 
 import oracle.jbo.domain.Number;
 import oracle.jbo.server.ApplicationModuleImpl;
@@ -99,7 +99,7 @@ import oracle.jbo.ViewCriteriaManager;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.uicli.binding.JUCtrlListBinding;
 
-import view.pojo.EmailRequestPojo;
+
 
 public class Employee {
 

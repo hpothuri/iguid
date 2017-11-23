@@ -695,7 +695,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             }
         }
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
+        //getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
         getXxQpActionHistoryTVO1().executeQuery();
     }
     

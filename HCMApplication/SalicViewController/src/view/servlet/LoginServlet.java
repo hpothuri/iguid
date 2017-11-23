@@ -1,5 +1,7 @@
 package view.servlet;
 
+import SalicView.backing.Utils.ADFUtils;
+
 import com.google.gson.Gson;
 
 import view.session.UserService;
@@ -35,7 +37,7 @@ public class LoginServlet extends HttpServlet {
         _logger.info("doGet######START#######");
         System.out.println("doGet######START#######");
         String jwtUserToken = null;
-        LoginBean loginBean = null;
+        LoginBean loginBean = (LoginBean)httpServletRequest.getSession().getAttribute("loginBean");;//ADFUtils.evaluateEL("#{loginBean}");
         ArrayList<RolePojo> roles = null;
         
         if (loginBean == null) {
@@ -70,6 +72,7 @@ public class LoginServlet extends HttpServlet {
 
                     // redirect to Dashboard
                     System.err.println("Redirecting to dashboard");
+                    httpServletRequest.getSession().setAttribute("loginBean",loginBean);
                     httpServletResponse.sendRedirect("/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml");
                 } else {
                     

@@ -27,7 +27,7 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  Where="XxQpActionHistoryTEO.PAGE=:p_req_typ and XxQpActionHistoryTEO.HEADER_ID=:p_req_id"
+  Where="XxQpActionHistoryTEO.PAGE=:p_req_typ"
   OrderBy="XxQpActionHistoryTEO.APPROVE_LEVEL DESC">
   <Variable
     Name="BV_USR_NM"
@@ -36,11 +36,14 @@
   <Variable
     Name="p_req_typ"
     Kind="where"
-    Type="java.lang.String"
-    DefaultValue="NA"/>
+    Type="java.lang.String">
+    <TransientExpression
+      Name="VariableScript"
+      CodeSourceName="XxQpActionHistoryTVO"/>
+  </Variable>
   <Variable
     Name="p_req_id"
-    Kind="where"
+    Kind="viewcriteria"
     Type="java.math.BigDecimal"/>
   <EntityUsage
     Name="XxQpActionHistoryTEO"
@@ -237,6 +240,42 @@
         Operator="="
         Conjunction="AND"
         Value=":BV_USR_NM"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewCriteria
+    Name="XxQpActionHistoryTVOCriteria1"
+    ViewObjectName="SalicView.XxQpActionHistoryTVO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="XxQpActionHistoryTVOCriteria1_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="HeaderId"
+        ViewAttribute="HeaderId"
+        Operator="="
+        Conjunction="AND"
+        Value=":p_req_id"
         IsBindVarValue="true"
         Required="Optional"/>
     </ViewCriteriaRow>

@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ManagerDashbordAM"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.ManagerDashbordAMImpl"
@@ -21,7 +21,11 @@
     ViewObjectName="SalicView.XxhcmManagerReqDtlsVO"/>
   <ViewUsage
     Name="XxQpActionHistoryTVO1"
-    ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+    ViewObjectName="SalicView.XxQpActionHistoryTVO">
+    <ViewCriteriaUsage
+      Name="XxQpActionHistoryTVOCriteria1"
+      FullName="SalicView.XxQpActionHistoryTVO.XxQpActionHistoryTVOCriteria1"/>
+  </ViewUsage>
   <ViewUsage
     Name="XxQpActionHistoryTVO2"
     ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
@@ -37,6 +41,21 @@
   <ViewUsage
     Name="XxQpActionHistoryTVO4"
     ViewObjectName="SalicView.XxQpActionHistoryTVO"/>
+  <ViewUsage
+    Name="getApprovalSetupDetailsROVO1"
+    ViewObjectName="SalicROVO.getApprovalSetupDetailsROVO"/>
+  <ViewUsage
+    Name="getApprovalGrpDetailsROVO1"
+    ViewObjectName="SalicROVO.getApprovalGrpDetailsROVO"/>
+  <ViewUsage
+    Name="GetJobLevelROVO1"
+    ViewObjectName="SalicROVO.GetJobLevelROVO"/>
+  <ViewUsage
+    Name="GetManagerDetailsROVO1"
+    ViewObjectName="SalicROVO.GetManagerDetailsROVO"/>
+  <ViewUsage
+    Name="employeeROVO1"
+    ViewObjectName="SalicROVO.employeeROVO"/>
   <ViewLinkUsage
     Name="manager_QpActionHistory_VL2"
     ViewLinkObjectName="SalicVL.manager_QpActionHistory_VL"

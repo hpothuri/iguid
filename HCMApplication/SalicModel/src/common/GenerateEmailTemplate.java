@@ -28,8 +28,8 @@ public class GenerateEmailTemplate {
         super();
     }
 
-    private static String FROM_USER = "salic.paasadmn@gmail.com";
-    private static String FROM_USER_PASSWORD = "Admin1234";
+    private static String FROM_USER = "paas.user@salic.com";
+    private static String FROM_USER_PASSWORD = "Salic@123";
     
 //    private static String FROM_USER = "";
 //    private static String FROM_USER_PASSWORD = "";
@@ -65,7 +65,7 @@ public class GenerateEmailTemplate {
            
 //            String lineheaderinfo =
 //                           "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>sr.#</th><th  style='font-weight:bolder'>Ovetime Date</th><th style='font-weight:bolder;'>Ovetime Type</th><th style='font-weight:bolder;'>Overtime Hours</th><th style='font-weight:bolder;'>Calculated  Hours</th><th style='font-weight:bolder;'>Description</th></tr>";
-
+            if(linedetailsQuery!=null){
             ResultSet resultSet1 = statement.executeQuery(linedetailsQuery);
 
             int i = 1;
@@ -97,7 +97,7 @@ public class GenerateEmailTemplate {
             }
 
             linebodyInfo = lineheaderinfo + linebodyInfo + "</table>" + "<br>" + "<br>";
-
+            }
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
 //                "<button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>More Info</button>" +
 //                "</div>";
@@ -123,7 +123,7 @@ public class GenerateEmailTemplate {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.host", "smtp.office365.com");
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -135,7 +135,7 @@ public class GenerateEmailTemplate {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from-email@gmail.com"));
+            message.setFrom(new InternetAddress("paas.user@salic.com"));
 
             InternetAddress[] toAddress = new InternetAddress[to.length];
 

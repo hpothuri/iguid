@@ -183,6 +183,9 @@
                       <af:setPropertyListener from="#{'/WEB-INF/managerDashboard.xml#managerDashboard'}"
                                               to="#{pageFlowScope.taskId}" type="action"/>
                       <af:setPropertyListener from="mng" to="#{sessionScope.page}" type="action"/>
+                      <af:setPropertyListener from="mngr"
+                                              to="#{sessionScope.search}"
+                                              type="action"/>
                     </af:commandLink>
                   </af:gridCell>
                 </af:gridRow>

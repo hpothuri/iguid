@@ -14,7 +14,7 @@ public class LoginBean {
      private String authenticated = null;
      private String error = null;
      private String redirecturl = null;
-     private String personId="300000003699668";
+     private String personId = "300000003699668";
      private String personNumber;
      private String hcmUserId;
      private String hcmUserName;
