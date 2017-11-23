@@ -748,7 +748,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             }
 
             protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
-                obj.setDestCountry((BigDecimal) value);
+                obj.setDestCountry((String) value);
             }
         }
         ,
@@ -2019,19 +2019,20 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         setAttributeInternal(DESTREGION, value);
     }
 
+
     /**
      * Gets the attribute value for DestCountry, using the alias name DestCountry.
      * @return the value of DestCountry
      */
-    public BigDecimal getDestCountry() {
-        return (BigDecimal) getAttributeInternal(DESTCOUNTRY);
+    public String getDestCountry() {
+        return (String) getAttributeInternal(DESTCOUNTRY);
     }
 
     /**
      * Sets <code>value</code> as the attribute value for DestCountry.
      * @param value value to set the DestCountry
      */
-    public void setDestCountry(BigDecimal value) {
+    public void setDestCountry(String value) {
         setAttributeInternal(DESTCOUNTRY, value);
     }
 

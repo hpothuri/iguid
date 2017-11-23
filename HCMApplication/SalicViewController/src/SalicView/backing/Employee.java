@@ -143,6 +143,9 @@ public class Employee {
     private RichInputText prDM;
     private RichInputListOfValues btDestCountryCity;
     private RichInputListOfValues bstDestCount;
+    private RichSelectOneChoice bstCountryLOV;
+    private RichSelectOneChoice destCountryLOV;
+    private BigDecimal countryValue;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -642,11 +645,18 @@ public class Employee {
                                    this.btAirtickTyp.getValue());
                 System.err.println("------CityCountry" +
                                    this.btDestCountryCity.getValue());
+                
+                System.err.println("------Country" +
+                                   this.destCountryLOV.getValue());
+                
+                System.err.println("------Country" +countryValue);
 
                 lineVO.getCurrentRow().setAttribute("AirlineTicketType",
                                                     ADFContext.getCurrent().getPageFlowScope().get("airTicket"));
                 lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                     ADFContext.getCurrent().getPageFlowScope().get("DestCount"));
+                
+                lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
 
                 System.err.println("------BS");
 
@@ -713,6 +723,7 @@ public class Employee {
                                                     this.bstEdDt.getValue());
                 lineVO.getCurrentRow().setAttribute("DestCategory",
                                                     this.bstDestCateLOV.getValue());
+                lineVO.getCurrentRow().setAttribute("DestCountry", countryValue);
 
                 System.err.println("HELLOOOO--" +
                                    ADFContext.getCurrent().getPageFlowScope().get("bussTripReqNo"));
@@ -1591,11 +1602,16 @@ public class Employee {
                                        this.btAirtickTyp.getValue());
                     System.err.println("------CityCountry" +
                                        this.btDestCountryCity.getValue());
+                    System.err.println("------Country" +
+                                       this.destCountryLOV.getValue());
+                    System.err.println("------Country" +countryValue);
 
                     lineVO.getCurrentRow().setAttribute("AirlineTicketType",
                                                         ADFContext.getCurrent().getPageFlowScope().get("airTicket"));
                     lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                         ADFContext.getCurrent().getPageFlowScope().get("DestCount"));
+                    
+                    lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
 
                     System.err.println("------BS");
 
@@ -1682,6 +1698,8 @@ public class Employee {
                                                         this.bstEdDt.getValue());
                     lineVO.getCurrentRow().setAttribute("DestCategory",
                                                         this.bstDestCateLOV.getValue());
+                    
+                    lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
                     System.err.println("NOFDAYS" +
                                        this.bstNoOfDays.getValue());
                     //lineVO.getCurrentRow().setAttribute("NumberOfDays",
@@ -3389,6 +3407,16 @@ public class Employee {
         ADFContext.getCurrent().getPageFlowScope().put("DestCount",
                                                        valueChangeEvent.getNewValue());
     }
+    
+    public void onChangeDestCountry(ValueChangeEvent valueChangeEvent) {
+        // Add event code here...
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+        System.err.println("=========" + valueChangeEvent.getNewValue());
+        ADFContext.getCurrent().getPageFlowScope().put("DestCountry",
+                                                       valueChangeEvent.getNewValue());
+        ADFContext.getCurrent().getSessionScope().put("CurrentCountry", valueChangeEvent.getNewValue());
+        countryValue= (BigDecimal)valueChangeEvent.getNewValue();
+    }
 
     public void actualSdate(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
@@ -3552,5 +3580,21 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
 
     public RichInputListOfValues getBstDestCount() {
         return bstDestCount;
+    }
+
+    public void setBstCountryLOV(RichSelectOneChoice bstCountryLOV) {
+        this.bstCountryLOV = bstCountryLOV;
+    }
+
+    public RichSelectOneChoice getBstCountryLOV() {
+        return bstCountryLOV;
+    }
+
+    public void setDestCountryLOV(RichSelectOneChoice destCountryLOV) {
+        this.destCountryLOV = destCountryLOV;
+    }
+
+    public RichSelectOneChoice getDestCountryLOV() {
+        return destCountryLOV;
     }
 }

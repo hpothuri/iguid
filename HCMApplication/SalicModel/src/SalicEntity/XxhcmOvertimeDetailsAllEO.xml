@@ -909,14 +909,11 @@
   <Attribute
     Name="DestCountry"
     ColumnName="DEST_COUNTRY"
-    SQLType="NUMERIC"
-    Type="java.math.BigDecimal"
-    ColumnType="NUMBER"
-    TableName="XXHCM_OVERTIME_DETAILS_ALL">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="100"/>
-    </DesignTime>
-  </Attribute>
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL"
+    Precision="100"/>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"
     ViewLink="SalicVL.overtimeHdrDtl"

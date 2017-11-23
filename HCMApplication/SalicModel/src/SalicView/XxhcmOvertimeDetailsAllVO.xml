@@ -6,80 +6,12 @@
   Name="XxhcmOvertimeDetailsAllVO"
   Version="12.2.1.16.48"
   InheritPersonalization="merge"
-  SelectList="XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID, 
-       XxhcmOvertimeDetailsAllEO.REQ_ID, 
-       XxhcmOvertimeDetailsAllEO.STATUS, 
-       XxhcmOvertimeDetailsAllEO.DESCRIPTION, 
-       XxhcmOvertimeDetailsAllEO.OVERTIME_HOURS, 
-       XxhcmOvertimeDetailsAllEO.OVERTIME_DATE, 
-       XxhcmOvertimeDetailsAllEO.OVERTIME_TYPE, 
-       XxhcmOvertimeDetailsAllEO.CALCULATED_HOURS, 
-       XxhcmOvertimeDetailsAllEO.MISSIONS, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE_CATEGORY, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE1, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE2, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE3, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE4, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE5, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE6, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE7, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE8, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE9, 
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE10, 
-       XxhcmOvertimeDetailsAllEO.CREATED_BY, 
-       XxhcmOvertimeDetailsAllEO.CREATION_DATE, 
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATED_BY, 
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_DATE, 
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_LOGIN, 
-       XxhcmOvertimeDetailsAllEO.ADV_AMT, 
-       XxhcmOvertimeDetailsAllEO.COMMENTS, 
-       XxhcmOvertimeDetailsAllEO.MONTHS, 
-       XxhcmOvertimeDetailsAllEO.NOTE, 
-       XxhcmOvertimeDetailsAllEO.LEAVE, 
-       XxhcmOvertimeDetailsAllEO.SALARY_PERIOD, 
-       XxhcmOvertimeDetailsAllEO.ACT_AMT, 
-       XxhcmOvertimeDetailsAllEO.AGE, 
-       XxhcmOvertimeDetailsAllEO.AVL_AMT, 
-       XxhcmOvertimeDetailsAllEO.CHILD, 
-       XxhcmOvertimeDetailsAllEO.GRADE, 
-       XxhcmOvertimeDetailsAllEO.INV_DATE, 
-       XxhcmOvertimeDetailsAllEO.INV_NUM, 
-       XxhcmOvertimeDetailsAllEO.INV_TOTAL, 
-       XxhcmOvertimeDetailsAllEO.MAX_AMT, 
-       XxhcmOvertimeDetailsAllEO.SCHOOL, 
-       XxhcmOvertimeDetailsAllEO.SCHOOLGRADE, 
-       XxhcmOvertimeDetailsAllEO.SEMESTER, 
-       XxhcmOvertimeDetailsAllEO.SALARY_END_DATE, 
-       XxhcmOvertimeDetailsAllEO.SAL_PERIOD, 
-       XxhcmOvertimeDetailsAllEO.PER_ABSENCE_ENTRY_ID, 
-       XxhcmOvertimeDetailsAllEO.CONTACTPERSONID, 
-       XxhcmOvertimeDetailsAllEO.LETTER_TO, 
-       XxhcmOvertimeDetailsAllEO.LETTER_TYPE, 
-       XxhcmOvertimeDetailsAllEO.OTHER, 
-       XxhcmOvertimeDetailsAllEO.TRIP_TYPE, 
-       XxhcmOvertimeDetailsAllEO.AIRLINE_TICKET_TYPE, 
-       XxhcmOvertimeDetailsAllEO.START_DATE, 
-       XxhcmOvertimeDetailsAllEO.END_DATE, 
-       XxhcmOvertimeDetailsAllEO.ORIG_START_DATE, 
-       XxhcmOvertimeDetailsAllEO.ORIG_END_DATE, 
-       XxhcmOvertimeDetailsAllEO.DEST_CATEGORY, 
-       XxhcmOvertimeDetailsAllEO.NUMBER_OF_DAYS, 
-       XxhcmOvertimeDetailsAllEO.EXIT_RERENTRY_VISA, 
-       XxhcmOvertimeDetailsAllEO.DEST_VISA_REQUIRED, 
-       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY_CITY, 
-       XxhcmOvertimeDetailsAllEO.ADV_PERDIEM, 
-       XxhcmOvertimeDetailsAllEO.PROJ_TYPE, 
-       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM, 
-       XxhcmOvertimeDetailsAllEO.OTHER1, 
-       XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY, 
-       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM, 
-       XxhcmOvertimeDetailsAllEO.SALARY_DATE, 
-       XxhcmOvertimeDetailsAllEO.DEST_REGION, 
-       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY"
-  FromList="XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO"
   BindingStyle="OracleName"
-  CustomQuery="false"
+  CustomQuery="true"
   PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
   <ViewAccessor
     Name="otTypeROVA"
     ViewObjectName="SalicROVO.otTypeROVO"
@@ -490,8 +422,7 @@
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="CityName"/>
     </AttrArray>
-    <DisplayCriteria
-      Name="searchForCity"/>
+    <DisplayCriteria/>
   </ListBinding>
   <ListBinding
     Name="LOV_AdvPerdiem"
@@ -647,6 +578,77 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
+  <SQLQuery><![CDATA[SELECT XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID,     
+       XxhcmOvertimeDetailsAllEO.REQ_ID,     
+       XxhcmOvertimeDetailsAllEO.STATUS,     
+       XxhcmOvertimeDetailsAllEO.DESCRIPTION,     
+       XxhcmOvertimeDetailsAllEO.OVERTIME_HOURS,     
+       XxhcmOvertimeDetailsAllEO.OVERTIME_DATE,     
+       XxhcmOvertimeDetailsAllEO.OVERTIME_TYPE,     
+       XxhcmOvertimeDetailsAllEO.CALCULATED_HOURS,     
+       XxhcmOvertimeDetailsAllEO.MISSIONS,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE_CATEGORY,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE1,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE2,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE3,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE4,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE5,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE6,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE7,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE8,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE9,     
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE10,     
+       XxhcmOvertimeDetailsAllEO.CREATED_BY,     
+       XxhcmOvertimeDetailsAllEO.CREATION_DATE,     
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATED_BY,     
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_DATE,     
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_LOGIN,     
+       XxhcmOvertimeDetailsAllEO.ADV_AMT,     
+       XxhcmOvertimeDetailsAllEO.COMMENTS,     
+       XxhcmOvertimeDetailsAllEO.MONTHS,     
+       XxhcmOvertimeDetailsAllEO.NOTE,     
+       XxhcmOvertimeDetailsAllEO.LEAVE,     
+       XxhcmOvertimeDetailsAllEO.SALARY_PERIOD,     
+       XxhcmOvertimeDetailsAllEO.ACT_AMT,     
+       XxhcmOvertimeDetailsAllEO.AGE,     
+       XxhcmOvertimeDetailsAllEO.AVL_AMT,     
+       XxhcmOvertimeDetailsAllEO.CHILD,     
+       XxhcmOvertimeDetailsAllEO.GRADE,     
+       XxhcmOvertimeDetailsAllEO.INV_DATE,     
+       XxhcmOvertimeDetailsAllEO.INV_NUM,     
+       XxhcmOvertimeDetailsAllEO.INV_TOTAL,     
+       XxhcmOvertimeDetailsAllEO.MAX_AMT,     
+       XxhcmOvertimeDetailsAllEO.SCHOOL,     
+       XxhcmOvertimeDetailsAllEO.SCHOOLGRADE,     
+       XxhcmOvertimeDetailsAllEO.SEMESTER,     
+       XxhcmOvertimeDetailsAllEO.SALARY_END_DATE,     
+       XxhcmOvertimeDetailsAllEO.SAL_PERIOD,     
+       XxhcmOvertimeDetailsAllEO.PER_ABSENCE_ENTRY_ID,     
+       XxhcmOvertimeDetailsAllEO.CONTACTPERSONID,     
+       XxhcmOvertimeDetailsAllEO.LETTER_TO,     
+       XxhcmOvertimeDetailsAllEO.LETTER_TYPE,     
+       XxhcmOvertimeDetailsAllEO.OTHER,     
+       XxhcmOvertimeDetailsAllEO.TRIP_TYPE,     
+       XxhcmOvertimeDetailsAllEO.AIRLINE_TICKET_TYPE,     
+       XxhcmOvertimeDetailsAllEO.START_DATE,     
+       XxhcmOvertimeDetailsAllEO.END_DATE,     
+       XxhcmOvertimeDetailsAllEO.ORIG_START_DATE,     
+       XxhcmOvertimeDetailsAllEO.ORIG_END_DATE,     
+       XxhcmOvertimeDetailsAllEO.DEST_CATEGORY,     
+       XxhcmOvertimeDetailsAllEO.NUMBER_OF_DAYS,     
+       XxhcmOvertimeDetailsAllEO.EXIT_RERENTRY_VISA,     
+       XxhcmOvertimeDetailsAllEO.DEST_VISA_REQUIRED,     
+       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY_CITY,     
+       XxhcmOvertimeDetailsAllEO.ADV_PERDIEM,     
+       XxhcmOvertimeDetailsAllEO.PROJ_TYPE,     
+       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM,     
+       XxhcmOvertimeDetailsAllEO.OTHER1,     
+       XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY,     
+       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM,     
+       XxhcmOvertimeDetailsAllEO.SALARY_DATE,     
+       XxhcmOvertimeDetailsAllEO.DEST_REGION,  
+       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY  
+FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
   <EntityUsage
     Name="XxhcmOvertimeDetailsAllEO"
     Entity="SalicEntity.XxhcmOvertimeDetailsAllEO"/>
@@ -841,20 +843,6 @@
     EntityAttrName="LastUpdateLogin"
     EntityUsage="XxhcmOvertimeDetailsAllEO"
     AliasName="LAST_UPDATE_LOGIN"/>
-  <ViewAttribute
-    Name="OTHoursTRANS"
-    IsSelected="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.lang.Integer"
-    ColumnType="INTEGER"
-    AliasName="VIEW_ATTR"
-    SQLType="INTEGER">
-    <TransientExpression
-      Name="ExpressionScript"><![CDATA[XxhcmOvertimeDetailsAllVO1.sum("OvertimeHours")]]></TransientExpression>
-    <RecalcCondition
-      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
-  </ViewAttribute>
   <ViewAttribute
     Name="AdvAmt"
     PrecisionRule="true"
@@ -1089,55 +1077,11 @@
     EntityUsage="XxhcmOvertimeDetailsAllEO"
     AliasName="PER_ABSENCE_ENTRY_ID"/>
   <ViewAttribute
-    Name="empIdTRANS"
-    IsSelected="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="oracle.jbo.domain.Number"
-    ColumnType="NUMBER"
-    AliasName="VIEW_ATTR"
-    SQLType="NUMERIC">
-    <TransientExpression
-      Name="ExpressionScript"
-      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
-    <RecalcCondition
-      Name="RecalcExpressionScript"
-      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
-  </ViewAttribute>
-  <ViewAttribute
     Name="Contactpersonid"
     PrecisionRule="true"
     EntityAttrName="Contactpersonid"
     EntityUsage="XxhcmOvertimeDetailsAllEO"
     AliasName="CONTACTPERSONID"/>
-  <ViewAttribute
-    Name="childTRANS"
-    IsSelected="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="VIEW_ATTR"
-    SQLType="VARCHAR"
-    LOVName="LOV_childTRANS">
-    <TransientExpression
-      Name="ExpressionScript"><![CDATA[if(Contactpersonid!=null && childrenROVA1.first()!=null){
-return childrenROVA1.first().getAttribute('ChildName');
-}
-else{
-return null;
-}]]></TransientExpression>
-    <RecalcCondition
-      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="SalicView.XxhcmOvertimeDetailsAllVO.childTRANS_LABEL"/>
-        <CONTROLTYPE
-          Value="input_text_lov"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
   <ViewAttribute
     Name="LetterTo"
     PrecisionRule="true"
@@ -1351,6 +1295,113 @@ return null;
     EntityUsage="XxhcmOvertimeDetailsAllEO"
     AliasName="OTHER1"/>
   <ViewAttribute
+    Name="PerdiemPerDay"
+    PrecisionRule="true"
+    EntityAttrName="PerdiemPerDay"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="PERDIEM_PER_DAY"/>
+  <ViewAttribute
+    Name="TotalPerdiem"
+    PrecisionRule="true"
+    EntityAttrName="TotalPerdiem"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="TOTAL_PERDIEM"/>
+  <ViewAttribute
+    Name="SalaryDate"
+    PrecisionRule="true"
+    EntityAttrName="SalaryDate"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="SALARY_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestRegion"
+    PrecisionRule="true"
+    EntityAttrName="DestRegion"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_REGION"/>
+  <ViewAttribute
+    Name="DestCountry"
+    PrecisionRule="true"
+    EntityAttrName="DestCountry"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="DEST_COUNTRY"
+    LOVName="LOV_DestCountry">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountry_LABEL"/>
+        <AUTOSUBMIT
+          Value="true"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OTHoursTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Integer"
+    ColumnType="INTEGER"
+    AliasName="VIEW_ATTR"
+    SQLType="INTEGER">
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[XxhcmOvertimeDetailsAllVO1.sum("OvertimeHours")]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="empIdTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC">
+    <TransientExpression
+      Name="ExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+    <RecalcCondition
+      Name="RecalcExpressionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="childTRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_childTRANS">
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(Contactpersonid!=null && childrenROVA1.first()!=null){
+return childrenROVA1.first().getAttribute('ChildName');
+}
+else{
+return null;
+}]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxhcmOvertimeDetailsAllVO.childTRANS_LABEL"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
     Name="Country_Trans"
     IsSelected="false"
     IsPersistent="false"
@@ -1371,18 +1422,6 @@ CountryROVO1.first().getAttribute("CountryName");
     </Dependencies>
   </ViewAttribute>
   <ViewAttribute
-    Name="PerdiemPerDay"
-    PrecisionRule="true"
-    EntityAttrName="PerdiemPerDay"
-    EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="PERDIEM_PER_DAY"/>
-  <ViewAttribute
-    Name="TotalPerdiem"
-    PrecisionRule="true"
-    EntityAttrName="TotalPerdiem"
-    EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="TOTAL_PERDIEM"/>
-  <ViewAttribute
     Name="EmpIdVacation"
     IsUpdateable="false"
     IsSelected="false"
@@ -1398,19 +1437,6 @@ CountryROVO1.first().getAttribute("CountryName");
     <RecalcCondition
       Name="RecalcExpressionScript"
       CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="SalaryDate"
-    PrecisionRule="true"
-    EntityAttrName="SalaryDate"
-    EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="SALARY_DATE">
-    <Properties>
-      <SchemaBasedProperties>
-        <LABEL
-          ResId="SalicView.XxhcmOvertimeDetailsAllVO.SalaryDate_LABEL"/>
-      </SchemaBasedProperties>
-    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="DestRegionId"
@@ -1437,30 +1463,6 @@ CountryROVO1.first().getAttribute("CountryName");
           Value="true"/>
         <LABEL
           ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountryId_LABEL"/>
-        <CONTROLTYPE
-          Value="choice"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="DestRegion"
-    PrecisionRule="true"
-    EntityAttrName="DestRegion"
-    EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="DEST_REGION"/>
-  <ViewAttribute
-    Name="DestCountry"
-    PrecisionRule="true"
-    EntityAttrName="DestCountry"
-    EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="DEST_COUNTRY"
-    LOVName="LOV_DestCountry">
-    <Properties>
-      <SchemaBasedProperties>
-        <AUTOSUBMIT
-          Value="true"/>
-        <LABEL
-          ResId="SalicView.XxhcmOvertimeDetailsAllVO.DestCountry_LABEL"/>
         <CONTROLTYPE
           Value="choice"/>
       </SchemaBasedProperties>

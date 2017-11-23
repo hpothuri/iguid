@@ -1056,7 +1056,9 @@
                                               shortDesc="#{bindings.DestCountry.hints.tooltip}"
                                               id="soc131" simple="true" partialTriggers="soc10"
                                               contentStyle="width:200px"
-                                              autoSubmit="true">
+                                              autoSubmit="true"
+                                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
+                                              binding="#{backingBeanScope.backing_employee.destCountryLOV}">
                             <f:selectItems value="#{bindings.DestCountry.items}"
                                            id="si131"/>
                           </af:selectOneChoice>
@@ -1597,7 +1599,9 @@
                                               shortDesc="#{bindings.DestCountry.hints.tooltip}"
                                               id="soc13" simple="true" partialTriggers="selectOneChoice2"
                                               contentStyle="width:200px"
-                                              autoSubmit="true">
+                                              autoSubmit="true"
+                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
+                                              binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
                             <f:selectItems value="#{bindings.DestCountry.items}"
                                            id="si13"/>
                           </af:selectOneChoice>
