@@ -161,19 +161,21 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
     public void prepareMailTemplateAndSend(String approveOrReject) {
         EmailRequestPojo emailReq = new EmailRequestPojo();
         
-        String reqType =  getStringBasedOnReqType((String) ADFContext.getCurrent().getSessionScope()
-                                                                               .get("page"));
+     
         
         ViewObjectImpl otHdrVO = getmanagerDashbaordROVO1();
-        emailReq.setRequestId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
+        
+        String reqType =  getStringBasedOnReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType"));
+        
+        emailReq.setRequestId(((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
         emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-        emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).stringValue());
+        emailReq.setEmpId(((BigDecimal) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
 
         ArrayList<String> toRecepients = new ArrayList<String>();
         
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", (String) otHdrVO.getCurrentRow().getAttribute("ReqType"));
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue());
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
         getXxQpActionHistoryTVO1().executeQuery();
         
         BigDecimal empId = (BigDecimal) ADFContext.getCurrent().getPageFlowScope().get("mempId");
@@ -184,9 +186,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         
         ArrayList<String> tableContentCols = new ArrayList<String>();
         LinkedHashMap<String, String> tableColumnDatatypes = null;
-        String reqPage = (String) ADFContext.getCurrent()
-                                            .getSessionScope()
-                                            .get("page");
+        String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
+        
         if (reqPage.equalsIgnoreCase("ot")) {
             tableContentCols.add("Overtime Date");
             tableContentCols.add("Overtime Type");
@@ -322,6 +323,30 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             return "Vacation Allowance";
         if(reqType.equalsIgnoreCase("house"))
             return "Housing Adavce";
+        
+        //house
+        
+        return reqty;
+    }
+    
+    public String getDecodedReqType(String reqType){
+        String reqty = null;
+        if(reqType.equalsIgnoreCase("ot"))
+            return "OVER_TIME";       
+        if(reqType.equalsIgnoreCase("salary"))
+            return "SAL_ADV";
+        if(reqType.equalsIgnoreCase("BusinessTrip"))
+            return "BUSINESS_TRIP";
+        if(reqType.equalsIgnoreCase("BusinessTripCompletion"))
+            return "BUSINESS_TRIP_COM";
+        if(reqType.equalsIgnoreCase("edu"))
+            return "EDU_ALL";
+        if(reqType.equalsIgnoreCase("letter"))
+            return "HR_LETTER";
+        if(reqType.equalsIgnoreCase("vacation"))
+            return "VAC_ALL";
+        if(reqType.equalsIgnoreCase("house"))
+            return "HOUSE_ADV";
         
         //house
         
