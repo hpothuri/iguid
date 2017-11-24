@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -37,11 +37,7 @@
   FromList="XXHCM_OVERTIME_HEADERS_ALL XxhcmOvertimeHeadersAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
-  </DesignTime>
+  PageIterMode="Full">
   <Variable
     Name="BV_REQ_ID"
     Kind="viewcriteria"
@@ -65,16 +61,28 @@
   <ViewAccessor
     Name="employeeROVA"
     ViewObjectName="SalicROVO.employeeROVO"
-    RowLevelBinds="true"/>
-  <ViewAccessor
-    Name="employeeROVA1"
-    ViewObjectName="SalicROVO.employeeROVO">
+    RowLevelBinds="true">
     <ViewCriteriaUsage
       Name="findById"
       FullName="SalicROVO.employeeROVO.findById"/>
     <ParameterMap>
       <PIMap Variable="BV_EMP_ID">
-        <TransientExpression><![CDATA[EmpId]]></TransientExpression>
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[adf.context.sessionScope.personId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="employeeROVA1"
+    ViewObjectName="SalicROVO.employeeROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="findById"
+      FullName="SalicROVO.employeeROVO.findById"/>
+    <ParameterMap>
+      <PIMap Variable="BV_EMP_ID">
+        <TransientExpression
+          Name="BindVariable"><![CDATA[EmpId]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
@@ -83,11 +91,11 @@
     ListVOName="employeeROVA"
     ListRangeSize="10"
     NullValueFlag="none"
-    NullValueId="LOV_employeeNameTRANS_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="employeeNameTRANS"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="DerivedAttrNames">
       <Item Value="EmpId"/>
       <Item Value="departmentTRANS"/>
@@ -273,13 +281,15 @@
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('EmpName');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -304,13 +314,15 @@ return null;
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('EmpNumber');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -333,13 +345,15 @@ return null;
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('JobTitle');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -360,13 +374,15 @@ return null;
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('Department');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -387,13 +403,15 @@ return null;
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('Grade');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -416,13 +434,15 @@ return null;
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <RecalcCondition><![CDATA[false]]></RecalcCondition>
-    <TransientExpression><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId!=null && employeeROVA1.first()!=null){
 return employeeROVA1.first().getAttribute('LineManager');
 }
 else{
 return null;
 }]]></TransientExpression>
+    <RecalcCondition
+      Name="RecalcExpressionScript"><![CDATA[false]]></RecalcCondition>
     <Dependencies>
       <Item
         Value="EmpId"/>
@@ -499,7 +519,7 @@ return null;
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"
     Conjunction="AND"
     Mode="3">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"
@@ -560,7 +580,7 @@ return null;
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"
     Conjunction="AND"
     Mode="3">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"
