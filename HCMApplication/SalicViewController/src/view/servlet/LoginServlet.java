@@ -26,6 +26,8 @@ public class LoginServlet extends HttpServlet {
     @SuppressWarnings("compatibility:-5529223165066085645")
     private static final long serialVersionUID = 1L;
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+    private static final String DASHBOARD_URL = "/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml";
+    private static final String OVERTIME_URL = "/ess/faces/pages/OvertimeRequest.jsf";
     private static ADFLogger _logger = ADFLogger.createADFLogger(LoginServlet.class);
 
     public void init(ServletConfig config) throws ServletException {
@@ -37,16 +39,61 @@ public class LoginServlet extends HttpServlet {
         _logger.info("doGet######START#######");
         System.out.println("doGet######START#######");
         String jwtUserToken = null;
+        String pageName = null;
         LoginBean loginBean = (LoginBean)httpServletRequest.getSession().getAttribute("loginBean");;//ADFUtils.evaluateEL("#{loginBean}");
-        ArrayList<RolePojo> roles = null;
-        
-        if (loginBean == null) {
-            loginBean = new LoginBean();
-        }
+                   
         jwtUserToken = httpServletRequest.getParameter("jwt_tkn");
-        System.out.println("jwtUserToken : " + jwtUserToken);
+        pageName = httpServletRequest.getParameter("pageName");
         System.err.println("jwtUserToken : " + jwtUserToken);
-        _logger.info("jwtUserToken : " + jwtUserToken);
+        System.err.println("pageName : " + pageName);
+       
+        if (loginBean == null) {
+            
+            loginBean = new LoginBean();
+            
+            redirectToPage(loginBean,jwtUserToken,pageName,httpServletRequest,httpServletResponse);
+        
+        // login bean already exists
+        } else {
+            
+            // token dint change
+            if(jwtUserToken.equals(loginBean.getJwtToken())) {
+                System.err.println("Redirecting to page " + pageName);
+                httpServletResponse.sendRedirect(fetchPageURL(pageName));
+            
+            } else {
+                loginBean = new LoginBean();
+                
+                redirectToPage(loginBean,jwtUserToken,pageName,httpServletRequest,httpServletResponse);
+            }
+        }
+        
+        _logger.info("doPost######END#######");
+    }
+
+    private void raiseException(LoginBean loginBean, String msg, Exception exp) {
+        loginBean.setUserName(null);
+        loginBean.setPassword(null);
+        loginBean.setAuthenticated("N");
+        if (exp == null) {
+            loginBean.setError(msg);
+        } else {
+            loginBean.setError(msg + ".Exception Details : " + exp.getMessage());
+            _logger.info("Error while populating login bean: " + exp.getMessage());
+            System.err.println(msg + ".Exception Details : " + exp.getMessage());
+        }
+    }
+    
+    private String fetchPageURL(String pageName) {
+        if("OVERTIME".equals(pageName))
+            return OVERTIME_URL;
+        else
+            return DASHBOARD_URL;
+    }
+
+    private void redirectToPage(LoginBean loginBean,String jwtUserToken,String pageName, HttpServletRequest httpServletRequest,
+                         HttpServletResponse httpServletResponse) {
+        ArrayList<RolePojo> roles = null;
         UserService svc =
             new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService",
                             jwtUserToken);
@@ -70,10 +117,10 @@ public class LoginServlet extends HttpServlet {
                         System.err.println("Role Code : " + currRole.getRoleCommonName());
                     }
 
-                    // redirect to Dashboard
-                    System.err.println("Redirecting to dashboard");
+                    // redirect to corresponding page
+                    System.err.println("Redirecting to page " + pageName);
                     httpServletRequest.getSession().setAttribute("loginBean",loginBean);
-                    httpServletResponse.sendRedirect("/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml");
+                    httpServletResponse.sendRedirect(fetchPageURL(pageName));
                 } else {
                     
                     raiseException(loginBean, "User doesn't sufficient roles to access the application.", null);
@@ -95,28 +142,13 @@ public class LoginServlet extends HttpServlet {
             raiseException(loginBean, "Failure in JWT token validation", exp);
 
             // redirect to Error
+            try {
             httpServletResponse.sendRedirect("/ess/Error.html");
-        }
+            } catch(Exception e){
+                raiseException(loginBean, "Unknown exception : "+ e.getMessage(), null);
 
-        //        Gson gson = new Gson();
-        //        String content = gson.toJson(loginBean);
-        //        httpServletResponse.setContentType("text/json");
-        //        httpServletResponse.getWriter().write(content);
-        _logger.info("doPost######END#######");
-    }
-
-    private void raiseException(LoginBean loginBean, String msg, Exception exp) {
-        loginBean.setUserName(null);
-        loginBean.setPassword(null);
-        loginBean.setAuthenticated("N");
-        if (exp == null) {
-            loginBean.setError(msg);
-        } else {
-            loginBean.setError(msg + ".Exception Details : " + exp.getMessage());
-            _logger.info("Error while populating login bean: " + exp.getMessage());
-            System.err.println(msg + ".Exception Details : " + exp.getMessage());
+            }
         }
     }
-
 }
 
