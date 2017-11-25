@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import oracle.adf.share.logging.ADFLogger;
 
+import org.json.JSONObject;
+
 import view.session.LoginBean;
 import view.session.RolePojo;
 
@@ -26,7 +28,8 @@ public class LoginServlet extends HttpServlet {
     @SuppressWarnings("compatibility:-5529223165066085645")
     private static final long serialVersionUID = 1L;
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-    private static final String DASHBOARD_URL = "/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml";
+    private static final String DASHBOARD_URL =
+        "/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml";
     private static final String OVERTIME_URL = "/ess/faces/pages/OvertimeRequest.jsf";
     private static final String HOUSING_ADVANCE_URL = "/ess/faces/pages/HousingAdvance.jsf";
     private static final String APPROVAL_GROUP_URL = "/ess/faces/pages/ApprovalGroup.jsf";
@@ -59,34 +62,41 @@ public class LoginServlet extends HttpServlet {
         System.out.println("doGet######START#######");
         String jwtUserToken = null;
         String pageName = null;
-        LoginBean loginBean = (LoginBean)httpServletRequest.getSession().getAttribute("loginBean");;//ADFUtils.evaluateEL("#{loginBean}");
-                   
+        LoginBean loginBean = (LoginBean) httpServletRequest.getSession().getAttribute("loginBean");
+        ; //ADFUtils.evaluateEL("#{loginBean}");
+
         jwtUserToken = httpServletRequest.getParameter("jwt_tkn");
         pageName = httpServletRequest.getParameter("pageName");
         System.err.println("jwtUserToken : " + jwtUserToken);
         System.err.println("pageName : " + pageName);
-       
+
         if (loginBean == null) {
-            
+
             loginBean = new LoginBean();
-            
-            redirectToPage(loginBean,jwtUserToken,pageName,httpServletRequest,httpServletResponse);
-        
-        // login bean already exists
+
+            redirectToPage(loginBean, jwtUserToken, pageName, httpServletRequest, httpServletResponse);
+
+            // login bean already exists
         } else {
-            
+
             // token dint change
-            if(jwtUserToken.equals(loginBean.getJwtToken())) {
-                System.err.println("Redirecting to page " + pageName);
+            if (jwtUserToken.equals(loginBean.getJwtToken())) {
+                System.err.println("Redirecting to page - jwt didnt change" + pageName);
                 httpServletResponse.sendRedirect(fetchPageURL(pageName));
-            
+
             } else {
-                loginBean = new LoginBean();
-                
-                redirectToPage(loginBean,jwtUserToken,pageName,httpServletRequest,httpServletResponse);
+                // if same user
+                if (loginBean.getUserName().equalsIgnoreCase(getUsernameFromJwt(jwtUserToken))) {
+                    System.err.println("Redirecting to page - same user accessing app " + pageName);
+                    httpServletResponse.sendRedirect(fetchPageURL(pageName));
+                } else {
+                    loginBean = new LoginBean();
+
+                    redirectToPage(loginBean, jwtUserToken, pageName, httpServletRequest, httpServletResponse);
+                }
             }
         }
-        
+
         _logger.info("doPost######END#######");
     }
 
@@ -102,54 +112,54 @@ public class LoginServlet extends HttpServlet {
             System.err.println(msg + ".Exception Details : " + exp.getMessage());
         }
     }
-    
+
     private String fetchPageURL(String pageName) {
-        if("OVERTIME".equals(pageName))
+        if ("OVERTIME".equals(pageName))
             return OVERTIME_URL;
-        else if("APPROVAL_GROUP".equals(pageName))
+        else if ("APPROVAL_GROUP".equals(pageName))
             return APPROVAL_GROUP_URL;
-        else if("APPROVAL_SETUP".equals(pageName))
+        else if ("APPROVAL_SETUP".equals(pageName))
             return APPROVAL_SETUP_URL;
-        else if("BUSINESS_TRIP".equals(pageName))
+        else if ("BUSINESS_TRIP".equals(pageName))
             return BUSINESS_TRIP_URL;
-        else if("BUSINESS_TRIP_COMPLETION".equals(pageName))
+        else if ("BUSINESS_TRIP_COMPLETION".equals(pageName))
             return BUSINESS_TRIP_COMPLETION_URL;
-        else if("EDUCATION_ALLOWANCE".equals(pageName))
+        else if ("EDUCATION_ALLOWANCE".equals(pageName))
             return EDUCATION_ALLOWANCE_URL;
-        else if("EMPLOYEE_DASHBOARD".equals(pageName))
+        else if ("EMPLOYEE_DASHBOARD".equals(pageName))
             return EMPLOYEE_DASHBOARD_URL;
-        else if("HOUSING_ADVANCE".equals(pageName))
+        else if ("HOUSING_ADVANCE".equals(pageName))
             return HOUSING_ADVANCE_URL;
-        else if("HR_ADMIN_DASHBOARD".equals(pageName))
+        else if ("HR_ADMIN_DASHBOARD".equals(pageName))
             return HR_ADMIN_DASHBOARD_URL;
-        else if("HR_LETTER".equals(pageName))
+        else if ("HR_LETTER".equals(pageName))
             return HR_LETTER_URL;
-        else if("LOOKUP".equals(pageName))
+        else if ("LOOKUP".equals(pageName))
             return LOOKUP_URL;
-        else if("MANAGER_DASHBOARD".equals(pageName))
+        else if ("MANAGER_DASHBOARD".equals(pageName))
             return MANAGER_DASHBOARD_URL;
-        else if("MENU".equals(pageName))
+        else if ("MENU".equals(pageName))
             return MENU_URL;
-        else if("MENU_ACCESS".equals(pageName))
+        else if ("MENU_ACCESS".equals(pageName))
             return MENU_ACCESS_URL;
-        else if("NOTIFICATION".equals(pageName))
+        else if ("NOTIFICATION".equals(pageName))
             return NOTIFICATION_URL;
-        else if("PAYROLL_DASHBOARD".equals(pageName))
+        else if ("PAYROLL_DASHBOARD".equals(pageName))
             return PAYROLL_DASHBOARD_URL;
-        else if("REPORT".equals(pageName))
+        else if ("REPORT".equals(pageName))
             return REPORT_URL;
-        else if("SALARY".equals(pageName))
+        else if ("SALARY".equals(pageName))
             return SALARY_IN_ADVANCE_URL;
-        else if("SETUP".equals(pageName))
+        else if ("SETUP".equals(pageName))
             return SETUP_URL;
-        else if("VACATION_ALLOWANCE".equals(pageName))
+        else if ("VACATION_ALLOWANCE".equals(pageName))
             return VACATION_ALLOWANCE_URL;
         else
             return DASHBOARD_URL;
     }
 
-    private void redirectToPage(LoginBean loginBean,String jwtUserToken,String pageName, HttpServletRequest httpServletRequest,
-                         HttpServletResponse httpServletResponse) {
+    private void redirectToPage(LoginBean loginBean, String jwtUserToken, String pageName,
+                                HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ArrayList<RolePojo> roles = null;
         UserService svc =
             new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService",
@@ -164,11 +174,11 @@ public class LoginServlet extends HttpServlet {
                 roles = svc.fetchRoles("paas.user@salic.com", "Welcome@123", loginBean.getPersonId());
 
                 if (roles != null && roles.size() > 0) {
-                    _logger.info("Roles size : " + roles != null ? roles.size()+"" : "0");
-                    System.err.println("Roles size : " + roles != null ? roles.size()+"" : "0");
+                    _logger.info("Roles size : " + roles != null ? roles.size() + "" : "0");
+                    System.err.println("Roles size : " + roles != null ? roles.size() + "" : "0");
                     loginBean.setAuthenticated("Y");
                     loginBean.setRoleList(roles);
-                    for(RolePojo currRole : roles){
+                    for (RolePojo currRole : roles) {
                         loginBean.getRoles().put(currRole.getRoleCommonName(), true);
                         _logger.info("Role Name : " + currRole.getRoleName());
                         System.err.println("Role Code : " + currRole.getRoleCommonName());
@@ -176,10 +186,10 @@ public class LoginServlet extends HttpServlet {
 
                     // redirect to corresponding page
                     System.err.println("Redirecting to page " + pageName);
-                    httpServletRequest.getSession().setAttribute("loginBean",loginBean);
+                    httpServletRequest.getSession().setAttribute("loginBean", loginBean);
                     httpServletResponse.sendRedirect(fetchPageURL(pageName));
                 } else {
-                    
+
                     raiseException(loginBean, "User doesn't sufficient roles to access the application.", null);
 
                     loginBean.setAuthenticated("N");
@@ -200,12 +210,42 @@ public class LoginServlet extends HttpServlet {
 
             // redirect to Error
             try {
-            httpServletResponse.sendRedirect("/ess/Error.html");
-            } catch(Exception e){
-                raiseException(loginBean, "Unknown exception : "+ e.getMessage(), null);
+                httpServletResponse.sendRedirect("/ess/Error.html");
+            } catch (Exception e) {
+                raiseException(loginBean, "Unknown exception : " + e.getMessage(), null);
 
             }
         }
+    }
+
+    private String getUsernameFromJwt(String jwt) {
+        String[] splitJwt = getDecodedJwt(jwt);
+
+        JSONObject json = new JSONObject(splitJwt[1]);
+        System.out.println("Username from JWT : " + json.getString("sub"));
+        return json.getString("sub");
+    }
+
+    private String[] getDecodedJwt(String jwt) {
+        String[] result = new String[2];
+        String[] parts = jwt.split("[.]");
+        try {
+            int index = 0;
+            for (String part : parts) {
+                if (index > 1)
+                    break;
+                byte[] partAsBytes = part.getBytes("UTF-8");
+                String decodedPart = new String(java.util
+                                                    .Base64
+                                                    .getUrlDecoder()
+                                                    .decode(partAsBytes), "UTF-8");
+                result[index] = decodedPart;
+                index++;
+            }
+        } catch (Exception e) {
+            result = null;
+        }
+        return result;
     }
 }
 
