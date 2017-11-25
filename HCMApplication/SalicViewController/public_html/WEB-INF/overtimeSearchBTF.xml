@@ -2,6 +2,26 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="overtimeSearchBTF">
     <default-activity id="__1">Execute1</default-activity>
+    <input-parameter-definition id="__56">
+      <name>page</name>
+      <value>#{sessionScope.page}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__57">
+      <name>type</name>
+      <value>#{sessionScope.type}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__58">
+      <name>personId</name>
+      <value>#{sessionScope.personId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__59">
+      <name>taskId</name>
+      <value>#{pageFlowScope.taskId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__21">
       <managed-bean-name id="__24">OvertimeSearch</managed-bean-name>
       <managed-bean-class id="__23">SalicView.backing.OvertimeSearch</managed-bean-class>

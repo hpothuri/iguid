@@ -2,6 +2,16 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="employeedashboard">
     <default-activity id="__1">load</default-activity>
+    <input-parameter-definition id="__40">
+      <name>page</name>
+      <value>#{sessionScope.page}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__41">
+      <name>taskId</name>
+      <value>#{pageFlowScope.taskId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__5">
       <managed-bean-name id="__3">backing_EmployeeDashboard</managed-bean-name>
       <managed-bean-class id="__4">SalicView.backing.EmployeeDashboard</managed-bean-class>

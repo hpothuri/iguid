@@ -2,6 +2,11 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="payRollBTF">
     <default-activity id="__6">load</default-activity>
+    <input-parameter-definition id="__31">
+      <name>taskId</name>
+      <value>#{pageFlowScope.taskId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__2">
       <managed-bean-name id="__4">backing_payRollPage</managed-bean-name>
       <managed-bean-class id="__5">SalicView.backing.PayRollPage</managed-bean-class>

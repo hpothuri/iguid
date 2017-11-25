@@ -77,6 +77,26 @@
             usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef1"/>
       <page path="/WEB-INF/PayrollTransfer.xml#PayrollTransfer@ExecuteWithParams"
             usageId="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
+      <page path="/pages/OvertimeRequest.jsf" usageId="SalicView_OvertimeRequestPageDef"/>
+      <page path="/pages/BusinessTrip.jsf" usageId="SalicView_BusinessTripPageDef"/>
+      <page path="/pages/BusinessTripCompletion.jsf" usageId="SalicView_BusinessTripCompletionPageDef"/>
+      <page path="/pages/HousingAdvance.jsf" usageId="SalicView_HousingAdvancePageDef"/>
+      <page path="/pages/SalaryInAdvance.jsf" usageId="SalicView_SalaryInAdvancePageDef"/>
+      <page path="/pages/EducationAllowance.jsf" usageId="SalicView_EducationAllowancePageDef"/>
+      <page path="/pages/HRLetter.jsf" usageId="SalicView_HRLetterPageDef"/>
+      <page path="/pages/VacationAllowance.jsf" usageId="SalicView_VacationAllowancePageDef"/>
+      <page path="/pages/EmployeeDashboard.jsf" usageId="SalicView_EmployeeDashboardPageDef1"/>
+      <page path="/pages/ManagerDashboard.jsf" usageId="SalicView_ManagerDashboardPageDef1"/>
+      <page path="/pages/HRAdminDashboard.jsf" usageId="SalicView_HRAdminDashboardPageDef"/>
+      <page path="/pages/PayRollDashboard.jsf" usageId="SalicView_PayRollDashboardPageDef"/>
+      <page path="/pages/ApprovalGroup.jsf" usageId="SalicView_ApprovalGroupPageDef"/>
+      <page path="/pages/ApprovalSetup.jsf" usageId="SalicView_ApprovalSetupPageDef"/>
+      <page path="/pages/Notification.jsf" usageId="SalicView_NotificationPageDef"/>
+      <page path="/pages/Report.jsf" usageId="SalicView_ReportPageDef"/>
+      <page path="/pages/Setup.jsf" usageId="SalicView_SetupPageDef"/>
+      <page path="/pages/Menu.jsf" usageId="SalicView_MenuPageDef"/>
+      <page path="/pages/MenuAccess.jsf" usageId="SalicView_MenuAccessPageDef"/>
+      <page path="/pages/LookUp.jsf" usageId="SalicView_LookUpPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -155,6 +175,26 @@
             path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_CreateInsertPageDef1"/>
       <page id="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"
             path="SalicView.pageDefs.PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
+      <page id="SalicView_OvertimeRequestPageDef" path="pages.OvertimeRequestPageDef"/>
+      <page id="SalicView_BusinessTripPageDef" path="pages.BusinessTripPageDef"/>
+      <page id="SalicView_BusinessTripCompletionPageDef" path="pages.BusinessTripCompletionPageDef"/>
+      <page id="SalicView_HousingAdvancePageDef" path="pages.HousingAdvancePageDef"/>
+      <page id="SalicView_SalaryInAdvancePageDef" path="pages.SalaryInAdvancePageDef"/>
+      <page id="SalicView_EducationAllowancePageDef" path="pages.EducationAllowancePageDef"/>
+      <page id="SalicView_HRLetterPageDef" path="pages.HRLetterPageDef"/>
+      <page id="SalicView_VacationAllowancePageDef" path="pages.VacationAllowancePageDef"/>
+      <page id="SalicView_EmployeeDashboardPageDef1" path="pages.EmployeeDashboardPageDef"/>
+      <page id="SalicView_ManagerDashboardPageDef1" path="pages.ManagerDashboardPageDef"/>
+      <page id="SalicView_HRAdminDashboardPageDef" path="pages.HRAdminDashboardPageDef"/>
+      <page id="SalicView_PayRollDashboardPageDef" path="pages.PayRollDashboardPageDef"/>
+      <page id="SalicView_ApprovalGroupPageDef" path="pages.ApprovalGroupPageDef"/>
+      <page id="SalicView_ApprovalSetupPageDef" path="pages.ApprovalSetupPageDef"/>
+      <page id="SalicView_NotificationPageDef" path="pages.NotificationPageDef"/>
+      <page id="SalicView_ReportPageDef" path="pages.ReportPageDef"/>
+      <page id="SalicView_SetupPageDef" path="pages.SetupPageDef"/>
+      <page id="SalicView_MenuPageDef" path="pages.MenuPageDef"/>
+      <page id="SalicView_MenuAccessPageDef" path="pages.MenuAccessPageDef"/>
+      <page id="SalicView_LookUpPageDef" path="pages.LookUpPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="ManagerDashboardPageDef"
+                Package="pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="managerDashboard1" taskFlowId="/WEB-INF/managerDashboard.xml#managerDashboard" activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding">
+      <parameters>
+        <parameter id="page" value="#{'mng'}"/>
+        <parameter id="search" value="#{'mngr'}"/>
+        <parameter id="taskId" value="#{'/WEB-INF/managerDashboard.xml#managerDashboard'}"/>
+      </parameters>
+    </taskFlow>
+  </executables>
+  <bindings/>
+</pageDefinition>

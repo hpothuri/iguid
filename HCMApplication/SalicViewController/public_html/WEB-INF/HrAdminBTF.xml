@@ -2,6 +2,11 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="HrAdminBTF">
     <default-activity id="__1">load</default-activity>
+    <input-parameter-definition id="__36">
+      <name>taskId</name>
+      <value>#{pageFlowScope.taskId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__3">
       <managed-bean-name id="__5">backing_HrAdminPage</managed-bean-name>
       <managed-bean-class id="__2">SalicView.backing.HrAdminPage</managed-bean-class>

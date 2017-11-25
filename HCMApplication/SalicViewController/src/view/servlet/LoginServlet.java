@@ -28,6 +28,25 @@ public class LoginServlet extends HttpServlet {
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
     private static final String DASHBOARD_URL = "/ess/faces/adf.task-flow?adf.tfId=Dashboard&adf.tfDoc=/WEB-INF/Dashboard.xml";
     private static final String OVERTIME_URL = "/ess/faces/pages/OvertimeRequest.jsf";
+    private static final String HOUSING_ADVANCE_URL = "/ess/faces/pages/HousingAdvance.jsf";
+    private static final String APPROVAL_GROUP_URL = "/ess/faces/pages/ApprovalGroup.jsf";
+    private static final String APPROVAL_SETUP_URL = "/ess/faces/pages/ApprovalSetup.jsf";
+    private static final String BUSINESS_TRIP_URL = "/ess/faces/pages/BusinessTrip.jsf";
+    private static final String BUSINESS_TRIP_COMPLETION_URL = "/ess/faces/pages/BusinessTripCompletion.jsf";
+    private static final String EDUCATION_ALLOWANCE_URL = "/ess/faces/pages/EducationAllowance.jsf";
+    private static final String EMPLOYEE_DASHBOARD_URL = "/ess/faces/pages/EmployeeDashboard.jsf";
+    private static final String HR_ADMIN_DASHBOARD_URL = "/ess/faces/pages/HRAdminDashboard.jsf";
+    private static final String HR_LETTER_URL = "/ess/faces/pages/HRLetter.jsf";
+    private static final String LOOKUP_URL = "/ess/faces/pages/LookUp.jsf";
+    private static final String MANAGER_DASHBOARD_URL = "/ess/faces/pages/ManagerDashboard.jsf";
+    private static final String MENU_URL = "/ess/faces/pages/Menu.jsf";
+    private static final String MENU_ACCESS_URL = "/ess/faces/pages/MenuAccess.jsf";
+    private static final String NOTIFICATION_URL = "/ess/faces/pages/Notification.jsf";
+    private static final String PAYROLL_DASHBOARD_URL = "/ess/faces/pages/PayRollDashboard.jsf";
+    private static final String REPORT_URL = "/ess/faces/pages/Report.jsf";
+    private static final String SALARY_IN_ADVANCE_URL = "/ess/faces/pages/SalaryInAdvance.jsf";
+    private static final String SETUP_URL = "/ess/faces/pages/Setup.jsf";
+    private static final String VACATION_ALLOWANCE_URL = "/ess/faces/pages/VacationAllowance.jsf";
     private static ADFLogger _logger = ADFLogger.createADFLogger(LoginServlet.class);
 
     public void init(ServletConfig config) throws ServletException {
@@ -87,6 +106,44 @@ public class LoginServlet extends HttpServlet {
     private String fetchPageURL(String pageName) {
         if("OVERTIME".equals(pageName))
             return OVERTIME_URL;
+        else if("APPROVAL_GROUP".equals(pageName))
+            return APPROVAL_GROUP_URL;
+        else if("APPROVAL_SETUP".equals(pageName))
+            return APPROVAL_SETUP_URL;
+        else if("BUSINESS_TRIP".equals(pageName))
+            return BUSINESS_TRIP_URL;
+        else if("BUSINESS_TRIP_COMPLETION".equals(pageName))
+            return BUSINESS_TRIP_COMPLETION_URL;
+        else if("EDUCATION_ALLOWANCE".equals(pageName))
+            return EDUCATION_ALLOWANCE_URL;
+        else if("EMPLOYEE_DASHBOARD".equals(pageName))
+            return EMPLOYEE_DASHBOARD_URL;
+        else if("HOUSING_ADVANCE".equals(pageName))
+            return HOUSING_ADVANCE_URL;
+        else if("HR_ADMIN_DASHBOARD".equals(pageName))
+            return HR_ADMIN_DASHBOARD_URL;
+        else if("HR_LETTER".equals(pageName))
+            return HR_LETTER_URL;
+        else if("LOOKUP".equals(pageName))
+            return LOOKUP_URL;
+        else if("MANAGER_DASHBOARD".equals(pageName))
+            return MANAGER_DASHBOARD_URL;
+        else if("MENU".equals(pageName))
+            return MENU_URL;
+        else if("MENU_ACCESS".equals(pageName))
+            return MENU_ACCESS_URL;
+        else if("NOTIFICATION".equals(pageName))
+            return NOTIFICATION_URL;
+        else if("PAYROLL_DASHBOARD".equals(pageName))
+            return PAYROLL_DASHBOARD_URL;
+        else if("REPORT".equals(pageName))
+            return REPORT_URL;
+        else if("SALARY".equals(pageName))
+            return SALARY_IN_ADVANCE_URL;
+        else if("SETUP".equals(pageName))
+            return SETUP_URL;
+        else if("VACATION_ALLOWANCE".equals(pageName))
+            return VACATION_ALLOWANCE_URL;
         else
             return DASHBOARD_URL;
     }

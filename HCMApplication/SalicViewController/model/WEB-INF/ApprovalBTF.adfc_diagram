@@ -3,27 +3,27 @@
    <OverallProperties
       id="OverallProperties1">
       <property
-         name="y">266.5</property>
-      <property
          name="x">91.5</property>
+      <property
+         name="y">266.5</property>
    </OverallProperties>
    <View
       id="View2">
       <property
          name="activityId">Approval</property>
       <property
-         name="page">/Approval.jsff</property>
+         name="pageFragment">true</property>
+      <property
+         name="x">285.5</property>
       <property
          name="start">true</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>Approval&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
+         name="y">158.34473</property>
+      <property
+         name="page">/Approval.jsff</property>
+      <property
          name="exceptionHandler">false</property>
-      <property
-         name="y">159.39648</property>
-      <property
-         name="pageFragment">true</property>
-      <property
-         name="x">285.5</property>
    </View>
 </SDM>

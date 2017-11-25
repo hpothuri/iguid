@@ -2,6 +2,11 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="ReportBTF">
     <default-activity id="__1">ReportDashBoard</default-activity>
+    <input-parameter-definition id="__22">
+      <name>taskId</name>
+      <value>#{pageFlowScope.taskId}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__13">
       <managed-bean-name id="__15">JasperReportBean</managed-bean-name>
       <managed-bean-class id="__12">JasperReportBean</managed-bean-class>
