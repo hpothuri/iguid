@@ -62,6 +62,7 @@ public class LoginBean {
      private String locationCountry;
      private Map<String,Boolean> roles = new HashMap<String,Boolean>();
      private List<RolePojo> roleList;
+     private String jwtToken;
 
 
     public void setUserName(String userName) {
@@ -486,5 +487,13 @@ public class LoginBean {
 
     public Map<String, Boolean> getRoles() {
         return roles;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
     }
 }
