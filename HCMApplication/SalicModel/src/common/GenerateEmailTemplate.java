@@ -101,8 +101,9 @@ public class GenerateEmailTemplate {
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
 //                "<button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>More Info</button>" +
 //                "</div>";
-
-            String body = message + linebodyInfo + actionBody;
+            String bestRegardsmessage = "<br><br>Best Regards,<br>Employee self service Process";
+            
+            String body = message + linebodyInfo + actionBody + bestRegardsmessage;
             emailHapmap.put("subject", emailSubject);
             emailHapmap.put("body", body);
 
