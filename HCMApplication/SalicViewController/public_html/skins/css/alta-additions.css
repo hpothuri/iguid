@@ -25,7 +25,7 @@ af|train::unvisited-stop-icon {
 }
 
 .AFGlobalBackgroundColor:alias {
-  color: #1d4a6d;
+  color: #ffffff;
 }
 
 .AFBrandingLinkColor:alias {
@@ -664,7 +664,7 @@ af|commandLink.banner-link:disabled:active {
 }
 
 .page-top {
-    margin: 10px 25px 0px;
+    margin: 5px 5px 0px;
 }
 
 body {
@@ -1057,7 +1057,7 @@ af|commandToolbarButton.radio-group:selected::text {
 }
 
 .page-top {
-    margin: 10px 25px 0px;
+    margin: 5px 5px 0px;
 }
 
 .page-side-panel {
@@ -1070,7 +1070,7 @@ af|commandToolbarButton.radio-group:selected::text {
 }
 
 .page-body {
-    margin: 10px 25px;
+    margin: 5px 5px;
 }
 
 .popup-top, popup-body {
