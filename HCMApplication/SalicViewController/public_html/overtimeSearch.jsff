@@ -116,6 +116,12 @@
                                               type="action"/>
                       <af:setPropertyListener to="#{sessionScope.hr}" from="OT"
                                               type="action"/>
+                        <af:setPropertyListener from="#{row.ReqType}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqType}"/>
+                                <af:setPropertyListener from="#{row.ReqId}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqId}"/>
                     </af:commandLink>
                   </af:column>
                   <af:column sortProperty="#{bindings.otHdrROVO1.hints.RequestDate.name}"

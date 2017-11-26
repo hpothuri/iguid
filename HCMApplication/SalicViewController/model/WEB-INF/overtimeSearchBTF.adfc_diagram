@@ -79,17 +79,17 @@
       <property
          name="fromOutcome">taskFlowReturn1</property>
       <property
-         name="sdm:polyPoints">B50,680.7783,526.0762,R50</property>
+         name="sdm:polyPoints">B50,680.7783,580.0762,91.5,580.0762,B50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
       id="ControlFlowCase8"
       from="MethodCall4"
-      to="TaskFlowCall6">
+      to="MethodCall34">
       <property
          name="fromOutcome">ExecuteWithParams</property>
       <property
-         name="sdm:polyPoints">R50,561.7573,432.1494,561.7573,354.5795,L54</property>
+         name="sdm:polyPoints">R50,536.21094,432.1494,536.21094,516.7988,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -134,7 +134,7 @@
       <property
          name="fromOutcome">Execute</property>
       <property
-         name="sdm:polyPoints">B50,24.5,246.09265,24.692383,246.09265,T50</property>
+         name="sdm:polyPoints">B50,24.5,245.91736,24.692383,245.91736,T50</property>
    </ControlFlowCase>
    <MethodCall
       id="MethodCall17">
@@ -305,5 +305,28 @@
          name="fromOutcome">defaultOneRecord</property>
       <property
          name="sdm:polyPoints">R50,859.0073,214.43555,859.0073,308.68945,L46</property>
+   </ControlFlowCase>
+   <MethodCall
+      id="MethodCall34">
+      <property
+         name="activityId">filterReqActionHistory</property>
+      <property
+         name="x">629.68555</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>filterReqActionHistory&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="y">517.1494</property>
+      <property
+         name="exceptionHandler">false</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase36"
+      from="MethodCall34"
+      to="TaskFlowCall6">
+      <property
+         name="fromOutcome">filterReqActionHistory</property>
+      <property
+         name="sdm:polyPoints">T50,629.68555,433.93915,677.2783,433.93915,B44</property>
    </ControlFlowCase>
 </SDM>

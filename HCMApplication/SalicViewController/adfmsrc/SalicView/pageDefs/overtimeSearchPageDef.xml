@@ -38,6 +38,8 @@
           <Item Value="Status"/>
           <Item Value="LineApproval"/>
           <Item Value="RequestNumber"/>
+          <Item Value="ReqId"/>
+          <Item Value="ReqType"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
