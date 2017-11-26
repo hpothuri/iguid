@@ -597,6 +597,11 @@
                     InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider"/>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountry"
             id="DestCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="NoOfDays">
+         <AttrNames>
+            <Item Value="NoOfDays"/>
+         </AttrNames>
+      </attributeValues>
       <methodAction id="updateAutoApprove" RequiresUpdateModel="true" Action="invokeMethod"
                     MethodName="updateAutoApprove" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
                     InstanceName="bindings.updateAutoApprove.dataControl.dataProvider">

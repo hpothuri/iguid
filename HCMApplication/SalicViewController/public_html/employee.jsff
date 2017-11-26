@@ -453,6 +453,18 @@
                                           partialTriggers="it14">
                       <f:validator binding="#{bindings.Leave.validator}"/>
                     </af:inputListOfValues>
+                    <af:inputText value="#{bindings.NoOfDays.inputValue}"
+                                  required="#{bindings.NoOfDays.hints.mandatory}"
+                                  columns="#{bindings.NoOfDays.hints.displayWidth}"
+                                  maximumLength="#{bindings.NoOfDays.hints.precision}"
+                                  shortDesc="#{bindings.NoOfDays.hints.tooltip}"
+                                  id="it57" label="Leave Days"
+                                  partialTriggers="leaveId"
+                                  disabled="true">
+                      <f:validator binding="#{bindings.NoOfDays.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.NoOfDays.format}"/>
+                    </af:inputText>
                     <af:inputText value="#{bindings.Missions.inputValue}"
                                   label="Comments"
                                   required="#{bindings.Missions.hints.mandatory}"

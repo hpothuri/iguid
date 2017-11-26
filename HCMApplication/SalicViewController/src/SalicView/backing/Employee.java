@@ -1298,7 +1298,7 @@ public class Employee {
                                                          "Pending Approval");
                     autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
-                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
 //                                     "H",
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
@@ -1333,7 +1333,7 @@ public class Employee {
                         otHdrVO.getCurrentRow().setAttribute("Status","Pending Approval");
                         autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
-                        JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                        JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
 //                                         "H",otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                         appMenu.setDisabled(true);
@@ -1364,7 +1364,7 @@ public class Employee {
                                                          "Pending Approval");
                     autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
-                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),"H",
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     appMenu.setDisabled(true);
@@ -1400,7 +1400,7 @@ public class Employee {
                                                          "Pending Approval");
                     autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
-                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
 //                                     "H",
@@ -1532,7 +1532,7 @@ public class Employee {
                     otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
                     
                     ADFUtils.findOperation("Commit").execute();
-                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     appMenu.setDisabled(true);
@@ -1553,7 +1553,7 @@ public class Employee {
                         otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
                         autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
-                        JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                        JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
 //                                         otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                         appMenu.setDisabled(true);
@@ -1593,7 +1593,7 @@ public class Employee {
                     returnActivity = "save";
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    JSFUtils.addFacesInformationMessage("Request submitted successfully");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide HR Letter Details!..");
 
@@ -1682,7 +1682,7 @@ public class Employee {
                         returnActivity = "save";
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
 //                                         otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                        JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                        JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
                     }
 
 
@@ -1734,7 +1734,7 @@ public class Employee {
                     returnActivity = "save";
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
+                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
                 } else if(lineVO.first() == null && !isError){
                     JSFUtils.addFacesInformationMessage("Please provide Business Trip Completion Details!..");
 

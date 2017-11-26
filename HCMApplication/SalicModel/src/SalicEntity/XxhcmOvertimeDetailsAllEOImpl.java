@@ -752,6 +752,16 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             }
         }
         ,
+        NoOfDays {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getNoOfDays();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setNoOfDays((BigDecimal) value);
+            }
+        }
+        ,
         XxhcmOvertimeHeadersAllVO {
             protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
                 return obj.getXxhcmOvertimeHeadersAllVO();
@@ -863,6 +873,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static final int SALARYDATE = AttributesEnum.SalaryDate.index();
     public static final int DESTREGION = AttributesEnum.DestRegion.index();
     public static final int DESTCOUNTRY = AttributesEnum.DestCountry.index();
+    public static final int NOOFDAYS = AttributesEnum.NoOfDays.index();
     public static final int XXHCMOVERTIMEHEADERSALLVO = AttributesEnum.XxhcmOvertimeHeadersAllVO.index();
 
     /**
@@ -2034,6 +2045,22 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
      */
     public void setDestCountry(String value) {
         setAttributeInternal(DESTCOUNTRY, value);
+    }
+
+    /**
+     * Gets the attribute value for NoOfDays, using the alias name NoOfDays.
+     * @return the value of NoOfDays
+     */
+    public BigDecimal getNoOfDays() {
+        return (BigDecimal) getAttributeInternal(NOOFDAYS);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for NoOfDays.
+     * @param value value to set the NoOfDays
+     */
+    public void setNoOfDays(BigDecimal value) {
+        setAttributeInternal(NOOFDAYS, value);
     }
 
     /**
