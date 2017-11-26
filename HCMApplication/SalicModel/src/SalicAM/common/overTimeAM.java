@@ -31,4 +31,6 @@ public interface overTimeAM extends ApplicationModule {
     void populateApproversForReqest(String reqNumber, Number empId, String reqType, Number req_id);
 
     void prepareMailTemplateAndSend();
+
+    void updateAutoApprove(Number empId);
 }

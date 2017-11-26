@@ -519,6 +519,9 @@
                                  <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
                                                          type="action"
                                                          to="#{pageFlowScope.RequestNumber}"/>
+                              <af:setPropertyListener from="#{row.bindings.ReqType.inputValue}"
+                              type = "action"
+                              to = "#{sessionScope.page}"/>
                               </af:commandLink>
                            </af:column>
                            <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.RequestDate.name}"

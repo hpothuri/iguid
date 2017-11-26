@@ -597,5 +597,10 @@
                     InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider"/>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountry"
             id="DestCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <methodAction id="updateAutoApprove" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="updateAutoApprove" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.updateAutoApprove.dataControl.dataProvider">
+         <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

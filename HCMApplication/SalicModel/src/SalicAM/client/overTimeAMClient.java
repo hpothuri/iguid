@@ -88,6 +88,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void updateAutoApprove(Number empId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "updateAutoApprove", new String[] { "oracle.jbo.domain.Number" },
+                                        new Object[] { empId });
+        return;
+    }
+
     public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validateThreeChildsPerYear",

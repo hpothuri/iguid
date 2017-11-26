@@ -182,7 +182,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         emailReq.setEmpId(((BigDecimal) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
-String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
+        String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         ArrayList<String> toRecepients = new ArrayList<String>();
         
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));

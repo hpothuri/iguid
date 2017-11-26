@@ -99,6 +99,7 @@ import oracle.jbo.ViewCriteriaManager;
 import oracle.jbo.server.ViewObjectImpl;
 import oracle.jbo.uicli.binding.JUCtrlListBinding;
 
+import view.session.LoginBean;
 
 
 public class Employee {
@@ -1255,6 +1256,16 @@ public class Employee {
         }
         return errorMsg;
     }
+    
+    public void autoApproveRequest(){
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        //(oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("updateAutoApprove");
+        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        op.execute();
+        //updateAutoApprove
+    }
     public String approvalSubmitACL() {
         String returnActivity = null;
         ViewObject otHdrVO =
@@ -1285,6 +1296,7 @@ public class Employee {
                     otHdrVO.getCurrentRow().setAttribute("ReqType", "ot");
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
+                    autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
@@ -1319,6 +1331,7 @@ public class Employee {
                     if (lineVO.first() != null) {
                         otHdrVO.getCurrentRow().setAttribute("ReqType","house");
                         otHdrVO.getCurrentRow().setAttribute("Status","Pending Approval");
+                        autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
                         JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
@@ -1349,6 +1362,7 @@ public class Employee {
                                                          "vacation");
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
+                    autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),"H",
@@ -1384,6 +1398,7 @@ public class Employee {
                     otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
+                    autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 
@@ -1515,6 +1530,7 @@ public class Employee {
                                                                .getSessionScope()
                                                                .get("mode"))) {
                     otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
+                    
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
@@ -1535,6 +1551,7 @@ public class Employee {
                         empLov.setValid(true);
                         AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);
                         otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
+                        autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
                         JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
@@ -1571,6 +1588,7 @@ public class Employee {
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
                     otHdrVO.getCurrentRow().setAttribute("ReqType", "letter");
+                    autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     returnActivity = "save";
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
@@ -1659,6 +1677,7 @@ public class Employee {
                         JSFUtils.addFacesErrorMessage("Already this Resource had booked in these dates, please provide different Dates");
                         returnActivity = null;
                     } else {
+                        autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
                         returnActivity = "save";
 //                        approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
@@ -1710,7 +1729,7 @@ public class Employee {
                                                         ADFContext.getCurrent().getPageFlowScope().get("bussTripReqNo"));
                     lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                         this.bstDestCount.getValue());
-
+                    autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     returnActivity = "save";
 //                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
@@ -1725,6 +1744,9 @@ public class Employee {
             }
             
         }
+        
+        
+        
     
         
         //TODO
@@ -1736,6 +1758,80 @@ public class Employee {
 
     }
 
+
+
+    public void approveNewACL(ActionEvent actionEvent) {
+        ViewObject mgrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        //        mgrVO.getCurrentRow().getAttribute("");
+        updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "A",
+                       (String)mgrVO.getCurrentRow().getAttribute("RequestNumber")
+                       );
+        mgrVO.executeQuery();
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+//        OperationBinding ob =
+//            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
+//        ob.execute();
+//        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
+        //refresh();
+        
+        //send emails
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "A");
+        op.execute();
+        
+    }
+
+
+    public void updateApproveRejection(Object header_id, String approver_flag,
+                                String User) {
+        String str = null;
+        Number hdrId = null;
+        String userName = User;
+        try {
+            hdrId = new Number(header_id);
+        } catch (SQLException e) {
+        }
+        ViewObject mgrVo =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        
+        //XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC
+        //LoginBean  lb = (LoginBean)JSFUtils.getFromSession("loginBean");
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        BigDecimal ownerReqId =(BigDecimal)mgrVo.getCurrentRow().getAttribute("EmpId");
+        String reqType = (String)mgrVo.getCurrentRow().getAttribute("ReqType");
+        
+        ApplicationModuleImpl am =
+            (ApplicationModuleImpl)ADFUtils.getApplicationModuleForDataControl(null);
+        try {
+            dobProcArgs = new Object[][] {
+                { "IN", approver_flag, oracle.jdbc.internal.OracleTypes.VARCHAR }, //0
+                { "IN", reqType, oracle.jdbc.internal.OracleTypes.VARCHAR },
+                { "IN", new oracle.jbo.domain.Number(ownerReqId), oracle.jdbc.internal.OracleTypes.NUMBER },
+                { "IN", new oracle.jbo.domain.Number(empId), oracle.jdbc.internal.OracleTypes.NUMBER },
+                { "IN", hdrId, oracle.jdbc.internal.OracleTypes.NUMBER }, //1 
+                { "OUT", str, oracle.jdbc.internal.OracleTypes.VARCHAR }
+            };
+        } catch (SQLException e) {
+        }
+        try {
+            System.err.println("==11====");
+            DBUtils.callDBStoredProcedure(am.getDBTransaction(),
+                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?)",
+                                          dobProcArgs);
+            System.err.println("==22====");
+        } catch (Exception e) {
+            System.err.println("===EXE==" + e.toString());
+        }
+        
+    }
     public void createOtLineACL(ActionEvent actionEvent) {
         ADFUtils.invokeEL("#{bindings.CreateInsert.execute}");
 
@@ -1875,6 +1971,29 @@ public class Employee {
         //        System.err.println("===SEND==" + str);
 
     }
+
+    public void rejectNewACL(ActionEvent actionEvent) {
+        ViewObject mgrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        //        mgrVO.getCurrentRow().getAttribute("");
+        updateApproveRejection(mgrVO.first().getAttribute("ReqId"), "R",
+                       (String)mgrVO.first().getAttribute("RequestNumber"));
+        mgrVO.executeQuery();
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+//        OperationBinding ob =
+//            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
+//        ob.execute();
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
+        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
+        //refresh();
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "R");
+        op.execute();
+    }
+
 
     public void approveACL(ActionEvent actionEvent) {
         ViewObject mgrVO =

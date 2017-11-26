@@ -207,7 +207,7 @@
                     </af:commandLink>
                   </af:gridCell>
                   <af:gridCell marginStart="5px" width="200px" id="gc4" halign="center"
-                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN'] || sessionScope.loginBean.roles['SALIC_PAYROLL_ADMIN']}">
+                               >
                     <af:commandLink id="commandLink9" action="home">
                       <af:panelGroupLayout id="panelGroupLayout19" layout="vertical" halign="center">
                         <af:image source="/images/grid_dot_trophy.png" id="image9"/>
