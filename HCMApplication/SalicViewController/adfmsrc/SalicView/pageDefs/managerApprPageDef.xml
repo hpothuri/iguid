@@ -22,8 +22,7 @@
                   MethodName="load" IsViewObjectMethod="false"/>
     <tree IterBinding="managerDashbaordROVO1Iterator"
           id="managerDashbaordROVO1">
-      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO"
-                      Name="managerDashbaordROVO10">
+      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO" Name="managerDashbaordROVO10">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
@@ -34,13 +33,13 @@
           <Item Value="LineManagerName"/>
           <Item Value="Department"/>
           <Item Value="Grade"/>
+          <Item Value="ReqId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
     <tree IterBinding="managerDashbaordROVO1Iterator"
           id="managerDashbaordROVO11">
-      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO"
-                      Name="managerDashbaordROVO110">
+      <nodeDefinition DefName="SalicROVO.managerDashbaordROVO" Name="managerDashbaordROVO110">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
@@ -54,6 +53,7 @@
           <Item Value="ApproverUserName"/>
           <Item Value="Description"/>
           <Item Value="LineApproval"/>
+          <Item Value="ReqId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

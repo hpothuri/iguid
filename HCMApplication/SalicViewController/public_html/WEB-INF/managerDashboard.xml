@@ -67,6 +67,12 @@
         <fixed-outcome>Execute</fixed-outcome>
       </outcome>
     </method-call>
+    <method-call id="filterReqActionHistory">
+      <method>#{bindings.filterReqActionHistory.execute}</method>
+      <outcome>
+        <fixed-outcome>filterReqActionHistory</fixed-outcome>
+      </outcome>
+    </method-call>
     <control-flow-rule id="__20">
       <from-activity-id id="__21">managerAppr</from-activity-id>
       <control-flow-case id="__23">
@@ -76,9 +82,9 @@
     </control-flow-rule>
     <control-flow-rule id="__25">
       <from-activity-id id="__26">ExecuteWithParams</from-activity-id>
-      <control-flow-case id="__29">
-        <from-outcome id="__28">ExecuteWithParams</from-outcome>
-        <to-activity-id id="__27">overtimeAddEditBTFn</to-activity-id>
+      <control-flow-case id="__30">
+        <from-outcome>ExecuteWithParams</from-outcome>
+        <to-activity-id>filterReqActionHistory</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__15">
@@ -107,6 +113,13 @@
       <control-flow-case id="__63">
         <from-outcome id="__62">Execute</from-outcome>
         <to-activity-id id="__61">managerAppr</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__34">
+      <from-activity-id>filterReqActionHistory</from-activity-id>
+      <control-flow-case id="__36">
+        <from-outcome>filterReqActionHistory</from-outcome>
+        <to-activity-id>overtimeAddEditBTFn</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

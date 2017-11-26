@@ -39,6 +39,14 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return (BigDecimal) _ret;
     }
 
+    public void filterReqActionHistory(String reqType, BigDecimal reqId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "filterReqActionHistory",
+                                        new String[] { "java.lang.String", "java.math.BigDecimal" },
+                                        new Object[] { reqType, reqId });
+        return;
+    }
+
     public String getAirTicketType(String grade, String dest) {
         Object _ret =
             this.riInvokeExportedMethod(this, "getAirTicketType",

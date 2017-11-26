@@ -519,6 +519,12 @@
                                  <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
                                                          type="action"
                                                          to="#{pageFlowScope.RequestNumber}"/>
+                                    <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqType}"/>
+                                <af:setPropertyListener from="#{row.bindings.ReqId.inputValue}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqId}"/>
                               <af:setPropertyListener from="#{row.bindings.ReqType.inputValue}"
                               type = "action"
                               to = "#{sessionScope.page}"/>

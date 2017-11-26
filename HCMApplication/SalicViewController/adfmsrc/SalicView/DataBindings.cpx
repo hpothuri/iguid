@@ -97,6 +97,8 @@
       <page path="/pages/Menu.jsf" usageId="SalicView_MenuPageDef"/>
       <page path="/pages/MenuAccess.jsf" usageId="SalicView_MenuAccessPageDef"/>
       <page path="/pages/LookUp.jsf" usageId="SalicView_LookUpPageDef"/>
+      <page path="/WEB-INF/managerDashboard.xml#managerDashboard@filterReqActionHistory"
+            usageId="SalicView_managerDashboard_managerDashboard_filterReqActionHistoryPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -195,6 +197,8 @@
       <page id="SalicView_MenuPageDef" path="pages.MenuPageDef"/>
       <page id="SalicView_MenuAccessPageDef" path="pages.MenuAccessPageDef"/>
       <page id="SalicView_LookUpPageDef" path="pages.LookUpPageDef"/>
+      <page id="SalicView_managerDashboard_managerDashboard_filterReqActionHistoryPageDef"
+            path="SalicView.pageDefs.managerDashboard_managerDashboard_filterReqActionHistoryPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"

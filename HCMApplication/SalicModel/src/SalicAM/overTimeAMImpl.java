@@ -1152,5 +1152,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         
         return reqty;
     }
+    
+    public void filterReqActionHistory(String reqType, BigDecimal reqId){
+        ViewObjectImpl actionHistVO = getXxQpActionHistoryTVO1();
+        actionHistVO.setNamedWhereClauseParam("p_req_typ", getDecodedReqType(reqType));
+        actionHistVO.applyViewCriteria(actionHistVO.getViewCriteria("XxQpActionHistoryTVOCriteria1"));
+        actionHistVO.setNamedWhereClauseParam("p_req_id", reqId);
+        actionHistVO.executeQuery();
+    }
 }
 
