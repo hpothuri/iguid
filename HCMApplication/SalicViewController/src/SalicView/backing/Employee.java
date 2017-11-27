@@ -1779,7 +1779,7 @@ public class Employee {
         //refresh();
         
         //send emails
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "A");
         op.execute();
         
@@ -1789,11 +1789,12 @@ public class Employee {
     public void updateApproveRejection(Object header_id, String approver_flag,
                                 String User) {
         String str = null;
-        Number hdrId = null;
+        oracle.jbo.domain.Number hdrId = null;
         String userName = User;
         try {
-            hdrId = new Number(header_id);
+            hdrId = new oracle.jbo.domain.Number(header_id.toString());
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         ViewObject mgrVo =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
@@ -1805,7 +1806,8 @@ public class Employee {
         
         
         BigDecimal empId = new BigDecimal(usersb.getPersonId());
-        BigDecimal ownerReqId =(BigDecimal)mgrVo.getCurrentRow().getAttribute("EmpId");
+        oracle.jbo.domain.Number empIdN = (oracle.jbo.domain.Number)mgrVo.getCurrentRow().getAttribute("EmpId");
+        BigDecimal ownerReqId =(BigDecimal)empIdN.bigDecimalValue();
         String reqType = (String)mgrVo.getCurrentRow().getAttribute("ReqType");
         
         ApplicationModuleImpl am =
@@ -1820,12 +1822,13 @@ public class Employee {
                 { "OUT", str, oracle.jdbc.internal.OracleTypes.VARCHAR }
             };
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         try {
             System.err.println("==11====");
             DBUtils.callDBStoredProcedure(am.getDBTransaction(),
                                           "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?)",
-                                          dobProcArgs);
+                                          (Object[][])dobProcArgs);
             System.err.println("==22====");
         } catch (Exception e) {
             System.err.println("===EXE==" + e.toString());
@@ -1989,7 +1992,7 @@ public class Employee {
         //AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
         //refresh();
         
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "R");
         op.execute();
     }

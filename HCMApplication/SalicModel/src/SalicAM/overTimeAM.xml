@@ -2,7 +2,7 @@
 <!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
 <!---->
 <AppModule xmlns="http://xmlns.oracle.com/bc4j" Name="overTimeAM"
-   Version="12.2.1.16.48" InheritPersonalization="merge"
+   Version="12.2.1.12.24" InheritPersonalization="merge"
            ClearCacheOnRollback="true"
            ClientProxyName="SalicAM.client.overTimeAMClient"
            ComponentClass="SalicAM.overTimeAMImpl"
@@ -568,6 +568,16 @@
          <Parameter
             Name="reqId"
             Type="java.math.BigDecimal"/>
+      </Method>
+      <Method
+         Name="prepareMailTemplateAndSend1"
+         MethodName="prepareMailTemplateAndSend">
+         <Return
+            Name="_return_type_"
+            Type="void"/>
+         <Parameter
+            Name="approveOrReject"
+            Type="java.lang.String"/>
       </Method>
    </ClientInterface>
 </AppModule>

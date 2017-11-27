@@ -607,5 +607,11 @@
                     InstanceName="bindings.updateAutoApprove.dataControl.dataProvider">
          <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
       </methodAction>
+      <methodAction id="prepareMailTemplateAndSend1" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
+                    DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
+         <NamedData NDName="approveOrReject" NDType="java.lang.String"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

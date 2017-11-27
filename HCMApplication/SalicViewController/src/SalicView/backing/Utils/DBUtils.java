@@ -146,9 +146,4 @@ public class DBUtils implements java.io.Serializable {
         }
     }
 
-
-    public static void callDBStoredProcedure(DBTransaction dbTransaction,
-                                             String string,
-                                             Object dobProcArgs) {
-    }
 }

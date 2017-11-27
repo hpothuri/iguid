@@ -20,7 +20,7 @@
                 <af:spacer width="10" height="2"
                           
                            id="s6"/>
-                <af:panelGroupLayout 
+                <af:panelGroupLayout rendered="false"
                                      id="pgl6" layout="horizontal">
                   <af:spacer width="10" height="10"
                              
@@ -81,9 +81,11 @@
                                         partialTriggers="ot10 employeeNameTRANSId"
                                         actionListener="#{backingBeanScope.backing_employee.saveACL}"/>
                     <af:commandMenuItem text="Approve" id="cmi3"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"/>
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        actionListener="#{backingBeanScope.backing_employee.approveNewACL}"/>
                     <af:commandMenuItem text="Reject" id="cmi4"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"/>
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        actionListener="#{backingBeanScope.backing_employee.rejectNewACL}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
                                         disabled="#{bindings.Status.inputValue ne 'Pending Approval'?'true':'false'}"
                                         rendered="#{sessionScope.page eq 'emp'?'true':'false'}"
@@ -770,7 +772,7 @@
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.tooltip}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.tooltip}" readOnly="true"
                                       id="it28" partialTriggers="ilov1">
                           <f:validator binding="#{row.bindings.Age.validator}"/>
                         </af:inputText>
@@ -803,7 +805,7 @@
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.tooltip}"
-                                      id="it32"
+                                      id="it32" readOnly="true"
                                       binding="#{backingBeanScope.backing_employee.maxAmt}">
                           <f:validator binding="#{row.bindings.MaxAmt.validator}"/>
                         </af:inputText>
@@ -818,7 +820,7 @@
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.tooltip}"
-                                      id="it31"
+                                      id="it31" readOnly="true"
                                       binding="#{backingBeanScope.backing_employee.avlAmt}">
                           <f:validator binding="#{row.bindings.AvlAmt.validator}"/>
                         </af:inputText>
@@ -2117,7 +2119,7 @@
                                  sortable="false"
                                  headerText="Approval Status"
                                  id="c8" width="175">
-                        <af:outputText value="#{row.ApproverFlag eq 'Y'?'Approved':row.ApproverFlag eq 'N'?'Rejected':'Pending'}" id="ot15"/>
+                        <af:outputText value="#{row.ApproverFlag eq 'A'?'Approved':row.ApproverFlag eq 'R'?'Rejected':'Pending'}" id="ot15"/>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.Type.name}"
                                  sortable="false"

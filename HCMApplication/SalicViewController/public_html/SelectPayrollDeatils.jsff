@@ -163,7 +163,13 @@
                 </af:outputText>
               </af:column>
               <af:column id="c2" headerText="Request Type">
-                <af:outputText value="Over Time" id="ot7"/>
+                <af:selectOneChoice value="#{row.bindings.ReqType.inputValue}" label="#{row.bindings.ReqType.label}"
+                                    required="#{bindings.payRollObjROVO1.hints.ReqType.mandatory}" readOnly="true"
+                                    shortDesc="#{bindings.payRollObjROVO1.hints.ReqType.tooltip}" id="soc2">
+                  <f:selectItems value="#{row.bindings.ReqType.items}" id="si2"/>
+                  <f:validator binding="#{row.bindings.ReqType.validator}"/>
+                </af:selectOneChoice>
+                
               </af:column>
               <af:column sortProperty="#{bindings.payRollObjROVO1.hints.EmployeeNumber.name}"
                          sortable="false" headerText="Employee Number" id="c8"
@@ -288,7 +294,13 @@
               </af:column>
               <af:column id="c27" headerText="Request Type" frozen="true"
                          width="103">
-                <af:outputText id="ot28"
+                <af:selectOneChoice value="#{row.bindings.ReqType.inputValue}" label="#{row.bindings.ReqType.label}"
+                                    required="#{bindings.PayrollTransfer_VO1.hints.ReqType.mandatory}" readOnly="true"
+                                    shortDesc="#{bindings.PayrollTransfer_VO1.hints.ReqType.tooltip}" id="soc3">
+                  <f:selectItems value="#{row.bindings.ReqType.items}" id="si3"/>
+                  <f:validator binding="#{row.bindings.ReqType.validator}"/>
+                </af:selectOneChoice>
+                <af:outputText id="ot28" rendered="false"
                                value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':''}"/>
               </af:column>
               <af:column id="c28" headerText="Payroll Transfer Date"

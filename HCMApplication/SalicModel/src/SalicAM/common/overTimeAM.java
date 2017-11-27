@@ -35,4 +35,6 @@ public interface overTimeAM extends ApplicationModule {
     void updateAutoApprove(Number empId);
 
     void filterReqActionHistory(String reqType, BigDecimal reqId);
+
+    void prepareMailTemplateAndSend(String approveOrReject);
 }

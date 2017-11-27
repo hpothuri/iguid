@@ -155,9 +155,6 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="11"/>
     </DesignTime>
-    <TransientExpression
-      Name="ExpressionScript"
-      CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
     Name="LastUpdateLogin"

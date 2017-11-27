@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="PayrollTransfer_VO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.APPROVAL_TEMPLATE_ID, 
        XxhcmOvertimeHeadersAllEO.APPROVER_USER_NAME, 
@@ -65,6 +65,14 @@
     Name="getPayrollTransStatus_ROV1"
     ViewObjectName="SalicROVO.getPayrollTransStatus_ROV"
     RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="Lookup_ROVO1"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="ReqTypeCriteria"
+      FullName="SalicROVO.Lookup_ROVO.ReqTypeCriteria"/>
+  </ViewAccessor>
   <ListBinding
     Name="LOV_PayrollTansStatus"
     ListVOName="getPayrollTransStatus_ROV1"
@@ -74,6 +82,23 @@
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="PayrollTansStatus"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ReqType"
+    ListVOName="Lookup_ROVO1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ReqType"/>
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
@@ -367,7 +392,7 @@ employeeROVO.first().getAttribute("Department")
     <TransientExpression
       Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
-employeeROVO.first().getAttribute("LineManagerName")
+employeeROVO.first().getAttribute("LineManager")
 }]]></TransientExpression>
     <RecalcCondition
       Name="RecalcExpressionScript"><![CDATA[true]]></RecalcCondition>
@@ -423,7 +448,15 @@ employeeROVO.first().getAttribute("Grade")
     PrecisionRule="true"
     EntityAttrName="ReqType"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
-    AliasName="REQ_TYPE"/>
+    AliasName="REQ_TYPE"
+    LOVName="LOV_ReqType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewLinkAccessor
     Name="XxhcmOvertimeDetailsAllVO"
     ViewLink="SalicVL.payTransOtDtlVL"

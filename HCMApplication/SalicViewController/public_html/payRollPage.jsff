@@ -455,7 +455,7 @@
                                           </af:column>
                                           <af:column headerText="Content Id"
                                           sortProperty="#{bindings.payRollObjROVO11.hints.Attribute3.name}"
-                                                     id="c19" sortable="true">
+                                                     id="c19" sortable="true" width="160" minimumWidth="12">
                                                 <af:outputText value="#{row.Attribute3}"
                                                                id="ot15"/>
                                           </af:column>

@@ -1034,6 +1034,170 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     public ViewObjectImpl getemployeeROVO1() {
         return (ViewObjectImpl) findViewObject("employeeROVO1");
     }
+    
+    
+    
+    
+    public void prepareMailTemplateAndSend(String approveOrReject) {
+        EmailRequestPojo emailReq = new EmailRequestPojo();
+        
+     
+        
+        ViewObjectImpl otHdrVO = getXxhcmOvertimeHeadersAllVO1();
+        
+        String reqType =  getStringBasedOnReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType"));
+        
+        emailReq.setRequestId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
+        emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
+        //emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
+        ViewObject empManagerDet = getemployeeROVO1();
+        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
+        empManagerDet.executeQuery();
+        String empNameR = null;;
+        if(empManagerDet.hasNext()){
+            empNameR = (String)empManagerDet.first().getAttribute("EmpName");
+            emailReq.setEmpName((String)empManagerDet.first().getAttribute("EmpName"));
+        }
+
+        ArrayList<String> toRecepients = new ArrayList<String>();
+        
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id",(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue()) );
+        getXxQpActionHistoryTVO1().executeQuery();
+        
+        BigDecimal empId = (((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).bigDecimalValue());
+        
+        BigDecimal approveLevel = null;
+        String firstLevelApproverName = "";
+        String secondLevelApproverName = "";
+        String rejectReason = "";
+        
+        ArrayList<String> tableContentCols = new ArrayList<String>();
+        LinkedHashMap<String, String> tableColumnDatatypes = null;
+        String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
+        
+        if (reqPage.equalsIgnoreCase("ot")) {
+            tableContentCols.add("Overtime Date");
+            tableContentCols.add("Overtime Type");
+            tableContentCols.add("Overtime Hours");
+            tableContentCols.add("Calculated Hours");
+            tableContentCols.add("Description");
+
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select OVERTIME_DATE,OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("OVERTIME_DATE", "DATE");
+            tableColumnDatatypes.put("OVERTIME_TYPE", "STRING");
+            tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
+            tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
+            tableColumnDatatypes.put("MISSIONS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+
+        }
+        if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
+       
+        
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+        if(rows != null && rows.length > 0){
+            approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
+            firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+            rejectReason = (String)rows[0].getAttribute("ApproverComments");
+            BigDecimal nextLevel = approveLevel.add(new BigDecimal(1));
+            rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", nextLevel);
+            if(rows != null && rows.length > 0){
+                //next level approver is present.
+                secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+                
+                //sending email to employee about first level approval complete and nexi is pending
+                
+                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                emailReq.setToEmail(to);
+                emailReq.setToEmpName(emailReq.getEmpName());
+                //                    emailReq.setToEmail((String[]) toRecepients.toArray());
+
+                emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+"  pending with "+secondLevelApproverName);
+                emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
+               
+                
+                LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                actionButtons.put("More Info", "");
+                emailReq.setActionButtons(actionButtons);
+                
+                Map<String, String> emailHapmap =
+                    GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                //Code for Sending email to employee about first level approval complete and nexi is pending
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                
+                //To second approver
+               String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+               String mgrUserName = secondLevelApproverName;
+               emailReq.setToEmpName(mgrUserName);
+               emailReq.setToEmail(managerUsers);
+               emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName());
+               emailReq.setMessage("<b> "+ reqType +
+                                   " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpId()+") </b> is pending for your approval with hereunder details:");
+               actionButtons = new LinkedHashMap<String, String>();
+               actionButtons.put("Approve", "");
+               actionButtons.put("Reject", "");
+               actionButtons.put("More Info", "");
+               emailReq.setActionButtons(actionButtons);
+               emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+               //Code for Sending email for second approver
+               GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                
+            }
+            else{
+                
+                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                emailReq.setToEmail(to);
+                emailReq.setToEmpName(emailReq.getEmpName());
+                emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
+                emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
+                LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                actionButtons = new LinkedHashMap<String, String>();
+                actionButtons.put("More Info", "");
+                emailReq.setActionButtons(actionButtons);
+                Map<String, String> emailHapmap =
+                    GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                //Code for Sending email for second approver
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                //empNameR
+                    try {
+                        sendFYINotification(emailReq.getRequestNo(), new oracle.jbo.domain.Number(emailReq.getEmpId()),
+                                            reqPage, new oracle.jbo.domain.Number(emailReq.getRequestId()), empNameR);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
+        }
+        else if(approveOrReject != null && "R".equalsIgnoreCase(approveOrReject)){
+            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+            emailReq.setToEmail(to);
+            emailReq.setToEmpName(emailReq.getEmpName());
+            emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") is rejected.");
+            emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected with hereunder information: <br> Reject Reason : "+rejectReason);
+            LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+            actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            Map<String, String> emailHapmap =
+                GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email for second approver
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+        }
+    }
 
     public void prepareMailTemplateAndSend() {
         EmailRequestPojo emailReq = new EmailRequestPojo();

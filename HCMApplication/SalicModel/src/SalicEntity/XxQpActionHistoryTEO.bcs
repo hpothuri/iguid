@@ -10,10 +10,3 @@ def CreationDate_ExpressionScript_Expression()
 adf.currentDateTime
 }
 
-
-@TransientValueExpression(attributeName="LastUpdateDate")
-def LastUpdateDate_ExpressionScript_Expression()
-{
-adf.currentDateTime
-}
-

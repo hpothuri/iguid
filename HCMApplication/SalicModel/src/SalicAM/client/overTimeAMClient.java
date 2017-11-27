@@ -96,6 +96,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void prepareMailTemplateAndSend(String approveOrReject) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "prepareMailTemplateAndSend", new String[] { "java.lang.String" },
+                                        new Object[] { approveOrReject });
+        return;
+    }
+
     public void updateAutoApprove(Number empId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "updateAutoApprove", new String[] { "oracle.jbo.domain.Number" },
