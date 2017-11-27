@@ -398,7 +398,7 @@
                                   maximumLength="#{bindings.Comments.hints.precision}"
                                   shortDesc="#{bindings.Comments.hints.tooltip}"
                                   id="it11" rows="4"
-                                  contentStyle="width:200px;"
+                                  contentStyle="width:200px;" readOnly="#{sessionScope.mode=='edit'?'true':'false'}"
                                   partialTriggers="employeeNameTRANSId">
                       <f:validator binding="#{bindings.Comments.validator}"/>
                     </af:inputText>
@@ -421,7 +421,7 @@
                                   shortDesc="#{bindings.Note.hints.tooltip}"
                                   id="it9" contentStyle="width:200px;" rows="4"
                                   partialTriggers="employeeNameTRANSId"
-                                  rendered="false">
+                                  rendered="false" readOnly="#{sessionScope.mode=='edit'?'true':'false'}">
                       <f:validator binding="#{bindings.Note.validator}"/>
                     </af:inputText>
                   </af:panelFormLayout>
@@ -452,7 +452,7 @@
                                           contentStyle="width:180px;"
                                           binding="#{backingBeanScope.backing_employee.leaveLov}"
                                           launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunch}"
-                                          partialTriggers="it14">
+                                          partialTriggers="it14" disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                       <f:validator binding="#{bindings.Leave.validator}"/>
                     </af:inputListOfValues>
                     <af:inputText value="#{bindings.NoOfDays.inputValue}"
@@ -475,7 +475,7 @@
                                   shortDesc="#{bindings.Missions.hints.tooltip}"
                                   id="it12" rows="4"
                                   contentStyle="width:200px;"
-                                  partialTriggers="employeeNameTRANSId">
+                                  partialTriggers="employeeNameTRANSId" disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                       <f:validator binding="#{bindings.Missions.validator}"/>
                     </af:inputText>
                   </af:panelFormLayout>
@@ -512,6 +512,7 @@
                                   shortDesc="#{bindings.Missions.hints.tooltip}"
                                   id="it15" rows="4"
                                   contentStyle="width:200px;"
+                                  disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                   partialTriggers="employeeNameTRANSId">
                       <f:validator binding="#{bindings.Missions.validator}"/>
                     </af:inputText>
@@ -535,7 +536,8 @@
                                     required="#{bindings.InvDate.hints.mandatory}"
                                     shortDesc="#{bindings.InvDate.hints.tooltip}"
                                     id="id4" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.InvDate.validator}"/>
                         <af:convertDateTime pattern="#{bindings.InvDate.format}"/>
                       </af:inputDate>
@@ -548,7 +550,8 @@
                                             columns="#{bindings.childTRANS.hints.displayWidth}"
                                             shortDesc="#{bindings.childTRANS.hints.tooltip}"
                                             partialTriggers="employeeNameTRANSId"
-                                            contentStyle="width:180px;">
+                                            contentStyle="width:180px;"
+                                            disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.childTRANS.validator}"/>
                       </af:inputListOfValues>
                       <af:selectOneChoice value="#{bindings.Grade.inputValue}"
@@ -556,7 +559,8 @@
                                           required="#{bindings.Grade.hints.mandatory}"
                                           shortDesc="#{bindings.Grade.hints.tooltip}"
                                           id="soc3" contentStyle="width:200px;"
-                                          partialTriggers="employeeNameTRANSId">
+                                          partialTriggers="employeeNameTRANSId"
+                                          disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:selectItems value="#{bindings.Grade.items}"
                                        id="si3"/>
                       </af:selectOneChoice>
@@ -568,7 +572,8 @@
                                     shortDesc="#{bindings.ActAmt.hints.tooltip}"
                                     id="it25" contentStyle="width:200px;"
                                     partialTriggers="employeeNameTRANSId"
-                                    autoSubmit="true">
+                                    autoSubmit="true"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.ActAmt.validator}"/>
                         <af:validateLongRange maximum="#{bindings.AvlAmt.inputValue}"/>
                       </af:inputText>
@@ -579,7 +584,8 @@
                                     maximumLength="#{bindings.School.hints.precision}"
                                     shortDesc="#{bindings.School.hints.tooltip}"
                                     id="it24" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.School.validator}"/>
                       </af:inputText>
                       <af:inputText value="#{bindings.Age.inputValue}"
@@ -590,7 +596,8 @@
                                     shortDesc="#{bindings.Age.hints.tooltip}"
                                     id="it20" contentStyle="width:200px;"
                                     partialTriggers="employeeNameTRANSId childTRANSId"
-                                    autoSubmit="true">
+                                    autoSubmit="true"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.Age.validator}"/>
                         <af:validateLongRange maximum="19"
                                               messageDetailMaximum="Child Age should not exceed 19"
@@ -601,7 +608,8 @@
                                           required="#{bindings.Semester.hints.mandatory}"
                                           shortDesc="#{bindings.Semester.hints.tooltip}"
                                           id="soc4" contentStyle="width:200px;"
-                                          partialTriggers="employeeNameTRANSId">
+                                          partialTriggers="employeeNameTRANSId"
+                                          disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:selectItems value="#{bindings.Semester.items}"
                                        id="si4"/>
                       </af:selectOneChoice>
@@ -612,7 +620,8 @@
                                     maximumLength="#{bindings.MaxAmt.hints.precision}"
                                     shortDesc="#{bindings.MaxAmt.hints.tooltip}"
                                     id="it26" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.MaxAmt.validator}"/>
                       </af:inputText>
                       <af:inputText value="#{bindings.AvlAmt.inputValue}"
@@ -622,7 +631,8 @@
                                     maximumLength="#{bindings.AvlAmt.hints.precision}"
                                     shortDesc="#{bindings.AvlAmt.hints.tooltip}"
                                     id="it22" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.AvlAmt.validator}"/>
                       </af:inputText>
                       <af:inputText value="#{bindings.InvNum.inputValue}"
@@ -632,7 +642,8 @@
                                     maximumLength="#{bindings.InvNum.hints.precision}"
                                     shortDesc="#{bindings.InvNum.hints.tooltip}"
                                     id="it21" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.InvNum.validator}"/>
                       </af:inputText>
                       <af:inputText value="#{bindings.InvTotal.inputValue}"
@@ -642,7 +653,8 @@
                                     maximumLength="#{bindings.InvTotal.hints.precision}"
                                     shortDesc="#{bindings.InvTotal.hints.tooltip}"
                                     id="it16" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId">
+                                    partialTriggers="employeeNameTRANSId"
+                                    disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:validator binding="#{bindings.InvTotal.validator}"/>
                       </af:inputText>
                       <af:inputText value="#{bindings.Schoolgrade.inputValue}"
@@ -889,6 +901,7 @@
                   <af:panelFormLayout id="pfl6" rows="2">
                     <af:selectOneChoice value="#{bindings.LetterTo.inputValue}"
                                         label="#{bindings.LetterTo.label}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         required="#{bindings.LetterTo.hints.mandatory}"
                                         shortDesc="#{bindings.LetterTo.hints.tooltip}"
                                         id="soc6" contentStyle="width:200px" autoSubmit="true">
@@ -897,6 +910,7 @@
                     </af:selectOneChoice>
                     <af:selectOneChoice value="#{bindings.LetterType.inputValue}"
                                         label="#{bindings.LetterType.label}" 
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         required="#{bindings.LetterType.hints.mandatory}"
                                         shortDesc="#{bindings.LetterType.hints.tooltip}"
                                         id="soc5" contentStyle="width:200px">
@@ -904,7 +918,7 @@
                                      id="si5"/>
                     </af:selectOneChoice>
                     <af:inputText value="#{bindings.Other.inputValue}"
-                                  label="Others (Arabic)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS'}"
+                                  label="Others (Arabic)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS' || sessionScope.mode=='edit'?'true':'false'}"
                                   required="#{bindings.Other.hints.mandatory}"
                                   maximumLength="#{bindings.Other.hints.precision}"
                                   shortDesc="#{bindings.Other.hints.tooltip}"
@@ -912,7 +926,7 @@
                       <f:validator binding="#{bindings.Other.validator}"/>
                     </af:inputText>
                     <af:inputText value="#{bindings.Other1.inputValue}"
-                                  label="Other (English)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS'}"
+                                  label="Other (English)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS' || sessionScope.mode=='edit'?'true':'false'}"
                                   required="#{bindings.Other1.hints.mandatory}"
                                   columns="#{bindings.Other1.hints.displayWidth}"
                                   maximumLength="#{bindings.Other1.hints.precision}"
@@ -990,7 +1004,8 @@
                                         simple="true" required="true"
                                         valueChangeListener="#{backingBeanScope.backing_employee.onChangeStartDate}"
                                         autoSubmit="true"
-                                        minValue="#{backingBeanScope.backing_employee.minDate}">
+                                        minValue="#{backingBeanScope.backing_employee.minDate}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                             <f:validator binding="#{bindings.StartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
                           </af:inputDate>
@@ -1007,7 +1022,8 @@
                                         simple="true" required="true"
                                         valueChangeListener="#{backingBeanScope.backing_employee.onChangeEndDate}"
                                         autoSubmit="true"
-                                        minValue="#{backingBeanScope.backing_employee.minDate}">
+                                        minValue="#{backingBeanScope.backing_employee.minDate}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                             <f:validator binding="#{bindings.EndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
                           </af:inputDate>
@@ -1071,6 +1087,7 @@
                                               id="soc131" simple="true" partialTriggers="soc10"
                                               contentStyle="width:200px"
                                               autoSubmit="true"
+                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
                                               binding="#{backingBeanScope.backing_employee.destCountryLOV}">
                             <f:selectItems value="#{bindings.DestCountry.items}"
@@ -1099,6 +1116,7 @@
                                                 columns="#{bindings.DestCountryCity1.hints.displayWidth}"
                                                 shortDesc="#{bindings.DestCountryCity1.hints.tooltip}"
                                                 autoSubmit="true" partialTriggers="soc131" 
+                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
                                                 binding="#{backingBeanScope.backing_employee.btDestCountryCity}" simple="true"
                                                 contentStyle="width:200px;">
@@ -1135,6 +1153,7 @@
                           <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
                                               label="#{bindings.ExitRerentryVisa.label}"
                                               required="#{bindings.ExitRerentryVisa.hints.mandatory}"
+                                             disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="soc11"
                                               simple="true" contentStyle="width:200px">
                             <f:selectItems value="#{bindings.ExitRerentryVisa.items}" id="si11"/>
@@ -1147,6 +1166,7 @@
                           <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
                                               label="#{bindings.DestVisaRequired.label}"
                                               required="#{bindings.DestVisaRequired.hints.mandatory}"
+                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="soc12"
                                               simple="true" contentStyle="width:200px">
                             <f:selectItems value="#{bindings.DestVisaRequired.items}" id="si12"/>
@@ -1263,6 +1283,7 @@
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.mandatory}"
                                         columns="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.displayWidth}"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.precision}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.tooltip}"
                                         id="it40">
                             <f:validator binding="#{row.bindings.PurposeTrvlId.validator}"/>
@@ -1275,6 +1296,7 @@
                           <af:inputText value="#{row.bindings.ReqDtlsId.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.label}"
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.displayWidth}"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.precision}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.tooltip}"
@@ -1291,6 +1313,7 @@
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.mandatory}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.tooltip}"
                                         id="id7"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         minValue="#{bindings.StartDate.inputValue}"
                                         maxValue="#{bindings.EndDate.inputValue}">
                             <f:validator binding="#{row.bindings.StartDate.validator}"/>
@@ -1305,6 +1328,7 @@
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.label}"
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.mandatory}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.tooltip}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         id="id8"
                                         maxValue="#{bindings.EndDate.inputValue}"
                                         minValue="#{bindings.StartDate.inputValue}">
@@ -1319,6 +1343,7 @@
                           <af:inputText value="#{row.bindings.Activity.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="60"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.tooltip}"
@@ -1364,6 +1389,7 @@
                                                 partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
                                                 simple="true" shortDesc="#{bindings.BussTravReqNum1.hints.tooltip}"
                                                 contentStyle="width:150px;"
+                                                disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                                 binding="#{backingBeanScope.backing_employee.bussTrReq1}"
                                                 launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
                             <f:validator binding="#{bindings.BussTravReqNum1.validator}"/>
@@ -1386,6 +1412,7 @@
                                               label="#{bindings.TripType.label}"
                                               required="#{bindings.TripType.hints.mandatory}"
                                               shortDesc="#{bindings.TripType.hints.tooltip}"
+                                              readOnly="#{sessionScope.mode=='edit'?'true':'false'}"
                                               id="selectOneChoice1"
                                               simple="true"
                                               disabled="#{bindings.BussTravReqNum1.inputValue == null}"
@@ -1478,7 +1505,7 @@
                                         id="id9" 
                                         partialTriggers="soc16"
                                         autoSubmit="true"
-                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                        disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}">
                             <f:validator binding="#{bindings.OrigStartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
@@ -1497,7 +1524,7 @@
                                         shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
                                         id="id10" 
                                         partialTriggers="soc16"
-                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                        disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
                             <f:validator binding="#{bindings.OrigEndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>
@@ -1520,7 +1547,7 @@
                                               id="selectOneChoice2"
                                               simple="true"
                                               contentStyle="width:200px"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
                                               >
@@ -1566,7 +1593,7 @@
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
                                               id="selectOneChoice3"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1589,7 +1616,7 @@
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
                                               id="selectOneChoice4"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1614,6 +1641,7 @@
                                               id="soc13" simple="true" partialTriggers="selectOneChoice2"
                                               contentStyle="width:200px"
                                               autoSubmit="true"
+                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                                valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
                                               binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
                             <f:selectItems value="#{bindings.DestCountry.items}"
@@ -1643,7 +1671,7 @@
                                                 columns="#{bindings.DestCountryCity1.hints.displayWidth}"
                                                 shortDesc="#{bindings.DestCountryCity1.hints.tooltip}"
                                                 autoSubmit="true" partialTriggers="soc16 soc13" 
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}" simple="true"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
                                                 contentStyle="width:200px;"
                                                        binding="#{backingBeanScope.backing_employee.bstDestCount}">
                             <f:validator binding="#{bindings.DestCountryCity1.validator}"/>
@@ -1664,7 +1692,7 @@
                                               shortDesc="#{bindings.ProjType.hints.tooltip}"
                                               id="selectOneChoice6"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               
                                               partialTriggers="soc16"
@@ -1690,7 +1718,7 @@
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
                                               simple="true" 
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1766,6 +1794,7 @@
                                         maximumLength="#{bindings.NumberOfDays.hints.precision}"
                                         shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
                                         id="it42"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         autoSubmit="true"
                                         partialTriggers="soc16" readOnly="true">
                             <f:validator binding="#{bindings.NumberOfDays.validator}"/>
@@ -1852,6 +1881,7 @@
                                    headerText="Expense Description" id="c40">
                           <af:inputText value="#{row.bindings.ExpnDesc.inputValue}"
                                         label="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.label}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         required="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.mandatory}"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.precision}"
@@ -1868,6 +1898,7 @@
                                         label="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.label}"
                                         required="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.mandatory}"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.displayWidth}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.tooltip}"
                                         id="itx51" rendered="false"
@@ -1879,6 +1910,7 @@
                                               label="#{row.bindings.Currency.label}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.changeCurrency}"
                                             autoSubmit="true"
+                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               required="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.mandatory}"
                                               shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.tooltip}"
                                               id="it51" valuePassThru="true">
@@ -1908,6 +1940,7 @@
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.tooltip}" id="it48"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.changeExpAmount}"
                                         autoSubmit="true">
                             <f:validator binding="#{row.bindings.OtherExpn.validator}"/>
@@ -1920,6 +1953,7 @@
                           <af:inputText value="#{row.bindings.ExpenseId.inputValue}"
                                         label="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpenseId.label}"
                                         required="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpenseId.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpenseId.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpenseId.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpenseId.tooltip}"
@@ -2005,6 +2039,7 @@
                           <af:inputText value="#{row.bindings.AttachFileType.inputValue}"
                                         label="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFileType.label}"
                                         required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFileType.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFileType.displayWidth}"
                                         maximumLength="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFileType.precision}"
                                         shortDesc="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFileType.tooltip}"
@@ -2019,6 +2054,7 @@
                           <af:inputText value="#{row.bindings.AttachDesc.inputValue}"
                                         label="#{bindings.XxhcmAttachmentsTVO1.hints.AttachDesc.label}"
                                         required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachDesc.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="#{bindings.XxhcmAttachmentsTVO1.hints.AttachDesc.displayWidth}"
                                         maximumLength="#{bindings.XxhcmAttachmentsTVO1.hints.AttachDesc.precision}"
                                         shortDesc="#{bindings.XxhcmAttachmentsTVO1.hints.AttachDesc.tooltip}"
@@ -2049,6 +2085,7 @@
                                         simple="true"
                                         required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.mandatory}"
                                         columns="25"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         shortDesc="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.tooltip}"
                                         id="it56" label="Label 2"
                                         valueChangeListener="#{backingBeanScope.backing_employee.OnExpenseFileUpload}"
@@ -2060,6 +2097,7 @@
                                    id="c47" rendered="false">
                           <af:inputText value="#{row.bindings.AttachmentId.inputValue}"
                                         label="#{bindings.XxhcmAttachmentsTVO1.hints.AttachmentId.label}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachmentId.mandatory}"
                                         columns="#{bindings.XxhcmAttachmentsTVO1.hints.AttachmentId.displayWidth}"
                                         maximumLength="#{bindings.XxhcmAttachmentsTVO1.hints.AttachmentId.precision}"

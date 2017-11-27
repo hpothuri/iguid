@@ -525,6 +525,9 @@
                                 <af:setPropertyListener from="#{row.bindings.ReqId.inputValue}"
                                                          type="action"
                                                          to="#{pageFlowScope.ReqId}"/>
+                                <af:setPropertyListener from="#{'edit'}"
+                                                         type="action"
+                                                         to="#{sessionScope.mode}"/>
                               <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
                               type = "action"
                               to = "#{sessionScope.page}"/>
