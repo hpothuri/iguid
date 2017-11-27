@@ -72,6 +72,13 @@
         <to-activity-id id="__26">payRollPage</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
+    <control-flow-rule id="__32">
+      <from-activity-id>PayrollTransfer</from-activity-id>
+      <control-flow-case id="__33">
+        <from-outcome>Save</from-outcome>
+        <to-activity-id>load</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
     <use-page-fragments/>
   </task-flow-definition>
 </adfc-config>

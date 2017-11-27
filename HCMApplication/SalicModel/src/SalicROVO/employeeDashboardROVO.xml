@@ -4,12 +4,11 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="employeeDashboardROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -25,16 +24,40 @@
     Type="java.lang.String"/>
   <ViewAccessor
     Name="employeeROVO"
-    ViewObjectName="SalicROVO.employeeROVO">
+    ViewObjectName="SalicROVO.employeeROVO"
+    RowLevelBinds="true">
     <ViewCriteriaUsage
       Name="findById"
       FullName="SalicROVO.employeeROVO.findById"/>
     <ParameterMap>
       <PIMap Variable="BV_EMP_ID">
-        <TransientExpression><![CDATA[EmpId]]></TransientExpression>
+        <TransientExpression
+          Name="BindVariable"><![CDATA[EmpId]]></TransientExpression>
       </PIMap>
     </ParameterMap>
   </ViewAccessor>
+  <ViewAccessor
+    Name="ReqTypeVA"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_ReqType"
+    ListVOName="ReqTypeVA"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ReqType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <SQLQuery>
     <![CDATA[SELECT 
     XXHCM_OVERTIME_HEADERS_ALL.REQ_ID REQ_ID, 
@@ -469,10 +492,17 @@ FROM
     ColumnType="VARCHAR2"
     AliasName="REQ_TYPE"
     Expression="REQ_TYPE"
-    SQLType="VARCHAR">
+    SQLType="VARCHAR"
+    LOVName="LOV_ReqType">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="200"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="RequestType"
@@ -500,7 +530,8 @@ FROM
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
-    <TransientExpression><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[if(EmpId !=null && employeeROVO.first()!=null)
 {
 employeeROVO.first().getAttribute("LineManager")
 }]]></TransientExpression>

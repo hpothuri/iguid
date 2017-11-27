@@ -394,11 +394,14 @@
                                                      headerText="Request Type"
                                                      id="c10" align="center"
                                                      width="100">
-                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation':row.ReqType eq 'edu'?'Education':row.ReqType eq 'salary'?'Salary':row.ReqType eq 'house'?'House':''}"
-                                                               id="ot10"/>
-                                                <af:outputText value="Overtime"
-                                                               id="ot6"
-                                                               rendered="false"/>
+                                                <af:selectOneChoice value="#{row.bindings.ReqType.inputValue}"
+                                                                    label="#{row.bindings.ReqType.label}"
+                                                                    required="#{bindings.employeeDashboardROVO11.hints.ReqType.mandatory}"
+                                                                    shortDesc="#{bindings.employeeDashboardROVO11.hints.ReqType.tooltip}"
+                                                                    id="soc1">
+                                                      <f:selectItems value="#{row.bindings.ReqType.items}" id="si1"/>
+                                                      <f:validator binding="#{row.bindings.ReqType.validator}"/>
+                                                </af:selectOneChoice>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.employeeDashboardROVO11.hints.LineManagerName.name}"
                                                      sortable="false"

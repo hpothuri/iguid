@@ -8,7 +8,7 @@
   <bindings>
     <action id="load" RequiresUpdateModel="true" Action="invokeMethod"
             MethodName="load" IsViewObjectMethod="false"
-            DataControl="ManagerDashbordAMDataControl"
-            InstanceName="ManagerDashbordAMDataControl.dataProvider"/>
+            DataControl="EmployeeDashboardAMDataControl"
+            InstanceName="bindings.load.dataControl.dataProvider"/>
   </bindings>
 </pageDefinition>
