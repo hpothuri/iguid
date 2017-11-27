@@ -34,6 +34,7 @@
           <Item Value="Department"/>
           <Item Value="Grade"/>
           <Item Value="ReqId"/>
+          <Item Value="ApproverFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -54,6 +55,7 @@
           <Item Value="Description"/>
           <Item Value="LineApproval"/>
           <Item Value="ReqId"/>
+          <Item Value="ApproverFlag"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -68,5 +70,10 @@
                   InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
       <NamedData NDName="approveOrReject" NDType="java.lang.String"/>
     </methodAction>
+    <attributeValues IterBinding="managerDashbaordROVO1Iterator" id="ApproverFlag">
+      <AttrNames>
+        <Item Value="ApproverFlag"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

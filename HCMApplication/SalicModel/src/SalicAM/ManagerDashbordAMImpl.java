@@ -71,6 +71,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
     public void load(){
 //        ADFContext aDFContext = ADFContext.getCurrent();
 //        aDFContext.getPageFlowScope().put("mempId",empId);
+        long totalRequest = 0;
+        long approvedRequest = 0;
+        long rejectedRequest = 0;
+        long pendingRequest = 0;
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
         ViewObject mgrVo1=this.getmanagerDashbaordROVO1();
@@ -80,35 +84,32 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         ViewObject mgrVo=this.getmanagerDashbaordROVO2();
         mgrVo.setNamedWhereClauseParam("p_emp_logged_in", empId);
         System.err.println("total request "+mgrVo.getEstimatedRowCount());
-        
+        totalRequest = mgrVo.getEstimatedRowCount();
         aDFContext.getPageFlowScope().put("total", mgrVo.getEstimatedRowCount());
         
         ViewCriteria vc=mgrVo.createViewCriteria();
         ViewCriteriaRow vcr=vc.createViewCriteriaRow();
-        vcr.setAttribute("Status", "APPROVE");
+        vcr.setAttribute("ApproverFlag", "A");
         vc.addRow(vcr);
         mgrVo.applyViewCriteria(vc);
         mgrVo.executeQuery();
         System.err.println("Approved request "+mgrVo.getEstimatedRowCount());
         aDFContext.getPageFlowScope().put("approved", mgrVo.getEstimatedRowCount());
+        approvedRequest = mgrVo.getEstimatedRowCount();
         
         ViewCriteria vcc=mgrVo.createViewCriteria();
         ViewCriteriaRow vccr=vcc.createViewCriteriaRow();
-        vccr.setAttribute("Status", "REJECT");
+        vccr.setAttribute("ApproverFlag", "R");
         vcc.addRow(vccr);
         mgrVo.applyViewCriteria(vcc);
         mgrVo.executeQuery();
         System.err.println("Rejected request "+mgrVo.getEstimatedRowCount());
         aDFContext.getPageFlowScope().put("rejected", mgrVo.getEstimatedRowCount());
-        
-        ViewCriteria vccc=mgrVo.createViewCriteria();
-        ViewCriteriaRow vcccr=vccc.createViewCriteriaRow();
-        vcccr.setAttribute("Status", "Pending Approval");
-        vccc.addRow(vcccr);
-        mgrVo.applyViewCriteria(vccc);
-        mgrVo.executeQuery();
-        System.err.println("Pending request "+mgrVo.getEstimatedRowCount());
-        aDFContext.getPageFlowScope().put("pending", mgrVo.getEstimatedRowCount());
+        rejectedRequest = mgrVo.getEstimatedRowCount();;
+    
+        pendingRequest = totalRequest - approvedRequest - rejectedRequest;
+        System.err.println("Pending request "+pendingRequest);
+        aDFContext.getPageFlowScope().put("pending", pendingRequest);
         
         ViewCriteria vcccc=mgrVo.createViewCriteria();
         ViewCriteriaRow vccccr=vcccc.createViewCriteriaRow();

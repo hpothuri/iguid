@@ -329,10 +329,10 @@
                         <f:facet name="toolbar">
                            <af:toolbar id="t4">
                               <af:button text="Approve" id="b1" actionListener="#{ManagerAppr.approveACL}"
-                                         disabled="#{bindings.Status.inputValue eq 'APPROVE' ? 'true' : 'false' or bindings.Status.inputValue eq 'REJECT'? 'true' :'false'}"
+                                         disabled="#{bindings.ApproverFlag.inputValue eq 'A' ? 'true' : 'false' or bindings.ApproverFlag.inputValue eq 'R'? 'true' :'false'}"
                                          partialTriggers="t2"/>
                               <af:button text="Reject" id="b2" actionListener="#{ManagerAppr.rejectACL}"
-                                         disabled="#{bindings.Status.inputValue eq 'APPROVE' ? 'true' : 'false' or bindings.Status.inputValue eq 'REJECT'? 'true' :'false'}"
+                                         disabled="#{bindings.ApproverFlag.inputValue eq 'A' ? 'true' : 'false' or bindings.ApproverFlag.inputValue eq 'R'? 'true' :'false'}"
                                          partialTriggers="t2"/>
                            </af:toolbar>
                         </f:facet>
@@ -567,14 +567,14 @@
                                       frozen="true" rendered="false">
                               <af:panelGroupLayout id="pgl20" layout="horizontal">
                                  <af:link id="cmi1" actionListener="#{ManagerAppr.approveACL}"
-                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }"
+                                          disabled="#{row.ApproverFlag eq 'A' ? 'true' : 'false' or row.ApproverFlag eq 'R'? 'true' :'false' }"
                                           icon="/images/qual_approved_32_full.png"/>
                                  <af:link id="cmi2" actionListener="#{ManagerAppr.rejectACL}"
-                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }"
+                                          disabled="#{row.ApproverFlag eq 'A' ? 'true' : 'false' or row.ApproverFlag eq 'R'? 'true' :'false' }"
                                           icon="/images/qual_reject_32_full.png"/>
                               </af:panelGroupLayout>
                               <af:menuBar id="mb1" rendered="false"
-                                          disabled="#{row.Status eq 'APPROVE' ? 'true' : 'false' or row.Status eq 'REJECT'? 'true' :'false' }">
+                                          disabled="#{row.ApproverFlag eq 'A' ? 'true' : 'false' or row.ApproverFlag eq 'R'? 'true' :'false' }">
                                  <af:menu id="m1" icon="/images/goup_dis.png">
                                     <af:commandMenuItem text="Approve" id="cmi1v"
                                                         actionListener="#{ManagerAppr.approveACL}"/>
@@ -588,6 +588,25 @@
                                       headerText="Approval Status" id="c12"
                                       width="120" filterable="true">
                               <af:outputText value="#{row.Status}" id="ot10"/>
+                           </af:column>
+                           <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.ApproverFlag.name}"
+                                      sortable="false"
+                                      headerText="Approver Status" id="c25"
+                                      width="120" filterable="true">
+                              <af:switcher id="s9" facetName="#{row.ApproverFlag}" defaultFacet="NULL">
+                                 <f:facet name="A">
+                                    <af:outputText value="Approved" id="ot14"/>
+                                 </f:facet>
+                                 <f:facet name="R">
+                                    <af:outputText value="Rejected" id="ot15"/>
+                                 </f:facet>
+                                 <f:facet name="D">
+                                    <af:outputText value="Draft" id="ot16"/>
+                                 </f:facet>
+                                 <f:facet name="NULL">
+                                    <af:outputText value="Pending for Approval" id="ot17"/>
+                                 </f:facet>
+                              </af:switcher>
                            </af:column>
                            <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.EmployeeNumber.name}"
                                       sortable="false"
