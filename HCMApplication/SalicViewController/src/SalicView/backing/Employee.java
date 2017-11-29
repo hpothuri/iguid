@@ -3312,6 +3312,10 @@ rs.closeRowSetIterator();
                                  oldRow.getAttribute("DestVisaRequired") ==
                                  null ? "" :
                                  oldRow.getAttribute("DestVisaRequired"));
+            currRow.setAttribute("DestinationCountry",
+                                 oldRow.getAttribute("DestinationCountry") ==
+                                 null ? "" :
+                                 oldRow.getAttribute("DestinationCountry"));
             currRow.setAttribute("DestCountryCity",
                                  oldRow.getAttribute("DestCountryCity") ==
                                  null ? "" :
