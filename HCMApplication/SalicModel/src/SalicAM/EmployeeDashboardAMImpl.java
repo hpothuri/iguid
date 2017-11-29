@@ -2,6 +2,8 @@ package SalicAM;
 
 import SalicAM.common.EmployeeDashboardAM;
 
+import java.math.BigDecimal;
+
 import oracle.adf.share.ADFContext;
 
 import oracle.jbo.ViewCriteria;
@@ -35,8 +37,16 @@ public class EmployeeDashboardAMImpl extends ApplicationModuleImpl implements Em
         ViewObject mgrVo=this.getemployeeDashboardROVO2();
         System.err.println("total request "+mgrVo.getEstimatedRowCount());
         ADFContext aDFContext = ADFContext.getCurrent();
-        aDFContext.getPageFlowScope().put("total", mgrVo.getEstimatedRowCount());
+        BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("eempId");
         
+        ViewObject mgrVo1=this.getemployeeDashboardROVO1();
+        mgrVo1.setNamedWhereClauseParam("p_emp_logged_in", empId);
+        mgrVo1.executeQuery();
+        
+        mgrVo.setNamedWhereClauseParam("p_emp_logged_in", empId);
+        mgrVo.executeQuery();
+        aDFContext.getPageFlowScope().put("total", mgrVo.getEstimatedRowCount());
+        mgrVo.setNamedWhereClauseParam("p_emp_logged_in", empId);
         ViewCriteria vc=mgrVo.createViewCriteria();
         ViewCriteriaRow vcr=vc.createViewCriteriaRow();
         vcr.setAttribute("Status", "APPROVE");

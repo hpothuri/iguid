@@ -3,10 +3,13 @@ package SalicView.backing;
 
 import SalicView.backing.Utils.ADFUtils;
 
+import java.math.BigDecimal;
+
 import javax.faces.component.html.HtmlPanelGroup;
 
 import javax.faces.event.ActionEvent;
 
+import oracle.adf.share.ADFContext;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
@@ -22,6 +25,8 @@ import oracle.jbo.ViewObject;
 import oracle.jbo.server.ViewObjectImpl;
 
 import org.apache.myfaces.trinidad.component.UIXGroup;
+
+import view.session.LoginBean;
 
 
 public class EmployeeDashboard {
@@ -318,5 +323,13 @@ public class EmployeeDashboard {
         employeeVO.executeQuery();
     }
 
-   
+    public void taskFlowInitializer(){
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        
+                ADFContext aDFContext = ADFContext.getCurrent();
+                aDFContext.getPageFlowScope().put("eempId",empId);
+        
+    }
 }

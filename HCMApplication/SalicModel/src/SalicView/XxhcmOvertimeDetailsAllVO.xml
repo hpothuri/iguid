@@ -4,11 +4,13 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeDetailsAllVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -234,6 +236,14 @@
           Name="ExpressionScript"><![CDATA[DestRegion]]></TransientExpression>
       </PIMap>
     </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="Lookup_ROVO3"
+    ViewObjectName="SalicROVO.Lookup_ROVO"
+    RowLevelBinds="true">
+    <ViewCriteriaUsage
+      Name="GradeValueType"
+      FullName="SalicROVO.Lookup_ROVO.GradeValueType"/>
   </ViewAccessor>
   <ListBinding
     Name="LOV_OvertimeType"
@@ -578,6 +588,24 @@
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="CountryName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Grade"
+    ListVOName="Lookup_ROVO3"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Grade"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LookupValueName"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupValueNameDisp"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -963,11 +991,16 @@ FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="Grade"
     EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="GRADE">
+    AliasName="GRADE"
+    LOVName="LOV_Grade">
     <Properties>
       <SchemaBasedProperties>
         <LABEL
           ResId="SalicView.XxhcmOvertimeDetailsAllVO.Grade_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -1468,7 +1501,8 @@ CountryROVO1.first().getAttribute("CountryName");
     ColumnType="BIGINT"
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"
-    LOVName="LOV_DestCountryId">
+    LOVName="LOV_DestCountryId"
+    Passivate="true">
     <Properties>
       <SchemaBasedProperties>
         <AUTOSUBMIT

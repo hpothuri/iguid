@@ -1494,5 +1494,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         actionHistVO.setNamedWhereClauseParam("p_req_id", reqId);
         actionHistVO.executeQuery();
     }
+
+    /**
+     * Container's getter for employeeROVO2.
+     * @return employeeROVO2
+     */
+    public ViewObjectImpl getemployeeROVOById() {
+        return (ViewObjectImpl) findViewObject("employeeROVOById");
+    }
 }
 

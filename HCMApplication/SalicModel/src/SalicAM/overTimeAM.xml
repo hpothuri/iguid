@@ -117,6 +117,13 @@
          Name="findById"
          FullName="SalicROVO.employeeROVO.findById"/>
    </ViewUsage>
+   <ViewUsage
+      Name="employeeROVOById"
+      ViewObjectName="SalicROVO.employeeROVO">
+      <ViewCriteriaUsage
+         Name="findById"
+         FullName="SalicROVO.employeeROVO.findById"/>
+   </ViewUsage>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

@@ -1850,6 +1850,9 @@ public class Employee {
         String result = checkDuplicateOverTimeDate(dayy.getNewValue());
         java.sql.Date day1 =
             (java.sql.Date)dayy.getNewValue();
+        //XxhcmOvertimeHeadersAllVO1Iterator
+        ViewObject headerVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         ViewObject hdr1 =
@@ -1857,7 +1860,7 @@ public class Employee {
         ViewCriteria vc = hdr1.createViewCriteria();
         ViewCriteriaRow vcr = vc.createViewCriteriaRow();
         vcr.setAttribute("empIdTRANS",
-                         lineVO.getCurrentRow().getAttribute("empIdTRANS"));
+                         headerVO.getCurrentRow().getAttribute("EmpId"));
         //        vcr.setAttribute("ReqType", "ot");
         vcr.setAttribute("OvertimeDate", day1);
         vc.addRow(vcr);
@@ -2856,7 +2859,7 @@ public class Employee {
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         variationSearchVo.getCurrentRow().setAttribute("Attribute1",
                                                        vce.getNewValue());
-        variationSearchVo.executeQuery();
+        //variationSearchVo.executeQuery();
     }
 
     public void setLeaveLOV(RichSelectOneChoice leaveLOV) {
@@ -2927,6 +2930,14 @@ public class Employee {
         return null;
     }
 
+    public void addMessageToComp(String errMsg, String compId){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage fm = new FacesMessage(errMsg);
+                            fm.setSummary(null);
+                            fm.setDetail(errMsg);
+                            fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+                        facesContext.addMessage(compId,fm);
+    }
     public void childVCL(ValueChangeEvent semSel) {
         if (childTRANS.getValue() != null) {
             List comCheck = new ArrayList();
@@ -2948,16 +2959,17 @@ public class Employee {
                         cu.getAttribute("Semester");
                     comCheck.add(combin);
                 }
-
-
+                rs.closeRowSetIterator();
                 String childName = childTRANS.getValue().toString();
                 String combin1 = childName + " " + sem;
                 if (comCheck.contains(combin1)) {
-                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                    semSOC.setValue("");
+                    //JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                    semSOC.setValue("");
+//                    AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
+//                    childTRANS.setValue("");
+//                    AdfFacesContext.getCurrentInstance().addPartialTarget(childTRANS);
+                    addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
                     AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
-                    childTRANS.setValue("");
-                    AdfFacesContext.getCurrentInstance().addPartialTarget(childTRANS);
                 } else {
                     ViewObject childValidVO =
                         ADFUtils.findIterator("childValidationROVO1Iterator").getViewObject();
@@ -2993,21 +3005,24 @@ public class Employee {
 
                                 if (childSemCheckVO.getEstimatedRowCount() ==
                                     2) {
-                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                                    semSOC.setValue("");
-                                    AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
+                                    addMessageToComp("Already you Raised Educational Allowance for 3 Childs!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
+//                                    semSOC.setValue("");
+                                   AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
 
                                 } else {
                                     if (childSemCheckVO.first() != null) {
                                         if (sem.equals(semCheck)) {
-                                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                                            semSOC.setValue("");
+                                            addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                                            semSOC.setValue("");
                                             AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                                         }
 
                                     } else {
-                                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
-                                        semSOC.setValue("");
+                                        addMessageToComp("Already you Raised Educational Allowance for 3 Childs!!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
+//                                        semSOC.setValue("");
                                         AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                                     }
 
@@ -3016,17 +3031,19 @@ public class Employee {
 
                             } else {
                                 if (childSemVO.getEstimatedRowCount() == 1) {
-                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                                    semSOC.setValue("");
-                                    AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
+                                    addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                                    semSOC.setValue("");
+AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                                 }
 
 
                             }
 
                         } else {
-                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                            semSOC.setValue("");
+                            addMessageToComp("Already you Raised Educational Allowance for 3 Childs!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
+//                            semSOC.setValue("");
                             AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                         }
                     } else {
@@ -3040,8 +3057,9 @@ public class Employee {
                                                             lineVO.getCurrentRow().getAttribute("Contactpersonid"));
                         childSemVO.executeQuery();
                         if (childSemVO.first() != null) {
-                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                            semSOC.setValue("");
+                            addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                            semSOC.setValue("");
                             AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                         }
 
@@ -3082,21 +3100,24 @@ public class Employee {
 
 
                             if (childSemCheckVO.getEstimatedRowCount() == 2) {
-                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                                semSOC.setValue("");
+                                addMessageToComp("Already you Raised Educational Allowance for 3 Childs!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
+//                                semSOC.setValue("");
                                 AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
 
                             } else {
                                 if (childSemCheckVO.first() != null) {
                                     if (sem.equals(semCheck)) {
-                                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                                        semSOC.setValue("");
+                                        addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                                        semSOC.setValue("");
                                         AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                                     }
 
                                 } else {
-                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
-                                    semSOC.setValue("");
+                                    addMessageToComp("Already you Raised Educational Allowance for 3 Childs!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
+//                                    semSOC.setValue("");
                                     AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                                 }
 
@@ -3105,8 +3126,9 @@ public class Employee {
 
                         } else {
                             if (childSemVO.getEstimatedRowCount() == 1) {
-                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                                semSOC.setValue("");
+                                addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                                semSOC.setValue("");
                                 AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                             }
 
@@ -3114,8 +3136,9 @@ public class Employee {
                         }
 
                     } else {
-                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                        semSOC.setValue("");
+                        addMessageToComp("Already you Raised Educational Allowance for 3 Childs!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
+//                        semSOC.setValue("");
                         AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                     }
                 } else {
@@ -3129,8 +3152,9 @@ public class Employee {
                                                         lineVO.getCurrentRow().getAttribute("Contactpersonid"));
                     childSemVO.executeQuery();
                     if (childSemVO.first() != null) {
-                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                        semSOC.setValue("");
+                        addMessageToComp("Already you Raised Educational Allowance for selected Semester!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
+//                        semSOC.setValue("");
                         AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
                     }
 
@@ -3138,8 +3162,9 @@ public class Employee {
             }
 
         } else {
-            JSFUtils.addFacesInformationMessage("Please select Child!");
-            semSOC.setValue("");
+            addMessageToComp("Please select Child!",semSel.getComponent().getClientId(FacesContext.getCurrentInstance()));
+//            JSFUtils.addFacesInformationMessage("Please select Child!");
+//            semSOC.setValue("");
             AdfFacesContext.getCurrentInstance().addPartialTarget(semSOC);
         }
 
@@ -3204,7 +3229,7 @@ public class Employee {
                     System.err.println("ss" + cu.getAttribute("AvlAmt"));
                     avlAmt1.add((BigDecimal)cu.getAttribute("AvlAmt"));
                 }
-
+rs.closeRowSetIterator();
             }
         }
     }

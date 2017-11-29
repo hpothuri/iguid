@@ -7,7 +7,7 @@
   <executables>
     <iterator Binds="XxhcmOvertimeHeadersAllVO1" RangeSize="25"
               DataControl="overTimeAMDataControl"
-              id="XxhcmOvertimeHeadersAllVO1Iterator" Refresh="never"/>
+              id="XxhcmOvertimeHeadersAllVO1Iterator"/>
   </executables>
   <bindings>
     <action IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"

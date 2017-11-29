@@ -153,11 +153,11 @@
       islink="true"
       id="ControlFlowCase18"
       from="View3"
-      to="MethodCall25">
+      to="TaskFlowCall6">
       <property
          name="fromOutcome">add</property>
       <property
-         name="sdm:polyPoints">R50,65.69238,327.51147,65.69238,109.30444,434.69238,109.30444,T50</property>
+         name="sdm:polyPoints">R50,352.73535,327.51147,352.73535,354.5795,L54</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"

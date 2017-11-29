@@ -20,7 +20,7 @@
                 <af:spacer width="10" height="2"
                           
                            id="s6"/>
-                <af:panelGroupLayout rendered="false"
+                <af:panelGroupLayout 
                                      id="pgl6" layout="horizontal">
                   <af:spacer width="10" height="10"
                              
@@ -28,7 +28,7 @@
                   <af:outputText value="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'salary'?'Salary In Advance':sessionScope.page eq 'edu'?'Education Allowance':''}"
                                 
                                  id="ot1"
-                                 inlineStyle="font-weight:bold; font-size:medium;"/>
+                                 inlineStyle="font-weight:bold; font-size:medium;" rendered="false"/>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
               <af:spacer width="725" height="10"
@@ -172,8 +172,8 @@
                                       contentStyle="width:180px;"
                                       autoSubmit="true"
                                       valueChangeListener="#{backingBeanScope.backing_employee.generateReqNumVCL}"
-                                      required="true"
-                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
+                                      required="true" 
+                                      disabled="true" readOnly="true"
                                       binding="#{backingBeanScope.backing_employee.empLov}">
                   <f:validator binding="#{bindings.employeeNameTRANS.validator}"/>
                 </af:inputListOfValues>
@@ -381,16 +381,20 @@
                 <af:showDetailItem text="Advance Details" id="sdi3"
                                    rendered="#{sessionScope.page eq 'house'}">
                   <af:panelFormLayout id="pfl2" rows="2">
-                    <af:inputText value="#{bindings.AdvAmt.inputValue}"
-                                  label="#{bindings.AdvAmt.hints.label}"
-                                  required="#{bindings.AdvAmt.hints.mandatory}"
-                                  columns="#{bindings.AdvAmt.hints.displayWidth}"
-                                  maximumLength="#{bindings.AdvAmt.hints.precision}"
-                                  shortDesc="#{bindings.AdvAmt.hints.tooltip}"
-                                  id="it8" contentStyle="width:200px;"
-                                  partialTriggers="employeeNameTRANSId" readOnly="true">
-                      <f:validator binding="#{bindings.AdvAmt.validator}"/>
-                    </af:inputText>
+                    <af:panelLabelAndMessage label="#{bindings.AdvAmt.hints.label}" id="plam9">
+                      <af:inputText value="#{bindings.AdvAmt.inputValue}" label="#{bindings.AdvAmt.hints.label}"
+                                    required="#{bindings.AdvAmt.hints.mandatory}"
+                                    columns="#{bindings.AdvAmt.hints.displayWidth}" simple="true"
+                                    maximumLength="#{bindings.AdvAmt.hints.precision}"
+                                    shortDesc="#{bindings.AdvAmt.hints.tooltip}" id="it8" contentStyle="width:200px;"
+                                    partialTriggers="employeeNameTRANSId" readOnly="true">
+                        <f:validator binding="#{bindings.AdvAmt.validator}"/>
+                        <af:convertNumber groupingUsed="true" minFractionDigits="2"/>
+                      </af:inputText>
+                      <f:facet name="end">
+                        <af:outputText value="SAR" id="ot24"/>
+                      </f:facet>
+                    </af:panelLabelAndMessage>
                     <af:inputText value="#{bindings.Comments.inputValue}"
                                   label="#{bindings.Comments.hints.label}"
                                   required="#{bindings.Comments.hints.mandatory}"
@@ -511,7 +515,7 @@
                                   maximumLength="#{bindings.Missions.hints.precision}"
                                   shortDesc="#{bindings.Missions.hints.tooltip}"
                                   id="it15" rows="4"
-                                  contentStyle="width:200px;"
+                                  contentStyle="width:200px;" autoSubmit="true"
                                   disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                   partialTriggers="employeeNameTRANSId">
                       <f:validator binding="#{bindings.Missions.validator}"/>
@@ -738,7 +742,7 @@
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.label}"
                                  id="c33">
                         <af:selectOneChoice value="#{row.bindings.Grade.inputValue}"
-                                            label="#{row.bindings.Grade.label}"
+                                            label="#{row.bindings.Grade.label}" autoSubmit="true"
                                             required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.mandatory}"
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.tooltip}"
                                             id="soc8" simple="true">
@@ -765,7 +769,7 @@
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
                                  id="c34">
-                        <af:inputText value="#{row.bindings.School.inputValue}"
+                        <af:inputText value="#{row.bindings.School.inputValue}" autoSubmit="true"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.displayWidth}"
@@ -779,7 +783,7 @@
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
                                  id="c22">
-                        <af:inputText value="#{row.bindings.Age.inputValue}"
+                        <af:inputText value="#{row.bindings.Age.inputValue}" autoSubmit="true"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.displayWidth}"
@@ -1124,7 +1128,7 @@
                           </af:inputListOfValues>
                           <af:outputText value="#{bindings.Country_Trans.inputValue}"
                                          id="ot20" partialTriggers="soc131"
-                                         rendered="false"/>
+                                         rendered="true"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc19"
                                      halign="end" valign="middle">

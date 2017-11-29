@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="managerDashbaordROVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -93,16 +93,11 @@
     XXHCM_OVERTIME_HEADERS_ALL.LINE_APPROVAL LINE_APPROVAL,      
     XXHCM_OVERTIME_HEADERS_ALL.APPROVER_USER_NAME APPROVER_USER_NAME,     
  XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE REQ_TYPE, 
- (SELECT approver_flag 
+ (SELECT nvl(approver_flag,'P')
   FROM XX_QP_ACTION_HISTORY_T where  
   header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID 
-  and APPROVE_LEVEL = 
-    (SELECT MAX(approve_level) 
-    FROM XX_QP_ACTION_HISTORY_T 
-    WHERE approver_flag IS NOT NULL 
-    AND header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID 
-    AND approver_id  = :p_emp_logged_in 
-    )) approver_flag 
+  AND approver_id  = :p_emp_logged_in
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,:p_emp_logged_in)) approver_flag 
 FROM      
     XXHCM_OVERTIME_HEADERS_ALL    
     where req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE approver_id = :p_emp_logged_in AND (APPROVER_FLAG IN ('A','R')   
@@ -668,8 +663,8 @@ employeeROVO.first().getAttribute("Grade")
       Name="vcrow16"
       UpperColumns="1">
       <ViewCriteriaItem
-        Name="Status"
-        ViewAttribute="Status"
+        Name="ApproverFlag"
+        ViewAttribute="ApproverFlag"
         Operator="="
         Conjunction="AND"
         Value=":p_Status"

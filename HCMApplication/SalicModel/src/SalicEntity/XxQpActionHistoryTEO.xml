@@ -146,7 +146,6 @@
   </Attribute>
   <Attribute
     Name="LastUpdateDate"
-    IsNotNull="true"
     ColumnName="LAST_UPDATE_DATE"
     SQLType="TIMESTAMP"
     Type="java.sql.Timestamp"
@@ -245,17 +244,6 @@
     </DesignTime>
     <AttrArray Name="Attributes">
       <Item Value="SalicEntity.XxQpActionHistoryTEO.LastUpdatedBy"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="SysC004692">
-    <DesignTime>
-      <Attr Name="_DBObjectName" Value="SYS_C004692"/>
-      <Attr Name="_checkCondition" Value='"LAST_UPDATE_DATE" IS NOT NULL'/>
-      <Attr Name="_isCheck" Value="true"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
-      <Item Value="SalicEntity.XxQpActionHistoryTEO.LastUpdateDate"/>
     </AttrArray>
   </Key>
   <Key

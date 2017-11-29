@@ -286,24 +286,10 @@
       </list>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="Grade"
             DTSupportsMRU="true" SelectItemValueMode="ListObject"
-            StaticList="true">
+            StaticList="false" Uses="LOV_Grade">
          <AttrNames>
             <Item Value="Grade"/>
          </AttrNames>
-         <ValueList>
-            <Item Value="1"/>
-            <Item Value="2"/>
-            <Item Value="3"/>
-            <Item Value="4"/>
-            <Item Value="5"/>
-            <Item Value="6"/>
-            <Item Value="7"/>
-            <Item Value="8"/>
-            <Item Value="9"/>
-            <Item Value="10"/>
-            <Item Value="11"/>
-            <Item Value="12"/>
-         </ValueList>
       </list>
       <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
                        id="empIdTRANS">
@@ -347,7 +333,7 @@
             <AttrNames>
                <Item Value="InvDate"/>
                <Item Value="childTRANS"/>
-               <Item Value="Grade" Binds="Grade"/>
+               <Item Value="Grade"/>
                <Item Value="ActAmt"/>
                <Item Value="School"/>
                <Item Value="Age"/>

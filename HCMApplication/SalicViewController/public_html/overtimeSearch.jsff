@@ -8,7 +8,7 @@
       <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth"
                            halign="center" layout="scroll">
         <af:commandButton text="Add" id="cb1" action="add" rendered="false"/>
-        <af:panelHeader text="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'letter'?'HR Letter':sessionScope.page eq 'salary'?'Salary In Advance':sessionScope.page eq 'edu'?'Education Allowance':''}" id="ph1">
+        <af:panelHeader text = "" id="ph1">
           <f:facet name="context"/>
           <f:facet name="menuBar"/>
           <f:facet name="toolbar"/>
@@ -54,7 +54,7 @@
                 <af:spacer width="750" height="10" id="s1"/>
                 <!--af:commandButton text="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'BusinessTrip'?'Business Trip':sessionScope.page eq 'BusinessTripCompletion'?'Business Trip Completion':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'letter'?'Create HR Letter':sessionScope.page eq 'salary'?'Create New Request':sessionScope.page eq 'edu'?'Education Allowance':''}" id="cb3"-->
                 <af:commandButton text="New Request" id="cb3"
-                                  action="add">
+                                  action="#{OvertimeSearch.createNewRequest}">
                                      <af:setPropertyListener from="add"
                                               to="#{sessionScope.mode}"
                                               type="action"/>
@@ -208,5 +208,5 @@
     <f:facet name="header"/>
     <f:facet name="headerEnd"/>
   </af:pageTemplate>
-  oracle-jdev-comment:auto-binding-backing-bean-name:backing_overtimeSearch
+  
 </jsp:root>

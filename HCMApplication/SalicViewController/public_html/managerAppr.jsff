@@ -15,7 +15,7 @@
                                  rendered="false"/>
             </af:panelGroupLayout>
             <af:group id="g1"/>
-               <af:panelHeader text="Manager Dashboard"
+               <af:panelHeader text=""
                                        
                                         id="ph1">
                               <f:facet name="context"/>
@@ -606,7 +606,7 @@
                                  <f:facet name="D">
                                     <af:outputText value="Draft" id="ot16"/>
                                  </f:facet>
-                                 <f:facet name="NULL">
+                                 <f:facet name="P">
                                     <af:outputText value="Pending for Approval" id="ot17"/>
                                  </f:facet>
                               </af:switcher>

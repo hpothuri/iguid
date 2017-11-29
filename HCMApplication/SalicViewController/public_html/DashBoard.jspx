@@ -269,7 +269,7 @@
                 </af:gridRow>
                 <af:gridRow marginTop="5px" height="100px" id="gr2">
                   <af:gridCell marginStart="5px" width="200px" marginEnd="5px" id="gc3" halign="center"
-                               rendered="#{sessionScope.loginBean.roles['SALIC_ESS_ADMIN']}">
+                               >
                     <af:commandLink binding="#{backingBeanScope.backing_DashBoard.commandLink2}" id="commandLink2"
                                     action="gotoUser">
                       <af:panelGroupLayout binding="#{backingBeanScope.backing_DashBoard.panelGroupLayout4}"

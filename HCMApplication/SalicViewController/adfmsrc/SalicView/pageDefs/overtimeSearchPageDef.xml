@@ -16,6 +16,37 @@
                   Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
                   Binds="XxhcmOvertimeHeadersAllVO1Iterator"
                   id="otHdrROVOCriteriaQuery"/>
+    <iterator id="XxhcmOvertimeHeadersAllVO1Iterator1" Binds="XxhcmOvertimeHeadersAllVO1"
+              DataControl="overTimeAMDataControl" RangeSize="25"/>
+    <iterator id="XxhcmOvertimeDetailsAllVO2Iterator" Binds="XxhcmOvertimeDetailsAllVO2"
+              DataControl="overTimeAMDataControl" RangeSize="25"/>
+    <iterator Binds="XxhcmPurposeOfTrvl_VO1" RangeSize="10" DataControl="overTimeAMDataControl"
+              id="XxhcmPurposeOfTrvl_VO1Iterator"/>
+    <iterator id="absenceROVO1Iterator" Binds="absenceROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childValidationROVO1Iterator" Binds="childValidationROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childSemROVO1Iterator" Binds="childSemROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="childSemCheckROVO1Iterator" Binds="childSemCheckROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="hireROVO1Iterator" Binds="hireROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="ethnicROVO1Iterator" Binds="ethnicROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="salaryROVO1Iterator" Binds="salaryROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="OnValidateStartDateEndDateROVO1Iterator"
+                Binds="OnValidateStartDateEndDateROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="CheckEmployeeReqExistsROVO1Iterator" Binds="CheckEmployeeReqExistsROVO1"
+                DataControl="overTimeAMDataControl" RangeSize="25"/>
+      <iterator id="ValidateSalAdvROVO1Iterator" Binds="ValidateSalAdvROVO1" DataControl="overTimeAMDataControl"
+                RangeSize="25"/>
+    <iterator id="employeeROVOByIdIterator" Binds="employeeROVOById" DataControl="overTimeAMDataControl"
+              RangeSize="25"/>
+    <iterator id="XxhcmOvertimeHeadersAllVO1Iterator2" Binds="XxhcmOvertimeHeadersAllVO2"
+              DataControl="overTimeAMDataControl" RangeSize="25"/>
   </executables>
   <bindings>
     <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
@@ -43,5 +74,34 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <action IterBinding="XxhcmOvertimeHeadersAllVO1Iterator1" id="CreateInsert"
+            InstanceName="overTimeAMDataControl.XxhcmOvertimeHeadersAllVO1" DataControl="overTimeAMDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="XxhcmOvertimeDetailsAllVO2Iterator" id="CreateInsert1"
+            InstanceName="overTimeAMDataControl.XxhcmOvertimeDetailsAllVO2" DataControl="overTimeAMDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="XxhcmPurposeOfTrvl_VO1Iterator" id="CreateInsert2"
+            InstanceName="overTimeAMDataControl.XxhcmPurposeOfTrvl_VO1" DataControl="overTimeAMDataControl"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <methodAction id="populateApproversForReqest" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="populateApproversForReqest" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.populateApproversForReqest.dataControl.dataProvider">
+      <NamedData NDName="reqNumber" NDType="java.lang.String"/>
+      <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="reqType" NDType="java.lang.String"/>
+      <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <methodAction id="getOTGradeEligibility" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getOTGradeEligibility" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.getOTGradeEligibility.dataControl.dataProvider"
+                  ReturnName="data.overTimeAMDataControl.methodResults.getOTGradeEligibility_getOTGradeEligibility_dataControl_dataProvider_getOTGradeEligibility_result">
+      <NamedData NDName="grade" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="fetchMaxAmountForEmployee" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="fetchMaxAmountForEmployee" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.fetchMaxAmountForEmployee.dataControl.dataProvider"
+                  ReturnName="data.overTimeAMDataControl.methodResults.fetchMaxAmountForEmployee_fetchMaxAmountForEmployee_dataControl_dataProvider_fetchMaxAmountForEmployee_result">
+      <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

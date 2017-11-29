@@ -280,7 +280,7 @@ public class ManagerAppr {
         //        System.err.println("Approved request "+mgrVo.getEstimatedRowCount());
         //        ADFContext.getCurrent().getPageFlowScope().put("approved", mgrVo.getEstimatedRowCount());
         //        AdfFacesContext.getCurrentInstance().addPartialTarget(mgrTable);
-        filterEmployeeDashboardStatus("APPROVE");
+        filterEmployeeDashboardStatus("A");
     }
 
     public void rejectInfoletACL(ActionEvent actionEvent) {
@@ -295,7 +295,7 @@ public class ManagerAppr {
         //         ADFContext.getCurrent().getPageFlowScope().put("rejected", mgrVo.getEstimatedRowCount());
         //        AdfFacesContext.getCurrentInstance().addPartialTarget(mgrTable);
 
-        filterEmployeeDashboardStatus("REJECT");
+        filterEmployeeDashboardStatus("R");
     }
 
     public void pendingACL(ActionEvent actionEvent) {
@@ -308,7 +308,7 @@ public class ManagerAppr {
         //        mgrVo.executeQuery();
         //        System.err.println("Pending request "+mgrVo.getEstimatedRowCount());
         //        ADFContext.getCurrent().getPageFlowScope().put("pending", mgrVo.getEstimatedRowCount());
-        filterEmployeeDashboardStatus("Pending Approval");
+        filterEmployeeDashboardStatus("P");
     }
 
 

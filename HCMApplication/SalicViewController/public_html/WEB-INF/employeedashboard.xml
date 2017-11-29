@@ -18,6 +18,7 @@
       <managed-bean-scope id="__2">backingBean</managed-bean-scope>
       <!--oracle-jdev-comment:managed-bean-jsp-link:1EmployeeDashboard.jsff-->
     </managed-bean>
+    <initializer>#{backingBeanScope.backing_EmployeeDashboard.taskFlowInitializer}</initializer>
     <view id="EmployeeDashboard">
       <page>/EmployeeDashboard.jsff</page>
     </view>
