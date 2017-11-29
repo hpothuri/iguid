@@ -907,16 +907,15 @@
     </DesignTime>
   </Attribute>
   <Attribute
-    Name="DestCountry"
-    ColumnName="DEST_COUNTRY"
-    SQLType="VARCHAR"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    TableName="XXHCM_OVERTIME_DETAILS_ALL"
-    Precision="100"/>
-  <Attribute
     Name="NoOfDays"
     ColumnName="NO_OF_DAYS"
+    SQLType="NUMERIC"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL"/>
+  <Attribute
+    Name="DestinationCountry"
+    ColumnName="DESTINATION_COUNTRY"
     SQLType="NUMERIC"
     Type="java.math.BigDecimal"
     ColumnType="NUMBER"

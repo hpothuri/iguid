@@ -142,8 +142,8 @@ public class Employee {
     private RichInputListOfValues leaveLov;
     private RichInputListOfValues bussTrReq1;
     private RichInputText prDM;
-    private RichInputListOfValues btDestCountryCity;
-    private RichInputListOfValues bstDestCount;
+    private RichSelectOneChoice btDestCountryCity;
+    private RichSelectOneChoice bstDestCount;
     private RichSelectOneChoice bstCountryLOV;
     private RichSelectOneChoice destCountryLOV;
     private BigDecimal countryValue;
@@ -654,10 +654,11 @@ public class Employee {
 
                 lineVO.getCurrentRow().setAttribute("AirlineTicketType",
                                                     ADFContext.getCurrent().getPageFlowScope().get("airTicket"));
+                lineVO.getCurrentRow().setAttribute("DestinationCountry",countryValue);
                 lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                     ADFContext.getCurrent().getPageFlowScope().get("DestCount"));
                 
-                lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
+                
 
                 System.err.println("------BS");
 
@@ -724,7 +725,7 @@ public class Employee {
                                                     this.bstEdDt.getValue());
                 lineVO.getCurrentRow().setAttribute("DestCategory",
                                                     this.bstDestCateLOV.getValue());
-                lineVO.getCurrentRow().setAttribute("DestCountry", countryValue);
+                lineVO.getCurrentRow().setAttribute("DestinationCountry", countryValue);
 
                 System.err.println("HELLOOOO--" +
                                    ADFContext.getCurrent().getPageFlowScope().get("bussTripReqNo"));
@@ -1622,14 +1623,16 @@ public class Employee {
                                        this.btDestCountryCity.getValue());
                     System.err.println("------Country" +
                                        this.destCountryLOV.getValue());
-                    System.err.println("------Country" +countryValue);
 
                     lineVO.getCurrentRow().setAttribute("AirlineTicketType",
                                                         ADFContext.getCurrent().getPageFlowScope().get("airTicket"));
+                    
+                    lineVO.getCurrentRow().setAttribute("DestinationCountry",this.destCountryLOV.getValue());
+                    
                     lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                         ADFContext.getCurrent().getPageFlowScope().get("DestCount"));
                     
-                    lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
+                   
 
                     System.err.println("------BS");
 
@@ -1718,7 +1721,7 @@ public class Employee {
                     lineVO.getCurrentRow().setAttribute("DestCategory",
                                                         this.bstDestCateLOV.getValue());
                     
-                    lineVO.getCurrentRow().setAttribute("DestCountry",countryValue);
+                    lineVO.getCurrentRow().setAttribute("DestinationCountry",countryValue);
                     System.err.println("NOFDAYS" +
                                        this.bstNoOfDays.getValue());
                     //lineVO.getCurrentRow().setAttribute("NumberOfDays",
@@ -3713,19 +3716,19 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         return isValid;
     }
 
-    public void setBtDestCountryCity(RichInputListOfValues btDestCountryCity) {
+    public void setBtDestCountryCity(RichSelectOneChoice btDestCountryCity) {
         this.btDestCountryCity = btDestCountryCity;
     }
 
-    public RichInputListOfValues getBtDestCountryCity() {
+    public RichSelectOneChoice getBtDestCountryCity() {
         return btDestCountryCity;
     }
 
-    public void setBstDestCount(RichInputListOfValues bstDestCount) {
+    public void setBstDestCount(RichSelectOneChoice bstDestCount) {
         this.bstDestCount = bstDestCount;
     }
 
-    public RichInputListOfValues getBstDestCount() {
+    public RichSelectOneChoice getBstDestCount() {
         return bstDestCount;
     }
 

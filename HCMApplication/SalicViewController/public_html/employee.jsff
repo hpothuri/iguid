@@ -1084,21 +1084,21 @@
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc111"
                                      valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestCountry.inputValue}"
-                                              label="#{bindings.DestCountry.label}"
-                                              required="#{bindings.DestCountry.hints.mandatory}"
-                                              shortDesc="#{bindings.DestCountry.hints.tooltip}"
-                                              id="soc131" simple="true" partialTriggers="soc10"
+                                     <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
+                                              label="#{bindings.DestinationCountry.label}"
+                                              required="#{bindings.DestinationCountry.hints.mandatory}"
+                                              shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc25"
+                                              simple="true" partialTriggers="soc10"
                                               contentStyle="width:200px"
                                               autoSubmit="true"
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
+                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
                                               binding="#{backingBeanScope.backing_employee.destCountryLOV}">
-                            <f:selectItems value="#{bindings.DestCountry.items}"
-                                           id="si131"/>
+                            <f:selectItems value="#{bindings.DestinationCountry.items}" id="si20"/>
+                            <f:validator binding="#{bindings.DestinationCountry.validator}"/>
                           </af:selectOneChoice>
                           <af:outputText value="#{bindings.Country_Trans.inputValue}"
-                                         id="ot201" partialTriggers="soc131"
+                                         id="ot201" partialTriggers="soc25"
                                          rendered="false"/>
                         </af:gridCell>
                         </af:gridRow>
@@ -1111,23 +1111,20 @@
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc1"
                                      valign="middle">
-                          <af:inputListOfValues id="destCountryCity1Id"
-                                                popupTitle="Search and Select: City"
-                                                value="#{bindings.DestCountryCity1.inputValue}"
-                                                label="#{bindings.DestCountryCity1.hints.label}"
-                                                model="#{bindings.DestCountryCity1.listOfValuesModel}"
-                                                required="#{bindings.DestCountryCity1.hints.mandatory}"
-                                                columns="#{bindings.DestCountryCity1.hints.displayWidth}"
-                                                shortDesc="#{bindings.DestCountryCity1.hints.tooltip}"
-                                                autoSubmit="true" partialTriggers="soc131" 
+                          <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
+                                              label="#{bindings.DestCountryCity.label}"
+                                              required="#{bindings.DestCountryCity.hints.mandatory}"
+                                              shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc18"
+                                              autoSubmit="true" partialTriggers="soc25" 
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
                                                 binding="#{backingBeanScope.backing_employee.btDestCountryCity}" simple="true"
                                                 contentStyle="width:200px;">
-                            <f:validator binding="#{bindings.DestCountryCity1.validator}"/>
-                          </af:inputListOfValues>
+                            <f:selectItems value="#{bindings.DestCountryCity.items}" id="si18"/>
+                            <f:validator binding="#{bindings.DestCountryCity.validator}"/>
+                          </af:selectOneChoice>
                           <af:outputText value="#{bindings.Country_Trans.inputValue}"
-                                         id="ot20" partialTriggers="soc131"
+                                         id="ot20" partialTriggers="soc25"
                                          rendered="true"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc19"
@@ -1638,21 +1635,21 @@
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc36"
                                      valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestCountry.inputValue}"
-                                              label="#{bindings.DestCountry.label}"
-                                              required="#{bindings.DestCountry.hints.mandatory}"
-                                              shortDesc="#{bindings.DestCountry.hints.tooltip}"
-                                              id="soc13" simple="true" partialTriggers="selectOneChoice2"
+                          <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
+                                              label="#{bindings.DestinationCountry.label}"
+                                              required="#{bindings.DestinationCountry.hints.mandatory}"
+                                              shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc20"
+                                              simple="true" partialTriggers="selectOneChoice2"
                                               contentStyle="width:200px"
                                               autoSubmit="true"
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                                valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
                                               binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
-                            <f:selectItems value="#{bindings.DestCountry.items}"
-                                           id="si13"/>
+                            <f:selectItems value="#{bindings.DestinationCountry.items}" id="si13"/>
+                            <f:validator binding="#{bindings.DestinationCountry.validator}"/>
                           </af:selectOneChoice>
                           <af:outputText value="#{bindings.Country_Trans.inputValue}"
-                                         id="ot23" partialTriggers="soc131"
+                                         id="ot23" partialTriggers="soc25"
                                          rendered="false"/>
                         </af:gridCell>
                         </af:gridRow>
@@ -1666,20 +1663,18 @@
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell26" valign="middle">
-                                 <af:inputListOfValues id="ilov2"
-                                                popupTitle="Search and Select: City"
-                                                value="#{bindings.DestCountryCity1.inputValue}"
-                                                label="#{bindings.DestCountryCity1.hints.label}"
-                                                model="#{bindings.DestCountryCity1.listOfValuesModel}"
-                                                required="#{bindings.DestCountryCity1.hints.mandatory}"
-                                                columns="#{bindings.DestCountryCity1.hints.displayWidth}"
-                                                shortDesc="#{bindings.DestCountryCity1.hints.tooltip}"
-                                                autoSubmit="true" partialTriggers="soc16 soc13" 
+                                     <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
+                                              label="#{bindings.DestCountryCity.label}"
+                                              required="#{bindings.DestCountryCity.hints.mandatory}"
+                                              shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc19"
+                                              autoSubmit="true" partialTriggers="soc16 soc20" 
                                               disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
-                                                contentStyle="width:200px;"
-                                                       binding="#{backingBeanScope.backing_employee.bstDestCount}">
-                            <f:validator binding="#{bindings.DestCountryCity1.validator}"/>
-                                                    </af:inputListOfValues>
+                                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
+                                                binding="#{backingBeanScope.backing_employee.bstDestCount}"
+                                                contentStyle="width:200px;">
+                            <f:selectItems value="#{bindings.DestCountryCity.items}" id="si19"/>
+                            <f:validator binding="#{bindings.DestCountryCity.validator}"/>
+                          </af:selectOneChoice>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell27" halign="end"

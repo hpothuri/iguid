@@ -581,8 +581,6 @@
                     MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
                     DataControl="overTimeAMDataControl"
                     InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider"/>
-      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountry"
-            id="DestCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
       <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="NoOfDays">
          <AttrNames>
             <Item Value="NoOfDays"/>
@@ -599,5 +597,7 @@
                     InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
          <NamedData NDName="approveOrReject" NDType="java.lang.String"/>
       </methodAction>
+      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestinationCountry"
+            id="DestinationCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
    </bindings>
 </pageDefinition>

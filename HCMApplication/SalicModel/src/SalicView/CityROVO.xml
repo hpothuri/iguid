@@ -4,12 +4,11 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CityROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -19,9 +18,12 @@
         ResId="SalicView.CityROVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
-  <SQLQuery>
-    <![CDATA[SELECT CITY_ID,COUNTRY_ID, CITY_NAME FROM CITY]]>
-  </SQLQuery>
+  <Variable
+    Name="bindCountryId"
+    Kind="where"
+    Type="java.math.BigDecimal"
+    DefaultValue="-1"/>
+  <SQLQuery><![CDATA[SELECT CITY_ID,COUNTRY_ID, CITY_NAME FROM CITY where country_id = :bindCountryId]]></SQLQuery>
   <ViewAttribute
     Name="CityId"
     IsUpdateable="false"

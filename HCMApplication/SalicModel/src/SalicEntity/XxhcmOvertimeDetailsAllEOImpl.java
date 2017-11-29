@@ -742,16 +742,6 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             }
         }
         ,
-        DestCountry {
-            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
-                return obj.getDestCountry();
-            }
-
-            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
-                obj.setDestCountry((String) value);
-            }
-        }
-        ,
         NoOfDays {
             protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
                 return obj.getNoOfDays();
@@ -759,6 +749,16 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
 
             protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
                 obj.setNoOfDays((BigDecimal) value);
+            }
+        }
+        ,
+        DestinationCountry {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getDestinationCountry();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setDestinationCountry((BigDecimal) value);
             }
         }
         ,
@@ -773,6 +773,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         }
         ;
         private static AttributesEnum[] vals = null;
+        ;
         private static final int firstIndex = 0;
 
         protected abstract Object get(XxhcmOvertimeDetailsAllEOImpl object);
@@ -872,8 +873,8 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static final int OTHER1 = AttributesEnum.Other1.index();
     public static final int SALARYDATE = AttributesEnum.SalaryDate.index();
     public static final int DESTREGION = AttributesEnum.DestRegion.index();
-    public static final int DESTCOUNTRY = AttributesEnum.DestCountry.index();
     public static final int NOOFDAYS = AttributesEnum.NoOfDays.index();
+    public static final int DESTINATIONCOUNTRY = AttributesEnum.DestinationCountry.index();
     public static final int XXHCMOVERTIMEHEADERSALLVO = AttributesEnum.XxhcmOvertimeHeadersAllVO.index();
 
     /**
@@ -2032,22 +2033,6 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
 
 
     /**
-     * Gets the attribute value for DestCountry, using the alias name DestCountry.
-     * @return the value of DestCountry
-     */
-    public String getDestCountry() {
-        return (String) getAttributeInternal(DESTCOUNTRY);
-    }
-
-    /**
-     * Sets <code>value</code> as the attribute value for DestCountry.
-     * @param value value to set the DestCountry
-     */
-    public void setDestCountry(String value) {
-        setAttributeInternal(DESTCOUNTRY, value);
-    }
-
-    /**
      * Gets the attribute value for NoOfDays, using the alias name NoOfDays.
      * @return the value of NoOfDays
      */
@@ -2061,6 +2046,22 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
      */
     public void setNoOfDays(BigDecimal value) {
         setAttributeInternal(NOOFDAYS, value);
+    }
+
+    /**
+     * Gets the attribute value for DestinationCountry, using the alias name DestinationCountry.
+     * @return the value of DestinationCountry
+     */
+    public BigDecimal getDestinationCountry() {
+        return (BigDecimal) getAttributeInternal(DESTINATIONCOUNTRY);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for DestinationCountry.
+     * @param value value to set the DestinationCountry
+     */
+    public void setDestinationCountry(BigDecimal value) {
+        setAttributeInternal(DESTINATIONCOUNTRY, value);
     }
 
     /**
