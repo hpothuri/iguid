@@ -773,7 +773,6 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         }
         ;
         private static AttributesEnum[] vals = null;
-        ;
         private static final int firstIndex = 0;
 
         protected abstract Object get(XxhcmOvertimeDetailsAllEOImpl object);
@@ -2102,6 +2101,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         return (ViewRowImpl) getAttributeInternal(XXHCMOVERTIMEHEADERSALLVO);
     }
 
+
     /**
      * @param reqDtlsId key constituent
 
@@ -2111,6 +2111,9 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         return new Key(new Object[] { reqDtlsId });
     }
 
+    public void validateInvNumberUnique(){
+        
+    }
 
 }
 
