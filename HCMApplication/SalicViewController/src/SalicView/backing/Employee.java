@@ -1393,6 +1393,18 @@ public class Employee {
 //                }
             } else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
 
+                Boolean isValid = validateEducationAllowance();
+                if(!isValid){
+                    returnActivity = null;
+                }
+                lineVO =
+                    ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+                RowSetIterator rs = lineVO.createRowSetIterator(null);
+                while(rs.hasNext()){
+                    Row row = rs.next();
+                    
+                }
+
                 ViewObject attVo =
                     ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
                 if (attVo.first() != null) {
@@ -1403,119 +1415,10 @@ public class Employee {
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 
-//                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"),
-//                                     "H",
-//                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     appMenu.setDisabled(true);
                     AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
                     AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
                     returnActivity = "save";
-                    //                    ViewObject childValidVO =
-                    //                        ADFUtils.findIterator("childValidationROVO1Iterator").getViewObject();
-                    //
-                    //                    childValidVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                    //                    childValidVO.executeQuery();
-                    //                    if(childValidVO.getEstimatedRowCount()>=3){
-                    //                        if(childValidVO.getEstimatedRowCount()==3){
-                    //                            ViewObject childSemVO =
-                    //                                ADFUtils.findIterator("childSemROVO1Iterator").getViewObject();
-                    //                            childSemVO.setNamedWhereClauseParam("sem", lineVO.getCurrentRow().getAttribute("Semester"));
-                    //                            childSemVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                    //                            childSemVO.setNamedWhereClauseParam("cont", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                    //                            childSemVO.executeQuery();
-                    //                            System.err.println("ssss- - "+childSemVO.getEstimatedRowCount());
-                    //                            if(childSemVO.getEstimatedRowCount()==0){
-                    //                                ViewObject childSemCheckVO =
-                    //                                    ADFUtils.findIterator("childSemCheckROVO1Iterator").getViewObject();
-                    //                                childSemCheckVO.setNamedWhereClauseParam("con", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                    //                                childSemCheckVO.executeQuery();
-                    //                                System.err.println("check- - "+childSemCheckVO.getEstimatedRowCount());
-                    //
-                    //                            if(childSemCheckVO.getEstimatedRowCount()==2){
-                    //                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                    //                                returnActivity=null;
-                    //                            }
-                    //                            else{
-                    //                                if(childSemCheckVO.first()!=null){
-                    //                                    if(lineVO.getCurrentRow().getAttribute("Semester").equals(childSemCheckVO.first().getAttribute("Semester"))){
-                    //                                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                    //                                                    returnActivity=null;
-                    //                                                }
-                    //                                                else{
-                    //                                                    otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                    //                                                    otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
-                    //                                                    ADFUtils.findOperation("Commit").execute();
-                    //                                                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
-                    //
-                    //                                                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
-                    //                                                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    //                                                    appMenu.setDisabled(true);
-                    //                                                    AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
-                    //                                                    AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
-                    //                                                    returnActivity="save";
-                    //                                                }
-                    //                                }
-                    //                                else{
-                    //                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
-                    //                                    returnActivity=null;
-                    //                                }
-                    //
-                    //
-                    //                            }
-                    //
-                    //                            }
-                    //                            else{
-                    //                                if(childSemVO.getEstimatedRowCount()==1){
-                    //                                    JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                    //                                    returnActivity=null;
-                    //                                }
-                    //                                else{
-                    //                                    otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                    //                                    otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
-                    //                                    ADFUtils.findOperation("Commit").execute();
-                    //                                    JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
-                    //
-                    //                                    approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
-                    //                                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    //                                    appMenu.setDisabled(true);
-                    //                                    AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
-                    //                                    AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
-                    //                                    returnActivity="save";
-                    //                                }
-                    //
-                    //                            }
-                    //
-                    //                        }
-                    //                        else{
-                    //                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                    //                                                    returnActivity=null;
-                    //                        }
-                    //                                     }
-                    //                    else{
-                    //
-                    //                        ViewObject childSemVO =
-                    //                            ADFUtils.findIterator("childSemROVO1Iterator").getViewObject();
-                    //                        childSemVO.setNamedWhereClauseParam("sem", lineVO.getCurrentRow().getAttribute("Semester"));
-                    //                        childSemVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                    //                        childSemVO.setNamedWhereClauseParam("cont", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                    //                        childSemVO.executeQuery();
-                    //                        if(childSemVO.first()!=null){
-                    //                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                    //                            returnActivity=null;
-                    //                        }
-                    //                        else{
-                    //                            otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                    //                            otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
-                    //                            ADFUtils.findOperation("Commit").execute();
-                    //                            JSFUtils.addFacesInformationMessage("Request Submitted For Approval");
-                    //                            approve_hierachy(otHdrVO.getCurrentRow().getAttribute("ReqId"), "H",
-                    //                                             otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-                    //                            appMenu.setDisabled(true);
-                    //                            AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
-                    //                            AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
-                    //                            returnActivity="save";
-                    //                        }
-                    //                                          }
                 } else {
                     JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
                     returnActivity = null;
@@ -3665,19 +3568,17 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
-        ViewObject otHdrVO =
-            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
                                     (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
                                     (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
         lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
-        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
-        Boolean isValid = validateForMaxThreeChilds(empId,
-                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
-                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-        if(isValid == null || !isValid){
-            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
-        }
+//        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+//        Boolean isValid = validateForMaxThreeChilds(empId,
+//                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+//                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
+//        if(isValid == null || !isValid){
+//            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+//        }
         AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
     
@@ -3694,19 +3595,17 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
-        ViewObject otHdrVO =
-            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         BigDecimal avlAmt = calculateAvlAmtForChild((BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"),
                                     (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
                                     (BigDecimal) lineVO.getCurrentRow().getAttribute("MaxAmt"));
         lineVO.getCurrentRow().setAttribute("AvlAmt", avlAmt);
-        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
-        Boolean isValid = validateForMaxThreeChilds(empId,
-                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
-                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-        if(isValid == null || !isValid){
-            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
-        }
+//        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+//        Boolean isValid = validateForMaxThreeChilds(empId,
+//                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+//                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
+//        if(isValid == null || !isValid){
+//            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+//        }
         AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
     
@@ -3718,6 +3617,13 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         op.getParamsMap().put("empId", empId);
         Boolean isValid = (Boolean) op.execute();
         return isValid;
+    }
+    
+    private ArrayList fetchCurrentChilds(BigDecimal empId){
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("fetchCurrentChildsInYear");
+        op.getParamsMap().put("empId", empId);
+        ArrayList childList = (ArrayList) op.execute();
+        return childList;
     }
 
     public void setBtDestCountryCity(RichSelectOneChoice btDestCountryCity) {
@@ -3750,5 +3656,45 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
 
     public RichSelectOneChoice getDestCountryLOV() {
         return destCountryLOV;
+    }
+    
+    private Boolean validateEducationAllowance(){
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+      
+        BigDecimal empId = ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")).getBigDecimalValue();
+        Boolean isValid = validateForMaxThreeChilds(empId,
+                                      (java.sql.Date) lineVO.getCurrentRow().getAttribute("InvDate"),
+                                                    (BigDecimal) lineVO.getCurrentRow().getAttribute("Contactpersonid"));
+        if(isValid == null || !isValid){
+            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+            return Boolean.FALSE;
+        }
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
+        
+        //In memory
+        ArrayList childList = fetchCurrentChilds(empId);
+        RowSetIterator rs = lineVO.createRowSetIterator(null);
+        int noOfChilds = childList != null ? childList.size() : 0;
+        while(rs.hasNext()){
+            Row row = rs.next();
+            if(!childList.contains(row.getAttribute("Contactpersonid"))){
+                noOfChilds++;
+            }
+        }
+        
+        if(noOfChilds > 3){
+            JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
+            return Boolean.FALSE;
+        }
+        
+        //check if invoice numnber is unique
+        
+        //check if combination of invoice date, child, semester is unique
+        
+        
+        return Boolean.TRUE;
     }
 }

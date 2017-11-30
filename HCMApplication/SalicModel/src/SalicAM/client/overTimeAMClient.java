@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 
 import java.sql.Date;
 
+import java.util.ArrayList;
+
 import oracle.jbo.domain.Number;
 
 import oracle.jbo.client.remote.ApplicationModuleImpl;
@@ -30,6 +32,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
                                                        "java.math.BigDecimal" },
                                         new Object[] { childId, invDate, maxAmt });
         return (BigDecimal) _ret;
+    }
+
+    public ArrayList fetchCurrentChildsInYear(BigDecimal empId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "fetchCurrentChildsInYear", new String[] { "java.math.BigDecimal" },
+                                        new Object[] { empId });
+        return (ArrayList) _ret;
     }
 
     public BigDecimal fetchMaxAmountForEmployee(BigDecimal empId) {

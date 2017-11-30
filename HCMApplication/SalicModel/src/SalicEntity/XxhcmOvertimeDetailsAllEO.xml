@@ -88,7 +88,6 @@
       MaxValue="16">
       <validation:OnCondition
         Name="OnConditionScript"
-        trustMode="untrusted"
         CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
     </validation:RangeValidationBean>
     <validation:RangeValidationBean
@@ -101,7 +100,6 @@
       MaxValue="24">
       <validation:OnCondition
         Name="OnConditionScript"
-        trustMode="untrusted"
         CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
     </validation:RangeValidationBean>
   </Attribute>
@@ -890,7 +888,6 @@
       CompareType="GREATERTHAN">
       <validation:TransientExpression
         Name="ValidationRuleScript"
-        trustMode="untrusted"
         CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
     </validation:CompareValidationBean>
   </Attribute>
@@ -1047,6 +1044,9 @@
       <validation:Item
         Value="InvNum"/>
     </validation:OnAttributes>
+    <validation:OnCondition
+      Name="OnConditionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
   </validation:UniqueKeyValidationBean>
   <validation:UniqueKeyValidationBean
     Name="XxhcmOvertimeDetailsAllEORule1"
@@ -1062,6 +1062,9 @@
       <validation:Item
         Value="Grade"/>
     </validation:OnAttributes>
+    <validation:OnCondition
+      Name="OnConditionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
   </validation:UniqueKeyValidationBean>
   <ResourceBundle>
     <PropertiesBundle

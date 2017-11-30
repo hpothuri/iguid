@@ -741,13 +741,12 @@
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.label}"
                                  id="c33">
-                        <af:selectOneChoice value="#{row.bindings.Grade.inputValue}"
-                                            label="#{row.bindings.Grade.label}" autoSubmit="true"
+                        <af:selectOneChoice value="#{row.bindings.Grade.inputValue}" label="#{row.bindings.Grade.label}"
                                             required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.mandatory}"
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.tooltip}"
-                                            id="soc8" simple="true">
-                          <f:selectItems value="#{row.bindings.Grade.items}"
-                                         id="si8"/>
+                                            id="soc8" autoSubmit="true" simple="true">
+                          <f:selectItems value="#{row.bindings.Grade.items}" id="si8"/>
+                          <f:validator binding="#{row.bindings.Grade.validator}"/>
                         </af:selectOneChoice>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.name}"
@@ -802,7 +801,6 @@
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.tooltip}"
                                             id="soc7" simple="true"
                                             autoSubmit="true"
-                                            valueChangeListener="#{backingBeanScope.backing_employee.childVCL}"
                                             required="true"
                                             binding="#{backingBeanScope.backing_employee.semSOC}"
                                             disabled="#{row.bindings.childTRANS.inputValue eq null}"

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import java.sql.Date;
 
+import java.util.ArrayList;
+
 import oracle.jbo.ApplicationModule;
 import oracle.jbo.domain.Number;
 // ---------------------------------------------------------------------
@@ -37,4 +39,6 @@ public interface overTimeAM extends ApplicationModule {
     void filterReqActionHistory(String reqType, BigDecimal reqId);
 
     void prepareMailTemplateAndSend(String approveOrReject);
+
+    ArrayList fetchCurrentChildsInYear(BigDecimal empId);
 }

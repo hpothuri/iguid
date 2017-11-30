@@ -2110,10 +2110,5 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static Key createPrimaryKey(Number reqDtlsId) {
         return new Key(new Object[] { reqDtlsId });
     }
-
-    public void validateInvNumberUnique(){
-        
-    }
-
 }
 

@@ -599,5 +599,11 @@
       </methodAction>
       <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestinationCountry"
             id="DestinationCountry" DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+      <methodAction id="fetchCurrentChildsInYear" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="fetchCurrentChildsInYear" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.fetchCurrentChildsInYear.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.fetchCurrentChildsInYear_fetchCurrentChildsInYear_dataControl_dataProvider_fetchCurrentChildsInYear_result">
+         <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

@@ -510,6 +510,38 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         }
         return Boolean.TRUE;
     }
+    
+    public ArrayList fetchCurrentChildsInYear(BigDecimal empId){
+        ArrayList childsList = new ArrayList();
+        CheckChildsForEmployeeInYearVOImpl childsVO = getCheckChildsForEmployeeInYearVO1();
+        childsVO.setbindEmpId(empId);
+        if(empId != null){
+            Calendar cal = Calendar.getInstance();
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+            Integer startYear = 0;
+            Integer endYear = 0;
+            if(month >= 9){
+                startYear = year;
+                endYear = year+1;
+            }
+            else{
+                startYear = year-1;
+                endYear = year;
+            }
+            childsVO.setbindStartDate("01-09-"+startYear);
+            childsVO.setbindEndDate("31-08-"+endYear);
+            childsVO.executeQuery();
+            if(childsVO.getEstimatedRowCount() > 0){
+                RowSetIterator rs = childsVO.createRowSetIterator(null);
+                while(rs.hasNext()){
+                    Row row = rs.next();
+                    childsList.add(row.getAttribute("ChildId"));
+                }
+            }
+        }
+        return childsList;
+    }
 
     /**
      * Container's getter for EmpReqTypeApprListROVO1.

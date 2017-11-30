@@ -25,3 +25,17 @@ def SalaryDate_SalaryDateRule0_ValidationRuleScript_ValidationRule()
 adf.currentDate
 }
 
+
+@ValidatorConditionExpression(name="XxhcmOvertimeDetailsAllEORule0")
+def XxhcmOvertimeDetailsAllEORule0_OnConditionScript_OnCondition()
+{
+adf.context.sessionScope.page == 'edu'
+}
+
+
+@ValidatorConditionExpression(name="XxhcmOvertimeDetailsAllEORule1")
+def XxhcmOvertimeDetailsAllEORule1_OnConditionScript_OnCondition()
+{
+adf.context.sessionScope.page == 'edu'
+}
+
