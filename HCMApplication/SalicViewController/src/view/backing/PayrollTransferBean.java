@@ -701,9 +701,10 @@ public class PayrollTransferBean {
                         Date RequestDate = (Date) cu.getAttribute("RequestDate");
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
-
+                        // recovery will start after 1 month from adv
+                        calendar.add(Calendar.MONTH, 1);
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
-
+                        
                         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
                         int numOfDaysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
