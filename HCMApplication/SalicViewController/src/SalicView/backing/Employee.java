@@ -3529,6 +3529,10 @@ rs.closeRowSetIterator();
           
            String Id = (String)attrIdBinding.getInputValue();  
            System.out.println("selected currency =>"+Id);
+           if(Id != null && "SAR".equalsIgnoreCase(Id)){
+               ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("ExchnRate", new BigDecimal(1));
+           }
+           else{
         oracle.binding.OperationBinding op = ADFUtils.findOperation("getCurrwncyRate");
         op.getParamsMap().put("fromcurr", valueChangeEvent.getNewValue());
                 op.getParamsMap().put("grade", otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
@@ -3538,6 +3542,7 @@ rs.closeRowSetIterator();
                 }else{
 JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date");
                 }
+           }
     }
 
     public void changeExpAmount(ValueChangeEvent valueChangeEvent) {
