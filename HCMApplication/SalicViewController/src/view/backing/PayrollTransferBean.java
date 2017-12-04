@@ -292,10 +292,13 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
-
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
+                                                
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
                         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -508,9 +511,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -698,9 +704,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
                         // recovery will start after 1 month from adv
                         calendar.add(Calendar.MONTH, 1);
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -885,9 +894,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -1066,9 +1078,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -1276,9 +1291,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -1462,9 +1480,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -1652,9 +1673,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -1854,9 +1878,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -2073,9 +2100,12 @@ public class PayrollTransferBean {
                         genraterandomString(emp);
                         Random rand = new Random();
                         docname = generatedString;
-                        Date RequestDate = (Date) cu.getAttribute("RequestDate");
+                        java.util.Date payrollTransDate = (java.util.Date) cu.getAttribute("PayrollTransDate");
+                        
                         FileName = reqNum;
                         Calendar calendar = Calendar.getInstance();
+                        if(payrollTransDate!=null)
+                        calendar.setTime(payrollTransDate);
 
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
 
