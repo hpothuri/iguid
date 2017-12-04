@@ -1123,7 +1123,7 @@
                           </af:selectOneChoice>
                           <af:outputText value="#{bindings.Country_Trans.inputValue}"
                                          id="ot20" partialTriggers="soc25"
-                                         rendered="true"/>
+                                         rendered="false"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%" id="gc19"
                                      halign="end" valign="middle">

@@ -3463,6 +3463,7 @@ rs.closeRowSetIterator();
         System.err.println("=========" + valueChangeEvent.getNewValue());
         ADFContext.getCurrent().getPageFlowScope().put("DestCount",
                                                        valueChangeEvent.getNewValue());
+        ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getCurrentRow().setAttribute("DestCountryCity", valueChangeEvent.getNewValue());
     }
     
     public void onChangeDestCountry(ValueChangeEvent valueChangeEvent) {

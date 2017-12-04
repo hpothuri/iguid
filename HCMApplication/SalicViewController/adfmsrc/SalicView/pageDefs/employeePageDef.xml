@@ -575,8 +575,6 @@
          <NamedData NDName="reqType" NDType="java.lang.String"/>
          <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
       </methodAction>
-      <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_DestCountryCity"
-                    id="DestCountryCity1"/>
       <methodAction id="prepareMailTemplateAndSend" RequiresUpdateModel="true" Action="invokeMethod"
                     MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
                     DataControl="overTimeAMDataControl"
