@@ -299,7 +299,7 @@ public class OvertimeSearch {
 
                 }
                 BigDecimal month = new BigDecimal((String)reqDetailRow.getAttribute("Months"));
-                reqDetailRow.setAttribute("AdvAmt",salary.multiply(month));
+                reqDetailRow.setAttribute("AdvAmt",salary.multiply(month).multiply(new BigDecimal(0.25)));
             }            
             
             //line.executeQuery();

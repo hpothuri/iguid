@@ -859,7 +859,7 @@ public class Employee {
 
                 }
                 BigDecimal month = new BigDecimal((String)lineVO.getCurrentRow().getAttribute("Months"));
-                lineVO.getCurrentRow().setAttribute("AdvAmt",salary.multiply(month));
+                lineVO.getCurrentRow().setAttribute("AdvAmt",salary.multiply(month).multiply(new BigDecimal(0.25)));
             }            
             
             //line.executeQuery();
