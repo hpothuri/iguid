@@ -12,6 +12,11 @@
       <value>#{pageFlowScope.taskId}</value>
       <class>java.lang.String</class>
     </input-parameter-definition>
+    <input-parameter-definition id="__42">
+      <name>search</name>
+      <value>#{sessionScope.search}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__5">
       <managed-bean-name id="__3">backing_EmployeeDashboard</managed-bean-name>
       <managed-bean-class id="__4">SalicView.backing.EmployeeDashboard</managed-bean-class>

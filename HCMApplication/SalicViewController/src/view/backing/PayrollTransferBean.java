@@ -270,6 +270,8 @@ public class PayrollTransferBean {
         SimpleDateFormat hcmDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         RowSetIterator rs = payRollVO.createRowSetIterator(null);
+        rs.reset();
+        rs.reset();
         while (rs.hasNext()) {
             Row cu = rs.next();
             if ("ot".equals(cu.getAttribute("ReqType"))) {

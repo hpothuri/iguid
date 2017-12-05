@@ -72,6 +72,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return (Number) _ret;
     }
 
+    public String getJobLevel(Number empId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "getJobLevel", new String[] { "oracle.jbo.domain.Number" },
+                                        new Object[] { empId });
+        return (String) _ret;
+    }
+
     public String getOTGradeEligibility(String grade) {
         Object _ret =
             this.riInvokeExportedMethod(this, "getOTGradeEligibility", new String[] { "java.lang.String" },
@@ -109,6 +116,11 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         Object _ret =
             this.riInvokeExportedMethod(this, "prepareMailTemplateAndSend", new String[] { "java.lang.String" },
                                         new Object[] { approveOrReject });
+        return;
+    }
+
+    public void updateApproverStatus() {
+        Object _ret = this.riInvokeExportedMethod(this, "updateApproverStatus", null, null);
         return;
     }
 

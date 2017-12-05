@@ -586,8 +586,30 @@
                                  </af:menu>
                               </af:menuBar>
                            </af:column>
+                           <af:column  headerText="Approver Comments"
+                                      id="c26">
+                              <af:inputText value="#{row.bindings.ApproverComments.inputValue}"
+                              rendered="#{row.ApproverFlag eq 'A' ? 'true' : 'false' or row.ApproverFlag eq 'R'? 'true' :'false' }"
+                                            label="#{bindings.managerDashbaordROVO11.hints.ApproverComments.label}"
+                                            required="#{bindings.managerDashbaordROVO11.hints.ApproverComments.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO11.hints.ApproverComments.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO11.hints.ApproverComments.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO11.hints.ApproverComments.tooltip}"
+                                            id="it10">
+                                 <f:validator binding="#{row.bindings.ApproverComments.validator}"/>
+                              </af:inputText>
+                              <af:inputText value="#{row.bindings.ApprComments.inputValue}" simple="true"
+                              rendered="#{row.ApproverFlag eq 'P'}" autoSubmit="true"
+                                            required="#{bindings.managerDashbaordROVO11.hints.ApprComments.mandatory}"
+                                            columns="#{bindings.managerDashbaordROVO11.hints.ApprComments.displayWidth}"
+                                            maximumLength="#{bindings.managerDashbaordROVO11.hints.ApprComments.precision}"
+                                            shortDesc="#{bindings.managerDashbaordROVO11.hints.ApprComments.tooltip}"
+                                            id="it11">
+                                 <f:validator binding="#{row.bindings.ApprComments.validator}"/>
+                              </af:inputText>
+                           </af:column>
                            <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Status.name}"
-                                      sortable="false"
+                                      sortable="false" rendered="false"
                                       headerText="Approval Status" id="c12"
                                       width="120" filterable="true">
                               <af:outputText value="#{row.Status}" id="ot10"/>

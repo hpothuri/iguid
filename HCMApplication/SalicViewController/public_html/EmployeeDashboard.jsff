@@ -378,6 +378,18 @@
                                                       <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
                                                                               to="#{pageFlowScope.RequestNumber}"
                                                                               type="action"/>
+                                                                              <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqType}"/>
+                                <af:setPropertyListener from="#{row.bindings.ReqId.inputValue}"
+                                                         type="action"
+                                                         to="#{pageFlowScope.ReqId}"/>
+                                <af:setPropertyListener from="#{'edit'}"
+                                                         type="action"
+                                                         to="#{sessionScope.mode}"/>
+                              <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
+                              type = "action"
+                              to = "#{sessionScope.page}"/>
                                                 </af:commandLink>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.employeeDashboardROVO11.hints.RequestDate.name}"

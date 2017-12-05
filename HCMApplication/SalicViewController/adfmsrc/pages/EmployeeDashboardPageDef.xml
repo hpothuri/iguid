@@ -9,6 +9,7 @@
       <parameters>
         <parameter id="page" value="#{'emp'}"/>
         <parameter id="taskId" value="#{'/WEB-INF/employeedashboard.xml#employeedashboard'}"/>
+        <parameter id="search" value="#{'emp'}"/>
       </parameters>
     </taskFlow>
   </executables>

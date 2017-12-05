@@ -25,8 +25,7 @@
     </tree>
     <tree IterBinding="employeeDashboardROVO1Iterator"
           id="employeeDashboardROVO11">
-      <nodeDefinition DefName="SalicROVO.employeeDashboardROVO"
-                      Name="employeeDashboardROVO110">
+      <nodeDefinition DefName="SalicROVO.employeeDashboardROVO" Name="employeeDashboardROVO110">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
@@ -35,6 +34,7 @@
           <Item Value="ApproverUserName"/>
           <Item Value="Description"/>
           <Item Value="ReqType"/>
+          <Item Value="ReqId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

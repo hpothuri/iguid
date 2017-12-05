@@ -65,6 +65,8 @@
                 DataControl="overTimeAMDataControl" RangeSize="25"/>
       <iterator id="ValidateSalAdvROVO1Iterator" Binds="ValidateSalAdvROVO1" DataControl="overTimeAMDataControl"
                 RangeSize="25"/>
+      <iterator Binds="OvertimeHoursForEmpROVO1" RangeSize="10" DataControl="overTimeAMDataControl"
+                id="OvertimeHoursForEmpROVO1Iterator"/>
    </executables>
    <bindings>
       <listOfValues StaticList="false"
@@ -282,13 +284,6 @@
             StaticList="false" Uses="LOV_SalPeriod">
          <AttrNames>
             <Item Value="SalPeriod"/>
-         </AttrNames>
-      </list>
-      <list IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="Grade"
-            DTSupportsMRU="true" SelectItemValueMode="ListObject"
-            StaticList="false" Uses="LOV_Grade">
-         <AttrNames>
-            <Item Value="Grade"/>
          </AttrNames>
       </list>
       <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1"
@@ -603,5 +598,19 @@
                     ReturnName="data.overTimeAMDataControl.methodResults.fetchCurrentChildsInYear_fetchCurrentChildsInYear_dataControl_dataProvider_fetchCurrentChildsInYear_result">
          <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
       </methodAction>
+      <attributeValues IterBinding="OvertimeHoursForEmpROVO1Iterator" id="Totalhrs">
+         <AttrNames>
+            <Item Value="Totalhrs"/>
+         </AttrNames>
+      </attributeValues>
+      <methodAction id="getJobLevel" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getJobLevel"
+                    IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.getJobLevel.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.getJobLevel_getJobLevel_dataControl_dataProvider_getJobLevel_result">
+         <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+      </methodAction>
+      <methodAction id="updateApproverStatus" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="updateApproverStatus" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.updateApproverStatus.dataControl.dataProvider"/>
    </bindings>
 </pageDefinition>

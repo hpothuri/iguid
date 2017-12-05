@@ -57,6 +57,30 @@
                   </f:facet>
                 </af:dialog>
               </af:popup>
+              <af:popup childCreation="deferred" binding="#{backingBeanScope.backing_employee.approve}" autoCancel="disabled" id="p2">
+                <af:dialog id="d2" title="Approve Request"  type="none"
+                           >
+                  <af:inputText label="Comments" value="#{pageFlowScope.approveComment}" id="it58" rows="3"/>
+                  <f:facet name="buttonBar">
+                    <af:button text="Approve" id="b1"
+                               actionListener="#{backingBeanScope.backing_employee.approveNewACL}"/>
+                    <af:button text="Cancel" id="b2"
+                               actionListener="#{backingBeanScope.backing_employee.approveCancelRequest}"/>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+              <af:popup childCreation="deferred" autoCancel="disabled" id="px2"
+                        binding="#{backingBeanScope.backing_employee.reject}">
+                <af:dialog id="dx2" title="Reject Request" type="none">
+                  <af:inputText label="Comments" value="#{pageFlowScope.rejectComment}" id="itx58" rows="3"/>
+                  <f:facet name="buttonBar">
+                    <af:button text="Reject" id="bx1"
+                               actionListener="#{backingBeanScope.backing_employee.rejectNewACL}"/>
+                    <af:button text="Cancel" id="bx2"
+                               actionListener="#{backingBeanScope.backing_employee.rejectCancelRequest}"/>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
               <af:panelGroupLayout 
                                    id="panelGroupLayout2" layout="horizontal">
                 <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}"
@@ -81,11 +105,11 @@
                                         partialTriggers="ot10 employeeNameTRANSId"
                                         actionListener="#{backingBeanScope.backing_employee.saveACL}"/>
                     <af:commandMenuItem text="Approve" id="cmi3"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
-                                        actionListener="#{backingBeanScope.backing_employee.approveNewACL}"/>
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' : bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        actionListener="#{backingBeanScope.backing_employee.approveOkRequest}"/>
                     <af:commandMenuItem text="Reject" id="cmi4"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
-                                        actionListener="#{backingBeanScope.backing_employee.rejectNewACL}"/>
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        actionListener="#{backingBeanScope.backing_employee.rejectOkRequest}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
                                         disabled="#{bindings.Status.inputValue ne 'Pending Approval'?'true':'false'}"
                                         rendered="#{sessionScope.page eq 'emp'?'true':'false'}"
@@ -563,7 +587,6 @@
                                           required="#{bindings.Grade.hints.mandatory}"
                                           shortDesc="#{bindings.Grade.hints.tooltip}"
                                           id="soc3" contentStyle="width:200px;"
-                                          partialTriggers="employeeNameTRANSId"
                                           disabled="#{sessionScope.mode=='edit'?'true':'false'}">
                         <f:selectItems value="#{bindings.Grade.items}"
                                        id="si3"/>
@@ -2080,13 +2103,13 @@
                                         rendered="false"/>
                           <af:inputFile
                                         simple="true"
-                                        required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.mandatory}"
-                                        columns="25"
+                                        required="true"
+                                        columns="25" 
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         shortDesc="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.tooltip}"
                                         id="it56" label="Label 2"
                                         valueChangeListener="#{backingBeanScope.backing_employee.OnExpenseFileUpload}"
-                                        autoSubmit="true" immediate="true"/>
+                                        autoSubmit="true"/>
                         </af:column>
                         <af:column sortProperty="#{bindings.XxhcmAttachmentsTVO1.hints.AttachmentId.name}"
                                    sortable="false"
@@ -2164,7 +2187,7 @@
                       </af:column>
                       <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.name}"
                                  sortable="false"
-                                 headerText="Assigned Date"
+                                 headerText="Action Date"
                                  id="c11" width="175">
                         <af:outputText value="#{row.LastUpdateDate}" id="ot16">
                           <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.format}"/>
@@ -2291,14 +2314,14 @@
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
                           <f:validator binding="#{row.bindings.Attachment.validator}"/>
                         </af:inputText>
-                        <af:inputFile label="Label 1" id="if1"
+                        <af:inputFile label="Label 1" id="if1"  value="#{viewScope.attachup}"
                                       valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}"
                                       autoSubmit="true"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
                       </af:column>
                       <af:column id="c17" headerText="Download" align="center"
                                  width="100">
-                        <af:commandButton text="Download" id="cb9">
+                        <af:commandButton text="Download" partialTriggers="if1" id="cb9">
                           <af:fileDownloadActionListener filename="#{row.bindings.FileName.inputValue}"
                                                          method="#{backingBeanScope.backing_employee.downloadFileListener}"/>
                         </af:commandButton>
@@ -2309,12 +2332,10 @@
                                         text="Delete1"
                                         disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                                         id="cl1" rendered="false"/>
-                        <af:commandImageLink
+                        <af:commandButton
                                              id="cil6"
                                              actionListener="#{bindings.Delete1.execute}"
-                                             disabledIcon="/images/delete_dis.png"
                                              icon="/images/delete_dwn.png"
-                                             hoverIcon="/images/delete_dwn.png"
                                              disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
                       </af:column>
                     </af:table>

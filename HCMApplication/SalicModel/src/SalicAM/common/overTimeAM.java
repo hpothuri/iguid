@@ -41,4 +41,8 @@ public interface overTimeAM extends ApplicationModule {
     void prepareMailTemplateAndSend(String approveOrReject);
 
     ArrayList fetchCurrentChildsInYear(BigDecimal empId);
+
+    String getJobLevel(Number empId);
+
+    void updateApproverStatus();
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
     <af:document title="HR Admin Dashboard" id="d1">
-        <af:form id="f1">
+        <af:form usesUpload="true" id="f1">
             <af:region value="#{bindings.HrAdminBTF1.regionModel}" id="r1"/>
         </af:form>
     </af:document>

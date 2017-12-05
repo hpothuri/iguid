@@ -24,6 +24,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import oracle.adf.model.OperationBinding;
+import oracle.adf.view.rich.component.rich.RichDialog;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 import oracle.adf.view.rich.component.rich.input.RichInputDate;
@@ -147,6 +148,8 @@ public class Employee {
     private RichSelectOneChoice bstCountryLOV;
     private RichSelectOneChoice destCountryLOV;
     private BigDecimal countryValue;
+    private RichPopup approve;
+    private RichPopup reject;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -867,7 +870,8 @@ public class Employee {
 
         } else if ("ot".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             //valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
-            String errorMsg = validateEmpOverTimeEligibility((String)variationSearchVo.getCurrentRow().getAttribute("gradeTRANS"));
+            
+            String errorMsg = validateEmpOverTimeEligibility((oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
             if(errorMsg!=null){
                 empLov.setValue(valueChangeEvent.getNewValue());
                 empLov.setValid(false);
@@ -1141,13 +1145,39 @@ public class Employee {
                             fm.setSeverity(FacesMessage.SEVERITY_ERROR);
                         facesContext.addMessage(empLov.getClientId(facesContext),fm);
     }
-    public String validateEmpOverTimeEligibility(String grade){
+    
+    public void addMessageToPage(String errorMsg){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage fm = new FacesMessage(errorMsg);
+                            fm.setSummary(null);
+                            fm.setDetail(errorMsg);
+                            fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+                        facesContext.addMessage(null,fm);
+    }
+    public String validateEmpOverTimeEligibility(oracle.jbo.domain.Number empId){
         String errorMsg = null;
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("getOTGradeEligibility");
-        op.getParamsMap().put("grade", grade);
-        String res = (String)op.execute();
-        if(res!=null && res.equalsIgnoreCase("N")){
-           return "You are not eligible for Over time request";
+        ViewObject lineVO1 =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+        BigDecimal totlHrs = new BigDecimal(0);
+        java.sql.Date overtimeDate = (java.sql.Date)ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getCurrentRow().getAttribute("OvertimeDate");
+        RowSetIterator rsi = lineVO1.createRowSetIterator("total");
+        
+        while(rsi.hasNext()){
+            oracle.jbo.domain.Number hrs = (oracle.jbo.domain.Number)rsi.next().getAttribute("OvertimeHours");
+            totlHrs = totlHrs.add(hrs.bigDecimalValue());
+        }
+        rsi.closeRowSetIterator();
+        
+        ViewObject countcheckVO =
+            ADFUtils.findIterator("OvertimeHoursForEmpROVO1Iterator").getViewObject();
+        countcheckVO.setNamedWhereClauseParam("bind_empid",empId.bigDecimalValue());
+        //bind_date
+        countcheckVO.setNamedWhereClauseParam("bind_date",overtimeDate);
+        countcheckVO.executeQuery();
+        BigDecimal count = (BigDecimal)countcheckVO.first().getAttribute("Totalhrs");
+        totlHrs = totlHrs.add(count!=null ? count : new BigDecimal(0));
+        if(totlHrs.compareTo(new BigDecimal(40)) == 1){
+           return "Over time quota hours exceeded for the month";
         }
         return errorMsg;
     }
@@ -1262,13 +1292,25 @@ public class Employee {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         //(oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId")
+        oracle.binding.OperationBinding opJobLevel = ADFUtils.findOperation("getJobLevel");
+        opJobLevel.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        opJobLevel.execute();
+        String res = (String)opJobLevel.getResult();
+        if(res == null || (res!=null && !res.equalsIgnoreCase("0"))){
+        oracle.binding.OperationBinding opap = ADFUtils.findOperation("updateApproverStatus");
+        opap.execute();
+        }
+        if(res!=null && res.equalsIgnoreCase("0")){
         oracle.binding.OperationBinding op = ADFUtils.findOperation("updateAutoApprove");
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.execute();
+        }
         //updateAutoApprove
     }
     public String approvalSubmitACL() {
         String returnActivity = null;
+        boolean isValidated = true;
+        
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         ViewObject lineVO =
@@ -1284,10 +1326,11 @@ public class Employee {
 
 
             if ("ot".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-                String errorMsg = validateEmpOverTimeEligibility((String)otHdrVO.getCurrentRow().getAttribute("gradeTRANS"));
+                String errorMsg = validateEmpOverTimeEligibility((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
                 if(errorMsg!=null){
                     empLov.setValid(false);
-                    addMessageToComponent(errorMsg);
+                    addMessageToPage(errorMsg);
+                    isValidated = false;
                     AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);                    
                     returnActivity = null;
                 }else{
@@ -1323,6 +1366,7 @@ public class Employee {
                     GeneralUtils gu = new GeneralUtils();
                     empLov.setValid(false);
                     gu.displayMessage(errorMsg, "FATAL");
+                    isValidated = false;
                     AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);
                     returnActivity = null;
                 }else{
@@ -1354,6 +1398,7 @@ public class Employee {
                     GeneralUtils gu = new GeneralUtils();
                     empLov.setValid(false);
                     gu.displayMessage(errorMsg, "FATAL");
+                    isValidated = false;
                     AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);
                     returnActivity = null;
                 }else{
@@ -1395,34 +1440,38 @@ public class Employee {
 
                 Boolean isValid = validateEducationAllowance();
                 if(!isValid){
+                    isValidated = false;
                     returnActivity = null;
-                }
-                lineVO =
-                    ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
-                RowSetIterator rs = lineVO.createRowSetIterator(null);
-                while(rs.hasNext()){
-                    Row row = rs.next();
-                    
-                }
+                }else{
+                    lineVO =
+                        ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+                    RowSetIterator rs = lineVO.createRowSetIterator(null);
+                    while(rs.hasNext()){
+                        Row row = rs.next();
+                        
+                    }
 
-                ViewObject attVo =
-                    ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
-                if (attVo.first() != null) {
-                    otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                    otHdrVO.getCurrentRow().setAttribute("Status",
-                                                         "Pending Approval");
-                    autoApproveRequest();
-                    ADFUtils.findOperation("Commit").execute();
-                    JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
+                    ViewObject attVo =
+                        ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
+                    if (attVo.first() != null) {
+                        otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
+                        otHdrVO.getCurrentRow().setAttribute("Status",
+                                                             "Pending Approval");
+                        autoApproveRequest();
+                        ADFUtils.findOperation("Commit").execute();
+                        JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
 
-                    appMenu.setDisabled(true);
-                    AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
-                    AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
-                    returnActivity = "save";
-                } else {
-                    JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
-                    returnActivity = null;
+                        appMenu.setDisabled(true);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
+                        AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
+                        returnActivity = "save";
+                    } else {
+                        JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
+                        isValidated = false;
+                        returnActivity = null;
+                    } 
                 }
+                
 
 
             } else if ("salary".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
@@ -1449,6 +1498,7 @@ public class Employee {
                         GeneralUtils gu = new GeneralUtils();
                         empLov.setValid(false);
                         gu.displayMessage(errorMsg, "FATAL");
+                        isValidated = false;
                         AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);
                         returnActivity = null;
                     } else {
@@ -1500,7 +1550,7 @@ public class Employee {
                     JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide HR Letter Details!..");
-
+                    isValidated = false;
                 }
 
             }
@@ -1593,6 +1643,7 @@ public class Employee {
 
 
                 } else {
+                    isValidated = false;
                     JSFUtils.addFacesInformationMessage("Please provide Business Trip Details!..");
 
                 }
@@ -1605,13 +1656,14 @@ public class Employee {
                 Boolean isError =false;
                 //XxhcmOtherExpenseTVO1Iterator
                 //XxhcmAttachmentsTVO1Iterator
-                if(ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getEstimatedRowCount() > 0){
+                //if(ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getEstimatedRowCount() > 0){
                     if(ADFUtils.findIterator("XxhcmAttachmentsTVO1Iterator").getEstimatedRowCount() ==0){
                      JSFUtils.addFacesErrorMessage("Please add attachments for expense records");
                         isError = true;
+                        isValidated = false;
                      returnActivity = null;   
                     }
-                }
+                //}
                 if (lineVO.first() != null && !isError) {
                     otHdrVO.getCurrentRow().setAttribute("Status",
                                                          "Pending Approval");
@@ -1642,6 +1694,7 @@ public class Employee {
 //                                     otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
                     JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
                 } else if(lineVO.first() == null && !isError){
+                    isValidated = false;
                     JSFUtils.addFacesInformationMessage("Please provide Business Trip Completion Details!..");
 
                 }
@@ -1656,10 +1709,10 @@ public class Employee {
     
         
         //TODO
-        
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
-        op.execute();
-                            
+        if(isValidated){
+            oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+            op.execute();
+        }    
         return returnActivity;
 
     }
@@ -1673,7 +1726,7 @@ public class Employee {
         updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "A",
                        (String)mgrVO.getCurrentRow().getAttribute("RequestNumber")
                        );
-        mgrVO.executeQuery();
+        
         //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
 //        OperationBinding ob =
 //            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
@@ -1688,7 +1741,8 @@ public class Employee {
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "A");
         op.execute();
-        
+        mgrVO.executeQuery();
+        approve.hide();
     }
 
 
@@ -1704,7 +1758,8 @@ public class Employee {
         }
         ViewObject mgrVo =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        
+        String getAttr = approver_flag.equalsIgnoreCase("A") ? "approveComment" : "rejectComment";
+        String comment = (String)AdfFacesContext.getCurrentInstance().getPageFlowScope().get(getAttr);
         //XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC
         //LoginBean  lb = (LoginBean)JSFUtils.getFromSession("loginBean");
         LoginBean usersb =
@@ -1725,6 +1780,7 @@ public class Employee {
                 { "IN", new oracle.jbo.domain.Number(ownerReqId), oracle.jdbc.internal.OracleTypes.NUMBER },
                 { "IN", new oracle.jbo.domain.Number(empId), oracle.jdbc.internal.OracleTypes.NUMBER },
                 { "IN", hdrId, oracle.jdbc.internal.OracleTypes.NUMBER }, //1 
+                { "IN", comment, OracleTypes.VARCHAR },
                 { "OUT", str, oracle.jdbc.internal.OracleTypes.VARCHAR }
             };
         } catch (SQLException e) {
@@ -1733,7 +1789,7 @@ public class Employee {
         try {
             System.err.println("==11====");
             DBUtils.callDBStoredProcedure(am.getDBTransaction(),
-                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?)",
+                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?,?)",
                                           (Object[][])dobProcArgs);
             System.err.println("==22====");
         } catch (Exception e) {
@@ -1890,7 +1946,7 @@ public class Employee {
         //        mgrVO.getCurrentRow().getAttribute("");
         updateApproveRejection(mgrVO.first().getAttribute("ReqId"), "R",
                        (String)mgrVO.first().getAttribute("RequestNumber"));
-        mgrVO.executeQuery();
+        
         //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
 //        OperationBinding ob =
 //            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
@@ -1904,6 +1960,9 @@ public class Employee {
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "R");
         op.execute();
+        mgrVO.executeQuery();
+        
+        reject.hide();
     }
 
 
@@ -2633,12 +2692,14 @@ public class Employee {
             view.backing.ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
         BlobDomain blob =
             (BlobDomain)vc.getCurrentRow().getAttribute("Attachment");
+        if(blob!=null){
         try {
             IOUtils.copy(blob.getInputStream(), outputStream);
             blob.closeInputStream();
             outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
         }
     }
 
@@ -3702,5 +3763,38 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         
         
         return Boolean.TRUE;
+    }
+
+    public void setApprove(RichPopup approve) {
+        this.approve = approve;
+    }
+
+    public RichPopup getApprove() {
+        return approve;
+    }
+
+    public void setReject(RichPopup reject) {
+        this.reject = reject;
+    }
+
+    public RichPopup getReject() {
+        return reject;
+    }
+    
+    public void approveOkRequest(ActionEvent actionEvent){
+        AdfFacesContext.getCurrentInstance().getPageFlowScope().put("approveComment", null);
+        approve.show(new RichPopup.PopupHints());
+    }
+    public void approveCancelRequest(ActionEvent actionEvent){
+        approve.hide();
+    }
+    
+    public void rejectOkRequest(ActionEvent actionEvent){
+        AdfFacesContext.getCurrentInstance().getPageFlowScope().put("rejectComment", null);
+        reject.show(new RichPopup.PopupHints());
+    }
+    
+    public void rejectCancelRequest(ActionEvent actionEvent){
+    reject.hide();
     }
 }

@@ -156,7 +156,9 @@ public class ManagerAppr {
         BigDecimal empId = new BigDecimal(usersb.getPersonId());
         BigDecimal ownerReqId =(BigDecimal)mgrVo.getCurrentRow().getAttribute("EmpId");
         String reqType = (String)mgrVo.getCurrentRow().getAttribute("ReqType");
-        
+        String ApprComments = (String)mgrVo.getCurrentRow().getAttribute("ApprComments");
+            //ApprComments
+            
         ApplicationModuleImpl am =
             (ApplicationModuleImpl)ADFUtils.getApplicationModuleForDataControl(null);
         try {
@@ -166,6 +168,7 @@ public class ManagerAppr {
                 { "IN", new oracle.jbo.domain.Number(ownerReqId), OracleTypes.NUMBER },
                 { "IN", new oracle.jbo.domain.Number(empId), OracleTypes.NUMBER },
                 { "IN", hdrId, OracleTypes.NUMBER }, //1 
+                { "IN", ApprComments, OracleTypes.VARCHAR },
                 { "OUT", str, OracleTypes.VARCHAR }
             };
         } catch (SQLException e) {
@@ -173,7 +176,7 @@ public class ManagerAppr {
         try {
             System.err.println("==11====");
             DBUtils.callDBStoredProcedure(am.getDBTransaction(),
-                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?)",
+                                          "call XXSALIC_HCM_PKG.XXSALIC_APPROVAL_PRC(?,?,?,?,?,?,?)",
                                           dobProcArgs);
             System.err.println("==22====");
         } catch (SQLException e) {
@@ -189,8 +192,12 @@ public class ManagerAppr {
         updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "A",
                        (String)mgrVO.getCurrentRow().getAttribute("RequestNumber")
                        );
-        mgrVO.executeQuery();
-        AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+        //refresh();
+        
+        //send emails
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "A");
+        op.execute();
         OperationBinding ob =
             (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
         ob.execute();
@@ -198,12 +205,9 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
-        refresh();
         
-        //send emails
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
-        op.getParamsMap().put("approveOrReject", "A");
-        op.execute();
+        mgrVO.executeQuery();
+        AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
         
     }
 
@@ -213,8 +217,12 @@ public class ManagerAppr {
         //        mgrVO.getCurrentRow().getAttribute("");
         updateApproveRejection(mgrVO.first().getAttribute("ReqId"), "R",
                        (String)mgrVO.first().getAttribute("RequestNumber"));
-        mgrVO.executeQuery();
-        AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+        
+        //refresh();
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "R");
+        op.execute();
         OperationBinding ob =
             (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
         ob.execute();
@@ -222,11 +230,9 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
-        refresh();
+        mgrVO.executeQuery();
+        AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
         
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
-        op.getParamsMap().put("approveOrReject", "R");
-        op.execute();
     }
 
     public void refresh() {

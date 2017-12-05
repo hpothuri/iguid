@@ -20,7 +20,7 @@
     Name="bind_empid"
     Kind="where"
     Type="oracle.jbo.domain.Number"/>
-  <SQLQuery><![CDATA[select count(*) reccount from XXHCM_OVERTIME_HEADERS_ALL  where EMP_ID = :bind_empid and request_number like '%'||:bind_reqtype||'%' and REQUEST_DATE > add_months(sysdate,-6)]]></SQLQuery>
+  <SQLQuery><![CDATA[select count(*) reccount from XXHCM_OVERTIME_HEADERS_ALL  where EMP_ID = :bind_empid and status <> 'REJECT' and request_number like '%'||:bind_reqtype||'%' and REQUEST_DATE > add_months(sysdate,-6)]]></SQLQuery>
   <ViewAttribute
     Name="Reccount"
     IsUpdateable="false"

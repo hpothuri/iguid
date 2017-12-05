@@ -22,8 +22,7 @@
       </nodeDefinition>
     </tree>
     <tree IterBinding="payRollObjROVO1Iterator" id="payRollObjROVO11">
-      <nodeDefinition DefName="SalicROVO.payRollObjROVO"
-                      Name="payRollObjROVO110">
+      <nodeDefinition DefName="SalicROVO.payRollObjROVO" Name="payRollObjROVO110">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
@@ -38,6 +37,7 @@
           <Item Value="ReqType"/>
           <Item Value="Attribute3"/>
           <Item Value="PayrollTansStatus"/>
+          <Item Value="PayrollTansComments"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

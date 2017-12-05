@@ -464,7 +464,7 @@
                                                      width="180"
                                                      
                                                      sortable="true">
-                                                <af:outputText value="#{bindings.PayrollTansComments.inputValue}"
+                                                <af:outputText value="#{row.PayrollTansComments}"
                                                                id="ot13"/>
                                           </af:column>
                                           <af:column id="c15"

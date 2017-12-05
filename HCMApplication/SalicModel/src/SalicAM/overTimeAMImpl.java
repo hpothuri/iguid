@@ -1,5 +1,7 @@
 package SalicAM;
 
+import java.sql.SQLException;
+
 import SalicAM.common.overTimeAM;
 
 import SalicROVO.CheckChildsForEmployeeInYearVOImpl;
@@ -8,6 +10,7 @@ import SalicROVO.CheckGradeAllowanceVOImpl;
 import SalicROVO.GetJobLevelROVOImpl;
 import SalicROVO.GetJobLevelROVORowImpl;
 import SalicROVO.GetManagerDetailsROVOImpl;
+import SalicROVO.OvertimeHoursForEmpROVOImpl;
 import SalicROVO.ValidateSalAdvROVOImpl;
 
 
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import common.GenerateEmailTemplate;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import oracle.jbo.server.SequenceImpl;
@@ -573,6 +577,51 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         //house
         
         return reqty;
+    }
+    
+    
+    public String getJobLevel(oracle.jbo.domain.Number empId){
+        Integer jobLevelInt = null;
+        String JobLevel = null;
+        ViewObject empJobLev = getGetJobLevelROVO1();
+        empJobLev.setNamedWhereClauseParam("p_emp_id", empId.bigDecimalValue());
+        empJobLev.executeQuery();
+        if(empJobLev.hasNext()){
+            return (String)empJobLev.first().getAttribute("JobLevel");            
+        }
+        return null;
+    }
+    
+    public void updateApproverStatus(){
+        String jobLevel = getJobLevel((oracle.jbo.domain.Number)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("EmpId"));
+        
+        String sqlStr = "update XX_QP_ACTION_HISTORY_T set approver_flag = 'A' and LAST_UPDATE_DATE = sysdate where header_id = "+getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("ReqId");
+        String sqlStr1 = "update XX_QP_ACTION_HISTORY_T set LAST_UPDATE_DATE = sysdate where APPROVE_LEVEL = 1 and header_id = "+getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("ReqId");
+        //Date = new Date();
+        if(jobLevel.equalsIgnoreCase("0")){
+            RowSetIterator rsi = getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            while(rsi.hasNext()){
+                rsi.next().setAttribute("ApproverFlag", "A");
+                rsi.next().setAttribute("LastUpdateDate", new java.sql.Timestamp(System.currentTimeMillis()));
+                //new java.sql.date(system.currenttimemillis())                
+            }
+            rsi.closeRowSetIterator();
+        }else{
+            RowSetIterator rsi = getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            rsi.reset();
+            rsi.reset();
+            while(rsi.hasNext()){
+                Row row = rsi.next();
+                //row.setAttribute("ApproverFlag", "A");
+                BigDecimal level = (BigDecimal)row.getAttribute("ApproveLevel");
+                if(level.compareTo(new BigDecimal(1)) == 0)
+                row.setAttribute("LastUpdateDate", new java.sql.Timestamp(System.currentTimeMillis()));
+                //new java.sql.date(system.currenttimemillis())                
+            }
+            rsi.closeRowSetIterator();
+            
+        }
+        
     }
     
     public void updateAutoApprove(oracle.jbo.domain.Number empId){
@@ -1533,6 +1582,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public ViewObjectImpl getemployeeROVOById() {
         return (ViewObjectImpl) findViewObject("employeeROVOById");
+    }
+
+    /**
+     * Container's getter for OvertimeHoursForEmpROVO1.
+     * @return OvertimeHoursForEmpROVO1
+     */
+    public OvertimeHoursForEmpROVOImpl getOvertimeHoursForEmpROVO1() {
+        return (OvertimeHoursForEmpROVOImpl) findViewObject("OvertimeHoursForEmpROVO1");
     }
 }
 
