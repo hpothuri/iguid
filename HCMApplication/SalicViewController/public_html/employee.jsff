@@ -739,7 +739,9 @@
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}"
                                       id="id2" autoSubmit="true"
-                                      valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}">
+                                      valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}"
+                                      minValue="#{backingBeanScope.backing_employee.minDateForEduAllowance}"
+                                      maxValue="#{backingBeanScope.backing_employee.maxDateForEduAllowance}">
                           <f:validator binding="#{row.bindings.InvDate.validator}"/>
                           <af:convertDateTime pattern="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.format}"/>
                         </af:inputDate>

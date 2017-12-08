@@ -3801,4 +3801,46 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
     public void rejectCancelRequest(ActionEvent actionEvent){
     reject.hide();
     }
+
+    public java.util.Date getMinDateForEduAllowance() {
+        try { 
+            Calendar cal = Calendar.getInstance();
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+            Integer startYear = 0;
+            if(month >= 9){
+                startYear = year;
+            }
+            else{
+                startYear = year-1;
+            }
+            String dateStr = "01-09-"+startYear;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            java.util.Date date = sdf.parse(dateStr+" 00:00:00");
+            return date;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public java.util.Date getMaxDateForEduAllowance() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            int month = cal.get(Calendar.MONTH);
+            int year = cal.get(Calendar.YEAR);
+            Integer endYear = 0;
+            if(month >= 9){
+                endYear = year+1;
+            }
+            else{
+                endYear = year;
+            }
+            String dateStr = "31-08-"+endYear;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            java.util.Date date = sdf.parse(dateStr+" 00:00:00");
+            return date;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
