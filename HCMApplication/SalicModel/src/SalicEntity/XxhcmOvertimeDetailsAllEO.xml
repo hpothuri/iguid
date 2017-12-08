@@ -917,6 +917,18 @@
     Type="java.math.BigDecimal"
     ColumnType="NUMBER"
     TableName="XXHCM_OVERTIME_DETAILS_ALL"/>
+  <Attribute
+    Name="BussTravReqNumValue"
+    Precision="200"
+    ColumnName="BUSS_TRAV_REQ_NUM_VALUE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_OVERTIME_DETAILS_ALL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+  </Attribute>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"
     ViewLink="SalicVL.overtimeHdrDtl"

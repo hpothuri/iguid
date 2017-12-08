@@ -762,6 +762,16 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
             }
         }
         ,
+        BussTravReqNumValue {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getBussTravReqNumValue();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setBussTravReqNumValue((String) value);
+            }
+        }
+        ,
         XxhcmOvertimeHeadersAllVO {
             protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
                 return obj.getXxhcmOvertimeHeadersAllVO();
@@ -874,6 +884,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static final int DESTREGION = AttributesEnum.DestRegion.index();
     public static final int NOOFDAYS = AttributesEnum.NoOfDays.index();
     public static final int DESTINATIONCOUNTRY = AttributesEnum.DestinationCountry.index();
+    public static final int BUSSTRAVREQNUMVALUE = AttributesEnum.BussTravReqNumValue.index();
     public static final int XXHCMOVERTIMEHEADERSALLVO = AttributesEnum.XxhcmOvertimeHeadersAllVO.index();
 
     /**
@@ -2061,6 +2072,22 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
      */
     public void setDestinationCountry(BigDecimal value) {
         setAttributeInternal(DESTINATIONCOUNTRY, value);
+    }
+
+    /**
+     * Gets the attribute value for BussTravReqNumValue, using the alias name BussTravReqNumValue.
+     * @return the value of BussTravReqNumValue
+     */
+    public String getBussTravReqNumValue() {
+        return (String) getAttributeInternal(BUSSTRAVREQNUMVALUE);
+    }
+
+    /**
+     * Sets <code>value</code> as the attribute value for BussTravReqNumValue.
+     * @param value value to set the BussTravReqNumValue
+     */
+    public void setBussTravReqNumValue(String value) {
+        setAttributeInternal(BUSSTRAVREQNUMVALUE, value);
     }
 
     /**

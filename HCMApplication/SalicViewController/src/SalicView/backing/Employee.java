@@ -802,7 +802,7 @@ public class Employee {
       BindingContext bctx = BindingContext.getCurrent();
       BindingContainer bindings = bctx.getCurrentBindingsEntry();
       JUCtrlListBinding lov = 
-           (JUCtrlListBinding)bindings.get("BussTravReqNum1");
+           (JUCtrlListBinding)bindings.get("BussTravReqNumValue");
       lov.getListIterBinding().getViewObject().setNamedWhereClauseParam("bind_empid", ADFContext.getCurrent().getSessionScope().get("empfil"));
         lov.getListIterBinding().getViewObject().executeQuery();
     }
@@ -3223,15 +3223,15 @@ rs.closeRowSetIterator();
 
     public void BusinessTravelReqVCL(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
-
+        Object busTravlReqNum = ADFUtils.evaluateEL("#{bindings.BussTravReqNum.inputValue}");
         ADFContext.getCurrent().getPageFlowScope().put("bussTripReqNo",
-                                                       valueChangeEvent.getNewValue());
-        System.err.println("HEllo---" + valueChangeEvent.getNewValue());
+                                                       busTravlReqNum);
+        System.err.println("HEllo---" + busTravlReqNum);
         ViewObject hdr2 =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO1Iterator1").getViewObject();
         ViewCriteria vcc = hdr2.createViewCriteria();
         ViewCriteriaRow vccr = vcc.createViewCriteriaRow();
-        vccr.setAttribute("ReqId", valueChangeEvent.getNewValue());
+        vccr.setAttribute("ReqId", busTravlReqNum);
         vcc.addRow(vccr);
         hdr2.applyViewCriteria(vcc);
         hdr2.executeQuery();
@@ -3246,6 +3246,9 @@ rs.closeRowSetIterator();
             currRow.setAttribute("TripType",
                                  oldRow.getAttribute("TripType") == null ? "" :
                                  oldRow.getAttribute("TripType"));
+            currRow.setAttribute("BussTravReqNumValue",
+                                 oldRow.getAttribute("BussTravReqNumValue") == null ? "" :
+                                 oldRow.getAttribute("BussTravReqNumValue"));
             currRow.setAttribute("AirlineTicketType",
                                  oldRow.getAttribute("AirlineTicketType") ==
                                  null ? "" :

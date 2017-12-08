@@ -483,26 +483,6 @@
     <DisplayCriteria/>
   </ListBinding>
   <ListBinding
-    Name="LOV_BussTravReqNum"
-    ListVOName="getOverTimeHdrId_ROVO1"
-    ListRangeSize="-1"
-    NullValueFlag="none"
-    MRUCount="0"
-    ComboRowCountHint="10">
-    <AttrArray Name="AttrNames">
-      <Item Value="BussTravReqNum"/>
-    </AttrArray>
-    <AttrArray Name="AttrExpressions"/>
-    <AttrArray Name="ListAttrNames">
-      <Item Value="ReqId"/>
-    </AttrArray>
-    <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="RequestNumber"/>
-    </AttrArray>
-    <DisplayCriteria
-      Hint="showAndExecute"/>
-  </ListBinding>
-  <ListBinding
     Name="LOV_AirlineTicketType"
     ListVOName="Lookup_AirlineTicketType"
     ListRangeSize="-1"
@@ -594,77 +574,101 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
-  <SQLQuery><![CDATA[SELECT XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID,       
-       XxhcmOvertimeDetailsAllEO.REQ_ID,       
-       XxhcmOvertimeDetailsAllEO.STATUS,       
-       XxhcmOvertimeDetailsAllEO.DESCRIPTION,       
-       XxhcmOvertimeDetailsAllEO.OVERTIME_HOURS,       
-       XxhcmOvertimeDetailsAllEO.OVERTIME_DATE,       
-       XxhcmOvertimeDetailsAllEO.OVERTIME_TYPE,       
-       XxhcmOvertimeDetailsAllEO.CALCULATED_HOURS,       
-       XxhcmOvertimeDetailsAllEO.MISSIONS,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE_CATEGORY,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE1,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE2,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE3,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE4,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE5,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE6,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE7,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE8,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE9,       
-       XxhcmOvertimeDetailsAllEO.ATTRIBUTE10,       
-       XxhcmOvertimeDetailsAllEO.CREATED_BY,       
-       XxhcmOvertimeDetailsAllEO.CREATION_DATE,       
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATED_BY,       
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_DATE,       
-       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_LOGIN,       
-       XxhcmOvertimeDetailsAllEO.ADV_AMT,       
-       XxhcmOvertimeDetailsAllEO.COMMENTS,       
-       XxhcmOvertimeDetailsAllEO.MONTHS,       
-       XxhcmOvertimeDetailsAllEO.NOTE,       
-       XxhcmOvertimeDetailsAllEO.LEAVE,       
-       XxhcmOvertimeDetailsAllEO.SALARY_PERIOD,       
-       XxhcmOvertimeDetailsAllEO.ACT_AMT,       
-       XxhcmOvertimeDetailsAllEO.AGE,       
-       XxhcmOvertimeDetailsAllEO.AVL_AMT,       
-       XxhcmOvertimeDetailsAllEO.CHILD,       
-       XxhcmOvertimeDetailsAllEO.GRADE,       
-       XxhcmOvertimeDetailsAllEO.INV_DATE,       
-       XxhcmOvertimeDetailsAllEO.INV_NUM,       
-       XxhcmOvertimeDetailsAllEO.INV_TOTAL,       
-       XxhcmOvertimeDetailsAllEO.MAX_AMT,       
-       XxhcmOvertimeDetailsAllEO.SCHOOL,       
-       XxhcmOvertimeDetailsAllEO.SCHOOLGRADE,       
-       XxhcmOvertimeDetailsAllEO.SEMESTER,       
-       XxhcmOvertimeDetailsAllEO.SALARY_END_DATE,       
-       XxhcmOvertimeDetailsAllEO.SAL_PERIOD,       
-       XxhcmOvertimeDetailsAllEO.PER_ABSENCE_ENTRY_ID,       
-       XxhcmOvertimeDetailsAllEO.CONTACTPERSONID,       
-       XxhcmOvertimeDetailsAllEO.LETTER_TO,       
-       XxhcmOvertimeDetailsAllEO.LETTER_TYPE,       
-       XxhcmOvertimeDetailsAllEO.OTHER,       
-       XxhcmOvertimeDetailsAllEO.TRIP_TYPE,       
-       XxhcmOvertimeDetailsAllEO.AIRLINE_TICKET_TYPE,       
-       XxhcmOvertimeDetailsAllEO.START_DATE,       
-       XxhcmOvertimeDetailsAllEO.END_DATE,       
-       XxhcmOvertimeDetailsAllEO.ORIG_START_DATE,       
-       XxhcmOvertimeDetailsAllEO.ORIG_END_DATE,       
-       XxhcmOvertimeDetailsAllEO.DEST_CATEGORY,       
-       XxhcmOvertimeDetailsAllEO.NUMBER_OF_DAYS,       
-       XxhcmOvertimeDetailsAllEO.EXIT_RERENTRY_VISA,       
-       XxhcmOvertimeDetailsAllEO.DEST_VISA_REQUIRED,       
-       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY_CITY,       
-       XxhcmOvertimeDetailsAllEO.ADV_PERDIEM,       
-       XxhcmOvertimeDetailsAllEO.PROJ_TYPE,       
-       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM,       
-       XxhcmOvertimeDetailsAllEO.OTHER1,       
-       XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY,       
-       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM,       
-       XxhcmOvertimeDetailsAllEO.SALARY_DATE,       
-       XxhcmOvertimeDetailsAllEO.DEST_REGION,  
-       XxhcmOvertimeDetailsAllEO.NO_OF_DAYS, 
-       XxhcmOvertimeDetailsAllEO.DESTINATION_COUNTRY 
+  <ListBinding
+    Name="LOV_BussTravReqNumValue"
+    ListVOName="getOverTimeHdrId_ROVO1"
+    ComboRowCountHint="10"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="BussTravReqNumValue"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="BussTravReqNum"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RequestNumber"/>
+      <Item Value="ReqId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RequestNumber"/>
+    </AttrArray>
+    <DisplayCriteria
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <SQLQuery><![CDATA[SELECT XxhcmOvertimeDetailsAllEO.REQ_DTLS_ID,        
+       XxhcmOvertimeDetailsAllEO.REQ_ID,        
+       XxhcmOvertimeDetailsAllEO.STATUS,        
+       XxhcmOvertimeDetailsAllEO.DESCRIPTION,        
+       XxhcmOvertimeDetailsAllEO.OVERTIME_HOURS,        
+       XxhcmOvertimeDetailsAllEO.OVERTIME_DATE,        
+       XxhcmOvertimeDetailsAllEO.OVERTIME_TYPE,        
+       XxhcmOvertimeDetailsAllEO.CALCULATED_HOURS,        
+       XxhcmOvertimeDetailsAllEO.MISSIONS,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE_CATEGORY,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE1,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE2,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE3,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE4,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE5,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE6,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE7,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE8,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE9,        
+       XxhcmOvertimeDetailsAllEO.ATTRIBUTE10,        
+       XxhcmOvertimeDetailsAllEO.CREATED_BY,        
+       XxhcmOvertimeDetailsAllEO.CREATION_DATE,        
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATED_BY,        
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_DATE,        
+       XxhcmOvertimeDetailsAllEO.LAST_UPDATE_LOGIN,        
+       XxhcmOvertimeDetailsAllEO.ADV_AMT,        
+       XxhcmOvertimeDetailsAllEO.COMMENTS,        
+       XxhcmOvertimeDetailsAllEO.MONTHS,        
+       XxhcmOvertimeDetailsAllEO.NOTE,        
+       XxhcmOvertimeDetailsAllEO.LEAVE,        
+       XxhcmOvertimeDetailsAllEO.SALARY_PERIOD,        
+       XxhcmOvertimeDetailsAllEO.ACT_AMT,        
+       XxhcmOvertimeDetailsAllEO.AGE,        
+       XxhcmOvertimeDetailsAllEO.AVL_AMT,        
+       XxhcmOvertimeDetailsAllEO.CHILD,        
+       XxhcmOvertimeDetailsAllEO.GRADE,        
+       XxhcmOvertimeDetailsAllEO.INV_DATE,        
+       XxhcmOvertimeDetailsAllEO.INV_NUM,        
+       XxhcmOvertimeDetailsAllEO.INV_TOTAL,        
+       XxhcmOvertimeDetailsAllEO.MAX_AMT,        
+       XxhcmOvertimeDetailsAllEO.SCHOOL,        
+       XxhcmOvertimeDetailsAllEO.SCHOOLGRADE,        
+       XxhcmOvertimeDetailsAllEO.SEMESTER,        
+       XxhcmOvertimeDetailsAllEO.SALARY_END_DATE,        
+       XxhcmOvertimeDetailsAllEO.SAL_PERIOD,        
+       XxhcmOvertimeDetailsAllEO.PER_ABSENCE_ENTRY_ID,        
+       XxhcmOvertimeDetailsAllEO.CONTACTPERSONID,        
+       XxhcmOvertimeDetailsAllEO.LETTER_TO,        
+       XxhcmOvertimeDetailsAllEO.LETTER_TYPE,        
+       XxhcmOvertimeDetailsAllEO.OTHER,        
+       XxhcmOvertimeDetailsAllEO.TRIP_TYPE,        
+       XxhcmOvertimeDetailsAllEO.AIRLINE_TICKET_TYPE,        
+       XxhcmOvertimeDetailsAllEO.START_DATE,        
+       XxhcmOvertimeDetailsAllEO.END_DATE,        
+       XxhcmOvertimeDetailsAllEO.ORIG_START_DATE,        
+       XxhcmOvertimeDetailsAllEO.ORIG_END_DATE,        
+       XxhcmOvertimeDetailsAllEO.DEST_CATEGORY,        
+       XxhcmOvertimeDetailsAllEO.NUMBER_OF_DAYS,        
+       XxhcmOvertimeDetailsAllEO.EXIT_RERENTRY_VISA,        
+       XxhcmOvertimeDetailsAllEO.DEST_VISA_REQUIRED,        
+       XxhcmOvertimeDetailsAllEO.DEST_COUNTRY_CITY,        
+       XxhcmOvertimeDetailsAllEO.ADV_PERDIEM,        
+       XxhcmOvertimeDetailsAllEO.PROJ_TYPE,        
+       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM,        
+       XxhcmOvertimeDetailsAllEO.OTHER1,        
+       XxhcmOvertimeDetailsAllEO.PERDIEM_PER_DAY,        
+       XxhcmOvertimeDetailsAllEO.TOTAL_PERDIEM,        
+       XxhcmOvertimeDetailsAllEO.SALARY_DATE,        
+       XxhcmOvertimeDetailsAllEO.DEST_REGION,   
+       XxhcmOvertimeDetailsAllEO.NO_OF_DAYS,  
+       XxhcmOvertimeDetailsAllEO.DESTINATION_COUNTRY, 
+       XxhcmOvertimeDetailsAllEO.BUSS_TRAV_REQ_NUM_VALUE 
 FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
   <EntityUsage
     Name="XxhcmOvertimeDetailsAllEO"
@@ -1297,14 +1301,11 @@ FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="BussTravReqNum"
     EntityUsage="XxhcmOvertimeDetailsAllEO"
-    AliasName="BUSS_TRAV_REQ_NUM"
-    LOVName="LOV_BussTravReqNum">
+    AliasName="BUSS_TRAV_REQ_NUM">
     <Properties>
       <SchemaBasedProperties>
         <DISPLAYWIDTH
           Value="50"/>
-        <CONTROLTYPE
-          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
     <Dependencies>
@@ -1366,6 +1367,20 @@ FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
       <SchemaBasedProperties>
         <CONTROLTYPE
           Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BussTravReqNumValue"
+    PrecisionRule="true"
+    EntityAttrName="BussTravReqNumValue"
+    EntityUsage="XxhcmOvertimeDetailsAllEO"
+    AliasName="BUSS_TRAV_REQ_NUM_VALUE"
+    LOVName="LOV_BussTravReqNumValue">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

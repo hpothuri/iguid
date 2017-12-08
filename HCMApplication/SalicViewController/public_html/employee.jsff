@@ -1403,20 +1403,20 @@
                         </af:gridCell>
                         <af:gridCell marginStart="2px" width="45%" id="gc34">
                           <af:inputListOfValues id="soc16"
-                                                popupTitle="Search and Select: #{bindings.BussTravReqNum1.hints.label}"
-                                                value="#{bindings.BussTravReqNum1.inputValue}"
-                                                label="#{bindings.BussTravReqNum1.hints.label}"
-                                                model="#{bindings.BussTravReqNum1.listOfValuesModel}"
-                                                required="#{bindings.BussTravReqNum1.hints.mandatory}"
-                                                columns="#{bindings.BussTravReqNum1.hints.displayWidth}"
-                                                valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
+                                                popupTitle="Search and Select: Business Travel Request Number"
+                                                value="#{bindings.BussTravReqNumValue.inputValue}"
+                                                label="#{bindings.BussTravReqNumValue.hints.label}"
+                                                model="#{bindings.BussTravReqNumValue.listOfValuesModel}"
+                                                required="#{bindings.BussTravReqNumValue.hints.mandatory}"
+                                                columns="#{bindings.BussTravReqNumValue.hints.displayWidth}"
+                                                 valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
                                                 partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
-                                                simple="true" shortDesc="#{bindings.BussTravReqNum1.hints.tooltip}"
+                                                simple="true" shortDesc="#{bindings.BussTravReqNumValue.hints.tooltip}"
                                                 contentStyle="width:150px;"
                                                 disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                                 binding="#{backingBeanScope.backing_employee.bussTrReq1}"
                                                 launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
-                            <f:validator binding="#{bindings.BussTravReqNum1.validator}"/>
+                            <f:validator binding="#{bindings.BussTravReqNumValue.validator}"/>
                           </af:inputListOfValues>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
@@ -1439,7 +1439,7 @@
                                               readOnly="#{sessionScope.mode=='edit'?'true':'false'}"
                                               id="selectOneChoice1"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1463,7 +1463,7 @@
                                         maximumLength="#{bindings.AirlineTicketType.hints.precision}"
                                         shortDesc="#{bindings.AirlineTicketType.hints.tooltip}"
                                         id="inputText1"
-                                        disabled="#{bindings.BussTravReqNum1.inputValue == null}"
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
                                         contentStyle="width:200px" partialTriggers="soc16"
                                         readOnly="true">
                             <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
@@ -1529,7 +1529,7 @@
                                         id="id9" 
                                         partialTriggers="soc16"
                                         autoSubmit="true"
-                                        disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}">
                             <f:validator binding="#{bindings.OrigStartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
@@ -1548,7 +1548,7 @@
                                         shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
                                         id="id10" 
                                         partialTriggers="soc16"
-                                        disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
                             <f:validator binding="#{bindings.OrigEndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>
@@ -1571,7 +1571,7 @@
                                               id="selectOneChoice2"
                                               simple="true"
                                               contentStyle="width:200px"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
                                               >
@@ -1617,7 +1617,7 @@
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
                                               id="selectOneChoice3"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1640,7 +1640,7 @@
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
                                               id="selectOneChoice4"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >
@@ -1691,7 +1691,7 @@
                                               required="#{bindings.DestCountryCity.hints.mandatory}"
                                               shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc19"
                                               autoSubmit="true" partialTriggers="soc16 soc20" 
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
                                                 binding="#{backingBeanScope.backing_employee.bstDestCount}"
                                                 contentStyle="width:200px;">
@@ -1714,7 +1714,7 @@
                                               shortDesc="#{bindings.ProjType.hints.tooltip}"
                                               id="selectOneChoice6"
                                               simple="true"
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               
                                               partialTriggers="soc16"
@@ -1740,7 +1740,7 @@
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
                                               simple="true" 
-                                              disabled="#{bindings.BussTravReqNum1.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16"
                                               >

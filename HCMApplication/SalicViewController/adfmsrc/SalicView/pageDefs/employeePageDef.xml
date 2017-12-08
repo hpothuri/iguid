@@ -514,8 +514,6 @@
             <Item Value="EmpIdVacation"/>
          </AttrNames>
       </attributeValues>
-      <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_BussTravReqNum"
-                    id="BussTravReqNum1"/>
       <methodAction id="getPerDMRate" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getPerDMRate"
                     IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
                     InstanceName="bindings.getPerDMRate.dataControl.dataProvider"
@@ -612,5 +610,12 @@
       <methodAction id="updateApproverStatus" RequiresUpdateModel="true" Action="invokeMethod"
                     MethodName="updateApproverStatus" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
                     InstanceName="bindings.updateApproverStatus.dataControl.dataProvider"/>
+      <listOfValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" StaticList="false" Uses="LOV_BussTravReqNumValue"
+                    id="BussTravReqNumValue"/>
+      <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="BussTravReqNum">
+         <AttrNames>
+            <Item Value="BussTravReqNum"/>
+         </AttrNames>
+      </attributeValues>
    </bindings>
 </pageDefinition>
