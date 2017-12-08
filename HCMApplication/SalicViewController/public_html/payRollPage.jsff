@@ -377,7 +377,7 @@
                                                 <af:commandLink text="#{row.bindings.RequestNumber.inputValue}"
                                                                 id="cl1"
                                                                 action="edit"
-                                                                inlineStyle="font-weight:bold;">
+                                                                inlineStyle="font-weight:bold;" disabled="#{row.PayrollTansStatus ne 'Draft'}">
                                                       <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
                                                                               to="#{pageFlowScope.RequestNumber}"
                                                                               type="action"/>
