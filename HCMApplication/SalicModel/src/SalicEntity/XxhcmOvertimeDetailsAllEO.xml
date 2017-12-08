@@ -935,17 +935,6 @@
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Semester"/>
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.InvDate"/>
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Child"/>
-      <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Grade"/>
-    </AttrArray>
-  </Key>
-  <Key
-    Name="InvNumUnique"
-    AltKey="true">
-    <DesignTime>
-      <Attr Name="_isUnique" Value="true"/>
-      <Attr Name="_DBObjectName" Value="XXHCM_OVERTIME_DETAILS_ALL"/>
-    </DesignTime>
-    <AttrArray Name="Attributes">
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.InvNum"/>
     </AttrArray>
   </Key>
@@ -1037,18 +1026,6 @@
     </AttrArray>
   </Key>
   <validation:UniqueKeyValidationBean
-    Name="XxhcmOvertimeDetailsAllEORule0"
-    ResId="SalicEntity.XxhcmOvertimeDetailsAllEO_Rule_0"
-    KeyName="InvNumUnique">
-    <validation:OnAttributes>
-      <validation:Item
-        Value="InvNum"/>
-    </validation:OnAttributes>
-    <validation:OnCondition
-      Name="OnConditionScript"
-      CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
-  </validation:UniqueKeyValidationBean>
-  <validation:UniqueKeyValidationBean
     Name="XxhcmOvertimeDetailsAllEORule1"
     ResId="SalicEntity.XxhcmOvertimeDetailsAllEO_Rule_1"
     KeyName="InvDateComboUnique">
@@ -1060,7 +1037,7 @@
       <validation:Item
         Value="Child"/>
       <validation:Item
-        Value="Grade"/>
+        Value="InvNum"/>
     </validation:OnAttributes>
     <validation:OnCondition
       Name="OnConditionScript"

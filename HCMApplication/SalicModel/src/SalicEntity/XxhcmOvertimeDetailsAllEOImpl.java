@@ -2101,7 +2101,6 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         return (ViewRowImpl) getAttributeInternal(XXHCMOVERTIMEHEADERSALLVO);
     }
 
-
     /**
      * @param reqDtlsId key constituent
 
@@ -2110,5 +2109,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static Key createPrimaryKey(Number reqDtlsId) {
         return new Key(new Object[] { reqDtlsId });
     }
+
+
 }
 
