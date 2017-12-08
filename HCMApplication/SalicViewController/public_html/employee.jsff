@@ -1375,8 +1375,8 @@
                         </af:column>
                         <af:column id="c38" headerText="Delete">
                           <af:commandButton actionListener="#{bindings.Delete3.execute}"
-                                            text="Delete"
-                                            disabled="#{!bindings.Delete3.enabled}"
+                                            text="Delete" immediate="true" partialSubmit="true"
+                                            disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                             id="cb14"/>
                         </af:column>
                       </af:table>

@@ -1556,7 +1556,11 @@ public class Employee {
             }
 
             else if ("BusinessTrip".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
-
+                long purposeRows = ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().getEstimatedRowCount();
+                if(purposeRows == 0){
+                    JSFUtils.addFacesInformationMessage("At least one line is mandatory in Purpose of travel.");
+                    return null;
+                }
 
                 if (lineVO.first() != null) {
                     otHdrVO.getCurrentRow().setAttribute("Status",
