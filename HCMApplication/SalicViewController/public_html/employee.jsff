@@ -729,7 +729,7 @@
                               selectionListener="#{bindings.XxhcmOvertimeDetailsAllVO21.collectionModel.makeCurrent}"
                               rowSelection="single" id="t7"
                               styleClass="AFStretchWidth"
-                              partialTriggers="::cil7 ::cil9 ::cil8 :::employeeNameTRANSId :::pc5:cb11 :::pc5:t10:cb14">
+                              partialTriggers="::cil7 ::cil9 ::cil8 :::employeeNameTRANSId :::pc5:cb11 :::pc5:t10:cb14 :::pc8:cb16">
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
@@ -1293,7 +1293,7 @@
                                 emptyText="#{bindings.XxhcmPurposeOfTrvl_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
                                 fetchSize="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
                                 rowBandingInterval="0" id="t10"
-                                partialTriggers="::cb11 ::cb12 cb14" varStatus="vs"
+                                partialTriggers="::cb11 ::cb12 cb14 :::pc8:cb17 :::pc8:t17:cb19" varStatus="vs"
                                 columnStretching="column:c20">
                         <af:column id="c37" headerText="S.No" width="50">
                           <af:outputText value="#{vs.index+1}" id="ot19"/>
@@ -1798,6 +1798,120 @@
                                      valign="middle"/>
                       </af:gridRow>
                     </af:panelGridLayout>
+                  </af:panelBox>
+                  <af:panelBox text="Purpose of Travel" id="pb10">
+                    <f:facet name="toolbar"/>
+                    <af:panelCollection id="pc8" styleClass="AFStretchWidth">
+                      <f:facet name="menus"/>
+                      <f:facet name="toolbar">
+                        <af:toolbar id="t16">
+                          <af:commandButton actionListener="#{bindings.CreateInsert2.execute}"
+                                            text="Add"
+                                            disabled="#{!bindings.CreateInsert2.enabled}"
+                                            id="cb16" rendered="false"/>
+                          <af:commandButton actionListener="#{bindings.CreateInsert3.execute}"
+                                            text="Add"
+                                            disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                            id="cb17" partialSubmit="true"/>
+                        </af:toolbar>
+                      </f:facet>
+                      <f:facet name="statusbar"/>
+                      <af:table value="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel}"
+                                var="row"
+                                rows="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
+                                emptyText="#{bindings.XxhcmPurposeOfTrvl_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                fetchSize="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
+                                rowBandingInterval="0" id="t17"
+                                partialTriggers="::cb16 ::cb17 cb19 :::soc16" varStatus="vs"
+                                columnStretching="column:c20">
+                        <af:column id="c53" headerText="S.No" width="50">
+                          <af:outputText value="#{vs.index+1}" id="ot25"/>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.name}"
+                                   sortable="false"
+                                   headerText="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.label}"
+                                   id="c54" rendered="false">
+                          <af:inputText value="#{row.bindings.PurposeTrvlId.inputValue}"
+                                        label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.label}"
+                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.mandatory}"
+                                        columns="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.displayWidth}"
+                                        maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.precision}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.PurposeTrvlId.tooltip}"
+                                        id="it59">
+                            <f:validator binding="#{row.bindings.PurposeTrvlId.validator}"/>
+                          </af:inputText>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.name}"
+                                   sortable="false"
+                                   headerText="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.label}"
+                                   id="c55" rendered="false">
+                          <af:inputText value="#{row.bindings.ReqDtlsId.inputValue}"
+                                        label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.label}"
+                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        columns="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.displayWidth}"
+                                        maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.precision}"
+                                        shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.ReqDtlsId.tooltip}"
+                                        id="it60">
+                            <f:validator binding="#{row.bindings.ReqDtlsId.validator}"/>
+                          </af:inputText>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.name}"
+                                   sortable="false"
+                                   headerText="Start Date"
+                                   id="c56" width="130">
+                          <af:inputDate value="#{row.bindings.StartDate.inputValue}"
+                                        label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.label}"
+                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.mandatory}"
+                                        shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.tooltip}"
+                                        id="id12"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        minValue="#{bindings.StartDate.inputValue}"
+                                        maxValue="#{bindings.EndDate.inputValue}">
+                            <f:validator binding="#{row.bindings.StartDate.validator}"/>
+                            <af:convertDateTime pattern="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.format}"/>
+                          </af:inputDate>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.name}"
+                                   sortable="false"
+                                   headerText="End Date"
+                                   id="c57" width="130">
+                          <af:inputDate value="#{row.bindings.EndDate.inputValue}"
+                                        label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.label}"
+                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.mandatory}"
+                                        shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.tooltip}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        id="id13"
+                                        maxValue="#{bindings.EndDate.inputValue}"
+                                        minValue="#{bindings.StartDate.inputValue}">
+                            <f:validator binding="#{row.bindings.EndDate.validator}"/>
+                            <af:convertDateTime pattern="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.format}"/>
+                          </af:inputDate>
+                        </af:column>
+                        <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.name}"
+                                   sortable="false"
+                                   headerText="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
+                                   id="c59" width="180">
+                          <af:inputText value="#{row.bindings.Activity.inputValue}"
+                                        label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
+                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.mandatory}"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        columns="60"
+                                        maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
+                                        shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.tooltip}"
+                                        id="it61">
+                            <f:validator binding="#{row.bindings.Activity.validator}"/>
+                          </af:inputText>
+                        </af:column>
+                        <af:column id="c58" headerText="Delete">
+                          <af:commandButton actionListener="#{bindings.Delete3.execute}"
+                                            text="Delete" immediate="true" partialSubmit="true"
+                                            disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                            id="cb19"/>
+                        </af:column>
+                      </af:table>
+                    </af:panelCollection>
                   </af:panelBox>
                   <af:panelBox text="Business Travel Reimbursement Info" id="pb5">
                     <f:facet name="toolbar"/>

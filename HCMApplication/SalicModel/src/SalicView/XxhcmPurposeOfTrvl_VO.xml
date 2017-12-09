@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmPurposeOfTrvl_VO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmPurposeOfTrvl_EO.PURPOSE_TRVL_ID, 
        XxhcmPurposeOfTrvl_EO.REQ_DTLS_ID, 
@@ -30,11 +30,11 @@
   FromList="XXHCM_PURPOSE_OF_TRVL XxhcmPurposeOfTrvl_EO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="VarAccess"/>
-  </DesignTime>
+  PageIterMode="Full">
+  <Variable
+    Name="bindReqId"
+    Kind="viewcriteria"
+    Type="java.math.BigDecimal"/>
   <EntityUsage
     Name="XxhcmPurposeOfTrvl_EO"
     Entity="SalicEntity.XxhcmPurposeOfTrvl_EO"/>
@@ -164,4 +164,40 @@
     EntityAttrName="LastUpdateLogin"
     EntityUsage="XxhcmPurposeOfTrvl_EO"
     AliasName="LAST_UPDATE_LOGIN"/>
+  <ViewCriteria
+    Name="filterByReqId"
+    ViewObjectName="SalicView.XxhcmPurposeOfTrvl_VO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="XxhcmPurposeOfTrvl_VOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ReqDtlsId"
+        ViewAttribute="ReqDtlsId"
+        Operator="="
+        Conjunction="AND"
+        Value=":bindReqId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
 </ViewObject>

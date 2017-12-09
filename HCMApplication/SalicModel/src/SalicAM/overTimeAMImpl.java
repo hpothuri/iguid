@@ -1574,6 +1574,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         actionHistVO.applyViewCriteria(actionHistVO.getViewCriteria("XxQpActionHistoryTVOCriteria1"));
         actionHistVO.setNamedWhereClauseParam("p_req_id", reqId);
         actionHistVO.executeQuery();
+        filterPurposeOfTravel(reqType);
     }
 
     /**
@@ -1590,6 +1591,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public OvertimeHoursForEmpROVOImpl getOvertimeHoursForEmpROVO1() {
         return (OvertimeHoursForEmpROVOImpl) findViewObject("OvertimeHoursForEmpROVO1");
+    }
+    
+    private void filterPurposeOfTravel(String reqType){
+        if(reqType != null && "BusinessTripCompletion".equalsIgnoreCase(reqType)){
+            ViewObjectImpl detailVO = getXxhcmOvertimeDetailsAllVO2();
+            if(detailVO.first()!= null && detailVO.first().getAttribute("ReqDtlsId") != null){
+                ViewObjectImpl purposeVO = getXxhcmPurposeOfTrvl_VO1();
+                purposeVO.applyViewCriteria(purposeVO.getViewCriteria("filterByReqId"));
+                purposeVO.setNamedWhereClauseParam("bindReqId", detailVO.first().getAttribute("ReqDtlsId"));
+                purposeVO.executeQuery();
+            }
+        }
     }
 }
 

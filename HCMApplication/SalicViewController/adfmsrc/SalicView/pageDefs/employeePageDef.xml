@@ -67,6 +67,8 @@
                 RangeSize="25"/>
       <iterator Binds="OvertimeHoursForEmpROVO1" RangeSize="10" DataControl="overTimeAMDataControl"
                 id="OvertimeHoursForEmpROVO1Iterator"/>
+      <iterator id="XxhcmPurposeOfTrvl_VO2Iterator" Binds="XxhcmPurposeOfTrvl_VO2" DataControl="overTimeAMDataControl"
+                RangeSize="25"/>
    </executables>
    <bindings>
       <listOfValues StaticList="false"

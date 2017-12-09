@@ -3331,7 +3331,29 @@ rs.closeRowSetIterator();
             this.totPerdiem.setValue(Total);
             AdfFacesContext.getCurrentInstance().addPartialTarget(this.noOfDays);
             AdfFacesContext.getCurrentInstance().addPartialTarget(this.totPerdiem);
-
+                
+            ViewObjectImpl oldPurposeVO =
+                (ViewObjectImpl) ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO2Iterator").getViewObject();
+            System.err.println("purpose vo row count : "+oldPurposeVO.getEstimatedRowCount());
+            ViewObjectImpl newPurposeVO =
+                (ViewObjectImpl) ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject();
+            System.err.println("purpose vo row count : "+newPurposeVO.getEstimatedRowCount());
+            RowSetIterator rs  = oldPurposeVO.createRowSetIterator(null);
+            while(rs.hasNext()){
+                Row oldPurposeRow = rs.next();
+                Row newPurposeRow = newPurposeVO.createRow();
+                newPurposeRow.setAttribute("StartDate",
+                                     oldPurposeRow.getAttribute("StartDate") == null ? "" :
+                                     oldPurposeRow.getAttribute("StartDate"));
+                newPurposeRow.setAttribute("EndDate",
+                                     oldPurposeRow.getAttribute("EndDate") == null ? "" :
+                                     oldPurposeRow.getAttribute("EndDate"));
+                newPurposeRow.setAttribute("Activity",
+                                     oldPurposeRow.getAttribute("Activity") == null ? "" :
+                                     oldPurposeRow.getAttribute("Activity"));
+                newPurposeVO.insertRow(newPurposeRow);
+            }
+            
         }
 
 
