@@ -77,8 +77,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         long pendingRequest = 0;
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
-        ViewObject mgrVo1=this.getmanagerDashbaordROVO1();
+        ViewObjectImpl mgrVo1=this.getmanagerDashbaordROVO1();
         mgrVo1.setNamedWhereClauseParam("p_emp_logged_in", empId);
+        mgrVo1.executeQuery();
+        //Defaulting to pending
+        ViewCriteria employeeVC =
+            mgrVo1.getViewCriteria("filterByStatus");
+        mgrVo1.applyViewCriteria(employeeVC);
+        mgrVo1.setNamedWhereClauseParam("p_Status", "P");
         mgrVo1.executeQuery();
         
         ViewObject mgrVo=this.getmanagerDashbaordROVO2();

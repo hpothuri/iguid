@@ -7,7 +7,7 @@
     <variableIterator id="variables"/>
     <iterator id="XxQpActionHistoryTVO1Iterator1" Binds="XxQpActionHistoryTVO4"
               DataControl="ManagerDashbordAMDataControl" RangeSize="25"/>
-    <iterator Binds="managerDashbaordROVO1" RangeSize="6"
+    <iterator Binds="managerDashbaordROVO1" RangeSize="20"
               DataControl="ManagerDashbordAMDataControl"
               id="managerDashbaordROVO1Iterator"/>
     <searchRegion Binds="managerDashbaordROVO1Iterator" Criteria=""

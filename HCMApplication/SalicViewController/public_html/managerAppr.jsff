@@ -27,12 +27,9 @@
                                                  id="pd2"
                                                  inlineStyle="width:auto;height:200px;"
                                                  columns="5" rowHeight="195px">
-                                    <af:panelBox text="PanelBox1" id="pb1"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                                                                 <af:resource type="javascript">
+                  <af:panelBox text="PanelBox2" id="pb2" type="stretch" showDisclosure="false" showHeader="never"
+                               inlineStyle="width:220.0px; height:160px;">
+                     <af:resource type="javascript">
                               function infoletChangeBgColor(actionEvent){ 
                              var actionComp = actionEvent.getSource();
    
@@ -71,7 +68,6 @@
        if(actionComp.getProperty("id")=="cb3")
       {
         pg3.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
-       
       pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
          pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
          pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
@@ -82,7 +78,6 @@
        if(actionComp.getProperty("id")=="cb4")
       {
           pg4.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
-       
            pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
             pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
             pg5.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
@@ -94,7 +89,6 @@
        if(actionComp.getProperty("id")=="cb5")
       {
           pg5.setProperty("inlineStyle", "width:220px; background-color:#1a75ff;margin-top:46px;");
-       
            pg2.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
             pg3.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
              pg4.setProperty("inlineStyle", "width:220px; background-color:#e4e8ea;margin-top:46px;");
@@ -104,6 +98,79 @@
       
                              }
                         </af:resource>
+                     <af:panelGroupLayout id="pgl4" inlineStyle="height:inherit; width:inherit;">
+                        <af:outputLabel value="Pending Approval" id="ol3"
+                                        inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                        styleClass="InfoTileTitle" binding="#{ManagerAppr.ol3}"/>
+                        <af:panelGroupLayout id="pgl5" layout="vertical" styleClass="infolet-content infolet-padding"
+                                             halign="center">
+                           <af:spacer width="10" height="10" id="s2"/>
+                           <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
+                                           id="ol4" value="#{pageFlowScope.pending} "
+                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="pgl6" halign="center">
+                           <af:commandButton text=""
+                                             inlineStyle="width:220.0px; background-color:#1a75ff;margin-top:46px;"
+                                             icon="/images/func_arrowheaddown_16_onb.png" styleClass="background-blue"
+                                             id="cb2" actionListener="#{ManagerAppr.pendingACL}" clientComponent="true">
+                              <af:clientListener method="infoletChangeBgColor" type="click"/>
+                           </af:commandButton>
+                        </af:panelGroupLayout>
+                     </af:panelGroupLayout>
+                  </af:panelBox>
+                  <af:panelBox text="PanelBox3" id="pb3" type="stretch" showDisclosure="false" showHeader="never"
+                               inlineStyle="width:220.0px; height:160px;">
+                     <af:panelGroupLayout id="pgl7" layout="vertical" inlineStyle="height:inherit; width:inherit;">
+                        <af:outputLabel value="Approved" id="ol5"
+                                        inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
+                                        styleClass="InfoTileTitle" binding="#{ManagerAppr.ol5}"/>
+                        <af:panelGroupLayout id="pgl8" layout="vertical" styleClass="infolet-content infolet-padding"
+                                             halign="center">
+                           <af:spacer width="10" height="10" id="s3"/>
+                           <af:outputLabel value="#{pageFlowScope.approved}" id="ol6"
+                                           inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"
+                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="pgl9" halign="center">
+                           <af:commandButton text=""
+                                             inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                             icon="/images/func_arrowheaddown_16_onb.png" styleClass="background-blue"
+                                             id="cb3" actionListener="#{ManagerAppr.apprInfoletACL}"
+                                             clientComponent="true">
+                              <af:clientListener method="infoletChangeBgColor" type="click"/>
+                           </af:commandButton>
+                        </af:panelGroupLayout>
+                     </af:panelGroupLayout>
+                  </af:panelBox>
+                  <af:panelBox text="PanelBox4" id="pb4" type="stretch" showDisclosure="false" showHeader="never"
+                               inlineStyle="width:220.0px; height:160px;">
+                     <af:panelGroupLayout id="pgl10" layout="vertical" inlineStyle="height:inherit; width:inherit;">
+                        <af:outputLabel value="Rejected" id="ol7"
+                                        inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
+                                        styleClass="InfoTileTitle" binding="#{ManagerAppr.ol7}"
+                                        partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                        <af:panelGroupLayout id="pgl11" layout="vertical" styleClass="infolet-content infolet-padding"
+                                             halign="center">
+                           <af:spacer width="10" height="10" id="s4"/>
+                           <af:outputLabel value="#{pageFlowScope.rejected}" id="ol8"
+                                           inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="pgl12" halign="center">
+                           <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                             icon="/images/func_arrowheaddown_16_onb.png" styleClass="background-blue"
+                                             id="cb4" actionListener="#{ManagerAppr.rejectInfoletACL}"
+                                             clientComponent="true">
+                              <af:clientListener method="infoletChangeBgColor" type="click"/>
+                           </af:commandButton>
+                        </af:panelGroupLayout>
+                     </af:panelGroupLayout>
+                  </af:panelBox>
+                  <af:panelBox text="PanelBox1" id="pb1"
+                                                 type="stretch"
+                                                 showDisclosure="false"
+                                                 showHeader="never"
+                                                 inlineStyle="width:220.0px; height:160px;">
                                           <af:panelGroupLayout id="pgl16">
                                                 <af:outputLabel value="Total Request"
                                                                 id="ol1"
@@ -125,128 +192,10 @@
                                                 <af:panelGroupLayout id="pgl3"
                                                                      halign="center">
                                                       <af:commandButton id="cb1"
-                                                                        inlineStyle="width:220.0px; background-color:#1a75ff;margin-top:46px;"
                                                                         icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        actionListener="#{ManagerAppr.onClickTotalStatus}">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox2" id="pb2"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl4"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Pending Approval"
-                                                                id="ol3"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
-                                                                styleClass="InfoTileTitle"
-                                                                binding="#{ManagerAppr.ol3}"/>
-                                                <af:panelGroupLayout id="pgl5"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s2"/>
-                                                      <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
-                                                                      id="ol4"
-                                                                      value="#{pageFlowScope.pending} "
-                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl6"
-                                                                     halign="center">
-                                                      <af:commandButton text=""
+                                                                        actionListener="#{ManagerAppr.onClickTotalStatus}"
                                                                         inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb2"
-                                                                        actionListener="#{ManagerAppr.pendingACL}"
-                                                                        clientComponent="true">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox3" id="pb3"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl7"
-                                                               layout="vertical"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Approved"
-                                                                id="ol5"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
-                                                                styleClass="InfoTileTitle"
-                                                                binding="#{ManagerAppr.ol5}"/>
-                                                <af:panelGroupLayout id="pgl8"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s3"/>
-                                                      <af:outputLabel value="#{pageFlowScope.approved}"
-                                                                      id="ol6"
-                                                                      inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"
-                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl9"
-                                                                     halign="center">
-                                                      <af:commandButton text=""
-                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb3"
-                                                                        actionListener="#{ManagerAppr.apprInfoletACL}"
-                                                                        clientComponent="true">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox4" id="pb4"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl10"
-                                                               layout="vertical"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Rejected"
-                                                                id="ol7"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
-                                                                styleClass="InfoTileTitle"
-                                                                binding="#{ManagerAppr.ol7}"
-                                                                partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
-                                                <af:panelGroupLayout id="pgl11"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s4"/>
-                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
-                                                                      id="ol8"
-                                                                      inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl12"
-                                                                     halign="center">
-                                                      <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb4"
-                                                                        actionListener="#{ManagerAppr.rejectInfoletACL}"
-                                                                        clientComponent="true">
+                                                                        styleClass="background-blue">
                                                             <af:clientListener method="infoletChangeBgColor"
                                                                                type="click"/>
                                                       </af:commandButton>
