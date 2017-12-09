@@ -1546,7 +1546,8 @@
                           <af:inputDate value="#{bindings.OrigEndDate.inputValue}"
                                         required="#{bindings.OrigEndDate.hints.mandatory}"
                                         shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
-                                        id="id10" 
+                                        id="id10"
+                                        autoSubmit="true"
                                         partialTriggers="soc16"
                                         disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
@@ -1742,8 +1743,7 @@
                                               simple="true" 
                                               disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                               contentStyle="width:200px"
-                                              partialTriggers="soc16"
-                                              >
+                                              partialTriggers="soc16">
                             <f:selectItems value="#{bindings.AdvPerdiem.items}"
                                            id="selectItems7"/>
                           </af:selectOneChoice>
@@ -1818,7 +1818,7 @@
                                         id="it42"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         autoSubmit="true"
-                                        partialTriggers="soc16" readOnly="true">
+                                        partialTriggers="soc16 id10 id9" readOnly="true">
                             <f:validator binding="#{bindings.NumberOfDays.validator}"/>
                           </af:inputText>
                           <af:outputText value="#{bindings.NumberOfDays.inputValue}"

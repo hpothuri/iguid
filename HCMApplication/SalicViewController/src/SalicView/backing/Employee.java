@@ -3401,6 +3401,68 @@ rs.closeRowSetIterator();
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDays();
     }
+    
+    public void onCalculateNoOfActualDays() {
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+        System.err.println("StartDate" +
+                           lineVO.getCurrentRow().getAttribute("OrigStartDate"));
+
+        if (lineVO.getCurrentRow().getAttribute("OrigStartDate") != null &&
+            lineVO.getCurrentRow().getAttribute("OrigEndDate") != null) {
+            String dateStart =
+                lineVO.getCurrentRow().getAttribute("OrigStartDate").toString();
+            String dateEnd =
+                lineVO.getCurrentRow().getAttribute("OrigEndDate").toString();
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date d1 = null;
+            Date d2 = null;
+
+
+            try {
+                d1 = format.parse(dateStart);
+                d2 = format.parse(dateEnd);
+                int diff =
+                    (int)((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+
+                System.err.println("Diff" + diff);
+                diff = diff + 1;
+                Object temp = this.getDestCategoryLOV().getValue();
+                System.err.println("temp Objetc" + temp);
+                if (temp != null) {
+                    String descCat = temp.toString();
+                    if (descCat.equalsIgnoreCase("GCC")) {
+                        diff = diff + 1;
+                        this.bstNoOfDays.setValue(diff);
+                    } else if (descCat.equalsIgnoreCase("Other Countries")) {
+                        diff = diff + 2;
+                        this.bstNoOfDays.setValue(diff);
+                    } else if (descCat.equalsIgnoreCase("Saudi Arabia")) {
+                        this.bstNoOfDays.setValue(diff);
+                    }
+                    AdfFacesContext.getCurrentInstance().addPartialTarget(this.bstNoOfDays);
+                }
+                
+                String perdimday =
+                    lineVO.getCurrentRow().getAttribute("PerdiemPerDay") == null ?
+                    "0" :
+                    lineVO.getCurrentRow().getAttribute("PerdiemPerDay").toString();
+
+                BigDecimal NoofDays = new BigDecimal(diff);
+                BigDecimal Perdiem = new BigDecimal(perdimday);
+                lineVO.getCurrentRow().setAttribute("NumberOfDays", NoofDays);
+                BigDecimal Total = NoofDays.multiply(Perdiem);
+
+                this.totPerdiem.setValue(Total);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(this.totPerdiem);
+
+
+            } catch (ParseException e) {
+            }
+        }
+    }
 
     public void setNoOfDays(RichInputText noOfDays) {
         this.noOfDays = noOfDays;
@@ -3546,10 +3608,18 @@ rs.closeRowSetIterator();
 
     public void actualSdate(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+
+        onCalculateNoOfActualDays();
+
     }
 
     public void actualEdate(ValueChangeEvent valueChangeEvent) {
         // Add event code here...
+        valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
+
+        onCalculateNoOfActualDays();
+
     }
 
     public void setBussTravelReqNo(RichSelectOneChoice bussTravelReqNo) {
