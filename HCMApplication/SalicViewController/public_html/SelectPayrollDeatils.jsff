@@ -26,8 +26,8 @@
                 <af:button text="Back" id="b1" action="backToMain"/>
                 <af:spacer width="10" height="10" id="s1"/>
                 <af:popup id="p1" binding="#{PayrollTransferBean.p1}">
-                  <af:dialog id="d1" title="Info"
-                             titleIconSource="/images/info_ena.png" type="none"
+                  <af:dialog id="d1" title="Caution"
+                             titleIconSource="/images/warning_ena.png" type="none"
                              inlineStyle="height:150px; width:400.0px;">
                     <af:panelGroupLayout id="pgl8" layout="vertical">
                       <af:outputLabel value="Do you want to move the selected request to Payroll?"
