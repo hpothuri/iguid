@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -280,6 +281,7 @@ public class OvertimeSearch {
                 isSuccess = true;
                 DateFormat dateFormat =
                     new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
                 Date date = new Date();
                 dateFormat.getTimeInstance().format(date);
                 reqHeaderRow.setAttribute("RequestNumber",
@@ -314,7 +316,9 @@ public class OvertimeSearch {
                 isSuccess = true;
                 DateFormat dateFormat =
                     new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
                 Date date = new Date();
+                
                 dateFormat.getTimeInstance().format(date);
                 reqHeaderRow.setAttribute("RequestNumber",
                                                                dateFormat.format(date) +
@@ -338,6 +342,7 @@ public class OvertimeSearch {
                 
                 DateFormat dateFormat =
                     new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
                 //        DateFormat time = new SimpleDateFormat("kk:mm:ss");//12:08:43
                 Date date = new Date();
                 //        System.out.println(dateFormat.format(date));
@@ -359,6 +364,7 @@ public class OvertimeSearch {
                 
                 DateFormat dateFormat =
                     new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
                 Date date = new Date();
                 dateFormat.getTimeInstance().format(date);
                 reqHeaderRow.setAttribute("RequestNumber",
@@ -372,6 +378,7 @@ public class OvertimeSearch {
             isSuccess = true;
             DateFormat dateFormat =
                 new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
             //        DateFormat time = new SimpleDateFormat("kk:mm:ss");//12:08:43
             Date date = new Date();
             //        System.out.println(dateFormat.format(date));
@@ -395,6 +402,7 @@ public class OvertimeSearch {
             DateFormat dateFormat =
                 new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
             //        DateFormat time = new SimpleDateFormat("kk:mm:ss");//12:08:43
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
             Date date = new Date();
             //        System.out.println(dateFormat.format(date));
             //        System.out.println(dateFormat.format(date));
@@ -410,6 +418,7 @@ public class OvertimeSearch {
             isSuccess = true;
             DateFormat dateFormat =
                 new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); 
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
             Date date = new Date();
             dateFormat.getTimeInstance().format(date);
             reqHeaderRow.setAttribute("RequestNumber",
@@ -426,6 +435,7 @@ public class OvertimeSearch {
             isSuccess = true;
             DateFormat dateFormat =
                 new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); 
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
             Date date = new Date();
             ADFContext.getCurrent().getSessionScope().put("empfil",
                                                           reqHeaderRow.getAttribute("EmpId"));

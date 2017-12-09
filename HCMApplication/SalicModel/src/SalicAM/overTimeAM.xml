@@ -127,6 +127,9 @@
    <ViewUsage
       Name="OvertimeHoursForEmpROVO1"
       ViewObjectName="SalicROVO.OvertimeHoursForEmpROVO"/>
+   <ViewUsage
+      Name="ValidateOverTimeReqVO1"
+      ViewObjectName="SalicROVO.ValidateOverTimeReqVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

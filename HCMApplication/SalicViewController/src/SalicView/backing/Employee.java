@@ -1822,27 +1822,29 @@ public class Employee {
         ViewObject lineVO =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         ViewObject hdr1 =
-            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO1Iterator").getViewObject();
-        ViewCriteria vc = hdr1.createViewCriteria();
-        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
-        vcr.setAttribute("empIdTRANS",
-                         headerVO.getCurrentRow().getAttribute("EmpId"));
+            ADFUtils.findIterator("ValidateOverTimeReqVO1Iterator").getViewObject();
+        hdr1.setNamedWhereClauseParam("bind_empid",
+                         ((oracle.jbo.domain.Number)headerVO.getCurrentRow().getAttribute("EmpId")).bigDecimalValue());
         //        vcr.setAttribute("ReqType", "ot");
-        vcr.setAttribute("OvertimeDate", day1);
-        vc.addRow(vcr);
-        hdr1.applyViewCriteria(vc);
+        hdr1.setNamedWhereClauseParam("bind_otdate", day1);
         hdr1.executeQuery();
-
-        if (hdr1.first() != null) {
-            JSFUtils.addFacesInformationMessage("Already you raised over time request for selected date!..");
-            lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
-            id1.setValue(null);
-            AdfFacesContext.getCurrentInstance().addPartialTarget(id1);
-            lineVO.executeQuery();
+        BigDecimal otcount = (BigDecimal)hdr1.first().getAttribute("Countot");
+        
+            
+        if (otcount.compareTo(new BigDecimal(0)) > 0 ) {
+            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+            //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
+            RichInputDate otdate = (RichInputDate)dayy.getComponent();
+            otdate.setValid(false);
+            AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
             AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
+            //lineVO.executeQuery();
+            //AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
         } else {
             if (result.equals("N")) {
-
+                RichInputDate otdate = (RichInputDate)dayy.getComponent();
+                otdate.setValid(true);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 Calendar calendar = Calendar.getInstance();
                 Date date = calendar.getTime();
                 java.sql.Date domaiDay =
@@ -1853,29 +1855,48 @@ public class Employee {
                 //        System.out.println(new SimpleDateFormat("EE", Locale.ENGLISH).format(date.getTime()));
                 //            System.out.println(new SimpleDateFormat("EEEE",
                 //                                                    Locale.ENGLISH).format(day.getTime()));
+                BigDecimal dummy = null;
                 if (new SimpleDateFormat("EEEE",
                                          Locale.ENGLISH).format(day.getTime()).equalsIgnoreCase("friday")) {
                     lineVO.getCurrentRow().setAttribute("OvertimeType",
                                                         "OT_WE");
+                    //OvertimeHours
+                    lineVO.getCurrentRow().setAttribute("OvertimeHours",
+                                                        dummy);
+                    lineVO.getCurrentRow().setAttribute("CalculatedHours",
+                                                        dummy);
+                    
                     AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
                 } else if (new SimpleDateFormat("EEEE",
                                                 Locale.ENGLISH).format(day.getTime()).equalsIgnoreCase("saturday")) {
                     lineVO.getCurrentRow().setAttribute("OvertimeType",
                                                         "OT_WE");
+                    lineVO.getCurrentRow().setAttribute("OvertimeHours",
+                                                        dummy);
+                    lineVO.getCurrentRow().setAttribute("CalculatedHours",
+                                                        dummy);
+                    
                     AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
                 } else {
                     lineVO.getCurrentRow().setAttribute("OvertimeType",
                                                         "OT_WD");
+                    lineVO.getCurrentRow().setAttribute("OvertimeHours",
+                                                        dummy);
+                    lineVO.getCurrentRow().setAttribute("CalculatedHours",
+                                                        dummy);
+                    //CalculatedHours
                     AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
                 }
             } else {
-                JSFUtils.addFacesInformationMessage("Selected date already added for over time request!..");
-                lineVO.getCurrentRow().setAttribute("OvertimeDate", "");
+                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+                //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
+                RichInputText otdate = (RichInputText)dayy.getComponent();
+                otdate.setValid(false);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
             }
         }
-        vc.resetCriteria();
-        hdr1.applyViewCriteria(vc);
+        
     }
 
     public String checkDuplicateOverTimeDate(Object currDate) {

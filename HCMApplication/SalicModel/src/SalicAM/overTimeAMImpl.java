@@ -1,5 +1,7 @@
 package SalicAM;
 
+import SalicROVO.ValidateOverTimeReqVOImpl;
+
 import java.sql.SQLException;
 
 import SalicAM.common.overTimeAM;
@@ -1603,6 +1605,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 purposeVO.executeQuery();
             }
         }
+    }
+
+    /**
+     * Container's getter for ValidateOverTimeReqVO1.
+     * @return ValidateOverTimeReqVO1
+     */
+    public ValidateOverTimeReqVOImpl getValidateOverTimeReqVO1() {
+        return (ValidateOverTimeReqVOImpl) findViewObject("ValidateOverTimeReqVO1");
     }
 }
 

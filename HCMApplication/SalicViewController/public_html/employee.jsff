@@ -290,7 +290,8 @@
                                              id="cil2"
                                              icon="/images/delete_dis.png"
                                              partialSubmit="true"
-                                             actionListener="#{backingBeanScope.backing_employee.deleteOtLine}"/>
+                                             actionListener="#{backingBeanScope.backing_employee.deleteOtLine}"
+                                             immediate="true"/>
                         <af:outputText value="#{bindings.OTHoursTRANS.inputValue}"
                                        id="ot17" partialTriggers="t2"
                                        rendered="false">
@@ -325,10 +326,10 @@
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.label}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.tooltip}"
                                       id="id1" autoSubmit="true"
-                                      valueChangeListener="#{backingBeanScope.backing_employee.dayfInderVCL}"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                                       maxValue="#{backingBeanScope.backing_employee.minDate}"
-                                      binding="#{backingBeanScope.backing_employee.id1}">
+                                      valueChangeListener="#{backingBeanScope.backing_employee.dayfInderVCL}"
+                                      binding="#{backingBeanScope.backing_employee.id1}" required="true">
                           <f:validator binding="#{row.bindings.OvertimeDate.validator}"/>
                           <af:convertDateTime pattern="dd-MMM-yyyy"/>
                         </af:inputDate>
@@ -358,10 +359,10 @@
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.tooltip}"
-                                      id="it6" autoSubmit="true"
+                                      id="it6" autoSubmit="true"  required="true"
                                       valueChangeListener="#{backingBeanScope.backing_employee.calcHoursVCL}"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
-                                      partialTriggers="soc1 id1">
+                                      partialTriggers="soc1">
                           <f:validator binding="#{row.bindings.OvertimeHours.validator}"/>
                           <af:convertNumber groupingUsed="false"
                                             pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.format}"/>
@@ -390,12 +391,13 @@
                                  id="c5" width="160">
                         <af:inputText value="#{row.bindings.Missions.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.label}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.mandatory}"
+                                      
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.Missions.tooltip}"
-                                      id="it7"
-                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
+                                      id="it7"  required="true"
+                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
+                                      autoSubmit="true">
                           <f:validator binding="#{row.bindings.Missions.validator}"/>
                         </af:inputText>
                       </af:column>

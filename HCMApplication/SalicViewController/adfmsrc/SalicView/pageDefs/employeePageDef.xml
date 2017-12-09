@@ -69,6 +69,8 @@
                 id="OvertimeHoursForEmpROVO1Iterator"/>
       <iterator id="XxhcmPurposeOfTrvl_VO2Iterator" Binds="XxhcmPurposeOfTrvl_VO2" DataControl="overTimeAMDataControl"
                 RangeSize="25"/>
+      <iterator Binds="ValidateOverTimeReqVO1" RangeSize="10" DataControl="overTimeAMDataControl"
+                id="ValidateOverTimeReqVO1Iterator"/>
    </executables>
    <bindings>
       <listOfValues StaticList="false"
@@ -617,6 +619,11 @@
       <attributeValues IterBinding="XxhcmOvertimeDetailsAllVO2Iterator1" id="BussTravReqNum">
          <AttrNames>
             <Item Value="BussTravReqNum"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="ValidateOverTimeReqVO1Iterator" id="Countot">
+         <AttrNames>
+            <Item Value="Countot"/>
          </AttrNames>
       </attributeValues>
    </bindings>
