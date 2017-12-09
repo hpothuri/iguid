@@ -303,7 +303,7 @@ public class Employee {
                     ADFUtils.findOperation("Commit").execute();
                     JSFUtils.addFacesInformationMessage("Information Saved Successfully");
                 } else {
-                    JSFUtils.addFacesInformationMessage("Please provide Overtime Details!..");
+                    JSFUtils.addFacesInformationMessage("Please provide Over Time Details!..");
 
                 }
             }
@@ -778,11 +778,11 @@ public class Employee {
 //            Row row = ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getCurrentRow();
 //            String overtype = (String)row.getAttribute("OvertimeType");
 //            if(overtype.equalsIgnoreCase("OT_WD") && otHours.intValue() > 16  || otHours.intValue() <= 0){
-//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid overtime hours. Enter hours between 1 to 16");                
+//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid over time hours. Enter hours between 1 to 16");                
 //                return;
 //            }
 //            if(overtype.equalsIgnoreCase("OT_WE") && (otHours.intValue() > 24 || otHours.intValue() <= 0)){
-//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid overtime hours. Enter hours between 1 to 16");                
+//                JSFUtils.addFacesErrorMessage(vce.getComponent().getClientId(FacesContext.getCurrentInstance()), "Invalid over time hours. Enter hours between 1 to 16");                
 //                return;
 //            }
 //            Number calcHours = otHours.multiply(1.5);
@@ -1518,7 +1518,7 @@ public class Employee {
                 }
                 //            else{
             //                if("ot".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))){
-            //                    JSFUtils.addFacesInformationMessage("Please provide Overtime Details!..");
+            //                    JSFUtils.addFacesInformationMessage("Please provide Over Time Details!..");
             //                }
             //                else  if("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))){
             //                    JSFUtils.addFacesInformationMessage("Please provide Housing in Advance Details!..");
@@ -2156,7 +2156,7 @@ public class Employee {
                     returnActivity = "save";
                     JSFUtils.addFacesInformationMessage("Information Saved Successfully");
                 } else {
-                    JSFUtils.addFacesInformationMessage("Please provide Overtime Details!..");
+                    JSFUtils.addFacesInformationMessage("Please provide Over Time Details!..");
                     returnActivity = null;
                 }
             }

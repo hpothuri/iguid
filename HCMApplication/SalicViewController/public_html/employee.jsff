@@ -25,7 +25,7 @@
                   <af:spacer width="10" height="10"
                              
                              id="s7"/>
-                  <af:outputText value="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'salary'?'Salary In Advance':sessionScope.page eq 'edu'?'Education Allowance':''}"
+                  <af:outputText value="#{sessionScope.page eq 'ot'?'Over Time Request Search':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'salary'?'Salary In Advance':sessionScope.page eq 'edu'?'Education Allowance':''}"
                                 
                                  id="ot1"
                                  inlineStyle="font-weight:bold; font-size:medium;" rendered="false"/>

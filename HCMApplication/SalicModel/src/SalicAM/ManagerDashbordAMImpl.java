@@ -208,9 +208,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
         
         if (reqPage.equalsIgnoreCase("ot")) {
-            tableContentCols.add("Overtime Date");
-            tableContentCols.add("Overtime Type");
-            tableContentCols.add("Overtime Hours");
+            tableContentCols.add("Over Time Date");
+            tableContentCols.add("Over Time Type");
+            tableContentCols.add("Over Time Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
