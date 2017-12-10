@@ -261,6 +261,7 @@ public class OvertimeSearch {
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         Row reqHeaderRow = variationSearchVo.createRow();
         reqHeaderRow.setAttribute("employeeNameTRANS", empRow.getAttribute("EmpName"));
+        reqHeaderRow.setAttribute("Status", "New");
         reqHeaderRow.setAttribute("EmpId", empRow.getAttribute("EmpId"));
         reqHeaderRow.setAttribute("departmentTRANS", empRow.getAttribute("Department"));
         reqHeaderRow.setAttribute("empNumberTRANS", empRow.getAttribute("EmpNumber"));

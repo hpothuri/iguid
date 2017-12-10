@@ -71,6 +71,8 @@
                 RangeSize="25"/>
       <iterator Binds="ValidateOverTimeReqVO1" RangeSize="10" DataControl="overTimeAMDataControl"
                 id="ValidateOverTimeReqVO1Iterator"/>
+      <iterator Binds="ValidateOTonLeaveROVO1" RangeSize="10" DataControl="overTimeAMDataControl"
+                id="ValidateOTonLeaveROVO1Iterator"/>
    </executables>
    <bindings>
       <listOfValues StaticList="false"
@@ -624,6 +626,11 @@
       <attributeValues IterBinding="ValidateOverTimeReqVO1Iterator" id="Countot">
          <AttrNames>
             <Item Value="Countot"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="ValidateOTonLeaveROVO1Iterator" id="PersonId">
+         <AttrNames>
+            <Item Value="PersonId"/>
          </AttrNames>
       </attributeValues>
    </bindings>

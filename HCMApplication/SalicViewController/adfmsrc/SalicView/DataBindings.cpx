@@ -101,6 +101,8 @@
             usageId="SalicView_managerDashboard_managerDashboard_filterReqActionHistoryPageDef"/>
       <page path="/WEB-INF/overtimeSearchBTF.xml#overtimeSearchBTF@filterReqActionHistory"
             usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_filterReqActionHistoryPageDef"/>
+      <page path="/WEB-INF/payRollBTF.xml#payRollBTF@filterReqActionHistory"
+            usageId="SalicView_payRollBTF_payRollBTF_filterReqActionHistoryPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -203,6 +205,8 @@
             path="SalicView.pageDefs.managerDashboard_managerDashboard_filterReqActionHistoryPageDef"/>
       <page id="SalicView_overtimeSearchBTF_overtimeSearchBTF_filterReqActionHistoryPageDef"
             path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_filterReqActionHistoryPageDef"/>
+      <page id="SalicView_payRollBTF_payRollBTF_filterReqActionHistoryPageDef"
+            path="SalicView.pageDefs.payRollBTF_payRollBTF_filterReqActionHistoryPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"

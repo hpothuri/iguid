@@ -130,6 +130,9 @@
    <ViewUsage
       Name="ValidateOverTimeReqVO1"
       ViewObjectName="SalicROVO.ValidateOverTimeReqVO"/>
+   <ViewUsage
+      Name="ValidateOTonLeaveROVO1"
+      ViewObjectName="SalicROVO.ValidateOTonLeaveROVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

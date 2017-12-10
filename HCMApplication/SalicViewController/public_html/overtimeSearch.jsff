@@ -53,12 +53,6 @@
                                   rendered="false"/>
                 <af:spacer width="750" height="10" id="s1"/>
                 <!--af:commandButton text="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'BusinessTrip'?'Business Trip':sessionScope.page eq 'BusinessTripCompletion'?'Business Trip Completion':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'letter'?'Create HR Letter':sessionScope.page eq 'salary'?'Create New Request':sessionScope.page eq 'edu'?'Education Allowance':''}" id="cb3"-->
-                <af:commandButton text="New Request" id="cb3"
-                                  action="#{OvertimeSearch.createNewRequest}">
-                                     <af:setPropertyListener from="add"
-                                              to="#{sessionScope.mode}"
-                                              type="action"/>
-                                  </af:commandButton>
               </af:toolbar>
             </af:panelGroupLayout>
             <af:spacer width="10" height="10" id="s2"/>
@@ -193,6 +187,19 @@
                     <af:outputText value="#{row.LineApproval}" id="ot13"/>
                   </af:column>
                 </af:table>
+                <f:facet name="secondaryToolbar">
+                  <af:toolbar id="t4" stretchId="sp1">
+                  <af:spacer id="sp1" clientComponent="true"/>
+              <af:outputText value=""
+                             id="ot21"/>
+              
+                    <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}">
+                      <af:setPropertyListener from="add" to="#{sessionScope.mode}" type="action"/>
+                    </af:commandButton>
+                    
+              <af:spacer width="40" height="20" id="sde1"/>
+                  </af:toolbar>
+                </f:facet>
               </af:panelCollection>
             </af:panelBox>
           </af:panelGroupLayout>

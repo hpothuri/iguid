@@ -72,6 +72,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1835,12 +1836,37 @@ public class Employee {
             JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
             //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
             RichInputDate otdate = (RichInputDate)dayy.getComponent();
+            otdate.setSubmittedValue(day1);
             otdate.setValid(false);
             AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
             AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
             //lineVO.executeQuery();
             //AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
         } else {
+            //ValidateOTonLeaveROVO1Iterator
+            ViewObject hdr2 =
+                ADFUtils.findIterator("ValidateOTonLeaveROVO1Iterator").getViewObject();
+            hdr2.setNamedWhereClauseParam("bind_empid",
+                             ((oracle.jbo.domain.Number)headerVO.getCurrentRow().getAttribute("EmpId")).bigDecimalValue());
+            hdr2.setNamedWhereClauseParam("bind_date", day1);
+            hdr2.executeQuery();
+            BigDecimal otPersonId = null;
+            if(hdr2.first() != null){
+                otPersonId = (BigDecimal)hdr2.first().getAttribute("PersonId");
+            }
+            if(otPersonId!=null){
+                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Over Time cannot be raised on approved leave period",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+                
+                //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
+                RichInputDate otdate = (RichInputDate)dayy.getComponent();
+                otdate.setSubmittedValue(day1);
+                otdate.setValid(false);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
+                AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
+                    
+            }else{
+        
+            
             if (result.equals("N")) {
                 RichInputDate otdate = (RichInputDate)dayy.getComponent();
                 otdate.setValid(true);
@@ -1891,9 +1917,11 @@ public class Employee {
                 JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
                 //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
                 RichInputText otdate = (RichInputText)dayy.getComponent();
+                otdate.setSubmittedValue(day1);
                 otdate.setValid(false);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
+            }
             }
         }
         
@@ -2035,6 +2063,12 @@ public class Employee {
         try {
             Calendar now = Calendar.getInstance();
             java.util.Date date = now.getTime();
+            GregorianCalendar cal = new GregorianCalendar();
+                            cal.setTime(date);
+                            cal.add(Calendar.DATE, -1);
+                                            
+                            
+            date = cal.getTime();
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = formatter.format(date);
             return formatter.parse(currentDate);

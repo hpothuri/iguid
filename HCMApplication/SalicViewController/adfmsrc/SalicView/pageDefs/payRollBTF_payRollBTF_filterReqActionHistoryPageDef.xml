@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.12.24"
+                id="payRollBTF_payRollBTF_filterReqActionHistoryPageDef" Package="SalicView.pageDefs"
+                SkipValidation="true">
+  <parameters/>
+  <executables/>
+  <bindings>
+    <methodAction id="filterReqActionHistory" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="filterReqActionHistory" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.filterReqActionHistory.dataControl.dataProvider">
+      <NamedData NDName="reqType" NDValue="#{pageFlowScope.ReqType}" NDType="java.lang.String"/>
+      <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

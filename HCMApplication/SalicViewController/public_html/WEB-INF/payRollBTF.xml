@@ -40,6 +40,12 @@
         <id>PayrollTransfer</id>
       </task-flow-reference>
     </task-flow-call>
+    <method-call id="filterReqActionHistory">
+      <method>#{bindings.filterReqActionHistory.execute}</method>
+      <outcome>
+        <fixed-outcome>filterReqActionHistory</fixed-outcome>
+      </outcome>
+    </method-call>
     <control-flow-rule id="__8">
       <from-activity-id id="__9">payRollPage</from-activity-id>
       <control-flow-case id="__10">
@@ -49,13 +55,6 @@
       <control-flow-case id="__1">
         <from-outcome id="__30">topayrollTransfer</from-outcome>
         <to-activity-id id="__29">PayrollTransfer</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__13">
-      <from-activity-id id="__14">Execute</from-activity-id>
-      <control-flow-case id="__17">
-        <from-outcome id="__16">Execute</from-outcome>
-        <to-activity-id id="__15">overtimeAddEditBTFn</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__18">
@@ -77,6 +76,20 @@
       <control-flow-case id="__33">
         <from-outcome>Save</from-outcome>
         <to-activity-id>load</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__13">
+      <from-activity-id>Execute</from-activity-id>
+      <control-flow-case id="__14">
+        <from-outcome>Execute</from-outcome>
+        <to-activity-id>filterReqActionHistory</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id>filterReqActionHistory</from-activity-id>
+      <control-flow-case id="__16">
+        <from-outcome>filterReqActionHistory</from-outcome>
+        <to-activity-id>overtimeAddEditBTFn</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

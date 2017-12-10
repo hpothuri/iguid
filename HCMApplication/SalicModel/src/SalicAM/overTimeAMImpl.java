@@ -1,5 +1,6 @@
 package SalicAM;
 
+import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
 
 import java.sql.SQLException;
@@ -1613,6 +1614,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public ValidateOverTimeReqVOImpl getValidateOverTimeReqVO1() {
         return (ValidateOverTimeReqVOImpl) findViewObject("ValidateOverTimeReqVO1");
+    }
+
+    /**
+     * Container's getter for ValidateOTonLeaveROVO1.
+     * @return ValidateOTonLeaveROVO1
+     */
+    public ValidateOTonLeaveROVOImpl getValidateOTonLeaveROVO1() {
+        return (ValidateOTonLeaveROVOImpl) findViewObject("ValidateOTonLeaveROVO1");
     }
 }
 
