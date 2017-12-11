@@ -759,7 +759,9 @@
                                               shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.tooltip}"
                                               autoSubmit="true" required="true"
                                               binding="#{backingBeanScope.backing_employee.childTRANS}"
-                                              valueChangeListener="#{backingBeanScope.backing_employee.childVC}">
+                                              valueChangeListener="#{backingBeanScope.backing_employee.childVC}"
+                                              partialTriggers="id2"
+                                              disabled="#{row.bindings.InvDate.inputValue eq null}">
                           <f:validator binding="#{row.bindings.childTRANS.validator}"/>
                         </af:inputListOfValues>
                       </af:column>
