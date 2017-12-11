@@ -2147,6 +2147,16 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         return (RowSet) getAttributeInternal(VALIDATEEDUALLOWANCECOMBOVA);
     }
 
+
+    /**
+     * @param reqDtlsId key constituent
+
+     * @return a Key object based on given key constituents.
+     */
+    public static Key createPrimaryKey(Number reqDtlsId) {
+        return new Key(new Object[] { reqDtlsId });
+    }
+
     /**
      * Validation method for XxhcmOvertimeDetailsAllEO.
      */
@@ -2164,13 +2174,5 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
         }
     }
 
-    /**
-     * @param reqDtlsId key constituent
-
-     * @return a Key object based on given key constituents.
-     */
-    public static Key createPrimaryKey(Number reqDtlsId) {
-        return new Key(new Object[] { reqDtlsId });
-    }
 }
 

@@ -43,6 +43,8 @@ import common.GenerateEmailTemplate;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import java.text.SimpleDateFormat;
+
 import oracle.jbo.server.SequenceImpl;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.Row;
@@ -439,10 +441,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     public BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt){
         CheckClaimedAmountVOImpl claimedVO = getCheckClaimedAmountVO1();
         if(invDate != null && childId != null){
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(invDate);
-            int month = cal.get(Calendar.MONTH);
-            int year = cal.get(Calendar.YEAR);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM");
+            String monthStr = sdf.format(invDate);
+            int month = Integer.parseInt(monthStr);
+            sdf = new SimpleDateFormat("yyyy");
+            String yearStr = sdf.format(invDate);
+            int year = Integer.parseInt(yearStr);
             Integer startYear = 0;
             Integer endYear = 0;
             if(month >= 9){
