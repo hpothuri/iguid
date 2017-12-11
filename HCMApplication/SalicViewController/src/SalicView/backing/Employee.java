@@ -2,6 +2,8 @@ package SalicView.backing;
 
 import java.sql.SQLException;
 
+import java.text.ParseException;
+
 import SalicView.backing.Utils.ADFUtils;
 import SalicView.backing.Utils.DBUtils;
 import SalicView.backing.Utils.GeneralUtils;
@@ -493,6 +495,12 @@ public class Employee {
                 JSFUtils.addFacesErrorMessage("Claim is allowed only for a maximum of three childs per year.");
                 return;
             }
+            
+            isValid = isValidTotalAmountForChild();
+            if(isValid == null || !isValid){
+                return;
+            }
+            
             if (attVo.first() != null) {
                 if (lineVO.first() != null) {
                     otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -502,121 +510,6 @@ public class Employee {
                 } else {
                     JSFUtils.addFacesInformationMessage("Please provide Education Allowance Details!..");
                 }
-                //            ViewObject childValidVO =
-                //                ADFUtils.findIterator("childValidationROVO1Iterator").getViewObject();
-                //            childValidVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                //            childValidVO.executeQuery();
-                //            if(childValidVO.getEstimatedRowCount()==3){
-                //                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                //                }
-                //            else{
-                //                if(lineVO.first()!=null){
-                //                otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
-                //                    otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                //                ADFUtils.findOperation("Commit").execute();
-                //                JSFUtils.addFacesInformationMessage("Information Saved Successfully");
-                //                }
-                //                else{
-                //                    JSFUtils.addFacesInformationMessage("Please provide Education Allowance Details!..");
-                //
-                //                }
-                //            }
-
-                //                ViewObject childValidVO =
-                //                    ADFUtils.findIterator("childValidationROVO1Iterator").getViewObject();
-                //
-                //                childValidVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                //                childValidVO.executeQuery();
-                //                if(childValidVO.getEstimatedRowCount()>=3){
-                //                    if(childValidVO.getEstimatedRowCount()==3){
-                //                        ViewObject childSemVO =
-                //                            ADFUtils.findIterator("childSemROVO1Iterator").getViewObject();
-                //                        childSemVO.setNamedWhereClauseParam("sem", lineVO.getCurrentRow().getAttribute("Semester"));
-                //                        childSemVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                //                        childSemVO.setNamedWhereClauseParam("cont", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                //                        childSemVO.executeQuery();
-                //                        System.err.println("ssss- - "+childSemVO.getEstimatedRowCount());
-                //                        if(childSemVO.getEstimatedRowCount()==0){
-                //                            ViewObject childSemCheckVO =
-                //                                ADFUtils.findIterator("childSemCheckROVO1Iterator").getViewObject();
-                //                            childSemCheckVO.setNamedWhereClauseParam("con", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                //                            childSemCheckVO.executeQuery();
-                //                            System.err.println("check- - "+childSemCheckVO.getEstimatedRowCount());
-                //
-                //                        if(childSemCheckVO.getEstimatedRowCount()==2){
-                //                            JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                //
-                //                        }
-                //                        else{
-                //                            if(childSemCheckVO.first()!=null){
-                //                                if(lineVO.getCurrentRow().getAttribute("Semester").equals(childSemCheckVO.first().getAttribute("Semester"))){
-                //                                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                //
-                //                                            }
-                //                                            else{
-                //                                                 if(otHdrVO.getCurrentRow().getAttribute("Status")!="Draft"){
-                //                                                                            otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
-                //                                                                            otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                //                                                                        }
-                //                                                                        ADFUtils.findOperation("Commit").execute();
-                //
-                //                                                                        JSFUtils.addFacesInformationMessage("Information Saved Successfully");
-                //                                            }
-                //                            }
-                //                            else{
-                //                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!!");
-                //
-                //                            }
-                //
-                //
-                //                        }
-                //
-                //                        }
-                //                        else{
-                //                            if(childSemVO.getEstimatedRowCount()==1){
-                //                                JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                //
-                //                            }
-                //                            else{
-                //                                if(otHdrVO.getCurrentRow().getAttribute("Status")!="Draft"){
-                //                                                           otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
-                //                                                           otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                //                                                       }
-                //                                                       ADFUtils.findOperation("Commit").execute();
-                //
-                //                                                       JSFUtils.addFacesInformationMessage("Information Saved Successfully");
-                //                            }
-                //
-                //                        }
-                //
-                //                    }
-                //                    else{
-                //                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for 3 Childs!");
-                //
-                //                    }
-                //                                 }
-                //                else{
-                //
-                //                    ViewObject childSemVO =
-                //                        ADFUtils.findIterator("childSemROVO1Iterator").getViewObject();
-                //                    childSemVO.setNamedWhereClauseParam("sem", lineVO.getCurrentRow().getAttribute("Semester"));
-                //                    childSemVO.setNamedWhereClauseParam("emp", lineVO.getCurrentRow().getAttribute("empIdTRANS"));
-                //                    childSemVO.setNamedWhereClauseParam("cont", lineVO.getCurrentRow().getAttribute("Contactpersonid"));
-                //                    childSemVO.executeQuery();
-                //                    if(childSemVO.first()!=null){
-                //                        JSFUtils.addFacesInformationMessage("Already you Raised Educational Allowance for selected Semester!");
-                //
-                //                    }
-                //                    else{
-                //                        if(otHdrVO.getCurrentRow().getAttribute("Status")!="Draft"){
-                //                                                   otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
-                //                                                   otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                //                                               }
-                //                                               ADFUtils.findOperation("Commit").execute();
-                //
-                //                                               JSFUtils.addFacesInformationMessage("Information Saved Successfully");
-                //                    }
-                //                                      }
             } else {
                 JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
             }
@@ -1446,31 +1339,33 @@ public class Employee {
                 }else{
                     lineVO =
                         ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
-                    RowSetIterator rs = lineVO.createRowSetIterator(null);
-                    while(rs.hasNext()){
-                        Row row = rs.next();
-                        
-                    }
-
-                    ViewObject attVo =
-                        ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
-                    if (attVo.first() != null) {
-                        otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
-                        otHdrVO.getCurrentRow().setAttribute("Status",
-                                                             "Pending Approval");
-                        autoApproveRequest();
-                        ADFUtils.findOperation("Commit").execute();
-                        JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
-
-                        appMenu.setDisabled(true);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
-                        AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
-                        returnActivity = "save";
-                    } else {
-                        JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
+                    
+                    isValid = isValidTotalAmountForChild();
+                    if(!isValid){
                         isValidated = false;
                         returnActivity = null;
-                    } 
+                    }
+                    else{
+                        ViewObject attVo =
+                            ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
+                        if (attVo.first() != null) {
+                            otHdrVO.getCurrentRow().setAttribute("ReqType", "edu");
+                            otHdrVO.getCurrentRow().setAttribute("Status",
+                                                                 "Pending Approval");
+                            autoApproveRequest();
+                            ADFUtils.findOperation("Commit").execute();
+                            JSFUtils.addFacesInformationMessage("Request has been submitted for Approval");
+    
+                            appMenu.setDisabled(true);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
+                            AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
+                            returnActivity = "save";
+                        } else {
+                            JSFUtils.addFacesInformationMessage("Attachment is Mandatory!");
+                            isValidated = false;
+                            returnActivity = null;
+                        } 
+                    }
                 }
                 
 
@@ -3992,5 +3887,65 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public Boolean isValidTotalAmountForChild(){
+        try
+        {	
+            ViewObject lineVO =
+                ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+            RowSetIterator rs = lineVO.createRowSetIterator(null);
+            while(rs.hasNext()){
+                BigDecimal totalAmt = new BigDecimal(0);
+                Row row = rs.next();
+                java.sql.Date invDate = (java.sql.Date) row.getAttribute("InvDate");
+                java.util.Date invDateUtil = new java.util.Date(invDate.getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("MM");
+                String monthStr = sdf.format(invDateUtil);
+                int month = Integer.parseInt(monthStr);
+                sdf = new SimpleDateFormat("yyyy");
+                String yearStr = sdf.format(invDateUtil);
+                int year = Integer.parseInt(yearStr);
+                Integer startYear = 0;
+                Integer endYear = 0;
+                if(month >= 9){
+                    startYear = year;
+                    endYear = year+1;
+                }
+                else{
+                    startYear = year-1;
+                    endYear = year;
+                }
+                String finStartDateStr = "01-09-"+startYear;
+                String finEndDateStr = "31-08-"+endYear;
+                sdf = new SimpleDateFormat("dd-MM-YYYY");
+                java.util.Date finStartDate = sdf.parse(finStartDateStr);
+                java.util.Date finEndDate = sdf.parse(finEndDateStr);
+                BigDecimal childId = (BigDecimal) row.getAttribute("Contactpersonid"); 
+                Row filteredRows[] = lineVO.getFilteredRows("Contactpersonid", childId);
+                for(Row filteredRow : filteredRows){
+                    if(filteredRow.getAttribute("ActAmt") != null){
+                        if(filteredRow.getAttribute("InvDate") != null){
+                            java.sql.Date rowDate = (java.sql.Date) filteredRow.getAttribute("InvDate");
+                            java.util.Date rowDateUtil = new java.util.Date(rowDate.getTime());
+                            if((rowDateUtil.after(finStartDate) && rowDateUtil.before(finEndDate)) || rowDateUtil.equals(finStartDate) || rowDateUtil.equals(finEndDate))
+                                totalAmt = totalAmt.add((BigDecimal) filteredRow.getAttribute("ActAmt"));   
+                        }
+                    }
+                }
+                if(totalAmt.compareTo((BigDecimal) row.getAttribute("AvlAmt")) == 1){
+                    JSFUtils.addFacesErrorMessage("Total Claim amount for Child "+row.getAttribute("childTRANS")+ " is exceeding Available amount.");
+                    return Boolean.FALSE;
+                }
+            }
+        }
+        catch(NumberFormatException nfe)
+        {
+            nfe.printStackTrace();
+        }catch(ParseException pe)
+        {
+            pe.printStackTrace();
+        }
+        return Boolean.TRUE;
     }
 }
