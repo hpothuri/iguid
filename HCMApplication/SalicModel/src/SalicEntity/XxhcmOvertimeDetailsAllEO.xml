@@ -16,6 +16,29 @@
     <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
+  <ViewAccessor
+    Name="ValidateEduAllowanceComboVA"
+    ViewObjectName="SalicROVO.ValidateEduAllowanceComboVO"
+    RowLevelBinds="true">
+    <ParameterMap>
+      <PIMap Variable="bindChildId">
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[Contactpersonid]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="bindInvDate">
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[InvDate]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="bindInvNum">
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[InvNum]]></TransientExpression>
+      </PIMap>
+      <PIMap Variable="bindSemester">
+        <TransientExpression
+          Name="ExpressionScript"><![CDATA[Semester]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <Attribute
     Name="ReqDtlsId"
     IsUpdateable="while_insert"
@@ -946,8 +969,8 @@
     <AttrArray Name="Attributes">
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Semester"/>
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.InvDate"/>
-      <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Child"/>
       <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.InvNum"/>
+      <Item Value="SalicEntity.XxhcmOvertimeDetailsAllEO.Contactpersonid"/>
     </AttrArray>
   </Key>
   <Key
@@ -1047,14 +1070,22 @@
       <validation:Item
         Value="InvDate"/>
       <validation:Item
-        Value="Child"/>
-      <validation:Item
         Value="InvNum"/>
+      <validation:Item
+        Value="Contactpersonid"/>
     </validation:OnAttributes>
     <validation:OnCondition
       Name="OnConditionScript"
       CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
   </validation:UniqueKeyValidationBean>
+  <validation:MethodValidationBean
+    Name="validateCombination"
+    ResId="COMBINATION_OF_INVOICE_DATE__INVOICE_NUMBER__SEMESTER_AND_CHILD_SHOULD_BE_UNIQUE_"
+    MethodName="validateCombination">
+    <validation:OnCondition
+      Name="OnConditionScript"
+      CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+  </validation:MethodValidationBean>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="SalicModel.SalicModelBundle"/>

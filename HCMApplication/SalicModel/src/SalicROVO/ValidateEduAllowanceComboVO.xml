@@ -3,13 +3,13 @@
 <!---->
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
-  Name="CheckClaimedAmountVO"
+  Name="ValidateEduAllowanceComboVO"
   Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  RowClass="SalicROVO.CheckClaimedAmountVORowImpl"
-  ComponentClass="SalicROVO.CheckClaimedAmountVOImpl"
+  RowClass="SalicROVO.ValidateEduAllowanceComboVORowImpl"
+  ComponentClass="SalicROVO.ValidateEduAllowanceComboVOImpl"
   PageIterMode="Full">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
@@ -19,38 +19,46 @@
   <Properties>
     <SchemaBasedProperties>
       <LABEL
-        ResId="SalicROVO.CheckClaimedAmountVO_LABEL"/>
+        ResId="SalicROVO.ValidateEduAllowanceComboVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
   <Variable
-    Name="bindStartDate"
-    Kind="where"
-    Type="java.lang.String"/>
-  <Variable
-    Name="bindEndDate"
+    Name="bindInvNum"
     Kind="where"
     Type="java.lang.String"/>
   <Variable
     Name="bindChildId"
     Kind="where"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[select sum(dtls.act_amt) claimed_amount from XXHCM_OVERTIME_DETAILS_ALL dtls, XXHCM_OVERTIME_HEADERS_ALL hdr 
-where dtls.Inv_date BETWEEN TO_DATE(:bindStartDate,'DD-MM-YYYY') AND TO_DATE(:bindEndDate, 'DD-MM-YYYY')  
-and CONTACTPERSONID = :bindChildId 
-and hdr.req_id = dtls.req_id 
-and hdr.status not in ('REJECT', 'Draft')]]></SQLQuery>
+  <Variable
+    Name="bindInvDate"
+    Kind="where"
+    Type="java.sql.Date"/>
+  <Variable
+    Name="bindSemester"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery><![CDATA[SELECT COUNT(*) existing_count  
+FROM xxhcm_overtime_details_all dtls,  
+  xxhcm_overtime_headers_all hdr  
+WHERE dtls.semester    = :bindSemester  
+and  dtls.inv_date        =:bindInvDate  
+and  dtls.contactpersonid = :bindChildId  
+AND dtls.inv_num       = :bindInvNum  
+AND hdr.req_id         = dtls.req_id  
+AND hdr.status NOT    IN ('REJECT', 'Draft')]]></SQLQuery>
   <ViewAttribute
-    Name="ClaimedAmount"
+    Name="ExistingCount"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
     Type="java.math.BigDecimal"
     ColumnType="BIGINT"
-    AliasName="CLAIMED_AMOUNT"
-    Expression="CLAIMED_AMOUNT"
+    AliasName="EXISTING_COUNT"
+    Expression="EXISTING_COUNT"
     SQLType="NUMERIC"/>
   <AttrArray Name="KeyAttributes">
-    <Item Value="ClaimedAmount"/>
+    <Item Value="ExistingCount"/>
   </AttrArray>
   <ResourceBundle>
     <PropertiesBundle

@@ -32,3 +32,10 @@ def XxhcmOvertimeDetailsAllEORule1_OnConditionScript_OnCondition()
 adf.context.sessionScope.page == 'edu'
 }
 
+
+@ValidatorConditionExpression(name="validateCombination")
+def validateCombination_OnConditionScript_OnCondition()
+{
+adf.context.sessionScope.page == 'edu'
+}
+

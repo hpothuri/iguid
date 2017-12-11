@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import oracle.jbo.Key;
+import oracle.jbo.RowSet;
 import oracle.jbo.domain.Number;
 import oracle.jbo.domain.Timestamp;
 import oracle.jbo.server.AttributeDefImpl;
@@ -781,6 +782,16 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        ValidateEduAllowanceComboVA {
+            protected Object get(XxhcmOvertimeDetailsAllEOImpl obj) {
+                return obj.getValidateEduAllowanceComboVA();
+            }
+
+            protected void put(XxhcmOvertimeDetailsAllEOImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
@@ -886,6 +897,7 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static final int DESTINATIONCOUNTRY = AttributesEnum.DestinationCountry.index();
     public static final int BUSSTRAVREQNUMVALUE = AttributesEnum.BussTravReqNumValue.index();
     public static final int XXHCMOVERTIMEHEADERSALLVO = AttributesEnum.XxhcmOvertimeHeadersAllVO.index();
+    public static final int VALIDATEEDUALLOWANCECOMBOVA = AttributesEnum.ValidateEduAllowanceComboVA.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -2129,6 +2141,30 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     }
 
     /**
+     * Gets the view accessor <code>RowSet</code> ValidateEduAllowanceComboVA.
+     */
+    public RowSet getValidateEduAllowanceComboVA() {
+        return (RowSet) getAttributeInternal(VALIDATEEDUALLOWANCECOMBOVA);
+    }
+
+    /**
+     * Validation method for XxhcmOvertimeDetailsAllEO.
+     */
+    public boolean validateCombination() {
+        getValidateEduAllowanceComboVA().executeQuery();
+        BigDecimal count = new BigDecimal(0);
+        if(getValidateEduAllowanceComboVA().first() != null){
+            count = (BigDecimal) getValidateEduAllowanceComboVA().first().getAttribute("ExistingCount");   
+        }
+        if(count.compareTo(new BigDecimal(0)) == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /**
      * @param reqDtlsId key constituent
 
      * @return a Key object based on given key constituents.
@@ -2136,7 +2172,5 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
     public static Key createPrimaryKey(Number reqDtlsId) {
         return new Key(new Object[] { reqDtlsId });
     }
-
-
 }
 

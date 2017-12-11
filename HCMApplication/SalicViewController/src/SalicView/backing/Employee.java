@@ -3959,10 +3959,10 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
             int year = cal.get(Calendar.YEAR);
             Integer startYear = 0;
             if(month >= 9){
-                startYear = year;
+                startYear = year-1;
             }
             else{
-                startYear = year-1;
+                startYear = year-2;
             }
             String dateStr = "01-09-"+startYear;
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
