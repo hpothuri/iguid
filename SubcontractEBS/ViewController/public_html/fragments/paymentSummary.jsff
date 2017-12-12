@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:panelBox text="Payment" id="pb1" styleClass="home" inlineStyle="width:900px;" showDisclosure="false">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl1" rows="3" maxColumns="2" labelWidth="150">
+        <f:facet name="footer"/>
+        <af:inputText value="#{bindings.projectNumber.inputValue}" label="Project Number"
+                      required="#{bindings.projectNumber.hints.mandatory}"
+                      columns="#{bindings.projectNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.projectNumber.hints.precision}"
+                      shortDesc="#{bindings.projectNumber.hints.tooltip}" id="it1">
+          <f:validator binding="#{bindings.projectNumber.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.projectNumber.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.projectName.inputValue}" label="Project Name"
+                      required="#{bindings.projectName.hints.mandatory}"
+                      columns="#{bindings.projectName.hints.displayWidth}"
+                      maximumLength="#{bindings.projectName.hints.precision}"
+                      shortDesc="#{bindings.projectName.hints.tooltip}" id="it2">
+          <f:validator binding="#{bindings.projectName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.paymentNumber.inputValue}" label="Payment Number"
+                      required="#{bindings.paymentNumber.hints.mandatory}"
+                      columns="#{bindings.paymentNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.paymentNumber.hints.precision}"
+                      shortDesc="#{bindings.paymentNumber.hints.tooltip}" id="it3">
+          <f:validator binding="#{bindings.paymentNumber.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.paymentNumber.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.contractNumber.inputValue}" label="Contract Number"
+                      required="#{bindings.contractNumber.hints.mandatory}"
+                      columns="#{bindings.contractNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.contractNumber.hints.precision}"
+                      shortDesc="#{bindings.contractNumber.hints.tooltip}" id="it4">
+          <f:validator binding="#{bindings.contractNumber.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.supplierName.inputValue}" label="Supplier Name"
+                      required="#{bindings.supplierName.hints.mandatory}"
+                      columns="#{bindings.supplierName.hints.displayWidth}"
+                      maximumLength="#{bindings.supplierName.hints.precision}"
+                      shortDesc="#{bindings.supplierName.hints.tooltip}" id="it5">
+          <f:validator binding="#{bindings.supplierName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.supplierType.inputValue}" label="Supplier Type"
+                      required="#{bindings.supplierType.hints.mandatory}"
+                      columns="#{bindings.supplierType.hints.displayWidth}"
+                      maximumLength="#{bindings.supplierType.hints.precision}"
+                      shortDesc="#{bindings.supplierType.hints.tooltip}" id="it6">
+          <f:validator binding="#{bindings.supplierType.validator}"/>
+        </af:inputText>
+        <af:inputDate value="#{bindings.paymentDate.inputValue}" label="Payment Date"
+                      required="#{bindings.paymentDate.hints.mandatory}"
+                      columns="#{bindings.paymentDate.hints.displayWidth}"
+                      shortDesc="#{bindings.paymentDate.hints.tooltip}" id="id1">
+          <f:validator binding="#{bindings.paymentDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.paymentDate.format}"/>
+        </af:inputDate>
+      </af:panelFormLayout>
+      <af:panelFormLayout id="pfl2" labelWidth="150">
+        <f:facet name="footer"/>
+        <af:inputText value="#{bindings.description.inputValue}" label="Description"
+                      required="#{bindings.description.hints.mandatory}"
+                      columns="80"
+                      maximumLength="#{bindings.description.hints.precision}"
+                      shortDesc="#{bindings.description.hints.tooltip}" id="it7" rows="3">
+          <f:validator binding="#{bindings.description.validator}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelBox text="Summary" id="pb2" styleClass="home" showDisclosure="false" inlineStyle="width:900px;">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.summaryList.collectionModel}" var="row" rows="#{bindings.summaryList.rangeSize}"
+                  emptyText="#{bindings.summaryList.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  rowBandingInterval="0" selectedRowKeys="#{bindings.summaryList.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.summaryList.collectionModel.makeCurrent}" rowSelection="single"
+                  fetchSize="#{bindings.summaryList.rangeSize}"
+                  filterModel="#{bindings.summaryListQuery.queryDescriptor}"
+                  queryListener="#{bindings.summaryListQuery.processQuery}" varStatus="vs" id="t1"
+                  editingMode="editAll">
+          <af:column sortProperty="#{bindings.summaryList.hints.division.name}" filterable="true" sortable="true"
+                     headerText="Division" id="c1" width="200">
+            <af:outputText value="#{row.bindings.division.inputValue}"
+                           shortDesc="#{bindings.summaryList.hints.division.tooltip}" id="it8"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.summaryList.hints.subContractValue.name}" filterable="true"
+                     sortable="true" headerText="Sub Contract Value" id="c2" width="200">
+            <af:outputText value="#{row.bindings.subContractValue.inputValue}"
+                           shortDesc="#{bindings.summaryList.hints.subContractValue.tooltip}" id="it9">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryList.hints.subContractValue.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.summaryList.hints.executedValue.name}" filterable="true" sortable="true"
+                     headerText="Executed Value" id="c3" width="200">
+            <af:outputText value="#{row.bindings.executedValue.inputValue}"
+                           shortDesc="#{bindings.summaryList.hints.executedValue.tooltip}" id="it10">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryList.hints.executedValue.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.summaryList.hints.thisMonthValue.name}" filterable="true" sortable="true"
+                     headerText="This Month Value" id="c4" width="200">
+            <af:outputText value="#{row.bindings.thisMonthValue.inputValue}"
+                           shortDesc="#{bindings.summaryList.hints.thisMonthValue.tooltip}" id="it11">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryList.hints.thisMonthValue.format}"/>
+            </af:outputText>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s2"/>
+    <af:panelFormLayout id="pfl3" rows="5" maxColumns="2">
+      <f:facet name="footer"/>
+      <af:inputText value="#{bindings.executedValue.inputValue}" label="Executed Value"
+                    required="#{bindings.executedValue.hints.mandatory}"
+                    columns="#{bindings.executedValue.hints.displayWidth}"
+                    maximumLength="#{bindings.executedValue.hints.precision}"
+                    shortDesc="#{bindings.executedValue.hints.tooltip}" id="it12">
+        <f:validator binding="#{bindings.executedValue.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.executedValue.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.percTotalMaterialOnSite.inputValue}" label="80% of Total Material on Site"
+                    required="#{bindings.percTotalMaterialOnSite.hints.mandatory}"
+                    columns="#{bindings.percTotalMaterialOnSite.hints.displayWidth}"
+                    maximumLength="#{bindings.percTotalMaterialOnSite.hints.precision}"
+                    shortDesc="#{bindings.percTotalMaterialOnSite.hints.tooltip}" id="it14">
+        <f:validator binding="#{bindings.percTotalMaterialOnSite.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.percTotalMaterialOnSite.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.variations.inputValue}" label="Variations"
+                    required="#{bindings.variations.hints.mandatory}"
+                    columns="#{bindings.variations.hints.displayWidth}"
+                    maximumLength="#{bindings.variations.hints.precision}"
+                    shortDesc="#{bindings.variations.hints.tooltip}" id="it16">
+        <f:validator binding="#{bindings.variations.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.variations.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.deductions.inputValue}" label="Deductions"
+                    required="#{bindings.deductions.hints.mandatory}"
+                    columns="#{bindings.deductions.hints.displayWidth}"
+                    maximumLength="#{bindings.deductions.hints.precision}"
+                    shortDesc="#{bindings.deductions.hints.tooltip}" id="it18">
+        <f:validator binding="#{bindings.deductions.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.deductions.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.subTotalValue.inputValue}" label="Subtotal Value (Excluding deductions)"
+                    required="#{bindings.subTotalValue.hints.mandatory}"
+                    columns="#{bindings.subTotalValue.hints.displayWidth}"
+                    maximumLength="#{bindings.subTotalValue.hints.precision}"
+                    shortDesc="#{bindings.subTotalValue.hints.tooltip}" id="it20">
+        <f:validator binding="#{bindings.subTotalValue.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.subTotalValue.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.executedValueThisMonth.inputValue}"
+                    label="Executed value this month"
+                    required="#{bindings.executedValueThisMonth.hints.mandatory}"
+                    columns="#{bindings.executedValueThisMonth.hints.displayWidth}"
+                    maximumLength="#{bindings.executedValueThisMonth.hints.precision}"
+                    shortDesc="#{bindings.executedValueThisMonth.hints.tooltip}" id="it13">
+        <f:validator binding="#{bindings.executedValueThisMonth.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.executedValueThisMonth.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.percOfThisMonthMOS.inputValue}" label="80% of this month M.O.S"
+                    required="#{bindings.percOfThisMonthMOS.hints.mandatory}"
+                    columns="#{bindings.percOfThisMonthMOS.hints.displayWidth}"
+                    maximumLength="#{bindings.percOfThisMonthMOS.hints.precision}"
+                    shortDesc="#{bindings.percOfThisMonthMOS.hints.tooltip}" id="it15">
+        <f:validator binding="#{bindings.percOfThisMonthMOS.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.percOfThisMonthMOS.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.variationsSecond.inputValue}" label="Variations"
+                    required="#{bindings.variationsSecond.hints.mandatory}"
+                    columns="#{bindings.variationsSecond.hints.displayWidth}"
+                    maximumLength="#{bindings.variationsSecond.hints.precision}"
+                    shortDesc="#{bindings.variationsSecond.hints.tooltip}" id="it17">
+        <f:validator binding="#{bindings.variationsSecond.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.variationsSecond.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.deductionsSecond.inputValue}" label="Deductions"
+                    required="#{bindings.deductionsSecond.hints.mandatory}"
+                    columns="#{bindings.deductionsSecond.hints.displayWidth}"
+                    maximumLength="#{bindings.deductionsSecond.hints.precision}"
+                    shortDesc="#{bindings.deductionsSecond.hints.tooltip}" id="it19">
+        <f:validator binding="#{bindings.deductionsSecond.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.deductionsSecond.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.subTotalValueSecond.inputValue}"
+                    label="Subtotal Value (Excluding deductions)"
+                    required="#{bindings.subTotalValueSecond.hints.mandatory}"
+                    columns="#{bindings.subTotalValueSecond.hints.displayWidth}"
+                    maximumLength="#{bindings.subTotalValueSecond.hints.precision}"
+                    shortDesc="#{bindings.subTotalValueSecond.hints.tooltip}" id="it21">
+        <f:validator binding="#{bindings.subTotalValueSecond.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.subTotalValueSecond.format}"/>
+      </af:inputText>
+    </af:panelFormLayout>
+    <af:spacer width="10" height="10" id="s3"/>
+    <af:panelBox text="Total Amount" id="pb3" styleClass="home" inlineStyle="width:900px;" showDisclosure="false">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl4" maxColumns="4" rows="1" labelAlignment="top">
+        <f:facet name="footer"/>
+        <af:inputText value="#{bindings.totalSubContractValue.inputValue}"
+                      label="Total Sub Contract Value"
+                      required="#{bindings.totalSubContractValue.hints.mandatory}"
+                      columns="#{bindings.totalSubContractValue.hints.displayWidth}"
+                      maximumLength="#{bindings.totalSubContractValue.hints.precision}"
+                      shortDesc="#{bindings.totalSubContractValue.hints.tooltip}" id="it22">
+          <f:validator binding="#{bindings.totalSubContractValue.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.totalSubContractValue.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.totalVariations.inputValue}" label="Total Variations"
+                      required="#{bindings.totalVariations.hints.mandatory}"
+                      columns="#{bindings.totalVariations.hints.displayWidth}"
+                      maximumLength="#{bindings.totalVariations.hints.precision}"
+                      shortDesc="#{bindings.totalVariations.hints.tooltip}" id="it23">
+          <f:validator binding="#{bindings.totalVariations.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.totalVariations.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.progress.inputValue}" label="Progress%"
+                      required="#{bindings.progress.hints.mandatory}" columns="#{bindings.progress.hints.displayWidth}"
+                      maximumLength="#{bindings.progress.hints.precision}"
+                      shortDesc="#{bindings.progress.hints.tooltip}" id="it24">
+          <f:validator binding="#{bindings.progress.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.progress.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.subTotalAccumulativeValue.inputValue}"
+                      label="Subtotal Accumulative Value"
+                      required="#{bindings.subTotalAccumulativeValue.hints.mandatory}"
+                      columns="#{bindings.subTotalAccumulativeValue.hints.displayWidth}"
+                      maximumLength="#{bindings.subTotalAccumulativeValue.hints.precision}"
+                      shortDesc="#{bindings.subTotalAccumulativeValue.hints.tooltip}" id="it25">
+          <f:validator binding="#{bindings.subTotalAccumulativeValue.validator}"/>
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.subTotalAccumulativeValue.format}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s4"/>
+    <af:panelGroupLayout id="pgl2" layout="horizontal">
+      <af:inputText label="Payment Status" id="it26" value="SUBMITTED, (Approved by Client)" columns="40"/>
+      <af:spacer width="10" height="10" id="s5"/>
+      <af:button text="Post to AP" id="b1"/>
+    </af:panelGroupLayout>
+  </af:panelGroupLayout>
+</ui:composition>
