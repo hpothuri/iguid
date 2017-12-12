@@ -873,7 +873,7 @@
                                  id="c24">
                         <af:inputText value="#{row.bindings.InvNum.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.mandatory}"
+                                      required="true"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.tooltip}"
@@ -887,7 +887,7 @@
                                  id="c35">
                         <af:inputText value="#{row.bindings.InvTotal.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.mandatory}"
+                                      required="true"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.tooltip}"
