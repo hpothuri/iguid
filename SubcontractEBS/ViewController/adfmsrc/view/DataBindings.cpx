@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.16.48" id="DataBindings"
+             SeparateXMLFiles="false" Package="view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/fragments/paymentSummary.jsff" usageId="view_paymentSummaryPageDef"/>
+    <page path="/pages/PaymentSummary.jsf" usageId="view_PaymentSummaryPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="view_paymentSummaryPageDef" path="fragments.paymentSummaryPageDef"/>
+    <page id="view_PaymentSummaryPageDef" path="pages.PaymentSummaryPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="TotalAmountPojo" path="view.TotalAmountPojo"/>
+    <dc id="SummarySecondFormPojo" path="view.SummarySecondFormPojo"/>
+    <dc id="SummaryListPojo" path="view.SummaryListPojo"/>
+    <dc id="PaymentPojo" path="view.PaymentPojo"/>
+  </dataControlUsages>
+</Application>

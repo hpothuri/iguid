@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="paymentSummaryPageDef"
+                Package="fragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PaymentPojo" id="PaymentPojoIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SummaryListPojo" id="SummaryListPojoIterator"/>
+    <accessorIterator MasterBinding="SummaryListPojoIterator" Binds="summaryList" RangeSize="25"
+                      DataControl="SummaryListPojo" BeanClass="view.beans.paymentsummary.SummaryPojo"
+                      id="summaryListIterator"/>
+    <searchRegion Binds="summaryListIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="summaryListQuery"/>
+    <iterator Binds="root" RangeSize="25" DataControl="SummarySecondFormPojo" id="SummarySecondFormPojoIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="TotalAmountPojo" id="TotalAmountPojoIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="PaymentPojoIterator" id="projectNumber">
+      <AttrNames>
+        <Item Value="projectNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="projectName">
+      <AttrNames>
+        <Item Value="projectName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="paymentNumber">
+      <AttrNames>
+        <Item Value="paymentNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="contractNumber">
+      <AttrNames>
+        <Item Value="contractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="supplierName">
+      <AttrNames>
+        <Item Value="supplierName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="supplierType">
+      <AttrNames>
+        <Item Value="supplierType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="paymentDate">
+      <AttrNames>
+        <Item Value="paymentDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentPojoIterator" id="description">
+      <AttrNames>
+        <Item Value="description"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="summaryListIterator" id="summaryList">
+      <nodeDefinition DefName="view.beans.paymentsummary.SummaryPojo" Name="summaryList0">
+        <AttrNames>
+          <Item Value="division"/>
+          <Item Value="subContractValue"/>
+          <Item Value="executedValue"/>
+          <Item Value="thisMonthValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="executedValue">
+      <AttrNames>
+        <Item Value="executedValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="executedValueThisMonth">
+      <AttrNames>
+        <Item Value="executedValueThisMonth"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="percTotalMaterialOnSite">
+      <AttrNames>
+        <Item Value="percTotalMaterialOnSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="percOfThisMonthMOS">
+      <AttrNames>
+        <Item Value="percOfThisMonthMOS"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="variations">
+      <AttrNames>
+        <Item Value="variations"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="variationsSecond">
+      <AttrNames>
+        <Item Value="variationsSecond"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="deductions">
+      <AttrNames>
+        <Item Value="deductions"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="deductionsSecond">
+      <AttrNames>
+        <Item Value="deductionsSecond"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="subTotalValue">
+      <AttrNames>
+        <Item Value="subTotalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SummarySecondFormPojoIterator" id="subTotalValueSecond">
+      <AttrNames>
+        <Item Value="subTotalValueSecond"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TotalAmountPojoIterator" id="totalSubContractValue">
+      <AttrNames>
+        <Item Value="totalSubContractValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TotalAmountPojoIterator" id="totalVariations">
+      <AttrNames>
+        <Item Value="totalVariations"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TotalAmountPojoIterator" id="progress">
+      <AttrNames>
+        <Item Value="progress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TotalAmountPojoIterator" id="subTotalAccumulativeValue">
+      <AttrNames>
+        <Item Value="subTotalAccumulativeValue"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>
