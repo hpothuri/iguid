@@ -63,7 +63,7 @@
                   <af:inputText label="Comments" value="#{pageFlowScope.approveComment}" id="it58" rows="3"/>
                   <f:facet name="buttonBar">
                     <af:button text="Approve" id="b1"
-                               actionListener="#{backingBeanScope.backing_employee.approveNewACL}"/>
+                               action="#{backingBeanScope.backing_employee.approveNewACL}"/>
                     <af:button text="Cancel" id="b2"
                                actionListener="#{backingBeanScope.backing_employee.approveCancelRequest}"/>
                   </f:facet>
@@ -75,7 +75,7 @@
                   <af:inputText label="Comments" value="#{pageFlowScope.rejectComment}" id="itx58" rows="3"/>
                   <f:facet name="buttonBar">
                     <af:button text="Reject" id="bx1"
-                               actionListener="#{backingBeanScope.backing_employee.rejectNewACL}"/>
+                               action="#{backingBeanScope.backing_employee.rejectNewACL}"/>
                     <af:button text="Cancel" id="bx2"
                                actionListener="#{backingBeanScope.backing_employee.rejectCancelRequest}"/>
                   </f:facet>
@@ -105,10 +105,10 @@
                                         partialTriggers="ot10 employeeNameTRANSId"
                                         actionListener="#{backingBeanScope.backing_employee.saveACL}"/>
                     <af:commandMenuItem text="Approve" id="cmi3"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' : bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' : bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject  ? 'true' : 'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.approveOkRequest}"/>
                     <af:commandMenuItem text="Reject" id="cmi4"
-                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':'false'}"
+                                        disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.rejectOkRequest}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
                                         disabled="#{bindings.Status.inputValue ne 'Pending Approval'?'true':'false'}"
@@ -443,6 +443,15 @@
                                   readOnly="true">
                       <f:validator binding="#{bindings.Months.validator}"/>
                     </af:inputText>
+                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="#{bindings.SalaryDate.hints.mandatory}"
+                                  columns="#{bindings.SalaryDate.hints.displayWidth}"
+                                  label="Advance Date"
+                                  disabled="#{sessionScope.mode eq 'edit'}"
+                                  shortDesc="#{bindings.SalaryDate.hints.tooltip}" id="id1d1" autoSubmit="true">
+                      <f:validator binding="#{bindings.SalaryDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.SalaryDate.format}"/>
+                      </af:inputDate>
+                    
                     <af:inputText value="#{bindings.Note.inputValue}"
                                   label="#{bindings.Note.hints.label}"
                                   required="#{bindings.Note.hints.mandatory}"
@@ -2175,6 +2184,9 @@
                                             text="Add"
                                             disabled="#{!bindings.CreateInsert5.enabled}"
                                             id="cb18" partialSubmit="true"/>
+                          <af:spacer width="10" height="10" id="s13"/>
+                          <af:button actionListener="#{bindings.Delete4.execute}" text="Delete"
+                                     disabled="#{!bindings.Delete4.enabled}" id="b3" immediate="true"/>
                         </af:toolbar>
                       </f:facet>
                       <f:facet name="statusbar"/>
@@ -2184,7 +2196,7 @@
                                 emptyText="#{bindings.XxhcmAttachmentsTVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
                                 fetchSize="#{bindings.XxhcmAttachmentsTVO1.rangeSize}"
                                 rowBandingInterval="0" id="t14"
-                                partialTriggers="::cb18" varStatus="vs"
+                                partialTriggers="::cb18 ::b3" varStatus="vs"
                                 columnStretching="column:c46">
                         <af:column id="c52" headerText="S.No" width="35"
                                    align="center">

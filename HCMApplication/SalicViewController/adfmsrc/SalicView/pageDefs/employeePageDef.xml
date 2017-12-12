@@ -73,6 +73,8 @@
                 id="ValidateOverTimeReqVO1Iterator"/>
       <iterator Binds="ValidateOTonLeaveROVO1" RangeSize="10" DataControl="overTimeAMDataControl"
                 id="ValidateOTonLeaveROVO1Iterator"/>
+      <iterator Binds="getUserARStatusROVO1" RangeSize="10" DataControl="overTimeAMDataControl"
+                id="getUserARStatusROVO1Iterator"/>
    </executables>
    <bindings>
       <listOfValues StaticList="false"
@@ -637,6 +639,13 @@
       <attributeValues IterBinding="XxhcmOtherExpenseTVO1Iterator" id="TotalColumnAmount">
          <AttrNames>
             <Item Value="TotalColumnAmount"/>
+         </AttrNames>
+      </attributeValues>
+      <action IterBinding="XxhcmAttachmentsTVO1Iterator" id="Delete4" RequiresUpdateModel="false"
+              Action="removeCurrentRow"/>
+      <attributeValues IterBinding="getUserARStatusROVO1Iterator" id="ApproverFlag">
+         <AttrNames>
+            <Item Value="ApproverFlag"/>
          </AttrNames>
       </attributeValues>
    </bindings>

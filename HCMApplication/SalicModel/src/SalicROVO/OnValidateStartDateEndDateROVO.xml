@@ -26,17 +26,18 @@
     Name="p_startdate1"
     Kind="where"
     Type="oracle.jbo.domain.Date"/>
-  <SQLQuery><![CDATA[SELECT    
-OVERTIME.REQ_ID,                          
-OVERTIME.EMP_ID,                            
-OVERTIME.REQUEST_NUMBER ,                       
-OVERTIME.REQUEST_DATE,    
-LINE.START_DATE,    
-LINE.END_DATE    
-FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,    
-XXHCM_OVERTIME_DETAILS_ALL LINE    
-WHERE    
-OVERTIME.REQ_ID=LINE.REQ_ID    
+  <SQLQuery><![CDATA[SELECT     
+OVERTIME.REQ_ID,                           
+OVERTIME.EMP_ID,                             
+OVERTIME.REQUEST_NUMBER ,                        
+OVERTIME.REQUEST_DATE,     
+LINE.START_DATE,     
+LINE.END_DATE     
+FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,     
+XXHCM_OVERTIME_DETAILS_ALL LINE     
+WHERE     
+OVERTIME.REQ_ID=LINE.REQ_ID     
+and OVERTIME.status not in ('draft','REJECT') 
 and :p_startdate1 between trunc(LINE.START_DATE) and LINE.END_DATE]]></SQLQuery>
   <ViewAttribute
     Name="ReqId"

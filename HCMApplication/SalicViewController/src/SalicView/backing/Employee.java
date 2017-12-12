@@ -154,6 +154,8 @@ public class Employee {
     private RichPopup approve;
     private RichPopup reject;
     private RichOutputText totalAmount;
+    
+    private Boolean approveReject;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -1620,30 +1622,23 @@ public class Employee {
 
 
 
-    public void approveNewACL(ActionEvent actionEvent) {
+    public String approveNewACL() {
         ViewObject mgrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        //        mgrVO.getCurrentRow().getAttribute("");
+
         updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "A",
                        (String)mgrVO.getCurrentRow().getAttribute("RequestNumber")
                        );
-        
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
-//        OperationBinding ob =
-//            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
-//        ob.execute();
-//        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
-        //refresh();
-        
-        //send emails
+
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "A");
         op.execute();
-        mgrVO.executeQuery();
-        approve.hide();
+        if(op.getErrors().isEmpty()){
+            mgrVO.executeQuery();
+            approve.hide();
+            return "cancel";
+        }
+        return null;
     }
 
 
@@ -1889,29 +1884,22 @@ public class Employee {
 
     }
 
-    public void rejectNewACL(ActionEvent actionEvent) {
+    public String rejectNewACL() {
         ViewObject mgrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        //        mgrVO.getCurrentRow().getAttribute("");
-        updateApproveRejection(mgrVO.first().getAttribute("ReqId"), "R",
-                       (String)mgrVO.first().getAttribute("RequestNumber"));
-        
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
-//        OperationBinding ob =
-//            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
-//        ob.execute();
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        //AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
-        //refresh();
+
+        updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "R",
+                       (String)mgrVO.getCurrentRow().getAttribute("RequestNumber"));
         
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "R");
         op.execute();
-        mgrVO.executeQuery();
-        
-        reject.hide();
+        if(op.getErrors().isEmpty()){
+            mgrVO.executeQuery();
+            approve.hide();
+            return "cancel";
+        }
+        return null;
     }
 
 
@@ -3965,5 +3953,36 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
 
     public RichOutputText getTotalAmount() {
         return totalAmount;
+    }
+
+    public void setApproveReject(Boolean approveReject) {
+        this.approveReject = approveReject;
+    }
+
+    public Boolean getApproveReject() {
+        //getUserARStatusROVO1Iterator
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ViewObject mgrVo =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        BigDecimal reqId = ((oracle.jbo.domain.Number)mgrVo.getCurrentRow().getAttribute("ReqId")).bigDecimalValue();
+        ViewObject statusVO =
+            ADFUtils.findIterator("getUserARStatusROVO1Iterator").getViewObject();
+        statusVO.setNamedWhereClauseParam("p_emp_logged_in",empId);
+        statusVO.setNamedWhereClauseParam("p_req_id",reqId);
+        statusVO.executeQuery();
+        if (statusVO.first() != null) {
+            System.out.println("Logged in employee id ==>"+empId+" Reques id selected ==>"+reqId);
+            String approverFlag = (String) statusVO.first().getAttribute("ApproverFlag");
+            if (approverFlag.equalsIgnoreCase("R") || approverFlag.equalsIgnoreCase("A")) {
+                return true;
+            }else{
+                return false;
+            }
+        } else {
+            return false;
+        }
+        //return false;
     }
 }

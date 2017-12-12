@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="getUserARStatusROVO"
+  Version="12.2.1.12.24"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="SalicROVO.getUserARStatusROVORowImpl"
+  ComponentClass="SalicROVO.getUserARStatusROVOImpl"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="p_emp_logged_in"
+    Kind="where"
+    Type="java.math.BigDecimal"/>
+  <Variable
+    Name="p_req_id"
+    Kind="where"
+    Type="java.math.BigDecimal"/>
+  <SQLQuery><![CDATA[SELECT nvl(approver_flag,'P')    approver_flag   
+  FROM XX_QP_ACTION_HISTORY_T where         
+  header_id        = :p_req_id       
+  AND approver_id  = :p_emp_logged_in       
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(header_id,:p_emp_logged_in)]]></SQLQuery>
+  <ViewAttribute
+    Name="ApproverFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="APPROVER_FLAG"
+    Expression="APPROVER_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="ApproverFlag"/>
+  </AttrArray>
+</ViewObject>

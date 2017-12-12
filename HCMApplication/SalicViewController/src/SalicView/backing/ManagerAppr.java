@@ -215,8 +215,8 @@ public class ManagerAppr {
         ViewObject mgrVO =
             ADFUtils.findIterator("managerDashbaordROVO1Iterator").getViewObject();
         //        mgrVO.getCurrentRow().getAttribute("");
-        updateApproveRejection(mgrVO.first().getAttribute("ReqId"), "R",
-                       (String)mgrVO.first().getAttribute("RequestNumber"));
+        updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "R",
+                       (String)mgrVO.getCurrentRow().getAttribute("RequestNumber"));
         
         //refresh();
         

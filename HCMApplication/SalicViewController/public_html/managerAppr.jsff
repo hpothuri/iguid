@@ -561,7 +561,7 @@
                                       sortable="false" rendered="false"
                                       headerText="Approval Status" id="c12"
                                       width="120" filterable="true">
-                              <af:outputText value="#{row.Status}" id="ot10"/>
+                              <af:outputText value="#{row.Status = 'APPROVE' ? 'Approved' : row.Status = 'REJECT' ? 'Rejected' : row.Status}" id="ot10"/>
                            </af:column>
                            <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.ApproverFlag.name}"
                                       sortable="false"

@@ -133,6 +133,9 @@
    <ViewUsage
       Name="ValidateOTonLeaveROVO1"
       ViewObjectName="SalicROVO.ValidateOTonLeaveROVO"/>
+   <ViewUsage
+      Name="getUserARStatusROVO1"
+      ViewObjectName="SalicROVO.getUserARStatusROVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"

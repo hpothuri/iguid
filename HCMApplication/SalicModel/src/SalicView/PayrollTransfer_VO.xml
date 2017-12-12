@@ -40,7 +40,8 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED' AND XxhcmOvertimeHeadersAllEO.REQUEST_NUMBER NOT LIKE '%HRL%'">
+  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED' AND XxhcmOvertimeHeadersAllEO.REQUEST_NUMBER NOT LIKE '%HRL%'"
+  OrderBy='"REQUEST_DATE" Desc'>
   <Properties>
     <SchemaBasedProperties>
       <LABEL
