@@ -4,6 +4,8 @@ package SalicAM;
 import SalicAM.common.payRollAM;
 
 
+import SalicView.XxhcmOtherExpenseTVOImpl;
+
 import oracle.adf.share.ADFContext;
 
 import oracle.jbo.ViewCriteria;
@@ -175,7 +177,7 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
      * Container's getter for XxhcmOtherExpenseTVO1.
      * @return XxhcmOtherExpenseTVO1
      */
-    public ViewObjectImpl getXxhcmOtherExpenseTVO1() {
-        return (ViewObjectImpl) findViewObject("XxhcmOtherExpenseTVO1");
+    public XxhcmOtherExpenseTVOImpl getXxhcmOtherExpenseTVO1() {
+        return (XxhcmOtherExpenseTVOImpl) findViewObject("XxhcmOtherExpenseTVO1");
     }
 }

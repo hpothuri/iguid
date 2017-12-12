@@ -3,6 +3,8 @@ package SalicAM;
 import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
 
+import SalicView.XxhcmOtherExpenseTVOImpl;
+
 import java.sql.SQLException;
 
 import SalicAM.common.overTimeAM;
@@ -261,8 +263,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      * Container's getter for XxhcmOtherExpenseTVO1.
      * @return XxhcmOtherExpenseTVO1
      */
-    public ViewObjectImpl getXxhcmOtherExpenseTVO1() {
-        return (ViewObjectImpl)findViewObject("XxhcmOtherExpenseTVO1");
+    public XxhcmOtherExpenseTVOImpl getXxhcmOtherExpenseTVO1() {
+        return (XxhcmOtherExpenseTVOImpl) findViewObject("XxhcmOtherExpenseTVO1");
     }
 
     /**

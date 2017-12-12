@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOtherExpenseTVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOtherExpenseEO.ATTRIBUTE10, 
        XxhcmOtherExpenseEO.ATTRIBUTE2, 
@@ -32,7 +32,13 @@
   FromList="XXHCM_OTHER_EXPENSE XxhcmOtherExpenseEO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  RowClass="SalicView.XxhcmOtherExpenseTVORowImpl"
+  ComponentClass="SalicView.XxhcmOtherExpenseTVOImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -220,6 +226,15 @@
     EntityAttrName="TotalAmount"
     EntityUsage="XxhcmOtherExpenseEO"
     AliasName="TOTAL_AMOUNT"/>
+  <ViewAttribute
+    Name="TotalColumnAmount"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"/>
   <ViewLinkAccessor
     Name="XxhcmAttachmentsTVO"
     ViewLink="SalicVL.OtherExpense_AttachmentVl"

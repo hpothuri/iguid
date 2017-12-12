@@ -153,6 +153,7 @@ public class Employee {
     private BigDecimal countryValue;
     private RichPopup approve;
     private RichPopup reject;
+    private RichOutputText totalAmount;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -3278,9 +3279,11 @@ rs.closeRowSetIterator();
 
             BigDecimal Total = NoofDays.multiply(Perdiem);
 
-            this.totPerdiem.setValue(Total);
+//            this.totPerdiem.setValue(Total);
+            ADFUtils.setEL("#{bindings.TotalPerdiem.inputValue}", Total);
             AdfFacesContext.getCurrentInstance().addPartialTarget(this.noOfDays);
             AdfFacesContext.getCurrentInstance().addPartialTarget(this.totPerdiem);
+            AdfFacesContext.getCurrentInstance().addPartialTarget(this.totalAmount);
                 
             ViewObjectImpl oldPurposeVO =
                 (ViewObjectImpl) ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO2Iterator").getViewObject();
@@ -3426,9 +3429,11 @@ rs.closeRowSetIterator();
                 BigDecimal Perdiem = new BigDecimal(perdimday);
                 lineVO.getCurrentRow().setAttribute("NumberOfDays", NoofDays);
                 BigDecimal Total = NoofDays.multiply(Perdiem);
-
-                this.totPerdiem.setValue(Total);
+                
+                ADFUtils.setEL("#{bindings.TotalPerdiem.inputValue}", Total);
+//                this.totPerdiem.setValue(Total);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(this.totPerdiem);
+                AdfFacesContext.getCurrentInstance().addPartialTarget(this.totalAmount);
 
 
             } catch (ParseException e) {
@@ -3640,6 +3645,11 @@ rs.closeRowSetIterator();
           
            String Id = (String)attrIdBinding.getInputValue();  
            System.out.println("selected currency =>"+Id);
+           
+
+        ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("OtherExpn", null);
+        ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("TotalAmount", null);
+           
            if(Id != null && "SAR".equalsIgnoreCase(Id)){
                ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getCurrentRow().setAttribute("ExchnRate", new BigDecimal(1));
            }
@@ -3947,5 +3957,13 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
             pe.printStackTrace();
         }
         return Boolean.TRUE;
+    }
+
+    public void setTotalAmount(RichOutputText totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public RichOutputText getTotalAmount() {
+        return totalAmount;
     }
 }

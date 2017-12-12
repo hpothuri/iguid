@@ -2112,6 +2112,14 @@
                                         id="it46" disabled="true" partialTriggers="it48">
                             <f:validator binding="#{row.bindings.TotalAmount.validator}"/>
                           </af:inputText>
+                          <f:facet name="footer">
+                            <af:outputText value="Total : #{bindings.TotalColumnAmount.inputValue}"
+                                           shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.TotalColumnAmount.tooltip}"
+                                           id="ot26">
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.XxhcmOtherExpenseTVO1.hints.TotalColumnAmount.format}"/>
+                            </af:outputText>
+                          </f:facet>
                         </af:column>
                         <af:column sortProperty="#{bindings.XxhcmOtherExpenseTVO1.hints.ReqDtlsId.name}"
                                    sortable="false"
@@ -2128,6 +2136,17 @@
                           </af:inputText>
                         </af:column>
                       </af:table>
+                      <f:facet name="secondaryToolbar">
+                        <af:toolbar id="t18" styleClass="AFStretchWidth">
+                          <af:panelLabelAndMessage label="Total Amount" id="plam10">
+                            <af:outputText value="#{bindings.TotalColumnAmount.inputValue != null ?  (bindings.TotalColumnAmount.inputValue + bindings.TotalPerdiem.inputValue) : bindings.TotalPerdiem.inputValue}"
+                                           id="ot28" partialTriggers="t12:it46 ::it44 ::it43"
+                                           inlineStyle="font-weight:bold;"
+                                           binding="#{backingBeanScope.backing_employee.totalAmount}"/>
+                          </af:panelLabelAndMessage>
+                        </af:toolbar>
+                      </f:facet>
+                      <f:facet name="afterToolbar"/>
                     </af:panelCollection>
                   </af:panelBox>
                   <af:panelBox text="Attachments" id="pb6">

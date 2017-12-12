@@ -457,6 +457,7 @@
                <Item Value="ExpnDesc"/>
                <Item Value="OtherExpn"/>
                <Item Value="ReqDtlsId"/>
+               <Item Value="TotalColumnAmount"/>
             </AttrNames>
          </nodeDefinition>
       </tree>
@@ -631,6 +632,11 @@
       <attributeValues IterBinding="ValidateOTonLeaveROVO1Iterator" id="PersonId">
          <AttrNames>
             <Item Value="PersonId"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOtherExpenseTVO1Iterator" id="TotalColumnAmount">
+         <AttrNames>
+            <Item Value="TotalColumnAmount"/>
          </AttrNames>
       </attributeValues>
    </bindings>
