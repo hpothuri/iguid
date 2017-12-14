@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="OnValidateStartDateEndDateROVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -26,19 +26,26 @@
     Name="p_startdate1"
     Kind="where"
     Type="oracle.jbo.domain.Date"/>
-  <SQLQuery><![CDATA[SELECT     
-OVERTIME.REQ_ID,                           
-OVERTIME.EMP_ID,                             
-OVERTIME.REQUEST_NUMBER ,                        
-OVERTIME.REQUEST_DATE,     
-LINE.START_DATE,     
-LINE.END_DATE     
-FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,     
-XXHCM_OVERTIME_DETAILS_ALL LINE     
-WHERE     
-OVERTIME.REQ_ID=LINE.REQ_ID     
-and OVERTIME.status not in ('draft','REJECT') 
-and :p_startdate1 between trunc(LINE.START_DATE) and LINE.END_DATE]]></SQLQuery>
+  <Variable
+    Name="p_enddate1"
+    Kind="where"
+    Type="java.sql.Date"/>
+  <SQLQuery><![CDATA[SELECT      
+OVERTIME.REQ_ID,                            
+OVERTIME.EMP_ID,                              
+OVERTIME.REQUEST_NUMBER ,                         
+OVERTIME.REQUEST_DATE,      
+LINE.START_DATE,      
+LINE.END_DATE      
+FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,      
+XXHCM_OVERTIME_DETAILS_ALL LINE      
+WHERE      
+OVERTIME.REQ_ID=LINE.REQ_ID      
+and OVERTIME.status not in ('draft','REJECT')  
+and (trunc(LINE.START_DATE)  between :p_startdate1 and :p_enddate1 
+or LINE.END_DATE between  :p_startdate1 and :p_enddate1  
+or :p_startdate1 between trunc(LINE.START_DATE) and LINE.END_DATE 
+or :p_enddate1 between trunc(LINE.START_DATE) and LINE.END_DATE)]]></SQLQuery>
   <ViewAttribute
     Name="ReqId"
     IsUpdateable="false"

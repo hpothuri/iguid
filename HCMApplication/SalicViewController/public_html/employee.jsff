@@ -719,12 +719,14 @@
                       <af:toolbar id="t8" flex="50">
                         <af:commandImageLink actionListener="#{backingBeanScope.backing_employee.addNewChildRow}"
                                              id="cil7"
+                                             disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                              icon="/images/add_dis.png"/>
                         <af:commandImageLink
                                              id="cil9"
-                                             icon="/images/edit_dis.png"/>
+                                             icon="/images/edit_dis.png"
+                                             disabled="#{sessionScope.mode=='edit'?'true':'false'}"/>
                         <af:commandImageLink actionListener="#{bindings.Delete2.execute}"
-                                             disabled="#{!bindings.Delete2.enabled}"
+                                             disabled="#{!bindings.Delete2.enabled or sessionScope.mode=='edit'?'true':'false'}"
                                              id="cil8"
                                              icon="/images/delete_dis.png"/>
                       </af:toolbar>
@@ -750,6 +752,7 @@
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}"
                                       id="id2" autoSubmit="true"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}"
                                       minValue="#{backingBeanScope.backing_employee.minDateForEduAllowance}">
                           <f:validator binding="#{row.bindings.InvDate.validator}"/>
@@ -770,7 +773,7 @@
                                               binding="#{backingBeanScope.backing_employee.childTRANS}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.childVC}"
                                               partialTriggers="id2"
-                                              disabled="#{row.bindings.InvDate.inputValue eq null}">
+                                              disabled="#{row.bindings.InvDate.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}">
                           <f:validator binding="#{row.bindings.childTRANS.validator}"/>
                         </af:inputListOfValues>
                       </af:column>
@@ -781,6 +784,7 @@
                         <af:selectOneChoice value="#{row.bindings.Grade.inputValue}" label="#{row.bindings.Grade.label}"
                                             required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.mandatory}"
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.tooltip}"
+                                            disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                             id="soc8" autoSubmit="true" simple="true">
                           <f:selectItems value="#{row.bindings.Grade.items}" id="si8"/>
                           <f:validator binding="#{row.bindings.Grade.validator}"/>
@@ -793,6 +797,7 @@
                         <af:inputText value="#{row.bindings.ActAmt.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.mandatory}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.tooltip}"
@@ -807,6 +812,7 @@
                                  id="c34">
                         <af:inputText value="#{row.bindings.School.inputValue}" autoSubmit="true"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.precision}"
@@ -821,6 +827,7 @@
                                  id="c22">
                         <af:inputText value="#{row.bindings.Age.inputValue}" autoSubmit="true"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.precision}"
@@ -840,7 +847,7 @@
                                             autoSubmit="true"
                                             required="true"
                                             binding="#{backingBeanScope.backing_employee.semSOC}"
-                                            disabled="#{row.bindings.childTRANS.inputValue eq null}"
+                                            disabled="#{row.bindings.childTRANS.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}"
                                             partialTriggers="ilov1">
                           <f:selectItems value="#{row.bindings.Semester.items}"
                                          id="si7"/>
@@ -852,6 +859,7 @@
                                  id="c28">
                         <af:inputText value="#{row.bindings.MaxAmt.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.precision}"
@@ -867,6 +875,7 @@
                                  id="c30">
                         <af:inputText value="#{row.bindings.AvlAmt.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.precision}"
@@ -883,6 +892,7 @@
                         <af:inputText value="#{row.bindings.InvNum.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}"
                                       required="true"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.tooltip}"
@@ -897,6 +907,7 @@
                         <af:inputText value="#{row.bindings.InvTotal.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}"
                                       required="true"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.tooltip}"
@@ -909,6 +920,7 @@
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.label}"
                                  id="c31">
                         <af:inputText value="#{row.bindings.Child.inputValue}"
+                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.mandatory}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.displayWidth}"
@@ -925,6 +937,7 @@
                         <af:inputText value="#{row.bindings.Schoolgrade.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.label}"
                                       required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.mandatory}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Schoolgrade.tooltip}"
@@ -1306,7 +1319,9 @@
                                 fetchSize="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
                                 rowBandingInterval="0" id="t10"
                                 partialTriggers="::cb11 ::cb12 cb14 :::pc8:cb17 :::pc8:t17:cb19" varStatus="vs"
-                                columnStretching="column:c20">
+                                columnStretching="column:c20" rowSelection="single"
+                                selectedRowKeys="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.makeCurrent}">
                         <af:column id="c37" headerText="S.No" width="50">
                           <af:outputText value="#{vs.index+1}" id="ot19"/>
                         </af:column>

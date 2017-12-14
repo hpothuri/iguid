@@ -1265,6 +1265,7 @@ public class Employee {
                     gu.displayMessage(errorMsg, "FATAL");
                     isValidated = false;
                     AdfFacesContext.getCurrentInstance().addPartialTarget(empLov);
+                    isValidated = false;
                     returnActivity = null;
                 }else{
                     empLov.setValid(true);
@@ -1284,6 +1285,7 @@ public class Employee {
                         returnActivity = "save";
                     } else {
                         JSFUtils.addFacesInformationMessage("Please provide Housing in Advance Details!..");
+                        isValidated = false;
                         returnActivity = null;
                     }
                     
@@ -1458,6 +1460,7 @@ public class Employee {
                 long purposeRows = ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().getEstimatedRowCount();
                 if(purposeRows == 0){
                     JSFUtils.addFacesInformationMessage("At least one line is mandatory in Purpose of travel.");
+                    isValidated = false;
                     return null;
                 }
 
@@ -1527,14 +1530,23 @@ public class Employee {
                     ovo.setNamedWhereClauseParam("P_EMP",
                                                  otHdrVO.getCurrentRow().getAttribute("EmpId"));
                     ovo.setNamedWhereClauseParam("p_startdate1", new oracle.jbo.domain.Date(new java.sql.Date(date1.getTime())));
+                    ovo.setNamedWhereClauseParam("p_enddate1", new oracle.jbo.domain.Date(new java.sql.Date(date2.getTime())));
 
                     
                     ovo.executeQuery();
                     System.err.println("-----Count" +
                                        ovo.getEstimatedRowCount());
                     if (ovo.getEstimatedRowCount() > 0) {
-                        JSFUtils.addFacesErrorMessage("Already this Resource had booked in these dates, please provide different Dates");
-                        returnActivity = null;
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Row earlierRow = ovo.first();
+                        String reqDate = earlierRow.getAttribute("RequestDate") != null ? sdf.format(new java.util.Date(((java.sql.Date)earlierRow.getAttribute("RequestDate")).getTime())) : null;
+                        String startDate = earlierRow.getAttribute("StartDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("StartDate")).dateValue().getTime())) : null;
+                        String endDateStr = earlierRow.getAttribute("EndDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("EndDate")).dateValue().getTime())) : null;
+                        JSFUtils.addFacesErrorMessage("Your current request is overlapping another approved/pending on "+reqDate+
+                                " request started from "+startDate+" ending on "+endDateStr);
+//                        ("Already this Resource had booked in these dates, please provide different Dates");
+                        isValidated = false;
+                        return null;
                     } else {
                         autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();

@@ -30,7 +30,11 @@
   FromList="XXHCM_PURPOSE_OF_TRVL XxhcmPurposeOfTrvl_EO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  ComponentClass="SalicView.XxhcmPurposeOfTrvl_VOImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
+  </DesignTime>
   <Variable
     Name="bindReqId"
     Kind="viewcriteria"

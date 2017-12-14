@@ -81,6 +81,11 @@
         <TransientExpression
           Name="BindVariable"><![CDATA[Contactpersonid]]></TransientExpression>
       </PIMap>
+      <PIMap Variable="bindInvDate">
+        <TransientExpression
+          trustMode="untrusted"
+          Name="ExpressionScript"><![CDATA[InvDate]]></TransientExpression>
+      </PIMap>
     </ParameterMap>
   </ViewAccessor>
   <ViewAccessor
