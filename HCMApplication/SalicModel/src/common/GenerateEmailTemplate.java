@@ -57,7 +57,7 @@ public class GenerateEmailTemplate {
 //                emailReq.getEmpName() + "</b>,</div>" +
 //                "<div style='margin-top:20px;font-size:14px;font-family:arial;'>Your <b> overtime request </b> is submitted and pending for HR varification with hereunder information: </div><br>";
 
-            String lineheaderinfo = "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>sr.#</th>";
+            String lineheaderinfo = "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>Sr.#</th>";
             for(String headerCol : emailReq.getTableContentColumns()){
                  lineheaderinfo = lineheaderinfo + "<th  style='font-weight:bolder'>"+headerCol+"</th>";               
             }
@@ -101,7 +101,7 @@ public class GenerateEmailTemplate {
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
 //                "<button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>More Info</button>" +
 //                "</div>";
-            String bestRegardsmessage = "<br><br>Best Regards,<br>Employee self service Process";
+            String bestRegardsmessage = "<br><br>Best Regards,<br>Employee Self Service Process";
             
             String body = message + linebodyInfo + actionBody + bestRegardsmessage;
             emailHapmap.put("subject", emailSubject);
@@ -126,6 +126,11 @@ public class GenerateEmailTemplate {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host","smtp.office365.com");
         props.put("mail.smtp.port", "587");
+        
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.smtp.host", "smtp.gmail.com");
+//        props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -136,6 +141,7 @@ public class GenerateEmailTemplate {
         try {
 
             Message message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress("from-email@gmail.com"));
             message.setFrom(new InternetAddress("paas.user@salic.com"));
 
             InternetAddress[] toAddress = new InternetAddress[to.length];

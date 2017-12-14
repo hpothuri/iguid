@@ -11,6 +11,7 @@ public class EmailRequestPojo {
     private Integer requestId;
     private String empId;
     private String empName;
+    private String empNumber;
     private String requestNo;
     private String[] toEmail;
     private String message;
@@ -115,5 +116,13 @@ public class EmailRequestPojo {
 
     public LinkedHashMap<String, String> getActionButtons() {
         return actionButtons;
+    }
+
+    public void setEmpNumber(String empNumber) {
+        this.empNumber = empNumber;
+    }
+
+    public String getEmpNumber() {
+        return empNumber;
     }
 }
