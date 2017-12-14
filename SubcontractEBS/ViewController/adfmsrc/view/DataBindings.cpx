@@ -9,10 +9,12 @@
   <pageMap>
     <page path="/fragments/paymentSummary.jsff" usageId="view_paymentSummaryPageDef"/>
     <page path="/pages/PaymentSummary.jsf" usageId="view_PaymentSummaryPageDef"/>
+    <page path="/pages/ContractSummaryMain.jsf" usageId="view_ContractSummaryMainPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="view_paymentSummaryPageDef" path="fragments.paymentSummaryPageDef"/>
     <page id="view_PaymentSummaryPageDef" path="pages.PaymentSummaryPageDef"/>
+    <page id="view_ContractSummaryMainPageDef" path="pages.ContractSummaryMainPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="TotalAmountPojo" path="view.TotalAmountPojo"/>
