@@ -1599,7 +1599,7 @@
                                               id="selectOneChoice2"
                                               simple="true"
                                               contentStyle="width:200px"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="true"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
                                               >
@@ -1693,7 +1693,7 @@
                                               simple="true" partialTriggers="selectOneChoice2"
                                               contentStyle="width:200px"
                                               autoSubmit="true"
-                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                                valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
                                               binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
                             <f:selectItems value="#{bindings.DestinationCountry.items}" id="si13"/>
@@ -1768,7 +1768,7 @@
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
                                               simple="true" 
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                              disabled="true"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16">
                             <f:selectItems value="#{bindings.AdvPerdiem.items}"
@@ -2161,18 +2161,21 @@
                         </af:column>
                       </af:table>
                       <f:facet name="secondaryToolbar">
-                        <af:toolbar id="t18" styleClass="AFStretchWidth">
-                          <af:panelLabelAndMessage label="Total Amount" id="plam10">
-                            <af:outputText value="#{bindings.TotalColumnAmount.inputValue != null ?  (bindings.TotalColumnAmount.inputValue + bindings.TotalPerdiem.inputValue) : bindings.TotalPerdiem.inputValue}"
-                                           id="ot28" partialTriggers="t12:it46 ::it44 ::it43"
-                                           inlineStyle="font-weight:bold;"
-                                           binding="#{backingBeanScope.backing_employee.totalAmount}"/>
-                          </af:panelLabelAndMessage>
-                        </af:toolbar>
+                        <af:toolbar id="t18" styleClass="AFStretchWidth"/>
                       </f:facet>
                       <f:facet name="afterToolbar"/>
                     </af:panelCollection>
                   </af:panelBox>
+                  <af:panelGroupLayout id="pgl9" layout="horizontal" halign="right" styleClass="AFStretchWidth"
+                                       inlineStyle="white-space:noWrap;">
+                    <af:panelLabelAndMessage label="Total Amount" id="plam10" inlineStyle="font-size:large;">
+                      <af:outputText value="#{bindings.TotalColumnAmount.inputValue != null ?  (bindings.TotalColumnAmount.inputValue + bindings.TotalPerdiem.inputValue) : bindings.TotalPerdiem.inputValue}"
+                                     id="ot28" partialTriggers="it44 pc6:t12:it46 it43"
+                                     inlineStyle="font-weight:bold; font-size:large;"
+                                     binding="#{backingBeanScope.backing_employee.totalAmount}"/>
+                    </af:panelLabelAndMessage>
+                    <af:spacer width="10" height="10" id="s14"/>
+                  </af:panelGroupLayout>
                   <af:panelBox text="Attachments" id="pb6">
                     <f:facet name="toolbar"/>
                     <af:panelGridLayout id="pgl7" rendered="false">
