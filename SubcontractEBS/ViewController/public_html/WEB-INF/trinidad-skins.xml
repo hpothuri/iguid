@@ -3,8 +3,7 @@
   <skin>
     <id>iguid.desktop</id>
     <family>subContractSkin</family>
-    <extends>alta</extends>  
-    <!--fusionFx-v1.desktop-->
+    <extends>alta-v1.desktop</extends>
     <style-sheet-name>resources/css/subContract.css</style-sheet-name>
   </skin>
 </skins>

@@ -83,7 +83,7 @@
                   fetchSize="#{bindings.summaryList.rangeSize}"
                   filterModel="#{bindings.summaryListQuery.queryDescriptor}"
                   queryListener="#{bindings.summaryListQuery.processQuery}" varStatus="vs" id="t1"
-                  editingMode="editAll">
+                  editingMode="editAll" columnStretching="last">
           <af:column sortProperty="#{bindings.summaryList.hints.division.name}" filterable="true" sortable="true"
                      headerText="Division" id="c1" width="200">
             <af:outputText value="#{row.bindings.division.inputValue}"

@@ -19,7 +19,7 @@ af|panelBox::header-element {
     font-weight: normal;
     padding-bottom: 5px;
     padding-top:10px;
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
 }
 
 af|panelBox::center:core:default {
@@ -78,7 +78,7 @@ af|panelBox.home::header-element {
     padding-bottom:1px !important;
     padding-left:7px !important;
     padding-top:0px!important;
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
 }
 
 af|panelBox.home::center:core:default {
@@ -103,7 +103,7 @@ af|panelBox.home::footer-end:core:default {
 
 af|panelFormLayout.form
 {
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
     font-size:11pt;
     text-decoration:none;
     color: #6a757d;
@@ -111,7 +111,7 @@ af|panelFormLayout.form
 
 af|panelFormLayout.form::label-cell
 {
-font-family:'Ubuntu', sans-serif;
+/*font-family:'Ubuntu', sans-serif;*/
 font-size:11pt;
 text-decoration:none;
 color:#3b5998;
@@ -120,7 +120,7 @@ color:#3b5998;
 af|inputText::content
 {
     width: 100%;
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;
     background-color: white; 
@@ -132,7 +132,7 @@ af|inputText::content
 af|inputDate::content
 {
     width: 100%;
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;z
     background-color: white; 
@@ -144,7 +144,7 @@ af|inputDate::content
 af|inputDate::content
 {
     width: 100%;
-    font-family:'Ubuntu', sans-serif;
+    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;z
     background-color: white; 
@@ -229,7 +229,7 @@ color:   #333333;
 
 af|button
 {
-    font-family: 'Ubuntu', sans-serif;
+    /*font-family: 'Ubuntu', sans-serif;*/
     background: #8b9dc3;
     border: 0.5px solid #8b9dc3  ;     
     color: white ;     
@@ -250,7 +250,7 @@ af|button:hover,
 af|button:active:hover,
 af|button:focus:hover
 {
-    font-family: 'Ubuntu', sans-serif;
+    /*font-family: 'Ubuntu', sans-serif;*/
     background: #3b5998;
     border: 0.5px solid #8b9dc3  ;      
     color: white ;
