@@ -8,7 +8,7 @@ af|panelBox::header-center:core:default,
 af|panelBox::header-end:core:default,
 af|panelBox::header-start:core:default {
     background: none;
-    nackground-image:none;
+    background-image:none;
     border:none;
 }
 af|panelBox::header-center:core:default,
@@ -19,7 +19,6 @@ af|panelBox::header-element {
     font-weight: normal;
     padding-bottom: 5px;
     padding-top:10px;
-    /*font-family:'Ubuntu', sans-serif;*/
 }
 
 af|panelBox::center:core:default {
@@ -78,7 +77,6 @@ af|panelBox.home::header-element {
     padding-bottom:1px !important;
     padding-left:7px !important;
     padding-top:0px!important;
-    /*font-family:'Ubuntu', sans-serif;*/
 }
 
 af|panelBox.home::center:core:default {
@@ -103,7 +101,6 @@ af|panelBox.home::footer-end:core:default {
 
 af|panelFormLayout.form
 {
-    /*font-family:'Ubuntu', sans-serif;*/
     font-size:11pt;
     text-decoration:none;
     color: #6a757d;
@@ -111,7 +108,6 @@ af|panelFormLayout.form
 
 af|panelFormLayout.form::label-cell
 {
-/*font-family:'Ubuntu', sans-serif;*/
 font-size:11pt;
 text-decoration:none;
 color:#3b5998;
@@ -120,7 +116,6 @@ color:#3b5998;
 af|inputText::content
 {
     width: 100%;
-    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;
     background-color: white; 
@@ -132,7 +127,6 @@ af|inputText::content
 af|inputDate::content
 {
     width: 100%;
-    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;z
     background-color: white; 
@@ -144,7 +138,6 @@ af|inputDate::content
 af|inputDate::content
 {
     width: 100%;
-    /*font-family:'Ubuntu', sans-serif;*/
     border: 1px solid #ccc;
     font-size: 10.5pt;z
     background-color: white; 
@@ -169,7 +162,6 @@ af|column::column-header-cell {
     color:white; 
     text-align: center;
     font-size: 11pt;
-    font-family: 'Raleway500',sans-serif;  
     font-weight: normal;
     background-image: none;
     background-color:#9a9fa8;
@@ -193,7 +185,6 @@ background-color:#f7f7f7;
 color: #696969;
 font-size:14px;
 padding-left: 4px;
-font-family: 'Raleway500',sans-serif;
 height:30px;
 display: table-cell;
 vertical-align: middle;
@@ -209,7 +200,6 @@ color: #696969;
 font-size:14px;  
 padding-left: 4px;
 display: table-cell;
-font-family: 'Raleway500',sans-serif;
 height:30px;   
 vertical-align: middle;
 text-align: left; 
@@ -229,20 +219,18 @@ color:   #333333;
 
 af|button
 {
-    /*font-family: 'Ubuntu', sans-serif;*/
-    background: #8b9dc3;
+    background:#dfe3ee ;
     border: 0.5px solid #8b9dc3  ;     
-    color: white ;     
-    padding:6px; 
-    padding-left:13px; 
-    padding-right:13px;  
+    color: #3b5998 ;
+    padding-left:10px;    
+    padding-right:10px;   
     text-align: center ;     
-    text-decoration: none ;     
+    text-decoration: none ;
     display: inline-block ;     
-    font-size: 11pt ;     
+    /*font-size: 11pt ;*/     
     cursor: pointer ;     
     float: left ;
-    -webkit-transition-duration: 0.4s;  
+    -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
@@ -250,19 +238,68 @@ af|button:hover,
 af|button:active:hover,
 af|button:focus:hover
 {
-    /*font-family: 'Ubuntu', sans-serif;*/
     background: #3b5998;
     border: 0.5px solid #8b9dc3  ;      
     color: white ;
-    padding:6px; 
-    padding-left:13px;   
-    padding-right:13px;   
+    padding-left:10px;   
+    padding-right:10px;   
     text-align: center ;     
     text-decoration: none ;     
     display: inline-block ;     
-    font-size: 11pt ;     
+    /*font-size: 11pt ;*/     
     cursor: pointer ;     
     float: left ;
-    -webkit-transition-duration: 0.4s;  
+    -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
+
+/* Menu - START */
+
+af|menu{
+    border: 0.5px solid #8b9dc3  ;
+      background:#dfe3ee ;
+      text-align: center ;     
+    text-decoration: none ;
+    display: inline-block ;  
+    cursor: pointer ;     
+    float: left ;
+    color:#3b5998 !important;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+af|menuBar::body {
+    padding: 0px;     
+}
+
+af|menuBar::item-text-cell {
+     color: #3b5998 ;
+    padding-left:10px;    
+    padding-right:10px;   
+    text-align: center ;     
+}
+ 
+af|menuBar af|menu::bar-item:highlighted,
+af|menuBar af|commandMenuItem::bar-item:highlighted,
+af|menuBar af|menu::bar-item:hover,
+af|menuBar af|commandMenuItem::bar-item:hover,
+af|menuBar af|menu::bar-item:depressed,
+af|menuBar af|commandMenuItem::bar-item:depressed {
+    
+    background: #3b5998;
+      border: 0.5px solid #8b9dc3  ;
+}
+
+af|menu::submenu-text {
+    /*font-size: 14px;*/
+    padding: 6px;
+    font-weight: bold;
+    color: #3b5998;
+}
+
+af|commandMenuItem::menu-item-text {
+    /*font-size: 14px;*/
+    padding: 6px;
+    color: #3b5998;
+}
+/* Menu - END*/
