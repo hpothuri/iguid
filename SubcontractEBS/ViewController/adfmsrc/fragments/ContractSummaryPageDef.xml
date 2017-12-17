@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.12.24" id="ContractSummaryPageDef"
+                Package="fragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="PieDataControl" id="PieDataControlIterator"/>
+    <accessorIterator MasterBinding="PieDataControlIterator" Binds="pieData" RangeSize="-1" DataControl="PieDataControl"
+                      BeanClass="view.beans.paymentsummary.PieChartContractData" id="pieDataIterator"/>
+    <accessorIterator MasterBinding="PieDataControlIterator" Binds="meterialonsiteData" RangeSize="25"
+                      DataControl="PieDataControl" BeanClass="view.beans.paymentsummary.VariationPojo"
+                      id="meterialonsiteDataIterator"/>
+    <accessorIterator MasterBinding="PieDataControlIterator" Binds="variationData" RangeSize="25"
+                      DataControl="PieDataControl" BeanClass="view.beans.paymentsummary.PaymentVariationsPojo"
+                      id="variationDataIterator"/>
+    <accessorIterator MasterBinding="PieDataControlIterator" Binds="dedData" RangeSize="25" DataControl="PieDataControl"
+                      BeanClass="view.beans.paymentsummary.DeductionPaymentLinesPojo" id="dedDataIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="pieDataIterator" id="pieData" ChangeEventPolicy="ppr">
+      <nodeDefinition DefName="view.beans.paymentsummary.PieChartContractData" Name="pieData">
+        <AttrNames>
+          <Item Value="amounts"/>
+          <Item Value="rec"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="meterialonsiteDataIterator" id="meterialonsiteData">
+      <nodeDefinition DefName="view.beans.paymentsummary.VariationPojo" Name="meterialonsiteData0">
+        <AttrNames>
+          <Item Value="sno"/>
+          <Item Value="desc"/>
+          <Item Value="UOM"/>
+          <Item Value="prevmonthqty"/>
+          <Item Value="currMonthQty"/>
+          <Item Value="totQty"/>
+          <Item Value="qtyUsed"/>
+          <Item Value="balQty"/>
+          <Item Value="completePct"/>
+          <Item Value="rate"/>
+          <Item Value="qty"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="variationDataIterator" id="variationData">
+      <nodeDefinition DefName="view.beans.paymentsummary.PaymentVariationsPojo" Name="variationData0">
+        <AttrNames>
+          <Item Value="taskno"/>
+          <Item Value="sno"/>
+          <Item Value="desc"/>
+          <Item Value="UOM"/>
+          <Item Value="rate"/>
+          <Item Value="prevmonthqty"/>
+          <Item Value="prevpct"/>
+          <Item Value="prevnet"/>
+          <Item Value="qty"/>
+          <Item Value="totVal"/>
+          <Item Value="completePct"/>
+          <Item Value="netQty"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="dedDataIterator" id="dedData">
+      <nodeDefinition DefName="view.beans.paymentsummary.DeductionPaymentLinesPojo" Name="dedData0">
+        <AttrNames>
+          <Item Value="sno"/>
+          <Item Value="desc"/>
+          <Item Value="UOM"/>
+          <Item Value="unitrate"/>
+          <Item Value="prevmonthqty"/>
+          <Item Value="prevpct"/>
+          <Item Value="prevnet"/>
+          <Item Value="qty"/>
+          <Item Value="dedqty"/>
+          <Item Value="completePct"/>
+          <Item Value="dedNetQty"/>
+          <Item Value="diff"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

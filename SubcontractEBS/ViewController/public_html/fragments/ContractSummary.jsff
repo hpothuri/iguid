@@ -1,13 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
   <af:panelStretchLayout id="psl1">
     <f:facet name="center">
-      <af:panelStretchLayout topHeight="200px" endWidth="220px;" id="psl2">
+      <af:panelStretchLayout topHeight="200px" endWidth="260px;" id="psl2">
         <f:facet name="end">
           <af:panelGroupLayout id="pgl2" layout="vertical" halign="center" valign="bottom">
-            <af:spacer width="10" height="40" id="s3"/>
-            <af:panelFormLayout id="pfl2" labelAlignment="top" inlineStyle="border:1px;border-color:gray;">
+            <dvt:comboChart id="comboChart1" var="row" value="#{bindings.pieData.collectionModel}">
+              <dvt:chartLegend id="cl1"/>
+              <f:facet name="dataStamp">
+                <dvt:chartDataItem id="di1" series="#{bindings.pieData.hints.amounts.label}" value="#{row.amounts}"
+                                   group="#{row.rec}"/>
+              </f:facet>
+              <f:facet name="seriesStamp">
+                <dvt:chartSeriesStyle assignedToY2="false" series="#{bindings.pieData.hints.amounts.label}" id="ss1"
+                                      type="bar"/>
+              </f:facet>
+            </dvt:comboChart>
+            <af:spacer width="10" height="20" id="s3"/>
+            <af:panelFormLayout id="pfl2" labelAlignment="top" >
               <af:inputText label="Total Contract Value" value="4172000" id="it1">
                 <af:convertNumber minFractionDigits="2"/>
               </af:inputText>
@@ -19,7 +30,7 @@
               </af:inputText>
             </af:panelFormLayout>
             <af:spacer width="10" height="10" id="s1"/>
-            <af:panelFormLayout labelAlignment="top" inlineStyle="border:1px;border-color:gray;" id="pfl3">
+            <af:panelFormLayout labelAlignment="top"  id="pfl3">
               <af:inputText label="80 % Total Meterial On Site" value= "7120" id="it4">
                 <af:convertNumber minFractionDigits="2"/>
               </af:inputText>
@@ -28,7 +39,7 @@
               </af:inputText>
             </af:panelFormLayout>
             <af:spacer width="10" height="10" id="s2"/>
-            <af:panelFormLayout labelAlignment="top" inlineStyle="border:1px;border-color:gray;" id="pfl4">
+            <af:panelFormLayout labelAlignment="top"  id="pfl4">
               <af:inputText label="Total Variations" value="10000" id="it6">
                 <af:convertNumber minFractionDigits="2"/>
               </af:inputText>
@@ -39,7 +50,7 @@
           </af:panelGroupLayout>
         </f:facet>
         <f:facet name="top">
-          <af:panelBox text="Contract Information" showDisclosure="false" id="pb1">
+          <af:panelBox text="Contract Information" styleClass="home" showDisclosure="false" id="pb1">
             <f:facet name="toolbar">
               <af:panelGroupLayout id="pgl8" layout="horizontal">
                 <af:menuBar id="mb1">
@@ -78,7 +89,7 @@
             <af:showDetailItem id="tab1" text="Payment Lines" inlineStyle="border:1px;border-color:gray;" disclosed="true">
               <af:panelGroupLayout id="pgl1" layout="scroll">
                 <af:panelGroupLayout id="pgl6" styleClass="AFStretchWidth" layout="horizontal" valign="top">
-                  <af:panelBox text="Payment" showDisclosure="false" id="pb3">
+                  <af:panelBox text="Payment" styleClass="home" showDisclosure="false" id="pb3">
                     <af:panelFormLayout id="pfl5" inlineStyle="width:400px;height:230px;" labelWidth="130">
                       <af:selectOneChoice label="Contract Type" id="soc1">
                         <af:selectItem label="subcontract" value="a" id="si3"/>
@@ -95,7 +106,7 @@
                     </af:panelFormLayout>
                   </af:panelBox>
                   <af:spacer width="20" height="10" id="s6"/>
-                  <af:panelBox text="Payment Accounting" showDisclosure="false" id="pb2">
+                  <af:panelBox text="Payment Accounting" styleClass="home" showDisclosure="false" id="pb2">
                     <f:facet name="toolbar"/>
                     <af:panelFormLayout id="pfl6" inlineStyle="width:400px;height:230px;" labelWidth="150">
                       <f:facet name="footer"/>
@@ -109,7 +120,7 @@
                 </af:panelGroupLayout>
                 <af:spacer width="1" height="5" id="s7"/>
                 <af:panelGroupLayout styleClass="AFStretchWidth" id="pgl7" layout="vertical">
-                  <af:panelBox text="Payment Lines" showDisclosure="false" id="pb4">
+                  <af:panelBox text="Payment Lines" styleClass="home" showDisclosure="false" id="pb4">
                     <af:panelCollection styleClass="AFStretchWidth" id="pc1">
                       <af:table var="row" styleClass="AFStretchWidth" rowBandingInterval="1" id="t1" autoHeightRows="3"
                                 fetchSize="3" inlineStyle="height:230px;">
@@ -144,6 +155,11 @@
                           <af:outputText value="#{row.col5}" id="o35"/>
                         </af:column>
                       </af:table>
+                      <f:facet name="toolbar">
+                        <af:toolbar id="t2">
+                          <af:image source="/images/excel.png" id="i1"/>
+                        </af:toolbar>
+                      </f:facet>
                     </af:panelCollection>
                   </af:panelBox>
                 </af:panelGroupLayout>
@@ -151,16 +167,247 @@
             </af:showDetailItem>
             <af:showDetailItem id="tab2" inlineStyle="border:1px;border-color:gray;" text="Variations">
               <af:panelGroupLayout id="pgl3">
-                <af:button text="button 2" id="b2"/>
-                <af:panelGroupLayout id="pgl5"/>
+                <af:panelCollection id="pc2">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{bindings.meterialonsiteData.collectionModel}" var="row"
+                            rows="#{bindings.meterialonsiteData.rangeSize}"
+                            emptyText="#{bindings.meterialonsiteData.viewable ? 'No data to display.' : 'Access Denied.'}"
+                            rowBandingInterval="0"
+                            selectedRowKeys="#{bindings.meterialonsiteData.collectionModel.selectedRow}"
+                            selectionListener="#{bindings.meterialonsiteData.collectionModel.makeCurrent}"
+                            rowSelection="single" fetchSize="#{bindings.meterialonsiteData.rangeSize}" id="t3">
+                    <af:column headerText="Serial No" id="c11">
+                      <af:outputText value="#{row.sno}" shortDesc="#{bindings.meterialonsiteData.hints.sno.tooltip}"
+                                     id="ot6"/>
+                    </af:column>
+                    <af:column headerText="Description" id="c12">
+                      <af:outputText value="#{row.desc}" shortDesc="#{bindings.meterialonsiteData.hints.desc.tooltip}"
+                                     id="ot7"/>
+                    </af:column>
+                    <af:column headerText="UOM" id="c13">
+                      <af:outputText value="#{row.UOM}" shortDesc="#{bindings.meterialonsiteData.hints.UOM.tooltip}"
+                                     id="ot8"/>
+                    </af:column>
+                    <af:column headerText="Prev. Month Quantity" id="c14">
+                      <af:outputText value="#{row.prevmonthqty}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.prevmonthqty.tooltip}" id="ot9">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.prevmonthqty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="This Month Quantity" id="c15">
+                      <af:outputText value="#{row.currMonthQty}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.currMonthQty.tooltip}" id="ot10">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.currMonthQty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Total Quantity" id="c16">
+                      <af:outputText value="#{row.totQty}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.totQty.tooltip}" id="ot11">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.totQty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Quantity Used" id="c17">
+                      <af:outputText value="#{row.qtyUsed}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.qtyUsed.tooltip}" id="ot12">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.qtyUsed.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Balance Quantity" id="c18">
+                      <af:outputText value="#{row.balQty}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.balQty.tooltip}" id="ot13">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.balQty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Complete %" id="c19">
+                      <af:outputText value="#{row.completePct}"
+                                     shortDesc="#{bindings.meterialonsiteData.hints.completePct.tooltip}" id="ot14">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.completePct.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Rate" id="c20">
+                      <af:outputText value="#{row.rate}" shortDesc="#{bindings.meterialonsiteData.hints.rate.tooltip}"
+                                     id="ot15">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.rate.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Quantity" id="c21">
+                      <af:outputText value="#{row.qty}" shortDesc="#{bindings.meterialonsiteData.hints.qty.tooltip}"
+                                     id="ot16">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.meterialonsiteData.hints.qty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
               </af:panelGroupLayout>
             </af:showDetailItem>
             <af:showDetailItem id="tab3" inlineStyle="border:1px;border-color:gray;" text="Metirial Onsite">
               <af:panelGroupLayout id="pgl4">
-                <af:button text="button 3" id="b3"/>
+                <af:panelCollection id="pc3">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{bindings.variationData.collectionModel}" var="row"
+                            rows="#{bindings.variationData.rangeSize}"
+                            emptyText="#{bindings.variationData.viewable ? 'No data to display.' : 'Access Denied.'}"
+                            rowBandingInterval="0"
+                            selectedRowKeys="#{bindings.variationData.collectionModel.selectedRow}"
+                            selectionListener="#{bindings.variationData.collectionModel.makeCurrent}"
+                            rowSelection="single" fetchSize="#{bindings.variationData.rangeSize}" id="t4">
+                    <af:column headerText="Task No." id="c22">
+                      <af:outputText value="#{row.taskno}" shortDesc="#{bindings.variationData.hints.taskno.tooltip}"
+                                     id="ot17"/>
+                    </af:column>
+                    <af:column headerText="Serial No" id="c23">
+                      <af:outputText value="#{row.sno}" shortDesc="#{bindings.variationData.hints.sno.tooltip}"
+                                     id="ot18"/>
+                    </af:column>
+                    <af:column headerText="Description" id="c24">
+                      <af:outputText value="#{row.desc}" shortDesc="#{bindings.variationData.hints.desc.tooltip}"
+                                     id="ot19"/>
+                    </af:column>
+                    <af:column headerText="UOM" id="c25">
+                      <af:outputText value="#{row.UOM}" shortDesc="#{bindings.variationData.hints.UOM.tooltip}"
+                                     id="ot20"/>
+                    </af:column>
+                    <af:column headerText="Rate" id="c26">
+                      <af:outputText value="#{row.rate}" shortDesc="#{bindings.variationData.hints.rate.tooltip}"
+                                     id="ot21">
+                        <af:convertNumber groupingUsed="false" pattern="#{bindings.variationData.hints.rate.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Prev. Quantity" id="c27">
+                      <af:outputText value="#{row.prevmonthqty}"
+                                     shortDesc="#{bindings.variationData.hints.prevmonthqty.tooltip}" id="ot22">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.variationData.hints.prevmonthqty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Prev. %" id="c28">
+                      <af:outputText value="#{row.prevpct}" shortDesc="#{bindings.variationData.hints.prevpct.tooltip}"
+                                     id="ot23">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.variationData.hints.prevpct.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Prev. Net" id="c29">
+                      <af:outputText value="#{row.prevnet}" shortDesc="#{bindings.variationData.hints.prevnet.tooltip}"
+                                     id="ot24">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.variationData.hints.prevnet.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Quantity" id="c30">
+                      <af:outputText value="#{row.qty}" shortDesc="#{bindings.variationData.hints.qty.tooltip}"
+                                     id="ot25">
+                        <af:convertNumber groupingUsed="false" pattern="#{bindings.variationData.hints.qty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Total Value" id="c31">
+                      <af:outputText value="#{row.totVal}" shortDesc="#{bindings.variationData.hints.totVal.tooltip}"
+                                     id="ot26">
+                        <af:convertNumber groupingUsed="false" pattern="#{bindings.variationData.hints.totVal.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Complete %" id="c32">
+                      <af:outputText value="#{row.completePct}"
+                                     shortDesc="#{bindings.variationData.hints.completePct.tooltip}" id="ot27">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.variationData.hints.completePct.format}"/>
+                      </af:outputText>
+                    </af:column>
+                    <af:column headerText="Net Quantity" id="c33">
+                      <af:outputText value="#{row.netQty}" shortDesc="#{bindings.variationData.hints.netQty.tooltip}"
+                                     id="ot28">
+                        <af:convertNumber groupingUsed="false" pattern="#{bindings.variationData.hints.netQty.format}"/>
+                      </af:outputText>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
               </af:panelGroupLayout>
             </af:showDetailItem>
-            <af:showDetailItem text="Deductions" inlineStyle="border:1px;border-color:gray;" id="sdi1"/>
+            <af:showDetailItem text="Deductions" inlineStyle="border:1px;border-color:gray;" id="sdi1">
+              <af:panelCollection id="pc4">
+                <f:facet name="menus"/>
+                <f:facet name="toolbar"/>
+                <f:facet name="statusbar"/>
+                <af:table value="#{bindings.dedData.collectionModel}" var="row" rows="#{bindings.dedData.rangeSize}"
+                          emptyText="#{bindings.dedData.viewable ? 'No data to display.' : 'Access Denied.'}"
+                          rowBandingInterval="0" selectedRowKeys="#{bindings.dedData.collectionModel.selectedRow}"
+                          selectionListener="#{bindings.dedData.collectionModel.makeCurrent}" rowSelection="single"
+                          fetchSize="#{bindings.dedData.rangeSize}" id="t5">
+                  <af:column headerText="Serial No" id="c34">
+                    <af:outputText value="#{row.sno}" shortDesc="#{bindings.dedData.hints.sno.tooltip}" id="ot29"/>
+                  </af:column>
+                  <af:column headerText="Description" id="c35">
+                    <af:outputText value="#{row.desc}" shortDesc="#{bindings.dedData.hints.desc.tooltip}" id="ot30"/>
+                  </af:column>
+                  <af:column headerText="UOM" id="c36">
+                    <af:outputText value="#{row.UOM}" shortDesc="#{bindings.dedData.hints.UOM.tooltip}" id="ot31"/>
+                  </af:column>
+                  <af:column headerText="Unit Rate" id="c37">
+                    <af:outputText value="#{row.unitrate}" shortDesc="#{bindings.dedData.hints.unitrate.tooltip}"
+                                   id="ot32">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.unitrate.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Prev. Qunatity" id="c38">
+                    <af:outputText value="#{row.prevmonthqty}"
+                                   shortDesc="#{bindings.dedData.hints.prevmonthqty.tooltip}" id="ot33">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.prevmonthqty.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Prev. %" id="c39">
+                    <af:outputText value="#{row.prevpct}" shortDesc="#{bindings.dedData.hints.prevpct.tooltip}"
+                                   id="ot34">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.prevpct.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Prev. Net" id="c40">
+                    <af:outputText value="#{row.prevnet}" shortDesc="#{bindings.dedData.hints.prevnet.tooltip}"
+                                   id="ot35">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.prevnet.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Quantity" id="c41">
+                    <af:outputText value="#{row.qty}" shortDesc="#{bindings.dedData.hints.qty.tooltip}" id="ot36">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.qty.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Deduct. Quantity" id="c42">
+                    <af:outputText value="#{row.dedqty}" shortDesc="#{bindings.dedData.hints.dedqty.tooltip}" id="ot37">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.dedqty.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Complete %" id="c43">
+                    <af:outputText value="#{row.completePct}" shortDesc="#{bindings.dedData.hints.completePct.tooltip}"
+                                   id="ot38">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.completePct.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Deduct Net Quantity" id="c44">
+                    <af:outputText value="#{row.dedNetQty}" shortDesc="#{bindings.dedData.hints.dedNetQty.tooltip}"
+                                   id="ot39">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.dedNetQty.format}"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Differance" id="c45">
+                    <af:outputText value="#{row.diff}" shortDesc="#{bindings.dedData.hints.diff.tooltip}" id="ot40">
+                      <af:convertNumber groupingUsed="false" pattern="#{bindings.dedData.hints.diff.format}"/>
+                    </af:outputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </af:showDetailItem>
           </af:panelTabbed>
         </f:facet>
       </af:panelStretchLayout>
