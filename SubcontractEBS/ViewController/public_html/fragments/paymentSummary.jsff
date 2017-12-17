@@ -15,7 +15,7 @@
                   </af:menu>
                 </af:menuBar>
                 <af:spacer width="10" height="10" id="s8"/>
-                <af:button text="Submit" id="b1"/>
+                <af:button text="Transfer to AP" id="b1"/>
                 <af:spacer width="10" height="10" id="s9"/>
                 <af:button text="Cancel" id="b4"/>
                 <af:spacer width="30" height="10" id="s10"/>
@@ -176,7 +176,6 @@
       <af:panelGroupLayout id="pgl2" layout="horizontal">
         <af:inputText label="Payment Status" id="it26" value="SUBMITTED, (Approved by Client)" columns="40"/>
         <af:spacer width="10" height="10" id="s5"/>
-        <af:button text="Post to AP" id="b2"/>
       </af:panelGroupLayout>
     </af:panelGroupLayout>
     <af:spacer width="10" height="10" id="s6"/>
