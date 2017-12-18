@@ -264,7 +264,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,DEST_COUNTRY_CITY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -275,7 +275,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
-            tableColumnDatatypes.put("DEST_COUNTRY_CITY", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
             tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
@@ -304,7 +304,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,DEST_COUNTRY_CITY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -318,7 +318,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
-            tableColumnDatatypes.put("DEST_COUNTRY_CITY", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
             tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");

@@ -1194,6 +1194,178 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             emailReq.setTableColumnDatatypes(tableColumnDatatypes);
 
         }
+        else if(reqPage.equalsIgnoreCase("salary")){
+            tableContentCols.add("Salary Period");
+            tableContentCols.add("Comments");
+
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select SALARY_PERIOD,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("SALARY_PERIOD", "DATE");
+            tableColumnDatatypes.put("COMMENTS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            
+        }
+        else if(reqPage.equalsIgnoreCase("BusinessTrip")){
+            tableContentCols.add("Trip Type");
+            tableContentCols.add("Airline Ticket Type");
+            tableContentCols.add("Start Date");
+            tableContentCols.add("End Date");
+            tableContentCols.add("Destination Category");
+            tableContentCols.add("Number Of Days");
+            tableContentCols.add("Exit Reentry Visa");
+            tableContentCols.add("Destination Country");
+            tableContentCols.add("Advance PerDiem");
+            tableContentCols.add("Destination Visa Required");
+            tableContentCols.add("Project Type");
+            tableContentCols.add("Comments");
+            
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+            tableColumnDatatypes.put("START_DATE", "DATE");
+            tableColumnDatatypes.put("END_DATE", "DATE");
+            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+            tableColumnDatatypes.put("COMMENTS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+        }
+        else if(reqPage.equalsIgnoreCase("BusinessTripCompletion")){
+            
+            tableContentCols.add("Business Travel Request Number");
+            tableContentCols.add("Trip Type");
+            tableContentCols.add("Airline Ticket Type");
+            tableContentCols.add("Start Date");
+            tableContentCols.add("End Date");
+            tableContentCols.add("Original Start Date");
+            tableContentCols.add("Original End Date");
+            tableContentCols.add("Destination Category");
+            tableContentCols.add("Number Of Days");
+            tableContentCols.add("Exit Reentry Visa");
+            tableContentCols.add("Destination Country");
+            tableContentCols.add("Advance PerDiem");
+            tableContentCols.add("Destination Visa Required");
+            tableContentCols.add("Project Type");
+            tableContentCols.add("Comments");
+            
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM", "STRING");
+            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+            tableColumnDatatypes.put("START_DATE", "DATE");
+            tableColumnDatatypes.put("END_DATE", "DATE");
+            tableColumnDatatypes.put("ORIG_START_DATE", "DATE");
+            tableColumnDatatypes.put("ORIG_END_DATE", "DATE");
+            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+            tableColumnDatatypes.put("COMMENTS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+        }
+        else if(reqPage.equalsIgnoreCase("edu")){
+            tableContentCols.add("Invoice Number");
+            tableContentCols.add("Invoice Date");
+            tableContentCols.add("Child Name");
+            tableContentCols.add("School Grade");
+            tableContentCols.add("Actual Amount");
+            tableContentCols.add("School");
+            tableContentCols.add("Age");
+            tableContentCols.add("Semester");
+            tableContentCols.add("Max Eligible Amount");
+            tableContentCols.add("Available Amount");
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,CHILD,SCHOOLGRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("INV_NUM", "STRING");
+            tableColumnDatatypes.put("INV_DATE", "DATE");
+            tableColumnDatatypes.put("CHILD", "STRING");
+            tableColumnDatatypes.put("SCHOOLGRADE", "STRING");
+            tableColumnDatatypes.put("ACT_AMT", "STRING");
+            tableColumnDatatypes.put("SCHOOL", "STRING");
+            tableColumnDatatypes.put("AGE", "STRING");
+            tableColumnDatatypes.put("SEMESTER", "STRING");
+            tableColumnDatatypes.put("MAX_AMT", "STRING");
+            tableColumnDatatypes.put("AVL_AMT", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+        }
+        else if(reqPage.equalsIgnoreCase("letter")){
+            tableContentCols.add("Letter Type");
+            tableContentCols.add("Letter To");
+            tableContentCols.add("Others");
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("LETTER_TYPE", "STRING");
+            tableColumnDatatypes.put("LETTER_TO", "STRING");
+            tableColumnDatatypes.put("OTHER", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+        }
+        else if(reqPage.equalsIgnoreCase("vacation")){
+            tableContentCols.add("Leave");
+            tableContentCols.add("Comments");
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select LEAVE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("LEAVE", "STRING");
+            tableColumnDatatypes.put("COMMENTS", "STRING");
+        }
+        else if(reqPage.equalsIgnoreCase("house")){
+            tableContentCols.add("Advance Amount");
+            tableContentCols.add("Comments");
+            
+            emailReq.setTableContentColumns(tableContentCols);
+
+
+            emailReq.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                     emailReq.getRequestId());
+
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("ADV_AMT", "STRING");
+            tableColumnDatatypes.put("COMMENTS", "STRING");
+        }
+        
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
        
         
@@ -1397,7 +1569,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,DEST_COUNTRY_CITY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1408,7 +1580,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
-            tableColumnDatatypes.put("DEST_COUNTRY_CITY", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
             tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
@@ -1437,7 +1609,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,DEST_COUNTRY_CITY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1451,7 +1623,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
-            tableColumnDatatypes.put("DEST_COUNTRY_CITY", "STRING");
+            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
             tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
