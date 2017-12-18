@@ -367,7 +367,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
-      <Item Value="LookupTypeName"/>
+      <Item Value="LookupValueName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
@@ -409,7 +409,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
-      <Item Value="LookupTypeName"/>
+      <Item Value="LookupValueName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
@@ -428,7 +428,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
-      <Item Value="LookupTypeName"/>
+      <Item Value="LookupValueName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
@@ -466,7 +466,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
-      <Item Value="LookupTypeName"/>
+      <Item Value="LookupValueName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
@@ -485,7 +485,7 @@
     </AttrArray>
     <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
-      <Item Value="LookupTypeName"/>
+      <Item Value="LookupValueName"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="LookupValueNameDisp"/>
