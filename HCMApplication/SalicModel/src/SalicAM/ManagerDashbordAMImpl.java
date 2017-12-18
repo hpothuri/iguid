@@ -237,12 +237,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select SALARY_PERIOD,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
-            tableColumnDatatypes.put("SALARY_PERIOD", "DATE");
-            tableColumnDatatypes.put("COMMENTS", "STRING");
+            tableColumnDatatypes.put("SAL_PERIOD", "STRING");
+            tableColumnDatatypes.put("MISSIONS", "STRING");
             emailReq.setTableColumnDatatypes(tableColumnDatatypes);
             
         }
@@ -340,14 +340,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,CHILD,SCHOOLGRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("INV_NUM", "STRING");
             tableColumnDatatypes.put("INV_DATE", "DATE");
             tableColumnDatatypes.put("CHILD", "STRING");
-            tableColumnDatatypes.put("SCHOOLGRADE", "STRING");
+            tableColumnDatatypes.put("GRADE", "STRING");
             tableColumnDatatypes.put("ACT_AMT", "STRING");
             tableColumnDatatypes.put("SCHOOL", "STRING");
             tableColumnDatatypes.put("AGE", "STRING");
@@ -364,7 +364,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -380,12 +380,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select LEAVE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            emailReq.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LEAVE", "STRING");
-            tableColumnDatatypes.put("COMMENTS", "STRING");
+            tableColumnDatatypes.put("MISSIONS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
         }
         else if(reqPage.equalsIgnoreCase("house")){
             tableContentCols.add("Advance Amount");
@@ -400,6 +401,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("ADV_AMT", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
+            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
         }
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
        
@@ -731,7 +733,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         if(reqType.equalsIgnoreCase("vacation"))
             return "Vacation Allowance";
         if(reqType.equalsIgnoreCase("house"))
-            return "Housing Adavce";
+            return "Housing Advance";
         
         //house
         
