@@ -70,7 +70,7 @@ af|panelBox.home::header-center:core:default {
     padding-top:0px!important;
 }
 af|panelBox.home::header-element {
-    font-size: 12pt;
+    font-size: 11pt;
     color: #317eac;    
     line-height: 25px;
     font-weight: normal;
@@ -303,3 +303,38 @@ af|commandMenuItem::menu-item-text {
     color: #3b5998;
 }
 /* Menu - END*/
+
+
+
+/*it will be applied on header of tab*/
+af|panelTabbed::header
+{
+  background-color:  transparent;
+  border: none;
+   
+}
+ 
+ 
+af|panelTabbed::tab-start,  af|panelTabbed::tab:hover af|panelTabbed::tab-start {
+    background-image: url("../../images/tab_start_first.png")!important;
+   background-color:#233977  !important;
+   color:#233977  !important;
+   border: none ;
+   border-color:transparent; 
+}
+ 
+ 
+af|panelTabbed::tab-end,af|panelTabbed::tab:hover af|panelTabbed::tab-end  {
+    background-image: url("../../images/tab_end.png")!important;
+   background-color:#233977  !important;
+   color:#233977  !important;
+   border: none ;
+   border-color:transparent; 
+}
+
+
+af|panelTabbed::tab.p_AFSelected af|panelTabbed::tab-end, af|panelTabbed::tab.p_AFSelected:hover af|panelTabbed::tab-end
+{
+background-color: White; 
+ background-image: url("../../images/tab_end.png")!important;
+}

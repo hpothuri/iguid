@@ -39,8 +39,46 @@ public class PieDataControl {
         d7.setAmounts(new BigDecimal(225360));
         d7.setRec("Subtotal Accumulative Value");
         pieData.add(d7);
-        
-        
+        PaymentVariationsPojo variations =new PaymentVariationsPojo();
+        variations.setTaskno("01.01.90");
+        variations.setSno("1");
+        variations.setDesc("Doors");
+        variations.setUOM("NOS");
+        variations.setCompletePct(new BigDecimal(100));
+        variations.setNetQty(new BigDecimal(10000));
+        variations.setPrevmonthqty(new BigDecimal(0));
+        variations.setPrevnet(new BigDecimal(0));
+        variations.setPrevpct(new BigDecimal(0));
+        variations.setQty(new BigDecimal(10));
+        variations.setRate(new BigDecimal(1000));
+        variations.setTotVal(new BigDecimal(10000));
+        variationData.add(variations);
+        VariationPojo metOnsite = new VariationPojo();
+        metOnsite.setSno("1");
+        metOnsite.setDesc("Portland Cement");
+        metOnsite.setUOM("TON");
+        metOnsite.setPrevmonthqty(new BigDecimal(0));
+        metOnsite.setCurrMonthQty(new BigDecimal(1000));
+        metOnsite.setTotQty(new BigDecimal(100));
+        metOnsite.setQty(new BigDecimal(1000));
+        metOnsite.setQtyUsed(new BigDecimal(0));
+        metOnsite.setRate(new BigDecimal(10));
+        metOnsite.setBalQty(new BigDecimal(100));        
+        metOnsite.setCompletePct(new BigDecimal(100));
+        meterialonsiteData.add(metOnsite);
+        DeductionPaymentLinesPojo dpl = new DeductionPaymentLinesPojo();
+        dpl.setCompletePct(new BigDecimal(100));
+        dpl.setDedNetQty(new BigDecimal(900));
+        dpl.setDesc("Labors");
+        dpl.setDiff(new BigDecimal(900));
+        dpl.setPrevmonthqty(new BigDecimal(0));
+        dpl.setPrevnet(new BigDecimal(0));
+        dpl.setPrevpct(new BigDecimal(0));
+        dpl.setQty(new BigDecimal(20));
+        dpl.setSno("1");
+        dpl.setUOM("LUMP SUM");
+        dpl.setUnitrate(new BigDecimal(10));
+        dedData.add(dpl);
     }
 
     public void setPieData(ArrayList<PieChartContractData> pieData) {
