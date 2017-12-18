@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                 xmlns:f="http://java.sun.com/jsf/core" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
-  <af:panelTabbed position="above" id="pt2">
+  <af:panelTabbed position="above" id="pt2" tabRemoval="all">
     <af:showDetailItem id="tab4" text="Subcontractor Payment Certificate" disclosed="true"
                         inflexibleHeight="100">
       <af:panelStretchLayout id="psl1">

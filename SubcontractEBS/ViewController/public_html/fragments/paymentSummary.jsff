@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                 xmlns:f="http://java.sun.com/jsf/core">
-  <af:panelTabbed position="above" id="pt1">
+  <af:panelTabbed position="above" id="pt1" tabRemoval="all">
     <af:showDetailItem id="tab1" text="Subcontractor Payments">
       <af:panelGroupLayout id="pgl3" layout="horizontal">
         <af:panelGroupLayout id="pgl1" layout="scroll">
@@ -188,7 +188,7 @@
                         required="#{bindings.executedValue.hints.mandatory}"
                         columns="#{bindings.executedValue.hints.displayWidth}"
                         maximumLength="#{bindings.executedValue.hints.precision}"
-                        shortDesc="#{bindings.executedValue.hints.tooltip}" id="it12">
+                        shortDesc="#{bindings.executedValue.hints.tooltip}" id="it12" contentStyle="width:150px;">
             <f:validator binding="#{bindings.executedValue.validator}"/>
             <af:convertNumber pattern="#{bindings.executedValue.format}"/>
           </af:inputText>
@@ -196,7 +196,8 @@
                         required="#{bindings.percTotalMaterialOnSite.hints.mandatory}"
                         columns="#{bindings.percTotalMaterialOnSite.hints.displayWidth}"
                         maximumLength="#{bindings.percTotalMaterialOnSite.hints.precision}"
-                        shortDesc="#{bindings.percTotalMaterialOnSite.hints.tooltip}" id="it14">
+                        shortDesc="#{bindings.percTotalMaterialOnSite.hints.tooltip}" id="it14"
+                        contentStyle="width:150px;">
             <f:validator binding="#{bindings.percTotalMaterialOnSite.validator}"/>
             <af:convertNumber pattern="#{bindings.percTotalMaterialOnSite.format}"/>
           </af:inputText>
@@ -204,7 +205,7 @@
                         required="#{bindings.variations.hints.mandatory}"
                         columns="#{bindings.variations.hints.displayWidth}"
                         maximumLength="#{bindings.variations.hints.precision}"
-                        shortDesc="#{bindings.variations.hints.tooltip}" id="it16">
+                        shortDesc="#{bindings.variations.hints.tooltip}" id="it16" contentStyle="width:150px;">
             <f:validator binding="#{bindings.variations.validator}"/>
             <af:convertNumber pattern="#{bindings.variations.format}"/>
           </af:inputText>
@@ -212,12 +213,12 @@
                         required="#{bindings.deductions.hints.mandatory}"
                         columns="#{bindings.deductions.hints.displayWidth}"
                         maximumLength="#{bindings.deductions.hints.precision}"
-                        shortDesc="#{bindings.deductions.hints.tooltip}" id="it18">
+                        shortDesc="#{bindings.deductions.hints.tooltip}" id="it18" contentStyle="width:150px;">
             <f:validator binding="#{bindings.deductions.validator}"/>
             <af:convertNumber pattern="#{bindings.deductions.format}"/>
           </af:inputText>
           <af:inputText value="#{bindings.subTotalValue.inputValue}" label="Subtotal Value (Excluding deductions)"
-                        required="#{bindings.subTotalValue.hints.mandatory}" contentStyle="width:180px;"
+                        required="#{bindings.subTotalValue.hints.mandatory}" contentStyle="width:150px;"
                         shortDesc="#{bindings.subTotalValue.hints.tooltip}" id="it20">
             <f:validator binding="#{bindings.subTotalValue.validator}"/>
             <af:convertNumber pattern="#{bindings.subTotalValue.format}"/>
@@ -226,7 +227,8 @@
                         required="#{bindings.executedValueThisMonth.hints.mandatory}"
                         columns="#{bindings.executedValueThisMonth.hints.displayWidth}"
                         maximumLength="#{bindings.executedValueThisMonth.hints.precision}"
-                        shortDesc="#{bindings.executedValueThisMonth.hints.tooltip}" id="it13">
+                        shortDesc="#{bindings.executedValueThisMonth.hints.tooltip}" id="it13"
+                        contentStyle="width:150px;">
             <f:validator binding="#{bindings.executedValueThisMonth.validator}"/>
             <af:convertNumber pattern="#{bindings.executedValueThisMonth.format}"/>
           </af:inputText>
@@ -234,7 +236,7 @@
                         required="#{bindings.percOfThisMonthMOS.hints.mandatory}"
                         columns="#{bindings.percOfThisMonthMOS.hints.displayWidth}"
                         maximumLength="#{bindings.percOfThisMonthMOS.hints.precision}"
-                        shortDesc="#{bindings.percOfThisMonthMOS.hints.tooltip}" id="it15">
+                        shortDesc="#{bindings.percOfThisMonthMOS.hints.tooltip}" id="it15" contentStyle="width:150px;">
             <f:validator binding="#{bindings.percOfThisMonthMOS.validator}"/>
             <af:convertNumber pattern="#{bindings.percOfThisMonthMOS.format}"/>
           </af:inputText>
@@ -242,7 +244,7 @@
                         required="#{bindings.variationsSecond.hints.mandatory}"
                         columns="#{bindings.variationsSecond.hints.displayWidth}"
                         maximumLength="#{bindings.variationsSecond.hints.precision}"
-                        shortDesc="#{bindings.variationsSecond.hints.tooltip}" id="it17">
+                        shortDesc="#{bindings.variationsSecond.hints.tooltip}" id="it17" contentStyle="width:150px;">
             <f:validator binding="#{bindings.variationsSecond.validator}"/>
             <af:convertNumber pattern="#{bindings.variationsSecond.format}"/>
           </af:inputText>
@@ -250,12 +252,12 @@
                         required="#{bindings.deductionsSecond.hints.mandatory}"
                         columns="#{bindings.deductionsSecond.hints.displayWidth}"
                         maximumLength="#{bindings.deductionsSecond.hints.precision}"
-                        shortDesc="#{bindings.deductionsSecond.hints.tooltip}" id="it19">
+                        shortDesc="#{bindings.deductionsSecond.hints.tooltip}" id="it19" contentStyle="width:150px;">
             <f:validator binding="#{bindings.deductionsSecond.validator}"/>
             <af:convertNumber pattern="#{bindings.deductionsSecond.format}"/>
           </af:inputText>
           <af:inputText value="#{bindings.subTotalValueSecond.inputValue}" label="Subtotal Value (Excluding deductions)"
-                        required="#{bindings.subTotalValueSecond.hints.mandatory}" contentStyle="width:180px;"
+                        required="#{bindings.subTotalValueSecond.hints.mandatory}" contentStyle="width:150px;"
                         maximumLength="#{bindings.subTotalValueSecond.hints.precision}"
                         shortDesc="#{bindings.subTotalValueSecond.hints.tooltip}" id="it21">
             <f:validator binding="#{bindings.subTotalValueSecond.validator}"/>
