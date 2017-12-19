@@ -1035,7 +1035,7 @@
                                               id="soc17"
                                               contentStyle="width:200px"
                                               simple="true" autoSubmit="true"
-                                              disabled="true"
+                                              readOnly="true"
                                               binding="#{backingBeanScope.backing_employee.btAirtickTyp}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeAirTicketType}">
                             <f:selectItems value="#{bindings.AirlineTicketType1.items}"
@@ -1115,10 +1115,10 @@
                                         columns="#{bindings.NumberOfDays.hints.displayWidth}"
                                         maximumLength="#{bindings.NumberOfDays.hints.precision}"
                                         shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
-                                        id="it30" contentStyle="width:200px"
+                                        id="it30" contentStyle="width:200px;text-align:left;"
                                         binding="#{backingBeanScope.backing_employee.noOfDays}"
                                         partialTriggers="id5 id6 soc10"
-                                        readOnly="#{sessionScope.mode=='edit'?'true':'false'}" disabled="true">
+                                        readOnly="true" disabled="true">
                             <f:validator binding="#{bindings.NumberOfDays.validator}"/>
                           </af:inputText>
                         </af:gridCell>
