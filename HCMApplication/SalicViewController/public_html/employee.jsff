@@ -1498,7 +1498,7 @@
                           </af:inputText>
                         </af:gridCell>
                       </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto" id="gridRow4">
+                      <!--af:gridRow marginTop="12px" height="auto" id="gridRow4">
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell13" halign="end"
                                      valign="middle">
@@ -1540,7 +1540,7 @@
                             <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
                           </af:inputDate>
                         </af:gridCell>
-                      </af:gridRow>
+                      </af:gridRow-->
                       <af:gridRow marginTop="12px" height="auto"
                                   marginBottom="5px" id="gridRow10">
                         <af:gridCell marginStart="5px" width="25%"
@@ -1814,7 +1814,7 @@
                                         shortDesc="#{bindings.Comments.hints.tooltip}"
                                         id="inputText4"
                                         contentStyle="width:200px" rows="3" partialTriggers="soc16"
-                                        readOnly="true">
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
                             <f:validator binding="#{bindings.Comments.validator}"/>
                           </af:inputText>
                         </af:gridCell>
@@ -1941,7 +1941,7 @@
                       </af:table>
                     </af:panelCollection>
                   </af:panelBox>
-                  <af:panelBox text="Business Travel Reimbursement Info" id="pb5">
+                  <af:panelBox text="Perdiem Information" id="pb5">
                     <f:facet name="toolbar"/>
                     <af:panelGridLayout id="pgl2">
                       <af:gridRow marginTop="12px" height="auto" id="gr7">
@@ -2254,7 +2254,7 @@
                         <af:column sortProperty="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.name}"
                                    sortable="false"
                                    headerText="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.label}"
-                                   id="c48" rendered="true">
+                                   id="c48" rendered="true" width="250">
                           <af:inputFile value="#{row.bindings.AttachFile.inputValue}"
                                         label="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.label}"
                                         required="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.mandatory}"
