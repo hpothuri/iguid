@@ -424,7 +424,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
-                emailReq.setSubject("FYI: "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
+                emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
                 emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
                
                 
@@ -462,7 +462,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName(emailReq.getEmpName());
-                emailReq.setSubject("FYI: "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
+                emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
                 emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
@@ -494,7 +494,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
             emailReq.setToEmail(to);
             emailReq.setToEmpName(emailReq.getEmpName());
-            emailReq.setSubject("FYI: "+reqType+" request("+emailReq.getRequestNo()+") is rejected");
+            emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is rejected");
             emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected by "+firstLevelApproverName+"with hereunder information: <br><br> Reject Reason : "+rejectReason);
             LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
             actionButtons = new LinkedHashMap<String, String>();

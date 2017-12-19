@@ -74,15 +74,15 @@ public class GenerateEmailTemplate {
                     "<tr><td align='center'>" + i + "</td>";
                 for(Map.Entry<String, String> entry : emailReq.getTableColumnDatatypes().entrySet()){
                     if(entry.getValue() != null && "DATE".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + resultSet1.getDate(entry.getKey()) +
+                        linebodyInfo += "<td align='center'>" + (resultSet1.getDate(entry.getKey()) != null ? resultSet1.getDate(entry.getKey()) : "") +
                                             "</td>";
                     }
                     else if(entry.getValue() != null && "STRING".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + resultSet1.getString(entry.getKey()) +
+                        linebodyInfo += "<td align='center'>" + (resultSet1.getString(entry.getKey()) != null ? resultSet1.getString(entry.getKey()) : "") +
                                             "</td>";
                     }
                     else if(entry.getValue() != null && "NUMBER".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + resultSet1.getBigDecimal(entry.getKey()) +
+                        linebodyInfo += "<td align='center'>" + (resultSet1.getBigDecimal(entry.getKey()) != null ? resultSet1.getBigDecimal(entry.getKey()) : "") +
                                             "</td>";
                     }
                 }
@@ -170,7 +170,7 @@ public class GenerateEmailTemplate {
     private static String prepareStylizedBodyMessage(String message, String toEmpName){
         String msg =
             "<div style='background-image:url()'" +
-            "<div style='margin-left:80px;margin-top:20px;font-size:14px;font-family:arial;font-weight:bolder;'>Dear <b>" +
+            "<div style='margin-top:20px;font-size:14px;font-family:arial;font-weight:bolder;'>Dear <b>" +
             toEmpName + "</b>,</div>" +
             "<div style='margin-top:20px;font-size:14px;font-family:arial;'>"+message+"</div><br>";  
         
