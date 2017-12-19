@@ -156,6 +156,7 @@ public class Employee {
     private RichOutputText totalAmount;
     
     private Boolean approveReject;
+    private RichTable purposeOfTrvTable;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -3368,7 +3369,10 @@ rs.closeRowSetIterator();
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
 
         onCalculateNoOfDays();
-
+        if(ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().first() != null){
+            ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().first().setAttribute("StartDate", valueChangeEvent.getNewValue());
+            AdfFacesContext.getCurrentInstance().addPartialTarget(this.purposeOfTrvTable);
+        }
     }
 
     public void onChangeEndDate(ValueChangeEvent valueChangeEvent) {
@@ -3996,5 +4000,13 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
             return false;
         }
         //return false;
+    }
+
+    public void setPurposeOfTrvTable(RichTable purposeOfTrvTable) {
+        this.purposeOfTrvTable = purposeOfTrvTable;
+    }
+
+    public RichTable getPurposeOfTrvTable() {
+        return purposeOfTrvTable;
     }
 }

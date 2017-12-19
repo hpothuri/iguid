@@ -1321,7 +1321,8 @@
                                 partialTriggers="::cb11 ::cb12 cb14 :::pc8:cb17 :::pc8:t17:cb19" varStatus="vs"
                                 columnStretching="column:c20" rowSelection="single"
                                 selectedRowKeys="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.selectedRow}"
-                              selectionListener="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.makeCurrent}">
+                              selectionListener="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.makeCurrent}"
+                                binding="#{backingBeanScope.backing_employee.purposeOfTrvTable}">
                         <af:column id="c37" headerText="S.No" width="50">
                           <af:outputText value="#{vs.index+1}" id="ot19"/>
                         </af:column>
