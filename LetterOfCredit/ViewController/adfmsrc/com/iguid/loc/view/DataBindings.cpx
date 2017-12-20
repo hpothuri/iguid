@@ -9,12 +9,17 @@
   <pageMap>
     <page path="/pages/LCSummaryPage.jsf" usageId="com_iguid_loc_view_LCSummaryPagePageDef"/>
     <page path="/fragments/summary/LCSummary.jsff" usageId="com_iguid_loc_view_LCSummaryPageDef"/>
+    <page path="/fragments/amendments/LCAmendments.jsff" usageId="com_iguid_loc_view_LCAmendmentsPageDef"/>
+    <page path="/pages/LCAmendmentsPage.jsf" usageId="com_iguid_loc_view_LCAmendmentsPagePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_iguid_loc_view_LCSummaryPagePageDef" path="pages.LCSummaryPagePageDef"/>
     <page id="com_iguid_loc_view_LCSummaryPageDef" path="fragments.summary.LCSummaryPageDef"/>
+    <page id="com_iguid_loc_view_LCAmendmentsPageDef" path="fragments.amendments.LCAmendmentsPageDef"/>
+    <page id="com_iguid_loc_view_LCAmendmentsPagePageDef" path="pages.LCAmendmentsPagePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="LCAmendmentsPage" path="com.iguid.loc.view.LCAmendmentsPage"/>
     <dc id="LCSummaryPage" path="com.iguid.loc.view.LCSummaryPage"/>
   </dataControlUsages>
 </Application>

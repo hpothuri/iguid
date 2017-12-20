@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:panelBox text="Amendments Info" id="pb1" showDisclosure="false" styleClass="home">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.infoList.collectionModel}" var="row" rows="#{bindings.infoList.rangeSize}"
+                  emptyText="#{bindings.infoList.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  rowBandingInterval="0" selectedRowKeys="#{bindings.infoList.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.infoList.collectionModel.makeCurrent}" rowSelection="single"
+                  fetchSize="#{bindings.infoList.rangeSize}" id="t1" styleClass="AFStretchWidth"
+                  columnStretching="column:c6">
+          <af:column sortProperty="#{bindings.infoList.hints.seqNo.name}" sortable="true" headerText="Seq" id="c1">
+            <af:outputText value="#{row.seqNo}" shortDesc="#{bindings.infoList.hints.seqNo.tooltip}" id="ot1">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.infoList.hints.seqNo.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.amendDetail.name}" sortable="true"
+                     headerText="Amend Detail" id="c2">
+            <af:outputText value="#{row.amendDetail}" shortDesc="#{bindings.infoList.hints.amendDetail.tooltip}"
+                           id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.amendedAmount.name}" sortable="true"
+                     headerText="Amended Amount" id="c3" width="200" minimumWidth="12">
+            <af:outputText value="#{row.amendedAmount}" shortDesc="#{bindings.infoList.hints.amendedAmount.tooltip}"
+                           id="ot3">
+              <af:convertNumber pattern="#{bindings.infoList.hints.amendedAmount.format}" maxFractionDigits="2"
+                                minFractionDigits="2"/>
+            </af:outputText>
+            <f:facet name="footer">
+              <af:inputText label="Amends Total" id="it1" value="1000.00" readOnly="true">
+                <af:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+              </af:inputText>
+            </f:facet>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.date.name}" sortable="true" headerText="Date" id="c4"
+                     width="200">
+            <af:outputText value="#{row.date}" shortDesc="#{bindings.infoList.hints.date.tooltip}" id="ot4">
+              <af:convertDateTime pattern="dd-MMM-yyyy hh:mm" type="both"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.status.name}" sortable="true" headerText="Status" id="c5">
+            <af:outputText value="#{row.status}" shortDesc="#{bindings.infoList.hints.status.tooltip}" id="ot5"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.remarks.name}" sortable="true" headerText="Remarks"
+                     id="c6">
+            <af:outputText value="#{row.remarks}" shortDesc="#{bindings.infoList.hints.remarks.tooltip}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.sentToBankDate.name}" sortable="true"
+                     headerText="Sent To Bank Date" id="c7">
+            <af:outputText value="#{row.sentToBankDate}" shortDesc="#{bindings.infoList.hints.sentToBankDate.tooltip}"
+                           id="ot7">
+              <af:convertDateTime pattern="dd-MMM-yyyy" type="date"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.infoList.hints.swiftRec.name}" sortable="true" headerText="Swift Rec"
+                     id="c8">
+            <af:selectBooleanCheckbox id="sbc1"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelBox text="Amend Track" id="pb2" showDisclosure="false" styleClass="home">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.trackList.collectionModel}" var="row" rows="#{bindings.trackList.rangeSize}"
+                  emptyText="#{bindings.trackList.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  rowBandingInterval="0" selectedRowKeys="#{bindings.trackList.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.trackList.collectionModel.makeCurrent}" rowSelection="single"
+                  fetchSize="#{bindings.trackList.rangeSize}" id="t2" styleClass="AFStretchWidth"
+                  columnStretching="last">
+          <af:column sortProperty="#{bindings.trackList.hints.seqNo.name}" sortable="true"
+                     headerText="Seq" id="c9">
+            <af:outputText value="#{row.seqNo}" shortDesc="#{bindings.trackList.hints.seqNo.tooltip}" id="ot9">
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.trackList.hints.seqNo.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.trackList.hints.from.name}" sortable="true"
+                     headerText="From" id="c10">
+            <af:outputText value="#{row.from}" shortDesc="#{bindings.trackList.hints.from.tooltip}" id="ot10"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.trackList.hints.to.name}" sortable="true"
+                     headerText="To" id="c11">
+            <af:outputText value="#{row.to}" shortDesc="#{bindings.trackList.hints.to.tooltip}" id="ot11"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.trackList.hints.trackDate.name}" sortable="true"
+                     headerText="Track Date" id="c12">
+            <af:outputText value="#{row.trackDate}" shortDesc="#{bindings.trackList.hints.trackDate.tooltip}" id="ot12">
+              <af:convertDateTime pattern="#{bindings.trackList.hints.trackDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.trackList.hints.action.name}" sortable="true"
+                     headerText="Action" id="c13">
+            <af:outputText value="#{row.action}" shortDesc="#{bindings.trackList.hints.action.tooltip}" id="ot13"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.trackList.hints.remarks.name}" sortable="true"
+                     headerText="Remarks" id="c14">
+            <af:outputText value="#{row.remarks}" shortDesc="#{bindings.trackList.hints.remarks.tooltip}" id="ot14"/>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+    </af:panelBox>
+  </af:panelGroupLayout>
+</ui:composition>

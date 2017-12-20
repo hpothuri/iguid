@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="LCAmendmentsPageDef"
+                Package="fragments.amendments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="LCAmendmentsPage" id="LCAmendmentsPageIterator"/>
+    <accessorIterator MasterBinding="LCAmendmentsPageIterator" Binds="infoList" RangeSize="25"
+                      DataControl="LCAmendmentsPage" BeanClass="com.iguid.loc.view.beans.LCAmendmentInfoPojo"
+                      id="infoListIterator"/>
+    <accessorIterator MasterBinding="LCAmendmentsPageIterator" Binds="trackList" RangeSize="25"
+                      DataControl="LCAmendmentsPage" BeanClass="com.iguid.loc.view.beans.LCAmendTrackPojo"
+                      id="trackListIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="infoListIterator" id="infoList">
+      <nodeDefinition DefName="com.iguid.loc.view.beans.LCAmendmentInfoPojo" Name="infoList0">
+        <AttrNames>
+          <Item Value="seqNo"/>
+          <Item Value="amendDetail"/>
+          <Item Value="amendedAmount"/>
+          <Item Value="date"/>
+          <Item Value="status"/>
+          <Item Value="remarks"/>
+          <Item Value="sentToBankDate"/>
+          <Item Value="swiftRec"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="trackListIterator" id="trackList">
+      <nodeDefinition DefName="com.iguid.loc.view.beans.LCAmendTrackPojo" Name="trackList0">
+        <AttrNames>
+          <Item Value="seqNo"/>
+          <Item Value="from"/>
+          <Item Value="to"/>
+          <Item Value="trackDate"/>
+          <Item Value="action"/>
+          <Item Value="remarks"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>
