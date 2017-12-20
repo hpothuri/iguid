@@ -15,6 +15,9 @@
                       id="variationDataIterator"/>
     <accessorIterator MasterBinding="PieDataControlIterator" Binds="dedData" RangeSize="25" DataControl="PieDataControl"
                       BeanClass="view.beans.paymentsummary.DeductionPaymentLinesPojo" id="dedDataIterator"/>
+    <accessorIterator MasterBinding="PieDataControlIterator" Binds="payLineData" RangeSize="25"
+                      DataControl="PieDataControl" BeanClass="view.beans.paymentsummary.PaymentLinesSummary"
+                      id="payLineDataIterator"/>
   </executables>
   <bindings>
     <tree IterBinding="pieDataIterator" id="pieData" ChangeEventPolicy="ppr">
@@ -75,6 +78,22 @@
           <Item Value="completePct"/>
           <Item Value="dedNetQty"/>
           <Item Value="diff"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="payLineDataIterator" id="payLineData">
+      <nodeDefinition DefName="view.beans.paymentsummary.PaymentLinesSummary" Name="payLineData0">
+        <AttrNames>
+          <Item Value="actid"/>
+          <Item Value="descr"/>
+          <Item Value="contrValue"/>
+          <Item Value="pctComp"/>
+          <Item Value="pctValue"/>
+          <Item Value="preMonth"/>
+          <Item Value="monIncr"/>
+          <Item Value="currMonValue"/>
+          <Item Value="taskNo"/>
+          <Item Value="remarks"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

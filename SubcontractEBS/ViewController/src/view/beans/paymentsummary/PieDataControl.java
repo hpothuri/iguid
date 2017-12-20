@@ -9,6 +9,9 @@ public class PieDataControl {
     public ArrayList<PaymentVariationsPojo> variationData = new ArrayList<PaymentVariationsPojo>();
     public ArrayList<VariationPojo> meterialonsiteData = new ArrayList<VariationPojo>();
     public ArrayList<DeductionPaymentLinesPojo> dedData = new ArrayList<DeductionPaymentLinesPojo>();
+    public ArrayList<PaymentLinesSummary> payLineData = new ArrayList<PaymentLinesSummary>();
+    //PaymentLinesSummary
+    
     public PieDataControl() {
         super();
         PieChartContractData d1 = new PieChartContractData();
@@ -79,6 +82,30 @@ public class PieDataControl {
         dpl.setUOM("LUMP SUM");
         dpl.setUnitrate(new BigDecimal(10));
         dedData.add(dpl);
+        PaymentLinesSummary pl1 = new PaymentLinesSummary();
+        pl1.setActid("001");
+        pl1.setContrValue(new BigDecimal(12000));
+        pl1.setCurrMonValue(new BigDecimal(240));
+        pl1.setDescr("Apply and supply HD");
+        pl1.setMonIncr(new BigDecimal(2));
+        pl1.setPctComp(new BigDecimal(12));
+        pl1.setPctValue(new BigDecimal(1440));
+        pl1.setPreMonth(new BigDecimal(10));
+        pl1.setRemarks("");
+        pl1.setTaskNo("01.01.90");
+        PaymentLinesSummary pl2 = new PaymentLinesSummary();
+        pl2.setActid("002");
+        pl2.setContrValue(new BigDecimal(4160000));
+        pl2.setCurrMonValue(new BigDecimal(208000));
+        pl2.setDescr("Apply and suppy com");
+        pl2.setMonIncr(new BigDecimal(5));
+        pl2.setPctComp(new BigDecimal(10));
+        pl2.setPctValue(new BigDecimal(416000));
+        pl2.setPreMonth(new BigDecimal(5));
+        pl2.setRemarks("");
+        pl2.setTaskNo("01.01.90");
+        payLineData.add(pl1);
+        payLineData.add(pl2);
     }
 
     public void setPieData(ArrayList<PieChartContractData> pieData) {
@@ -111,5 +138,13 @@ public class PieDataControl {
 
     public ArrayList<DeductionPaymentLinesPojo> getDedData() {
         return dedData;
+    }
+
+    public void setPayLineData(ArrayList<PaymentLinesSummary> payLineData) {
+        this.payLineData = payLineData;
+    }
+
+    public ArrayList<PaymentLinesSummary> getPayLineData() {
+        return payLineData;
     }
 }

@@ -126,7 +126,74 @@
                     <af:panelGroupLayout styleClass="AFStretchWidth" id="pgl7" layout="vertical">
                       <af:panelBox text="Payment Lines" styleClass="home" showDisclosure="false" id="pb4">
                         <af:panelCollection styleClass="AFStretchWidth" id="pc1">
-                          <af:table var="row" styleClass="AFStretchWidth" rowBandingInterval="1" id="t1"
+                          <af:table value="#{bindings.payLineData.collectionModel}" var="row"
+                                    rows="#{bindings.payLineData.rangeSize}"
+                                    emptyText="#{bindings.payLineData.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                    styleClass="AFStretchWidth" rowBandingInterval="1" 
+                                    autoHeightRows="3" fetchSize="3" inlineStyle="height:230px;"
+                                    selectedRowKeys="#{bindings.payLineData.collectionModel.selectedRow}"
+                                    selectionListener="#{bindings.payLineData.collectionModel.makeCurrent}"
+                                    rowSelection="single"  id="t6">
+                            <af:column headerText="BOQ Item On / Act. ID" id="c46">
+                              <af:outputText value="#{row.actid}"
+                                             shortDesc="#{bindings.payLineData.hints.actid.tooltip}" id="ot41"/>
+                            </af:column>
+                            <af:column headerText="Description" id="c47">
+                              <af:outputText value="#{row.descr}"
+                                             shortDesc="#{bindings.payLineData.hints.descr.tooltip}" id="ot42"/>
+                            </af:column>
+                            <af:column headerText="Contract Value" id="c48">
+                              <af:outputText value="#{row.contrValue}"
+                                             shortDesc="#{bindings.payLineData.hints.contrValue.tooltip}" id="ot43">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.contrValue.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="Complete %" id="c49">
+                              <af:outputText value="#{row.pctComp}"
+                                             shortDesc="#{bindings.payLineData.hints.pctComp.tooltip}" id="ot44">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.pctComp.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="Value" id="c50">
+                              <af:outputText value="#{row.pctValue}"
+                                             shortDesc="#{bindings.payLineData.hints.pctValue.tooltip}" id="ot45">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.pctValue.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="Pre. Month" id="c51">
+                              <af:outputText value="#{row.preMonth}"
+                                             shortDesc="#{bindings.payLineData.hints.preMonth.tooltip}" id="ot46">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.preMonth.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="Mon. Incr" id="c52">
+                              <af:outputText value="#{row.monIncr}"
+                                             shortDesc="#{bindings.payLineData.hints.monIncr.tooltip}" id="ot47">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.monIncr.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="This Month Value" id="c53">
+                              <af:outputText value="#{row.currMonValue}"
+                                             shortDesc="#{bindings.payLineData.hints.currMonValue.tooltip}" id="ot48">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.payLineData.hints.currMonValue.format}"/>
+                              </af:outputText>
+                            </af:column>
+                            <af:column headerText="Task No" id="c54">
+                              <af:outputText value="#{row.taskNo}"
+                                             shortDesc="#{bindings.payLineData.hints.taskNo.tooltip}" id="ot49"/>
+                            </af:column>
+                            <af:column headerText="Remarks" id="c55">
+                              <af:outputText value="#{row.remarks}"
+                                             shortDesc="#{bindings.payLineData.hints.remarks.tooltip}" id="ot50"/>
+                            </af:column>
+                          </af:table>
+                          <af:table var="row" styleClass="AFStretchWidth" rendered="false" rowBandingInterval="1" id="t1"
                                     autoHeightRows="3" fetchSize="3" inlineStyle="height:230px;">
                             <af:column sortable="false" headerText="BOQ Item On / Act. ID" id="c1">
                               <af:outputText value="#{row.col1}" id="ot1"/>

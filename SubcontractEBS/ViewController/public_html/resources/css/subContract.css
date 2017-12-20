@@ -14,7 +14,7 @@ af|panelBox::header-start:core:default {
 af|panelBox::header-center:core:default,
 af|panelBox::header-element {
     font-size: 13pt;
-    color: #627aad    
+    color: #627aad;    
     line-height: 25px;
     font-weight: normal;
     padding-bottom: 5px;
@@ -128,7 +128,7 @@ af|inputDate::content
 {
     width: 100%;
     border: 1px solid #ccc;
-    font-size: 10.5pt;z
+    font-size: 10.5pt;
     background-color: white; 
     background-image:none;
     color:#6a757d; 
@@ -139,7 +139,7 @@ af|inputDate::content
 {
     width: 100%;
     border: 1px solid #ccc;
-    font-size: 10.5pt;z
+    font-size: 10.5pt;
     background-color: white; 
     background-image:none;
     color:#6a757d; 
@@ -189,7 +189,7 @@ height:30px;
 display: table-cell;
 vertical-align: middle;
 text-align: left;
-border-right:none; // lines
+border-right:none; 
 border-left:none;
 } 
 
@@ -203,7 +203,7 @@ display: table-cell;
 height:30px;   
 vertical-align: middle;
 text-align: left; 
-border-right :none; // grid lines
+border-right :none;
 }
 
 af|table::data-row:hover af|column::data-cell,       /*  Table row hover */ 
