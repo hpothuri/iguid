@@ -178,6 +178,7 @@
                <Item Value="ApproverFlag"/>
                <Item Value="Type"/>
                <Item Value="LastUpdateDate"/>
+               <Item Value="ApprDate"/>
             </AttrNames>
          </nodeDefinition>
       </tree>

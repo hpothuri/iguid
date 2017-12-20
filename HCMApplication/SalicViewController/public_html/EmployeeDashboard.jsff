@@ -357,7 +357,7 @@
                                               columnStretching="column:c9"
                                               varStatus="vs"
                                               scrollPolicy="page"
-                                              autoHeightRows="0">
+                                              autoHeightRows="20">
                                           <af:column id="c14" headerText="S.No"
                                                      align="center" width="35">
                                                 <af:outputText value="#{vs.index+1}"

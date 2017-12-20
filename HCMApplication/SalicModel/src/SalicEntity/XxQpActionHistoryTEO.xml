@@ -213,6 +213,13 @@
       <Attr Name="_DisplaySize" Value="20"/>
     </DesignTime>
   </Attribute>
+  <Attribute
+    Name="ApprDate"
+    ColumnName="APPR_DATE"
+    SQLType="DATE"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    TableName="XX_QP_ACTION_HISTORY_T"/>
   <Key
     Name="SysC004689">
     <DesignTime>

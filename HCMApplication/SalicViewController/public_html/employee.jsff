@@ -241,7 +241,7 @@
                                          id="plam7">
                   <af:outputText value="#{bindings.RequestDate.inputValue}"
                                  id="ot9" partialTriggers="employeeNameTRANSId">
-                    <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                    <af:convertDateTime pattern="dd/MM/yyyy kk:mm:ss" timeZone="Asia/Kuwait"/>
                   </af:outputText>
                 </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{bindings.Status.hints.label}"
@@ -2360,6 +2360,12 @@
                                  id="c11" width="175">
                         <af:outputText value="#{row.LastUpdateDate}" id="ot16">
                           <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.format}"/>
+                        </af:outputText>
+                      </af:column>
+                      <af:column sortable="false" headerText="Approved Date" id="c60">
+                        <af:outputText value="#{row.ApprDate}"
+                                       shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.tooltip}" id="ot27">
+                          <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.format}"/>
                         </af:outputText>
                       </af:column>
                     </af:table>

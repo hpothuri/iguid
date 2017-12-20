@@ -339,7 +339,7 @@
                                               rowSelection="single" id="t2"
                                               varStatus="vs"
                                               scrollPolicy="page"
-                                              autoHeightRows="0">
+                                              autoHeightRows="20">
                                           <af:column id="c14" headerText="S.No"
                                                      width="35" align="center">
                                                 <af:outputText value="#{vs.index+1}"

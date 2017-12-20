@@ -87,7 +87,7 @@
                           selectedRowKeys="#{bindings.otHdrROVO1.collectionModel.selectedRow}"
                           selectionListener="#{bindings.otHdrROVO1.collectionModel.makeCurrent}"
                           rowSelection="single" id="t3"
-                          binding="#{OvertimeSearch.t2}" autoHeightRows="0"
+                          binding="#{OvertimeSearch.t2}" autoHeightRows="20"
                           fetchSize="#{bindings.otHdrROVO1.rangeSize}"
                           scrollPolicy="page" first="0"
                           styleClass="AFStretchWidth">

@@ -260,7 +260,15 @@ public class OvertimeSearch {
         ViewObject line =
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         Row reqHeaderRow = variationSearchVo.createRow();
+        DateFormat dateFormat1 =
+            new SimpleDateFormat("dd/MM/yyyy'T'kk:mm:ss"); ////2016/11/16
+            dateFormat1.setTimeZone(TimeZone.getTimeZone("Asia/Kuwait"));
+        Date date1 = new Date();
+        dateFormat1.getTimeInstance().format(date1);
+        
         reqHeaderRow.setAttribute("employeeNameTRANS", empRow.getAttribute("EmpName"));
+        reqHeaderRow.setAttribute("RequestDate", date1);
+        
         reqHeaderRow.setAttribute("Status", "New");
         reqHeaderRow.setAttribute("EmpId", empRow.getAttribute("EmpId"));
         reqHeaderRow.setAttribute("departmentTRANS", empRow.getAttribute("Department"));

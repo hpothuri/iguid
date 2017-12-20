@@ -438,7 +438,7 @@
                                   selectedRowKeys="#{bindings.managerDashbaordROVO11.collectionModel.selectedRow}"
                                   selectionListener="#{bindings.managerDashbaordROVO11.collectionModel.makeCurrent}"
                                   rowSelection="single" id="t2" varStatus="vs"
-                                  scrollPolicy="page" autoHeightRows="0"
+                                  scrollPolicy="page" autoHeightRows="20"
                                   binding="#{ManagerAppr.t2}"
                                   partialTriggers="cmi1 cmi2"
                                   filterModel="#{bindings.managerDashbaordROVO11Query.queryDescriptor}"

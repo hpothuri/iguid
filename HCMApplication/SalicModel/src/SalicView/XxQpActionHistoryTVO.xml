@@ -22,7 +22,8 @@
        XxQpActionHistoryTEO.ROWID, 
        XxQpActionHistoryTEO.PAGE, 
        XxQpActionHistoryTEO.REQ_NUMBER, 
-       XxQpActionHistoryTEO.APPR_TYPE"
+       XxQpActionHistoryTEO.APPR_TYPE, 
+       XxQpActionHistoryTEO.APPR_DATE"
   FromList="XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -207,6 +208,12 @@
     EntityAttrName="ApprType"
     EntityUsage="XxQpActionHistoryTEO"
     AliasName="APPR_TYPE"/>
+  <ViewAttribute
+    Name="ApprDate"
+    PrecisionRule="true"
+    EntityAttrName="ApprDate"
+    EntityUsage="XxQpActionHistoryTEO"
+    AliasName="APPR_DATE"/>
   <ViewCriteria
     Name="XxQpActionHistoryTVOCriteria"
     ViewObjectName="SalicView.XxQpActionHistoryTVO"
