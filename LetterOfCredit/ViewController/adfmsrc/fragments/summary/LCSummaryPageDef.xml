@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="LCSummaryPageDef"
+                Package="fragments.summary">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="LCSummaryPage" id="LCSummaryPageIterator"/>
+    <accessorIterator MasterBinding="LCSummaryPageIterator" Binds="searchForm" RangeSize="25"
+                      DataControl="LCSummaryPage" BeanClass="com.iguid.loc.view.beans.LCSearchPojo"
+                      id="searchFormIterator"/>
+    <accessorIterator MasterBinding="LCSummaryPageIterator" Binds="summaryData" RangeSize="25"
+                      DataControl="LCSummaryPage" BeanClass="com.iguid.loc.view.beans.LCSummaryPojo"
+                      id="summaryDataIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="searchFormIterator" id="bank">
+      <AttrNames>
+        <Item Value="bank"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="type">
+      <AttrNames>
+        <Item Value="type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="lcNo">
+      <AttrNames>
+        <Item Value="lcNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="status">
+      <AttrNames>
+        <Item Value="status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="action">
+      <AttrNames>
+        <Item Value="action"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="fromSentDate">
+      <AttrNames>
+        <Item Value="fromSentDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="toSentDate">
+      <AttrNames>
+        <Item Value="toSentDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="fromExpiryDate">
+      <AttrNames>
+        <Item Value="fromExpiryDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="daysPlus">
+      <AttrNames>
+        <Item Value="daysPlus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchFormIterator" id="daysMinus">
+      <AttrNames>
+        <Item Value="daysMinus"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="summaryDataIterator" id="summaryData">
+      <nodeDefinition DefName="com.iguid.loc.view.beans.LCSummaryPojo" Name="summaryData0">
+        <AttrNames>
+          <Item Value="bank"/>
+          <Item Value="sentDate"/>
+          <Item Value="type"/>
+          <Item Value="lcNo"/>
+          <Item Value="expiryDate"/>
+          <Item Value="area"/>
+          <Item Value="project"/>
+          <Item Value="status"/>
+          <Item Value="action"/>
+          <Item Value="currency"/>
+          <Item Value="current"/>
+          <Item Value="received"/>
+          <Item Value="remaining"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="searchFormIterator" StaticList="true" id="printSimpleBalances">
+      <AttrNames>
+        <Item Value="printSimpleBalances"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="TRUE"/>
+        <Item Value="FALSE"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>

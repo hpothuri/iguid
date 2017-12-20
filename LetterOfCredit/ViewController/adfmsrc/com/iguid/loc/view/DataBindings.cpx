@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.16.48" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.iguid.loc.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/pages/LCSummaryPage.jsf" usageId="com_iguid_loc_view_LCSummaryPagePageDef"/>
+    <page path="/fragments/summary/LCSummary.jsff" usageId="com_iguid_loc_view_LCSummaryPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="com_iguid_loc_view_LCSummaryPagePageDef" path="pages.LCSummaryPagePageDef"/>
+    <page id="com_iguid_loc_view_LCSummaryPageDef" path="fragments.summary.LCSummaryPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="LCSummaryPage" path="com.iguid.loc.view.LCSummaryPage"/>
+  </dataControlUsages>
+</Application>

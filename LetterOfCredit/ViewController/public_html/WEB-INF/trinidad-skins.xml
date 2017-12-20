@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<skins xmlns="http://myfaces.apache.org/trinidad/skin">
+  <skin>
+    <id>iguid.desktop</id>
+    <family>subContractSkin</family>
+    <extends>alta-v1.desktop</extends>
+    <style-sheet-name>resources/css/subContract.css</style-sheet-name>
+  </skin>
+</skins>

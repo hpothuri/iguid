@@ -68,7 +68,14 @@
       <string v="oracle.bm.commonIde.data.project.ModelerProjectSettings/modelersContentSet"/>
       <string v="oracle.toplink.workbench.addin/toplinkContentSet"/>
    </list>
+   <value n="DCProject" v="true"/>
    <value n="defaultPackage" v="com.iguid.loc.view"/>
+   <value n="jbo.CustomContextMenus" v="true"/>
+   <value n="jbo.NoAttrEnumClasses" v="true"/>
+   <value n="JboProject" v="true"/>
+   <hash n="oracle.adfdtinternal.model.ide.settings.ADFMSettings">
+      <value n="hasDataControls" v="true"/>
+   </hash>
    <hash n="oracle.ide.model.DependencyConfiguration">
       <list n="dependencyList">
          <hash>
@@ -84,6 +91,9 @@
       <list n="technologyScope">
          <string v="ADF_FACES"/>
          <string v="ADFc"/>
+         <string v="ADFm"/>
+         <string v="HTML"/>
+         <string v="JAVASCRIPT"/>
          <string v="JSF"/>
          <string v="JSP"/>
          <string v="Java"/>
@@ -91,11 +101,84 @@
          <string v="XML"/>
       </list>
    </hash>
+   <value n="oracle.jbo.SavedPreferences" v="true"/>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
+      <list n="copyRes">
+         <string v=".cpx"/>
+         <string v=".dcx"/>
+         <string v=".ejx"/>
+         <string v=".gif"/>
+         <string v=".ini"/>
+         <string v=".jpeg"/>
+         <string v=".jpg"/>
+         <string v=".png"/>
+         <string v=".properties"/>
+         <string v=".sva"/>
+         <string v=".tag"/>
+         <string v=".tld"/>
+         <string v=".wsdl"/>
+         <string v=".xcfg"/>
+         <string v=".xlf"/>
+         <string v=".xml"/>
+         <string v=".xsd"/>
+         <string v=".xsl"/>
+         <string v=".jpx"/>
+         <string v=".rpx"/>
+         <string v=".bcs"/>
+      </list>
       <value n="webIANAEncoding" v="UTF-8"/>
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
+         <hash n="LetterOfCredit_ViewController">
+            <value n="adflib-connectionDetails" v="true"/>
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="true"/>
+            </hash>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="2"/>
+                        </hash>
+                        <hash>
+                           <value n="type" v="5"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Project Output"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="WEB-INF/classes/**"/>
+                              <value n="type" v="1"/>
+                           </hash>
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="0"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="project-output"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="jarURL" path="deploy/LetterOfCredit_ViewController.jar"/>
+            <hash n="LibraryDependencies">
+               <list n="dependencyList">
+                  <hash>
+                     <hash n="dependable">
+                        <url n="sourceOwnerURL" path="../LetterOfCredit.jws"/>
+                        <url n="sourceURL" path="../Model/Model.jpr"/>
+                     </hash>
+                     <value n="recognizerId" v="oracle.jdeveloper.library"/>
+                  </hash>
+               </list>
+            </hash>
+            <value n="profileClass" v="oracle.adfdt.common.deploy.impl.AdfLibraryProfile"/>
+            <value n="profileName" v="LetterOfCredit_ViewController"/>
+         </hash>
          <hash n="LetterOfCredit_ViewController_webapp">
             <hash n="appletArchives"/>
             <hash n="appletFiles">
@@ -173,6 +256,7 @@
       </hash>
       <list n="profileList">
          <string v="LetterOfCredit_ViewController_webapp"/>
+         <string v="LetterOfCredit_ViewController"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
@@ -263,6 +347,38 @@
             <value n="id" v="ADF DVT Faces Databinding MDS Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="ADF Model Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Model Generic Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JDBC"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JEWT"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Faces Databinding Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Security"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Oracle Domains"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
       <list n="libraryReferences">
          <hash>
@@ -335,6 +451,38 @@
          </hash>
          <hash>
             <value n="id" v="ADF DVT Faces Databinding MDS Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Model Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Model Generic Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JDBC"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Oracle JEWT"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="ADF Faces Databinding Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Security"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="BC4J Oracle Domains"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
@@ -444,6 +592,16 @@
             <value n="URI" v="http://xmlns.oracle.com/adf/faces/rich/component"/>
             <value n="version" v="11"/>
          </hash>
+         <hash>
+            <hash n="baseLibrary">
+               <value n="name" v="ADF Data Visualization"/>
+               <value n="version" v="1.1"/>
+            </hash>
+            <value n="name" v="ADF Data Visualization"/>
+            <value n="taglibURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/dvt-faces.jar!/META-INF/bi.taglib.xml"/>
+            <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
+            <value n="version" v="1.1"/>
+         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.webapp.jsp.libraries.model.ProjectTagLibraries">
@@ -480,6 +638,17 @@
             <value n="tldURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/adf-richclient-impl-11.jar!/META-INF/afu.tld"/>
             <value n="URI" v="http://xmlns.oracle.com/adf/faces/rich"/>
             <value n="version" v="11"/>
+         </hash>
+         <hash>
+            <hash n="baseLibrary">
+               <value n="name" v="ADF Data Visualization"/>
+               <value n="version" v="1.1"/>
+            </hash>
+            <value n="jspVersion" v="2.1"/>
+            <value n="name" v="ADF Data Visualization"/>
+            <value n="tldURL" v="@oracle.home@../oracle_common/modules/oracle.adf.view/dvt-faces.jar!/META-INF/bi.tld"/>
+            <value n="URI" v="http://xmlns.oracle.com/dss/adf/faces"/>
+            <value n="version" v="1.1"/>
          </hash>
       </list>
    </hash>

@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelTabbed position="above" id="pt1" tabRemoval="all">
+    <af:showDetailItem id="tab1" text="LC Transactions Summary">
+      <af:panelGroupLayout id="pgl1" layout="scroll">
+        <af:panelBox text="Find LC Transactions" id="pb1" showDisclosure="false">
+          <f:facet name="toolbar">
+            <af:toolbar id="t2">
+              <af:button text="Advanced" id="b1" visible="#{pageFlowScope.mode ne 'Adv'}" partialTriggers="b2">
+                <af:setPropertyListener from="#{'Adv'}" to="#{pageFlowScope.mode}" type="action"/>
+              </af:button>
+              <af:button text="Basic" id="b2" visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1">
+                <af:setPropertyListener from="#{'Basic'}" to="#{pageFlowScope.mode}" type="action"/>
+              </af:button>
+            </af:toolbar>
+          </f:facet>
+          <af:panelFormLayout id="pfl1" maxColumns="2" rows="3">
+            <af:inputText value="#{bindings.bank.inputValue}" label="Bank" required="#{bindings.bank.hints.mandatory}"
+                          columns="#{bindings.bank.hints.displayWidth}" maximumLength="#{bindings.bank.hints.precision}"
+                          shortDesc="#{bindings.bank.hints.tooltip}" id="it1">
+              <f:validator binding="#{bindings.bank.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.type.inputValue}" label="Type" required="#{bindings.type.hints.mandatory}"
+                          columns="#{bindings.type.hints.displayWidth}" maximumLength="#{bindings.type.hints.precision}"
+                          shortDesc="#{bindings.type.hints.tooltip}" id="it2">
+              <f:validator binding="#{bindings.type.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.lcNo.inputValue}" label="LC#" required="#{bindings.lcNo.hints.mandatory}"
+                          columns="#{bindings.lcNo.hints.displayWidth}" maximumLength="#{bindings.lcNo.hints.precision}"
+                          shortDesc="#{bindings.lcNo.hints.tooltip}" id="it3">
+              <f:validator binding="#{bindings.lcNo.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.status.inputValue}" label="Status"
+                          required="#{bindings.status.hints.mandatory}" columns="#{bindings.status.hints.displayWidth}"
+                          maximumLength="#{bindings.status.hints.precision}"
+                          shortDesc="#{bindings.status.hints.tooltip}" id="it4">
+              <f:validator binding="#{bindings.status.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.action.inputValue}" label="Action"
+                          required="#{bindings.action.hints.mandatory}" columns="#{bindings.action.hints.displayWidth}"
+                          maximumLength="#{bindings.action.hints.precision}"
+                          shortDesc="#{bindings.action.hints.tooltip}" id="it5">
+              <f:validator binding="#{bindings.action.validator}"/>
+            </af:inputText>
+          </af:panelFormLayout>
+          <af:spacer width="10" height="10" id="s2"/>
+          <af:panelBox text="Sent to Bank Date" id="pb2" showDisclosure="false"
+                       visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1 b2">
+            <f:facet name="toolbar"/>
+            <af:panelFormLayout id="pfl2" maxColumns="2" rows="1">
+              <f:facet name="footer"/>
+              <af:inputDate value="#{bindings.fromSentDate.inputValue}" label="From"
+                            required="#{bindings.fromSentDate.hints.mandatory}"
+                            columns="#{bindings.fromSentDate.hints.displayWidth}"
+                            shortDesc="#{bindings.fromSentDate.hints.tooltip}" id="id1">
+                <f:validator binding="#{bindings.fromSentDate.validator}"/>
+                <af:convertDateTime pattern="#{bindings.fromSentDate.format}"/>
+              </af:inputDate>
+              <af:inputDate value="#{bindings.toSentDate.inputValue}" label="To"
+                            required="#{bindings.toSentDate.hints.mandatory}"
+                            columns="#{bindings.toSentDate.hints.displayWidth}"
+                            shortDesc="#{bindings.toSentDate.hints.tooltip}" id="id2">
+                <f:validator binding="#{bindings.toSentDate.validator}"/>
+                <af:convertDateTime pattern="#{bindings.toSentDate.format}"/>
+              </af:inputDate>
+            </af:panelFormLayout>
+          </af:panelBox>
+          <af:spacer width="10" height="10" id="s3" visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1 b2"/>
+          <af:panelBox text="Expiration Date" id="pb3" showDisclosure="false" visible="#{pageFlowScope.mode eq 'Adv'}"
+                       partialTriggers="b1 b2">
+            <f:facet name="toolbar"/>
+            <af:panelFormLayout id="pfl3" maxColumns="3" rows="1">
+              <f:facet name="footer"/>
+              <af:inputDate value="#{bindings.fromExpiryDate.inputValue}" label="From"
+                            required="#{bindings.fromExpiryDate.hints.mandatory}"
+                            columns="#{bindings.fromExpiryDate.hints.displayWidth}"
+                            shortDesc="#{bindings.fromExpiryDate.hints.tooltip}" id="id3">
+                <f:validator binding="#{bindings.fromExpiryDate.validator}"/>
+                <af:convertDateTime pattern="#{bindings.fromExpiryDate.format}"/>
+              </af:inputDate>
+              <af:inputText value="#{bindings.daysPlus.inputValue}" label="#days +"
+                            required="#{bindings.daysPlus.hints.mandatory}"
+                            columns="#{bindings.daysPlus.hints.displayWidth}"
+                            maximumLength="#{bindings.daysPlus.hints.precision}"
+                            shortDesc="#{bindings.daysPlus.hints.tooltip}" id="it6">
+                <f:validator binding="#{bindings.daysPlus.validator}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.daysPlus.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.daysMinus.inputValue}" label="#days -"
+                            required="#{bindings.daysMinus.hints.mandatory}"
+                            columns="#{bindings.daysMinus.hints.displayWidth}"
+                            maximumLength="#{bindings.daysMinus.hints.precision}"
+                            shortDesc="#{bindings.daysMinus.hints.tooltip}" id="it7">
+                <f:validator binding="#{bindings.daysMinus.validator}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.daysMinus.format}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:panelBox>
+          <af:spacer width="10" height="10" id="s4" visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1 b2"/>
+          <af:panelBox text="Outstanding Tolerance" id="pb4" showDisclosure="false"
+                       visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1 b2">
+            <f:facet name="toolbar"/>
+            <af:panelGroupLayout id="pgl2" layout="vertical" halign="center">
+              <af:selectBooleanCheckbox text="" label="Print Small Balances" id="sbc1"
+                                        value="#{bindings.printSimpleBalances.inputValue}"/>
+            </af:panelGroupLayout>
+          </af:panelBox>
+          <af:spacer width="10" height="10" id="s7" visible="#{pageFlowScope.mode eq 'Adv'}" partialTriggers="b1 b2"/>
+          <af:panelGroupLayout id="pgl4" layout="horizontal" halign="end">
+            <af:button text="Find" id="b3"/>
+            <af:spacer width="10" height="10" id="s5"/>
+            <af:button text="Clear" id="b4"/>
+          </af:panelGroupLayout>
+        </af:panelBox>
+        <af:spacer width="10" height="10" id="s1"/>
+        <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+          <f:facet name="menus"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="statusbar"/>
+          <af:table value="#{bindings.summaryData.collectionModel}" var="row" rows="#{bindings.summaryData.rangeSize}"
+                    emptyText="#{bindings.summaryData.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" selectedRowKeys="#{bindings.summaryData.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.summaryData.collectionModel.makeCurrent}" rowSelection="single"
+                    fetchSize="#{bindings.summaryData.rangeSize}" id="t1" columnStretching="last"
+                    styleClass="AFStretchWidth">
+            <af:column sortProperty="#{bindings.summaryData.hints.bank.name}" sortable="true"
+                       headerText="Bank" id="c1">
+              <af:outputText value="#{row.bank}" shortDesc="#{bindings.summaryData.hints.bank.tooltip}" id="ot1"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.sentDate.name}" sortable="true"
+                       headerText="Sent Date" id="c2" width="80">
+              <af:outputText value="#{row.sentDate}" shortDesc="#{bindings.summaryData.hints.sentDate.tooltip}"
+                             id="ot2">
+                <af:convertDateTime pattern="#{bindings.summaryData.hints.sentDate.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.type.name}" sortable="true"
+                       headerText="Type" id="c3">
+              <af:outputText value="#{row.type}" shortDesc="#{bindings.summaryData.hints.type.tooltip}" id="ot3"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.lcNo.name}" sortable="true"
+                       headerText="LC#" id="c4">
+              <af:outputText value="#{row.lcNo}" shortDesc="#{bindings.summaryData.hints.lcNo.tooltip}" id="ot4"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.expiryDate.name}" sortable="true"
+                       headerText="Expiry Date" id="c5" width="80">
+              <af:outputText value="#{row.expiryDate}" shortDesc="#{bindings.summaryData.hints.expiryDate.tooltip}"
+                             id="ot5">
+                <af:convertDateTime pattern="#{bindings.summaryData.hints.expiryDate.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.area.name}" sortable="true"
+                       headerText="Area" id="c6" width="50">
+              <af:outputText value="#{row.area}" shortDesc="#{bindings.summaryData.hints.area.tooltip}" id="ot6"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.project.name}" sortable="true"
+                       headerText="Project" id="c7">
+              <af:outputText value="#{row.project}" shortDesc="#{bindings.summaryData.hints.project.tooltip}" id="ot7"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.status.name}" sortable="true"
+                       headerText="Status" id="c8" width="80">
+              <af:outputText value="#{row.status}" shortDesc="#{bindings.summaryData.hints.status.tooltip}" id="ot8"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.action.name}" sortable="true"
+                       headerText="Action" id="c9" width="50">
+              <af:outputText value="#{row.action}" shortDesc="#{bindings.summaryData.hints.action.tooltip}" id="ot9"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.currency.name}" sortable="true"
+                       headerText="Currency" id="c10" width="50">
+              <af:outputText value="#{row.currency}" shortDesc="#{bindings.summaryData.hints.currency.tooltip}"
+                             id="ot10"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.current.name}" sortable="true"
+                       headerText="CURRENT" id="c11">
+              <af:outputText value="#{row.current}" shortDesc="#{bindings.summaryData.hints.current.tooltip}" id="ot11">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.current.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.received.name}" sortable="true"
+                       headerText="Received" id="c12">
+              <af:outputText value="#{row.received}" shortDesc="#{bindings.summaryData.hints.received.tooltip}"
+                             id="ot12">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.received.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryData.hints.remaining.name}" sortable="true"
+                       headerText="Remaining" id="c13" displayIndex="-1">
+              <af:outputText value="#{row.remaining}" shortDesc="#{bindings.summaryData.hints.remaining.tooltip}"
+                             id="ot13">
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.remaining.format}"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+        </af:panelCollection>
+      </af:panelGroupLayout>
+    </af:showDetailItem>
+  </af:panelTabbed>
+</ui:composition>
