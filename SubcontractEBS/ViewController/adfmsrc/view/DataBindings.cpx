@@ -13,14 +13,17 @@
     <page path="/pages/PaymentSummary.jsf" usageId="view_PaymentSummaryPageDef"/>
     <page path="/pages/ContractSummaryMain.jsf" usageId="view_ContractSummaryMainPageDef"/>
     <page path="/fragments/ContractSummary.jsff" usageId="view_ContractSummaryPageDef"/>
+    <page path="/fragments/ContractSummarySearch.jsff" usageId="view_ContractSummarySearchPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="view_paymentSummaryPageDef" path="fragments.paymentSummaryPageDef"/>
     <page id="view_PaymentSummaryPageDef" path="pages.PaymentSummaryPageDef"/>
     <page id="view_ContractSummaryMainPageDef" path="pages.ContractSummaryMainPageDef"/>
     <page id="view_ContractSummaryPageDef" path="fragments.ContractSummaryPageDef"/>
+    <page id="view_ContractSummarySearchPageDef" path="fragments.ContractSummarySearchPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="ContractSummarySearchPage" path="view.ContractSummarySearchPage"/>
     <dc id="PieDataControl" path="view.PieDataControl"/>
     <dc id="TotalAmountPojo" path="view.TotalAmountPojo"/>
     <dc id="SummarySecondFormPojo" path="view.SummarySecondFormPojo"/>

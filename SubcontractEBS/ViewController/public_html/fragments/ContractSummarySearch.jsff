@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelTabbed position="above" id="pt1" tabRemoval="all">
+    <af:showDetailItem id="tab1" text="Contract Summary Search">
+      <af:panelGroupLayout id="pgl1" layout="scroll">
+        <af:panelBox text="Search" id="pb1" showDisclosure="false">
+          <f:facet name="toolbar"/>
+          <af:panelFormLayout id="pfl1" maxColumns="2" rows="4">
+            <af:inputText value="#{bindings.projectNumber.inputValue}" label="Project Number"
+                          required="#{bindings.projectNumber.hints.mandatory}"
+                          columns="#{bindings.projectNumber.hints.displayWidth}"
+                          maximumLength="#{bindings.projectNumber.hints.precision}"
+                          shortDesc="#{bindings.projectNumber.hints.tooltip}" id="it1">
+              <f:validator binding="#{bindings.projectNumber.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.projectName.inputValue}" label="Project Name"
+                          required="#{bindings.projectName.hints.mandatory}"
+                          columns="#{bindings.projectName.hints.displayWidth}"
+                          maximumLength="#{bindings.projectName.hints.precision}"
+                          shortDesc="#{bindings.projectName.hints.tooltip}" id="it2">
+              <f:validator binding="#{bindings.projectName.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.projectStatus.inputValue}" label="Project Status"
+                          required="#{bindings.projectStatus.hints.mandatory}"
+                          columns="#{bindings.projectStatus.hints.displayWidth}"
+                          maximumLength="#{bindings.projectStatus.hints.precision}"
+                          shortDesc="#{bindings.projectStatus.hints.tooltip}" id="it3">
+              <f:validator binding="#{bindings.projectStatus.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.contractType.inputValue}" label="Contract Type"
+                          required="#{bindings.contractType.hints.mandatory}"
+                          columns="#{bindings.contractType.hints.displayWidth}"
+                          maximumLength="#{bindings.contractType.hints.precision}"
+                          shortDesc="#{bindings.contractType.hints.tooltip}" id="it4">
+              <f:validator binding="#{bindings.contractType.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.contractNumber.inputValue}" label="Contract Number"
+                          required="#{bindings.contractNumber.hints.mandatory}"
+                          columns="#{bindings.contractNumber.hints.displayWidth}"
+                          maximumLength="#{bindings.contractNumber.hints.precision}"
+                          shortDesc="#{bindings.contractNumber.hints.tooltip}" id="it5">
+              <f:validator binding="#{bindings.contractNumber.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.contractStatus.inputValue}" label="Contract Status"
+                          required="#{bindings.contractStatus.hints.mandatory}"
+                          columns="#{bindings.contractStatus.hints.displayWidth}"
+                          maximumLength="#{bindings.contractStatus.hints.precision}"
+                          shortDesc="#{bindings.contractStatus.hints.tooltip}" id="it6">
+              <f:validator binding="#{bindings.contractStatus.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.contractValue.inputValue}" label="Contract Value"
+                          required="#{bindings.contractValue.hints.mandatory}"
+                          columns="#{bindings.contractValue.hints.displayWidth}"
+                          maximumLength="#{bindings.contractValue.hints.precision}"
+                          shortDesc="#{bindings.contractValue.hints.tooltip}" id="it7">
+              <f:validator binding="#{bindings.contractValue.validator}"/>
+              <af:convertNumber groupingUsed="false" pattern="#{bindings.contractValue.format}"/>
+            </af:inputText>
+            <af:inputDate value="#{bindings.startDate.inputValue}" label="Start Date"
+                          required="#{bindings.startDate.hints.mandatory}"
+                          columns="#{bindings.startDate.hints.displayWidth}"
+                          shortDesc="#{bindings.startDate.hints.tooltip}" id="id1">
+              <f:validator binding="#{bindings.startDate.validator}"/>
+              <af:convertDateTime pattern="#{bindings.startDate.format}"/>
+            </af:inputDate>
+            <f:facet name="footer"/>
+          </af:panelFormLayout>
+          <af:panelGroupLayout id="pgl2" layout="horizontal" halign="end">
+            <af:button text="Search" id="b1"/>
+            <af:spacer width="10" height="10" id="s1"/>
+            <af:button text="Clear" id="b2"/>
+          </af:panelGroupLayout>
+        </af:panelBox>
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+          <f:facet name="menus"/>
+          <f:facet name="toolbar"/>
+          <f:facet name="statusbar"/>
+          <af:table value="#{bindings.summaryList.collectionModel}" var="row" rows="#{bindings.summaryList.rangeSize}"
+                    emptyText="#{bindings.summaryList.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    rowBandingInterval="0" selectedRowKeys="#{bindings.summaryList.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.summaryList.collectionModel.makeCurrent}" rowSelection="single"
+                    fetchSize="#{bindings.summaryList.rangeSize}" id="t1" styleClass="AFStretchWidth"
+                    columnStretching="column:c4">
+            <af:column sortProperty="#{bindings.summaryList.hints.projectNumber.name}" sortable="true"
+                       headerText="Project Number" id="c1">
+              <af:link shortDesc="#{bindings.summaryList.hints.projectNumber.tooltip}" id="ot1"
+                       text="#{row.projectNumber}" action="toDetails"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.projectName.name}" sortable="true"
+                       headerText="Project Name" id="c2">
+              <af:outputText value="#{row.projectName}" shortDesc="#{bindings.summaryList.hints.projectName.tooltip}"
+                             id="ot2"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.projectStatus.name}" sortable="true"
+                       headerText="Project Status" id="c3">
+              <af:outputText value="#{row.projectStatus}"
+                             shortDesc="#{bindings.summaryList.hints.projectStatus.tooltip}" id="ot3"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.contractType.name}" sortable="true"
+                       headerText="Contract Type" id="c4">
+              <af:outputText value="#{row.contractType}" shortDesc="#{bindings.summaryList.hints.contractType.tooltip}"
+                             id="ot4"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.contractNumber.name}" sortable="true"
+                       headerText="Contract  Number" id="c5">
+              <af:outputText value="#{row.contractNumber}"
+                             shortDesc="#{bindings.summaryList.hints.contractNumber.tooltip}" id="ot5"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.contractStatus.name}" sortable="true"
+                       headerText="Contract Status" id="c6">
+              <af:outputText value="#{row.contractStatus}"
+                             shortDesc="#{bindings.summaryList.hints.contractStatus.tooltip}" id="ot6"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.contractValue.name}" sortable="true"
+                       headerText="Contract Value" id="c7">
+              <af:outputText value="#{row.contractValue}"
+                             shortDesc="#{bindings.summaryList.hints.contractValue.tooltip}" id="ot7">
+                <af:convertNumber pattern="#{bindings.summaryList.hints.contractValue.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.summaryList.hints.startDate.name}" sortable="true"
+                       headerText="Start Date" id="c8">
+              <af:outputText value="#{row.startDate}" shortDesc="#{bindings.summaryList.hints.startDate.tooltip}"
+                             id="ot8">
+                <af:convertDateTime pattern="#{bindings.summaryList.hints.startDate.format}"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+        </af:panelCollection>
+      </af:panelGroupLayout>
+    </af:showDetailItem>
+  </af:panelTabbed>
+</ui:composition>

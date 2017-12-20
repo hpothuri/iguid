@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="ContractSummarySearchPageDef"
+                Package="fragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="ContractSummarySearchPage"
+              id="ContractSummarySearchPageIterator"/>
+    <accessorIterator MasterBinding="ContractSummarySearchPageIterator" Binds="searchPojo" RangeSize="25"
+                      DataControl="ContractSummarySearchPage"
+                      BeanClass="view.beans.paymentsummary.ContractSummaryHeaderPojo" id="searchPojoIterator"/>
+    <accessorIterator MasterBinding="ContractSummarySearchPageIterator" Binds="summaryList" RangeSize="25"
+                      DataControl="ContractSummarySearchPage"
+                      BeanClass="view.beans.paymentsummary.ContractSummaryHeaderPojo" id="summaryListIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="searchPojoIterator" id="projectNumber">
+      <AttrNames>
+        <Item Value="projectNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="projectName">
+      <AttrNames>
+        <Item Value="projectName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="projectStatus">
+      <AttrNames>
+        <Item Value="projectStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="contractType">
+      <AttrNames>
+        <Item Value="contractType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="contractNumber">
+      <AttrNames>
+        <Item Value="contractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="contractStatus">
+      <AttrNames>
+        <Item Value="contractStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="contractValue">
+      <AttrNames>
+        <Item Value="contractValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="searchPojoIterator" id="startDate">
+      <AttrNames>
+        <Item Value="startDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="summaryListIterator" id="summaryList">
+      <nodeDefinition DefName="view.beans.paymentsummary.ContractSummaryHeaderPojo" Name="summaryList0">
+        <AttrNames>
+          <Item Value="projectNumber"/>
+          <Item Value="projectName"/>
+          <Item Value="projectStatus"/>
+          <Item Value="contractType"/>
+          <Item Value="contractNumber"/>
+          <Item Value="contractStatus"/>
+          <Item Value="contractValue"/>
+          <Item Value="startDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

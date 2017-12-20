@@ -67,7 +67,7 @@
                     <af:spacer width="10" height="10" id="s8"/>
                     <af:button text="Submit" id="b1"/>
                     <af:spacer width="10" height="10" id="s9"/>
-                    <af:button text="Cancel" id="b4"/>
+                    <af:button text="Cancel" id="b4" action="back"/>
                     <af:spacer width="30" height="10" id="s10"/>
                   </af:panelGroupLayout>
                 </f:facet>
