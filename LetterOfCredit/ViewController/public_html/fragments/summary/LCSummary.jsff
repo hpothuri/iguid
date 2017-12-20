@@ -4,7 +4,7 @@
   <af:panelTabbed position="above" id="pt1" tabRemoval="all">
     <af:showDetailItem id="tab1" text="LC Transactions Summary">
       <af:panelGroupLayout id="pgl1" layout="scroll">
-        <af:panelBox text="Find LC Transactions" id="pb1" showDisclosure="false">
+        <af:panelBox text="Find LC Transactions" id="pb1" showDisclosure="false" styleClass="home">
           <f:facet name="toolbar">
             <af:toolbar id="t2">
               <af:button text="Advanced" id="b1" visible="#{pageFlowScope.mode ne 'Adv'}" partialTriggers="b2">
