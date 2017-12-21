@@ -98,7 +98,7 @@
       
                              }
                         </af:resource>
-                     <af:panelGroupLayout id="pgl4" inlineStyle="height:inherit; width:inherit;">
+                     <af:panelGroupLayout id="pgl4" inlineStyle="height:inherit; width:inherit;" halign="center" layout="vertical">
                         <af:outputLabel value="Pending Approval" id="ol3"
                                         inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
                                         styleClass="InfoTileTitle" binding="#{ManagerAppr.ol3}"/>
@@ -121,7 +121,7 @@
                   </af:panelBox>
                   <af:panelBox text="PanelBox3" id="pb3" type="stretch" showDisclosure="false" showHeader="never"
                                inlineStyle="width:220.0px; height:160px;">
-                     <af:panelGroupLayout id="pgl7" layout="vertical" inlineStyle="height:inherit; width:inherit;">
+                     <af:panelGroupLayout id="pgl7" layout="vertical" inlineStyle="height:inherit; width:inherit;" halign="center">
                         <af:outputLabel value="Approved" id="ol5"
                                         inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
                                         styleClass="InfoTileTitle" binding="#{ManagerAppr.ol5}"/>
@@ -145,7 +145,7 @@
                   </af:panelBox>
                   <af:panelBox text="PanelBox4" id="pb4" type="stretch" showDisclosure="false" showHeader="never"
                                inlineStyle="width:220.0px; height:160px;">
-                     <af:panelGroupLayout id="pgl10" layout="vertical" inlineStyle="height:inherit; width:inherit;">
+                     <af:panelGroupLayout id="pgl10" layout="vertical" inlineStyle="height:inherit; width:inherit;" halign="center">
                         <af:outputLabel value="Rejected" id="ol7"
                                         inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
                                         styleClass="InfoTileTitle" binding="#{ManagerAppr.ol7}"
@@ -171,7 +171,7 @@
                                                  showDisclosure="false"
                                                  showHeader="never"
                                                  inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl16">
+                                          <af:panelGroupLayout id="pgl16" halign="center" layout="vertical">
                                                 <af:outputLabel value="Total Request"
                                                                 id="ol1"
                                                                 inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
@@ -209,7 +209,7 @@
                                                  inlineStyle="width:220.0px; height:160px;"
                                                  rendered="false">
                                           <af:panelGroupLayout id="pgl13"
-                                                               layout="vertical"
+                                                               layout="vertical" halign="center"
                                                                inlineStyle="height:inherit; width:inherit;">
                                                 <af:outputLabel value="Pending Submission"
                                                                 id="ol9"
