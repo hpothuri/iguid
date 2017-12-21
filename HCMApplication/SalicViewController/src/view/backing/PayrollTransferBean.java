@@ -269,11 +269,14 @@ public class PayrollTransferBean {
 
         SimpleDateFormat hcmDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        RowSetIterator rs = payRollVO.createRowSetIterator(null);
-        rs.reset();
-        rs.reset();
-        while (rs.hasNext()) {
-            Row cu = rs.next();
+        Row[] rows = payRollVO.getFilteredRows("Attribute2", "Y");
+        
+        if(rows == null || rows.length == 0){
+            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Select at least one row.", null);
+            return;
+        }
+
+        for (Row cu : rows) {
             if ("ot".equals(cu.getAttribute("ReqType"))) {
                 int i = 1;
                 hdr = "";
