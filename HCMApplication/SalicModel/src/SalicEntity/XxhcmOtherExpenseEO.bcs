@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicEntity.XxhcmOtherExpenseEO
+
+package SalicEntity
+
+import oracle.jbo.script.annotation.TransientValueExpression;
+
+@TransientValueExpression(attributeName="ExpenseId")
+def ExpenseId_ExpressionScript_Expression()
+{
+(new oracle.jbo.server.SequenceImpl("XXHCM_OTHER_EXPENSE_ID_S",adf.object.getDBTransaction())).getSequenceNumber();
+}
+

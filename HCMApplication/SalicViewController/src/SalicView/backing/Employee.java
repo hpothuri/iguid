@@ -620,10 +620,10 @@ public class Employee {
                 otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                      "BusinessTripCompletion");
 
-                lineVO.getCurrentRow().setAttribute("StartDate",
-                                                    this.bstStDt.getValue());
-                lineVO.getCurrentRow().setAttribute("EndDate",
-                                                    this.bstEdDt.getValue());
+//                lineVO.getCurrentRow().setAttribute("StartDate",
+//                                                    this.bstStDt.getValue());
+//                lineVO.getCurrentRow().setAttribute("EndDate",
+//                                                    this.bstEdDt.getValue());
                 lineVO.getCurrentRow().setAttribute("DestCategory",
                                                     this.bstDestCateLOV.getValue());
                 lineVO.getCurrentRow().setAttribute("DestinationCountry", countryValue);
@@ -1585,10 +1585,10 @@ public class Employee {
                                                          "Pending Approval");
                     otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                          "BusinessTripCompletion");
-                    lineVO.getCurrentRow().setAttribute("StartDate",
-                                                        this.bstStDt.getValue());
-                    lineVO.getCurrentRow().setAttribute("EndDate",
-                                                        this.bstEdDt.getValue());
+//                    lineVO.getCurrentRow().setAttribute("StartDate",
+//                                                        this.bstStDt.getValue());
+//                    lineVO.getCurrentRow().setAttribute("EndDate",
+//                                                        this.bstEdDt.getValue());
                     lineVO.getCurrentRow().setAttribute("DestCategory",
                                                         this.bstDestCateLOV.getValue());
                     
@@ -2487,10 +2487,10 @@ public class Employee {
                 otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                      "BusinessTripCompletion");
 
-                lineVO.getCurrentRow().setAttribute("StartDate",
-                                                    this.bstStDt.getValue());
-                lineVO.getCurrentRow().setAttribute("EndDate",
-                                                    this.bstEdDt.getValue());
+//                lineVO.getCurrentRow().setAttribute("StartDate",
+//                                                    this.bstStDt.getValue());
+//                lineVO.getCurrentRow().setAttribute("EndDate",
+//                                                    this.bstEdDt.getValue());
                 lineVO.getCurrentRow().setAttribute("DestCategory",
                                                     this.bstDestCateLOV.getValue());
                 System.err.println("NOFDAYS" + this.bstNoOfDays.getValue());

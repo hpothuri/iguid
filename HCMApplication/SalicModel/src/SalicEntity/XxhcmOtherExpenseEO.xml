@@ -4,7 +4,7 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOtherExpenseEO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_OTHER_EXPENSE"
@@ -21,6 +21,9 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
+    <TransientExpression
+      Name="ExpressionScript"
+      CodeSourceName="XxhcmOtherExpenseEORow"/>
   </Attribute>
   <Attribute
     Name="ReqDtlsId"
