@@ -310,7 +310,7 @@
                 <af:inputDate value="#{row.bindings.PayrollTransDate.inputValue}"
                               required="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.mandatory}"
                               shortDesc="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.tooltip}"
-                              id="id1">
+                              id="id1" autoSubmit="true">
                   <f:validator binding="#{row.bindings.PayrollTransDate.validator}"/>
                   <af:convertDateTime pattern="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.format}"/>
                 </af:inputDate>
