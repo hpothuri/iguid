@@ -6,6 +6,8 @@ import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 
 import oracle.adf.view.rich.component.rich.layout.RichShowDetailHeader;
 
+import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
+
 import org.apache.myfaces.trinidad.component.UIXGroup;
 
 public class ManagerDashboard {
@@ -17,6 +19,7 @@ public class ManagerDashboard {
     private RichShowDetailHeader sdh2;
     private RichTable t1;
     private RichTable t2;
+    private RichOutputLabel ol2;
 
 
     public void setPb3(RichPanelBox pb3) {
@@ -76,5 +79,13 @@ public class ManagerDashboard {
 
     public RichTable getT2() {
         return t2;
+    }
+
+    public void setOl2(RichOutputLabel ol2) {
+        this.ol2 = ol2;
+    }
+
+    public RichOutputLabel getOl2() {
+        return ol2;
     }
 }

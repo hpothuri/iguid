@@ -44,6 +44,12 @@ public class ManagerAppr {
     private RichOutputLabel ol9;
     private RichTable t2;
     static ADFLogger logger = ADFLogger.createADFLogger(ManagerAppr.class);
+    private RichOutputLabel ol2;
+    private RichOutputLabel ol10;
+    private RichOutputLabel ol8;
+    private RichOutputLabel ol6;
+    private RichOutputLabel ol4;
+
     public ManagerAppr() {
     }
 
@@ -201,10 +207,11 @@ public class ManagerAppr {
         OperationBinding ob =
             (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
         ob.execute();
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol2);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol6);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol8);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol10);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol4);
         
         mgrVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
@@ -226,10 +233,11 @@ public class ManagerAppr {
         OperationBinding ob =
             (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
         ob.execute();
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol1);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol3);
-        AdfFacesContext.getCurrentInstance().addPartialTarget(ol7);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol2);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol4);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol6);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol8);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol10);
         mgrVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
         
@@ -404,5 +412,45 @@ public class ManagerAppr {
 
     public RichOutputLabel getOl9() {
         return ol9;
+    }
+
+    public void setOl2(RichOutputLabel ol2) {
+        this.ol2 = ol2;
+    }
+
+    public RichOutputLabel getOl2() {
+        return ol2;
+    }
+
+    public void setOl10(RichOutputLabel ol10) {
+        this.ol10 = ol10;
+    }
+
+    public RichOutputLabel getOl10() {
+        return ol10;
+    }
+
+    public void setOl8(RichOutputLabel ol8) {
+        this.ol8 = ol8;
+    }
+
+    public RichOutputLabel getOl8() {
+        return ol8;
+    }
+
+    public void setOl6(RichOutputLabel ol6) {
+        this.ol6 = ol6;
+    }
+
+    public RichOutputLabel getOl6() {
+        return ol6;
+    }
+
+    public void setOl4(RichOutputLabel ol4) {
+        this.ol4 = ol4;
+    }
+
+    public RichOutputLabel getOl4() {
+        return ol4;
     }
 }

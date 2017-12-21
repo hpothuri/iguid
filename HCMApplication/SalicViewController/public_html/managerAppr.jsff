@@ -107,7 +107,7 @@
                            <af:spacer width="10" height="10" id="s2"/>
                            <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
                                            id="ol4" value="#{pageFlowScope.pending} "
-                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2" binding="#{ManagerAppr.ol4}"/>
                         </af:panelGroupLayout>
                         <af:panelGroupLayout id="pgl6" halign="center">
                            <af:commandButton text=""
@@ -130,7 +130,7 @@
                            <af:spacer width="10" height="10" id="s3"/>
                            <af:outputLabel value="#{pageFlowScope.approved}" id="ol6"
                                            inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"
-                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                           partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2" binding="#{ManagerAppr.ol6}"/>
                         </af:panelGroupLayout>
                         <af:panelGroupLayout id="pgl9" halign="center">
                            <af:commandButton text=""
@@ -154,7 +154,8 @@
                                              halign="center">
                            <af:spacer width="10" height="10" id="s4"/>
                            <af:outputLabel value="#{pageFlowScope.rejected}" id="ol8"
-                                           inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                           inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"
+                                           binding="#{ManagerAppr.ol8}"/>
                         </af:panelGroupLayout>
                         <af:panelGroupLayout id="pgl12" halign="center">
                            <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
@@ -187,7 +188,8 @@
                                                       <af:outputLabel value="#{pageFlowScope.total}"
                                                                       id="ol2"
                                                                       inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"
-                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"/>
+                                                                      partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"
+                                                                      binding="#{ManagerAppr.ol2}"/>
                                                 </af:panelGroupLayout>
                                                 <af:panelGroupLayout id="pgl3"
                                                                      halign="center">
@@ -226,7 +228,8 @@
                                                                  id="s5"/>
                                                       <af:outputLabel value="#{pageFlowScope.rejected}"
                                                                       id="ol10"
-                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      binding="#{ManagerAppr.ol10}"/>
                                                 </af:panelGroupLayout>
                                                 <af:panelGroupLayout id="pgl15"
                                                                      halign="center">
