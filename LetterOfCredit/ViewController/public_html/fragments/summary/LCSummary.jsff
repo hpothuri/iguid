@@ -55,7 +55,7 @@
                             columns="#{bindings.fromSentDate.hints.displayWidth}"
                             shortDesc="#{bindings.fromSentDate.hints.tooltip}" id="id1">
                 <f:validator binding="#{bindings.fromSentDate.validator}"/>
-                <af:convertDateTime pattern="#{bindings.fromSentDate.format}"/>
+                <af:convertDateTime pattern="dd-MMM-yyyy"/>
               </af:inputDate>
               <af:inputDate value="#{bindings.toSentDate.inputValue}" label="To"
                             required="#{bindings.toSentDate.hints.mandatory}"
@@ -77,7 +77,7 @@
                             columns="#{bindings.fromExpiryDate.hints.displayWidth}"
                             shortDesc="#{bindings.fromExpiryDate.hints.tooltip}" id="id3">
                 <f:validator binding="#{bindings.fromExpiryDate.validator}"/>
-                <af:convertDateTime pattern="#{bindings.fromExpiryDate.format}"/>
+                <af:convertDateTime pattern="dd-MMM-yyyy"/>
               </af:inputDate>
               <af:inputText value="#{bindings.daysPlus.inputValue}" label="#days +"
                             required="#{bindings.daysPlus.hints.mandatory}"
@@ -132,7 +132,7 @@
                        headerText="Sent Date" id="c2" width="80">
               <af:outputText value="#{row.sentDate}" shortDesc="#{bindings.summaryData.hints.sentDate.tooltip}"
                              id="ot2">
-                <af:convertDateTime pattern="#{bindings.summaryData.hints.sentDate.format}"/>
+                <af:convertDateTime pattern="dd-MMM-yyyy"/>
               </af:outputText>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.type.name}" sortable="true"
@@ -147,7 +147,7 @@
                        headerText="Expiry Date" id="c5" width="80">
               <af:outputText value="#{row.expiryDate}" shortDesc="#{bindings.summaryData.hints.expiryDate.tooltip}"
                              id="ot5">
-                <af:convertDateTime pattern="#{bindings.summaryData.hints.expiryDate.format}"/>
+                <af:convertDateTime pattern="dd-MMM-yyyy"/>
               </af:outputText>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.area.name}" sortable="true"
@@ -167,28 +167,31 @@
               <af:outputText value="#{row.action}" shortDesc="#{bindings.summaryData.hints.action.tooltip}" id="ot9"/>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.currency.name}" sortable="true"
-                       headerText="Currency" id="c10" width="50">
+                       headerText="Currency" id="c10" width="60">
               <af:outputText value="#{row.currency}" shortDesc="#{bindings.summaryData.hints.currency.tooltip}"
                              id="ot10"/>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.current.name}" sortable="true"
-                       headerText="CURRENT" id="c11">
+                       headerText="Current" id="c11">
               <af:outputText value="#{row.current}" shortDesc="#{bindings.summaryData.hints.current.tooltip}" id="ot11">
-                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.current.format}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.current.format}"
+                                  maxFractionDigits="2" minFractionDigits="2"/>
               </af:outputText>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.received.name}" sortable="true"
                        headerText="Received" id="c12">
               <af:outputText value="#{row.received}" shortDesc="#{bindings.summaryData.hints.received.tooltip}"
                              id="ot12">
-                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.received.format}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.received.format}"
+                                  maxFractionDigits="2" minFractionDigits="2"/>
               </af:outputText>
             </af:column>
             <af:column sortProperty="#{bindings.summaryData.hints.remaining.name}" sortable="true"
                        headerText="Remaining" id="c13" displayIndex="-1">
               <af:outputText value="#{row.remaining}" shortDesc="#{bindings.summaryData.hints.remaining.tooltip}"
                              id="ot13">
-                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.remaining.format}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.summaryData.hints.remaining.format}"
+                                  minFractionDigits="2" maxFractionDigits="2"/>
               </af:outputText>
             </af:column>
           </af:table>
