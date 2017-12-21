@@ -11,14 +11,19 @@
     <page path="/fragments/summary/LCSummary.jsff" usageId="com_iguid_loc_view_LCSummaryPageDef"/>
     <page path="/fragments/amendments/LCAmendments.jsff" usageId="com_iguid_loc_view_LCAmendmentsPageDef"/>
     <page path="/pages/LCAmendmentsPage.jsf" usageId="com_iguid_loc_view_LCAmendmentsPagePageDef"/>
+    <page path="/fragments/expenses/LCExpenses.jsff" usageId="com_iguid_loc_view_LCExpensesPageDef"/>
+    <page path="/pages/LCExpensePage.jsf" usageId="com_iguid_loc_view_LCExpensePagePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="com_iguid_loc_view_LCSummaryPagePageDef" path="pages.LCSummaryPagePageDef"/>
     <page id="com_iguid_loc_view_LCSummaryPageDef" path="fragments.summary.LCSummaryPageDef"/>
     <page id="com_iguid_loc_view_LCAmendmentsPageDef" path="fragments.amendments.LCAmendmentsPageDef"/>
     <page id="com_iguid_loc_view_LCAmendmentsPagePageDef" path="pages.LCAmendmentsPagePageDef"/>
+    <page id="com_iguid_loc_view_LCExpensesPageDef" path="fragments.expenses.LCExpensesPageDef"/>
+    <page id="com_iguid_loc_view_LCExpensePagePageDef" path="pages.LCExpensePagePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
+    <dc id="LCExpensePage" path="com.iguid.loc.view.LCExpensePage"/>
     <dc id="LCAmendmentsPage" path="com.iguid.loc.view.LCAmendmentsPage"/>
     <dc id="LCSummaryPage" path="com.iguid.loc.view.LCSummaryPage"/>
   </dataControlUsages>

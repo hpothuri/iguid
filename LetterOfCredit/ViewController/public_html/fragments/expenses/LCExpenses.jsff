@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+    <f:facet name="menus"/>
+    <f:facet name="toolbar">
+      <af:toolbar id="t2">
+        <af:link id="l1" icon="/images/add_16.png"/>
+        <af:spacer width="5" height="10" id="s1"/>
+        <af:link id="l2" icon="/images/edit.png"/>
+        <af:spacer width="5" height="10" id="s2"/>
+        <af:link id="l3" icon="/images/excel.png"/>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="statusbar"/>
+    <af:table value="#{bindings.expList.collectionModel}" var="row" rows="#{bindings.expList.rangeSize}"
+              emptyText="#{bindings.expList.viewable ? 'No data to display.' : 'Access Denied.'}" rowBandingInterval="0"
+              selectedRowKeys="#{bindings.expList.collectionModel.selectedRow}"
+              selectionListener="#{bindings.expList.collectionModel.makeCurrent}" rowSelection="single"
+              fetchSize="#{bindings.expList.rangeSize}" id="t1" styleClass="AFStretchWidth"
+              columnStretching="column:c5">
+      <af:column sortProperty="#{bindings.expList.hints.seqNo.name}" sortable="true"
+                 headerText="Seq" id="c1">
+        <af:outputText value="#{row.seqNo}" shortDesc="#{bindings.expList.hints.seqNo.tooltip}" id="ot1">
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.expList.hints.seqNo.format}"/>
+        </af:outputText>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.expenseType.name}" sortable="true"
+                 headerText="Expense Type" id="c2" width="200">
+        <af:inputText id="it5" value="#{row.expenseType}"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.expenseDate.name}" sortable="true"
+                 headerText="Expense Date" id="c3" width="150" minimumWidth="12">
+        <af:inputDate id="id1" value="#{row.expenseDate}" columns="17">
+          <af:convertDateTime pattern="dd-MMM-yyyy hh:mm"/>
+        </af:inputDate>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.totalValue.name}" sortable="true"
+                 headerText="Total Value" id="c4">
+        <af:inputText id="it4" value="#{row.totalValue}">
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.expList.hints.totalValue.format}"/>
+        </af:inputText>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.description.name}" sortable="true"
+                 headerText="Description" id="c5">
+        <af:inputText id="it3" value="#{row.description}"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.docType.name}" sortable="true"
+                 headerText="Doc Type" id="c6">
+        <af:selectOneChoice id="soc1" value="#{row.docType}" disabled="true">
+          <af:selectItem label="LC Amend" value="LC Amend" id="si1"/>
+          <af:selectItem label="LC" value="LC" id="si2"/>
+        </af:selectOneChoice>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.currency.name}" sortable="true"
+                 headerText="Currency" id="c7">
+        <af:inputText id="it2" value="#{row.currency}"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.expList.hints.rate.name}" sortable="true"
+                 headerText="Rate" id="c8">
+        <af:inputText id="it1" value="#{row.rate}">
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.expList.hints.rate.format}"/>
+        </af:inputText>
+      </af:column>
+    </af:table>
+  </af:panelCollection>
+</ui:composition>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48" id="LCExpensesPageDef"
+                Package="fragments.expenses">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="LCExpensePage" id="LCExpensePageIterator"/>
+    <accessorIterator MasterBinding="LCExpensePageIterator" Binds="expList" RangeSize="25" DataControl="LCExpensePage"
+                      BeanClass="com.iguid.loc.view.beans.LCExpensePojo" id="expListIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="expListIterator" id="expList">
+      <nodeDefinition DefName="com.iguid.loc.view.beans.LCExpensePojo" Name="expList0">
+        <AttrNames>
+          <Item Value="seqNo"/>
+          <Item Value="expenseType"/>
+          <Item Value="expenseDate"/>
+          <Item Value="totalValue"/>
+          <Item Value="description"/>
+          <Item Value="docType"/>
+          <Item Value="currency"/>
+          <Item Value="rate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

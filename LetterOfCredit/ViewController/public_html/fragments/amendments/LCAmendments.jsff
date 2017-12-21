@@ -6,7 +6,15 @@
       <f:facet name="toolbar"/>
       <af:panelCollection id="pc1" styleClass="AFStretchWidth">
         <f:facet name="menus"/>
-        <f:facet name="toolbar"/>
+        <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:link id="l1" icon="/images/add_16.png"/>
+            <af:spacer width="5" height="10" id="s4"/>
+            <af:link id="l2" icon="/images/edit.png"/>
+            <af:spacer width="5" height="10" id="s5"/>
+            <af:link id="l3" icon="/images/excel.png"/>
+      </af:toolbar>
+    </f:facet>
         <f:facet name="statusbar"/>
         <af:table value="#{bindings.infoList.collectionModel}" var="row" rows="#{bindings.infoList.rangeSize}"
                   emptyText="#{bindings.infoList.viewable ? 'No data to display.' : 'Access Denied.'}"
@@ -69,7 +77,15 @@
       <f:facet name="toolbar"/>
       <af:panelCollection id="pc2" styleClass="AFStretchWidth">
         <f:facet name="menus"/>
-        <f:facet name="toolbar"/>
+       <f:facet name="toolbar">
+      <af:toolbar id="t4">
+        <af:link id="l4" icon="/images/add_16.png"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:link id="l5" icon="/images/edit.png"/>
+            <af:spacer width="5" height="10" id="s3"/>
+            <af:link id="l6" icon="/images/excel.png"/>
+      </af:toolbar>
+      </f:facet>
         <f:facet name="statusbar"/>
         <af:table value="#{bindings.trackList.collectionModel}" var="row" rows="#{bindings.trackList.rangeSize}"
                   emptyText="#{bindings.trackList.viewable ? 'No data to display.' : 'Access Denied.'}"

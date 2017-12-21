@@ -116,7 +116,15 @@
         <af:spacer width="10" height="10" id="s1"/>
         <af:panelCollection id="pc1" styleClass="AFStretchWidth">
           <f:facet name="menus"/>
-          <f:facet name="toolbar"/>
+          <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:link id="l1" icon="/images/add_16.png"/>
+              <af:spacer width="5" height="10" id="s6"/>
+              <af:link id="l2" icon="/images/edit.png"/>
+              <af:spacer width="5" height="10" id="s8"/>
+              <af:link id="l3" icon="/images/excel.png"/>
+      </af:toolbar>
+    </f:facet>
           <f:facet name="statusbar"/>
           <af:table value="#{bindings.summaryData.collectionModel}" var="row" rows="#{bindings.summaryData.rangeSize}"
                     emptyText="#{bindings.summaryData.viewable ? 'No data to display.' : 'Access Denied.'}"
