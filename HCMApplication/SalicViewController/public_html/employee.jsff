@@ -1425,11 +1425,11 @@
                                      halign="end">
                           <af:outputLabel value="Business Travel Request Number" id="ol17"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="1px" width="1%" id="gc32">
+                        <af:gridCell marginStart="1px" width="0%" id="gc32">
                           <af:inputText value="#{bindings.empIdTRANS.inputValue}" partialTriggers="employeeNameTRANSId"
                                         visible="false" id="ot22" label="Label 22"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="2px" width="45%" id="gc34">
+                        <af:gridCell marginStart="2px" width="50%" id="gc34">
                           <af:inputListOfValues id="soc16"
                                                 popupTitle="Search and Select: Business Travel Request Number"
                                                 value="#{bindings.BussTravReqNumValue.inputValue}"
@@ -1440,7 +1440,7 @@
                                                  valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
                                                 partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
                                                 simple="true" shortDesc="#{bindings.BussTravReqNumValue.hints.tooltip}"
-                                                contentStyle="width:150px;"
+                                                contentStyle="width:200px;"
                                                 disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                                 binding="#{backingBeanScope.backing_employee.bussTrReq1}"
                                                 launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
@@ -1543,13 +1543,12 @@
                       </af:gridRow-->
                       <af:gridRow marginTop="12px" height="auto"
                                   marginBottom="5px" id="gridRow10">
-                        <af:gridCell marginStart="5px" width="25%"
+                        <af:gridCell width="23%"
                                      id="gridCell39" halign="end"
                                      valign="middle">
                           <af:outputLabel value="Actual Start Date" id="ol19"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell44"
+                        <af:gridCell marginStart="5px" width="27%" id="gridCell44"
                                      valign="middle">
                           <af:inputDate value="#{bindings.OrigStartDate.inputValue}"
                                         required="#{bindings.OrigStartDate.hints.mandatory}"
@@ -1558,18 +1557,18 @@
                                         partialTriggers="soc16"
                                         autoSubmit="true"
                                         disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
-                                        valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}">
+                                        valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}"
+                                        contentStyle="width:200px;">
                             <f:validator binding="#{bindings.OrigStartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
                           </af:inputDate>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
+                        <af:gridCell marginStart="5px" width="23%"
                                      id="gridCell41" halign="end"
                                      valign="middle">
                           <af:outputLabel value="Actual End Date" id="ol20"/>
                         </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell43"
+                        <af:gridCell marginStart="5px" width="27%" id="gridCell43"
                                      valign="middle">
                           <af:inputDate value="#{bindings.OrigEndDate.inputValue}"
                                         required="#{bindings.OrigEndDate.hints.mandatory}"
@@ -1600,7 +1599,7 @@
                                               id="selectOneChoice2"
                                               simple="true"
                                               contentStyle="width:200px"
-                                              disabled="true"
+                                              readOnly="true"
                                               partialTriggers="soc16"
                                               binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
                                               >
@@ -1624,7 +1623,7 @@
                                         maximumLength="#{bindings.NumberOfDays.hints.precision}"
                                         shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
                                         id="inputText2" 
-                                        contentStyle="width:200px" partialTriggers="soc16"
+                                        contentStyle="width:200px;text-align:left" partialTriggers="soc16"
                                         binding="#{backingBeanScope.backing_employee.bstNoOfDays}"
                                         readOnly="true">
                             <f:validator binding="#{bindings.NumberOfDays.validator}"/>
@@ -1769,7 +1768,7 @@
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
                                               simple="true" 
-                                              disabled="true"
+                                              readOnly="true"
                                               contentStyle="width:200px"
                                               partialTriggers="soc16">
                             <f:selectItems value="#{bindings.AdvPerdiem.items}"
