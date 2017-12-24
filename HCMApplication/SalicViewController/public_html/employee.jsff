@@ -412,8 +412,8 @@
                                     required="#{bindings.AdvAmt.hints.mandatory}"
                                     columns="#{bindings.AdvAmt.hints.displayWidth}" simple="true"
                                     maximumLength="#{bindings.AdvAmt.hints.precision}"
-                                    shortDesc="#{bindings.AdvAmt.hints.tooltip}" id="it8" contentStyle="width:200px;"
-                                    partialTriggers="employeeNameTRANSId" readOnly="true">
+                                    shortDesc="#{bindings.AdvAmt.hints.tooltip}" id="it8" contentStyle="width:200px;text-align:left;"
+                                    partialTriggers="employeeNameTRANSId" disabled="true">
                         <f:validator binding="#{bindings.AdvAmt.validator}"/>
                         <af:convertNumber groupingUsed="true" minFractionDigits="2"/>
                       </af:inputText>
@@ -440,7 +440,7 @@
                                   shortDesc="#{bindings.Months.hints.tooltip}"
                                   id="it5" contentStyle="width:200px;"
                                   partialTriggers="employeeNameTRANSId"
-                                  readOnly="true">
+                                  disabled="true">
                       <f:validator binding="#{bindings.Months.validator}"/>
                     </af:inputText>
                     <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="#{bindings.SalaryDate.hints.mandatory}"
