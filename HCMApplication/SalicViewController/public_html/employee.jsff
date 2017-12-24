@@ -942,24 +942,24 @@
                 <af:showDetailItem text="HR Letter" id="showDetailItem1"
                                    rendered="#{sessionScope.page eq 'letter'}">
                   <af:panelFormLayout id="pfl6" rows="2">
-                    <af:selectOneChoice value="#{bindings.LetterTo.inputValue}"
-                                        label="#{bindings.LetterTo.label}"
-                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                        required="#{bindings.LetterTo.hints.mandatory}"
-                                        shortDesc="#{bindings.LetterTo.hints.tooltip}"
-                                        id="soc6" contentStyle="width:200px" autoSubmit="true">
-                      <f:selectItems value="#{bindings.LetterTo.items}"
-                                     id="si6"/>
-                    </af:selectOneChoice>
-                    <af:selectOneChoice value="#{bindings.LetterType.inputValue}"
-                                        label="#{bindings.LetterType.label}" 
-                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                        required="#{bindings.LetterType.hints.mandatory}"
-                                        shortDesc="#{bindings.LetterType.hints.tooltip}"
-                                        id="soc5" contentStyle="width:200px">
-                      <f:selectItems value="#{bindings.LetterType.items}"
-                                     id="si5"/>
-                    </af:selectOneChoice>
+                    <af:panelLabelAndMessage label="#{bindings.LetterTo.label}" id="plam11">
+                      <af:selectOneChoice value="#{bindings.LetterTo.inputValue}" label="#{bindings.LetterTo.label}"
+                                          disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                          required="#{bindings.LetterTo.hints.mandatory}"
+                                          shortDesc="#{bindings.LetterTo.hints.tooltip}" id="soc6"
+                                          contentStyle="width:200px" autoSubmit="true" simple="true">
+                        <f:selectItems value="#{bindings.LetterTo.items}" id="si6"/>
+                      </af:selectOneChoice>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage label="#{bindings.LetterType.label}" id="plam12">
+                      <af:selectOneChoice value="#{bindings.LetterType.inputValue}" label="#{bindings.LetterType.label}"
+                                          disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                          required="#{bindings.LetterType.hints.mandatory}"
+                                          shortDesc="#{bindings.LetterType.hints.tooltip}" id="soc5"
+                                          contentStyle="width:200px" simple="true">
+                        <f:selectItems value="#{bindings.LetterType.items}" id="si5"/>
+                      </af:selectOneChoice>
+                    </af:panelLabelAndMessage>
                     <af:inputText value="#{bindings.Other.inputValue}"
                                   label="Others (Arabic)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS' || sessionScope.mode=='edit'?'true':'false'}"
                                   required="#{bindings.Other.hints.mandatory}"
