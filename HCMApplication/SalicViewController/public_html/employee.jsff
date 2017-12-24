@@ -743,6 +743,32 @@
                               rowSelection="single" id="t7"
                               styleClass="AFStretchWidth"
                               partialTriggers="::cil7 ::cil9 ::cil8 :::employeeNameTRANSId :::pc5:cb11 :::pc5:t10:cb14 :::pc8:cb16">
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.name}"
+                                 sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}" id="c24">
+                        <af:inputText value="#{row.bindings.InvNum.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}" required="true"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.tooltip}"
+                                      id="it34">
+                          <f:validator binding="#{row.bindings.InvNum.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.name}"
+                                 sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}" id="c35">
+                        <af:inputText value="#{row.bindings.InvTotal.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}"
+                                      required="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.tooltip}"
+                                      id="it19">
+                          <f:validator binding="#{row.bindings.InvTotal.validator}"/>
+                        </af:inputText>
+                      </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
@@ -762,7 +788,7 @@
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.label}"
-                                 id="c23">
+                                 id="c23" width="170" minimumWidth="12">
                         <af:inputListOfValues id="ilov1"
                                               popupTitle="Search and Select: #{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.label}"
                                               value="#{row.bindings.childTRANS.inputValue}"
@@ -773,14 +799,44 @@
                                               binding="#{backingBeanScope.backing_employee.childTRANS}"
                                               valueChangeListener="#{backingBeanScope.backing_employee.childVC}"
                                               partialTriggers="id2"
-                                              disabled="#{row.bindings.InvDate.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}">
+                                              disabled="#{row.bindings.InvDate.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}"
+                                              contentStyle="width:140px;">
                           <f:validator binding="#{row.bindings.childTRANS.validator}"/>
                         </af:inputListOfValues>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.name}" sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}" id="c22"
+                                 width="50">
+                        <af:inputText value="#{row.bindings.Age.inputValue}" autoSubmit="true"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.tooltip}"
+                                      readOnly="true" id="it28" partialTriggers="ilov1">
+                          <f:validator binding="#{row.bindings.Age.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.name}"
+                                 sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}" id="c34"
+                                 width="170" minimumWidth="12">
+                        <af:inputText value="#{row.bindings.School.inputValue}" autoSubmit="true"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
+                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.tooltip}"
+                                      id="it33">
+                          <f:validator binding="#{row.bindings.School.validator}"/>
+                        </af:inputText>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.label}"
-                                 id="c33">
+                                 id="c33" width="50">
                         <af:selectOneChoice value="#{row.bindings.Grade.inputValue}" label="#{row.bindings.Grade.label}"
                                             required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.mandatory}"
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.tooltip}"
@@ -788,6 +844,19 @@
                                             id="soc8" autoSubmit="true" simple="true">
                           <f:selectItems value="#{row.bindings.Grade.items}" id="si8"/>
                           <f:validator binding="#{row.bindings.Grade.validator}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.name}"
+                                 sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.label}" id="c29">
+                        <af:selectOneChoice value="#{row.bindings.Semester.inputValue}"
+                                            label="#{row.bindings.Semester.label}"
+                                            shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.tooltip}"
+                                            id="soc7" simple="true" autoSubmit="true" required="true"
+                                            binding="#{backingBeanScope.backing_employee.semSOC}"
+                                            disabled="#{row.bindings.childTRANS.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}"
+                                            partialTriggers="ilov1">
+                          <f:selectItems value="#{row.bindings.Semester.items}" id="si7"/>
                         </af:selectOneChoice>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.name}"
@@ -806,57 +875,25 @@
                           <af:validateLongRange maximum="#{row.bindings.AvlAmt.inputValue}"/>
                         </af:inputText>
                       </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.name}"
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.name}"
                                  sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
-                                 id="c34">
-                        <af:inputText value="#{row.bindings.School.inputValue}" autoSubmit="true"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.label}" id="c30"
+                                 width="90">
+                        <af:inputText value="#{row.bindings.AvlAmt.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.label}"
                                       disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.mandatory}"
-                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.tooltip}"
-                                      id="it33">
-                          <f:validator binding="#{row.bindings.School.validator}"/>
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.mandatory}"
+                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.displayWidth}"
+                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.precision}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.tooltip}" id="it31"
+                                      readOnly="true" binding="#{backingBeanScope.backing_employee.avlAmt}">
+                          <f:validator binding="#{row.bindings.AvlAmt.validator}"/>
                         </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
-                                 id="c22">
-                        <af:inputText value="#{row.bindings.Age.inputValue}" autoSubmit="true"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.label}"
-                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.mandatory}"
-                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Age.tooltip}" readOnly="true"
-                                      id="it28" partialTriggers="ilov1">
-                          <f:validator binding="#{row.bindings.Age.validator}"/>
-                        </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.label}"
-                                 id="c29">
-                        <af:selectOneChoice value="#{row.bindings.Semester.inputValue}"
-                                            label="#{row.bindings.Semester.label}"
-                                            shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Semester.tooltip}"
-                                            id="soc7" simple="true"
-                                            autoSubmit="true"
-                                            required="true"
-                                            binding="#{backingBeanScope.backing_employee.semSOC}"
-                                            disabled="#{row.bindings.childTRANS.inputValue eq null or sessionScope.mode=='edit'?'true':'false'}"
-                                            partialTriggers="ilov1">
-                          <f:selectItems value="#{row.bindings.Semester.items}"
-                                         id="si7"/>
-                        </af:selectOneChoice>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.label}"
-                                 id="c28">
+                                 id="c28" width="90">
                         <af:inputText value="#{row.bindings.MaxAmt.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.MaxAmt.label}"
                                       disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -867,52 +904,6 @@
                                       id="it32" readOnly="true"
                                       binding="#{backingBeanScope.backing_employee.maxAmt}">
                           <f:validator binding="#{row.bindings.MaxAmt.validator}"/>
-                        </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.label}"
-                                 id="c30">
-                        <af:inputText value="#{row.bindings.AvlAmt.inputValue}"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.label}"
-                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.mandatory}"
-                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.AvlAmt.tooltip}"
-                                      id="it31" readOnly="true"
-                                      binding="#{backingBeanScope.backing_employee.avlAmt}">
-                          <f:validator binding="#{row.bindings.AvlAmt.validator}"/>
-                        </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}"
-                                 id="c24">
-                        <af:inputText value="#{row.bindings.InvNum.inputValue}"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}"
-                                      required="true"
-                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.tooltip}"
-                                      id="it34">
-                          <f:validator binding="#{row.bindings.InvNum.validator}"/>
-                        </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}"
-                                 id="c35">
-                        <af:inputText value="#{row.bindings.InvTotal.inputValue}"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}"
-                                      required="true"
-                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.precision}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.tooltip}"
-                                      id="it19">
-                          <f:validator binding="#{row.bindings.InvTotal.validator}"/>
                         </af:inputText>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Child.name}"
