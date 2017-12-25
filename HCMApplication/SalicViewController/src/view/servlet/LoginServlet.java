@@ -171,7 +171,7 @@ public class LoginServlet extends HttpServlet {
             _logger.info("UserName : " + loginBean.getUserName());
             System.err.println("UserName : " + loginBean.getUserName());
             if (loginBean.getUserName() != null) {
-                roles = svc.fetchRoles("paas.user@salic.com", "Welcome@123", loginBean.getPersonId());
+                roles = svc.fetchRoles("paas.user@salic.com", "Welc@me123", loginBean.getPersonId());
 
                 if (roles != null && roles.size() > 0) {
                     _logger.info("Roles size : " + roles != null ? roles.size() + "" : "0");
