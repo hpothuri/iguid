@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.16.48"
+                id="ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef" Package="SalicView.pageDefs"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="managerDashbaordROVO1Iterator" Binds="managerDashbaordROVO1"
+              DataControl="ManagerDashbordAMDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <methodAction id="prepareMailTemplateAndSend" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false"
+                  DataControl="ManagerDashbordAMDataControl"
+                  InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
+      <NamedData NDName="approveOrReject" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

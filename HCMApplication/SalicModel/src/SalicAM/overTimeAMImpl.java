@@ -29,6 +29,8 @@ import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
 import SalicROVO.getApprovalGrpDetailsROVORowImpl;
 //grpRec
+import common.AESEncryption;
+
 import common.pojo.EmailRequestPojo;
 
 import java.math.BigDecimal;
@@ -1381,7 +1383,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             if(rows != null && rows.length > 0){
                 //next level approver is present.
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
-                
+                String approverId = (String) rows[0].getAttribute("ApproverId");
                 //sending email to employee about first level approval complete and nexi is pending
                 
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
@@ -1412,8 +1414,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "");
-               actionButtons.put("Reject", "");
+               actionButtons.put("Approve", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
+               actionButtons.put("Reject", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -1486,7 +1488,9 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).stringValue());
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("employeeNameTRANS"));
         emailReq.setEmpNumber((String) otHdrVO.getCurrentRow().getAttribute("empNumberTRANS"));
-
+        
+        String approverId = "";
+        
         ArrayList<String> toRecepients = new ArrayList<String>();
         
 //        getXxQpActionHistoryTVO1().executeQuery();
@@ -1497,6 +1501,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         if(rows != null && rows.length > 0){
             for(Row row : rows){
                 approverName = (String)row.getAttribute("ApproverUserName");
+                approverId = (String)row.getAttribute("ApproverId");
                 toRecepients.add((String)row.getAttribute("ApproverUserName"));
             }
         }
@@ -1730,8 +1735,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setMessage("<b> "+ reqType +
                             " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
         actionButtons = new LinkedHashMap<String, String>();
-        actionButtons.put("Approve", "");
-        actionButtons.put("Reject", "");
+        actionButtons.put("Approve", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
+        actionButtons.put("Reject", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
         actionButtons.put("More Info", "");
         emailReq.setActionButtons(actionButtons);
         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());

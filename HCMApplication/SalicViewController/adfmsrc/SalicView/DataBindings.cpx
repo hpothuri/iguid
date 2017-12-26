@@ -103,6 +103,9 @@
             usageId="SalicView_overtimeSearchBTF_overtimeSearchBTF_filterReqActionHistoryPageDef"/>
       <page path="/WEB-INF/payRollBTF.xml#payRollBTF@filterReqActionHistory"
             usageId="SalicView_payRollBTF_payRollBTF_filterReqActionHistoryPageDef"/>
+      <page path="/pages/ApproveOrRejectByEmail.jsf" usageId="SalicView_ApproveOrRejectByEmailPageDef"/>
+      <page path="/WEB-INF/ApproveOrRejectEmailTF.xml#ApproveOrRejectEmailTF@initAppOrRej"
+            usageId="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -207,6 +210,9 @@
             path="SalicView.pageDefs.overtimeSearchBTF_overtimeSearchBTF_filterReqActionHistoryPageDef"/>
       <page id="SalicView_payRollBTF_payRollBTF_filterReqActionHistoryPageDef"
             path="SalicView.pageDefs.payRollBTF_payRollBTF_filterReqActionHistoryPageDef"/>
+      <page id="SalicView_ApproveOrRejectByEmailPageDef" path="pages.ApproveOrRejectByEmailPageDef"/>
+      <page id="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"
+            path="SalicView.pageDefs.ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"

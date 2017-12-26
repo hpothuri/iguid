@@ -9,6 +9,7 @@ import SalicROVO.getApprovalGrpDetailsROVORowImpl;
 import SalicROVO.getApprovalSetupDetailsROVOImpl;
 import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
+import common.AESEncryption;
 import common.GenerateEmailTemplate;
 
 import common.pojo.EmailRequestPojo;
@@ -198,6 +199,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         getXxQpActionHistoryTVO1().executeQuery();
         
         BigDecimal empId = (BigDecimal) ADFContext.getCurrent().getPageFlowScope().get("mempId");
+        if(empId == null){
+            empId = (BigDecimal) otHdrVO.getNamedWhereClauseParam("p_emp_logged_in");
+        }
         
         BigDecimal approveLevel = null;
         String firstLevelApproverName = "";
@@ -416,7 +420,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             if(rows != null && rows.length > 0){
                 //next level approver is present.
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
-                
+                String approverId = (String) rows[0].getAttribute("ApproverId");
                 //sending email to employee about first level approval complete and nexi is pending
                 
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
@@ -447,8 +451,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "");
-               actionButtons.put("Reject", "");
+               actionButtons.put("Approve", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
+               actionButtons.put("Reject", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
