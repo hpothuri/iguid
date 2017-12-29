@@ -412,7 +412,7 @@
                                                 <af:outputText value="Overtime"
                                                                id="ot10"
                                                                rendered="false"/>
-                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':row.ReqType eq 'BusinessTrip'?'Business Trip':row.ReqType eq 'BusinessTripCompletion'?'Business Trip Completion':''}"
+                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':row.ReqType eq 'BusinessTrip'?'Business Trip':row.ReqType eq 'BusinessTripCompletion'?'Business Trip Completion':row.ReqType eq 'letter'?'HR Letter':''}"
                                                                id="ot14"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.EmployeeNumber.name}"

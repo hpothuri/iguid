@@ -301,7 +301,7 @@
                   <f:validator binding="#{row.bindings.ReqType.validator}"/>
                 </af:selectOneChoice>
                 <af:outputText id="ot28" rendered="false"
-                               value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':''}"/>
+                               value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':row.ReqType eq 'BusinessTrip'?'Business Trip':row.ReqType eq 'BusinessTripCompletion'?'Business Trip Completion':row.ReqType eq 'letter'?'HR Letter':''}"/>
               </af:column>
               <af:column id="c28" headerText="Payroll Transfer Date"
               sortProperty="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.name}"

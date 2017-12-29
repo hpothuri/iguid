@@ -239,7 +239,7 @@
                                                 </af:panelGroupLayout>
                                           </af:panelGroupLayout>
                                     </af:panelBox>
-                                    <af:panelBox text="PanelBox5" id="pb5"
+                                    <af:panelBox text="PanelBox5" id="pb5" visible="false"
                                                  type="stretch"
                                                  showDisclosure="false"
                                                  showHeader="never"
@@ -377,7 +377,7 @@
                                                 <af:outputText value="Overtime"
                                                                id="ot1"
                                                                rendered="false"/>
-                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation':row.ReqType eq 'edu'?'Education':row.ReqType eq 'salary'?'Salary':row.ReqType eq 'house'?'House':''}"
+                                                <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':row.ReqType eq 'BusinessTrip'?'Business Trip':row.ReqType eq 'BusinessTripCompletion'?'Business Trip Completion':row.ReqType eq 'letter'?'HR Letter':''}"
                                                                id="ot13"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.hrAdminObjROVO1.hints.EmployeeNumber.name}"
