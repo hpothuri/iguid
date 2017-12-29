@@ -222,11 +222,12 @@ public class ManagerAppr {
         ViewObject mgrVO =
             ADFUtils.findIterator("managerDashbaordROVO1Iterator").getViewObject();
         //        mgrVO.getCurrentRow().getAttribute("");
+        String ApprComments = (String)mgrVO.getCurrentRow().getAttribute("ApprComments");
+        //refresh();
+        if(ApprComments!=null || (ApprComments!=null && !ApprComments.isEmpty())){
+        
         updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "R",
                        (String)mgrVO.getCurrentRow().getAttribute("RequestNumber"));
-        
-        //refresh();
-        
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
         op.getParamsMap().put("approveOrReject", "R");
         op.execute();
@@ -240,6 +241,10 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol10);
         mgrVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+        }
+        else{
+            JSFUtils.addFacesErrorMessage("Enter Comments for rejection");
+        }
         
     }
 

@@ -136,6 +136,9 @@
    <ViewUsage
       Name="getUserARStatusROVO1"
       ViewObjectName="SalicROVO.getUserARStatusROVO"/>
+   <ViewUsage
+      Name="ValidatePublicHolidayVO1"
+      ViewObjectName="SalicView.ValidatePublicHolidayVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"
@@ -624,6 +627,16 @@
          <Return
             Name="_return_type_"
             Type="void"/>
+      </Method>
+      <Method
+         Name="validatePublicHoliday"
+         MethodName="validatePublicHoliday">
+         <Return
+            Name="_return_type_"
+            Type="int"/>
+         <Parameter
+            Name="otdate"
+            Type="java.sql.Date"/>
       </Method>
    </ClientInterface>
 </AppModule>

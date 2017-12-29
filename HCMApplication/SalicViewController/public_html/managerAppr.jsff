@@ -286,6 +286,7 @@
                               <af:button text="Reject" id="b2" actionListener="#{ManagerAppr.rejectACL}"
                                          disabled="#{bindings.ApproverFlag.inputValue eq 'A' ? 'true' : 'false' or bindings.ApproverFlag.inputValue eq 'R'? 'true' :'false'}"
                                          partialTriggers="t2"/>
+                              <af:button text="Request More Info" id="b3"/>
                            </af:toolbar>
                         </f:facet>
                         <f:facet name="statusbar"/>

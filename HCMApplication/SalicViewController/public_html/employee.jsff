@@ -72,7 +72,7 @@
               <af:popup childCreation="deferred" autoCancel="disabled" id="px2"
                         binding="#{backingBeanScope.backing_employee.reject}">
                 <af:dialog id="dx2" title="Reject Request" type="none">
-                  <af:inputText label="Comments" value="#{pageFlowScope.rejectComment}" id="itx58" rows="3"/>
+                  <af:inputText label="Comments" required="true" value="#{pageFlowScope.rejectComment}" id="itx58" rows="3"/>
                   <f:facet name="buttonBar">
                     <af:button text="Reject" id="bx1"
                                action="#{backingBeanScope.backing_employee.rejectNewACL}"/>
@@ -96,30 +96,36 @@
                            inlineStyle="margin-right:13px;margin-top:10px;"
                            styleClass="portlet-form-button">
                     <af:commandMenuItem text="Save &amp; Close" id="cmi1"
+                    visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                                         action="#{backingBeanScope.backing_employee.saveAC}"
                                         partialTriggers="pc1:t2 pc1:t2:it6"
                                         rendered="#{sessionScope.page eq 'mng'?'false':'true'}"/>
                     <af:commandMenuItem text="Save" id="cmi2"
+                    visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                                         partialTriggers="ot10 employeeNameTRANSId"
                                         actionListener="#{backingBeanScope.backing_employee.saveACL}"/>
                     <af:commandMenuItem text="Approve" id="cmi3"
                                         disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' : bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject  ? 'true' : 'false'}"
+                                        visible = "#{sessionScope.search eq 'mngr'}"
                                         actionListener="#{backingBeanScope.backing_employee.approveOkRequest}"/>
                     <af:commandMenuItem text="Reject" id="cmi4"
+                    visible = "#{sessionScope.search eq 'mngr'}"
                                         disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.rejectOkRequest}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
                                         disabled="#{bindings.Status.inputValue ne 'Pending Approval'?'true':'false'}"
-                                        rendered="#{sessionScope.page eq 'emp'?'true':'false'}"
+                                        visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.withdrawACL}"
                                         action="save"/>
-                    <af:commandMenuItem text="Delegate" id="cmi6"
-                                        disabled="#{sessionScope.hr ne 'hr'}"/>
+                    <af:commandMenuItem text="Request More Info" id="cmi6"
+                    visible="#{sessionScope.search eq 'mngr'?'true':'false'}"
+                    disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
+                                        />
                     <af:commandMenuItem text="Delete" id="cmi7"
                                         action="#{backingBeanScope.backing_employee.deleteReqACL}"
-                                        rendered="#{sessionScope.page eq 'emp'?'true':'false'}"
+                                        rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         disabled="#{bindings.Status.inputValue ne 'APPROVE'?'true':'false'}"/>
                   </af:menu>
                 </af:menuBar>
@@ -137,6 +143,7 @@
                 <af:commandButton text="Submit" id="cb10"
                                   action="#{backingBeanScope.backing_employee.approvalSubmitACL}"
                                   partialTriggers="ot10"
+                                  visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                   disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                                   inlineStyle="margin-right:13px;margin-top:10px;"
                                   binding="#{backingBeanScope.backing_employee.appMenu}"/>
@@ -270,10 +277,10 @@
               <f:facet name="toolbar"/>
               <af:panelTabbed position="above" id="pt2"
                               styleClass="AFStretchWidth"
-                              inlineStyle="height:1400px;">
+                              >
                 <af:showDetailItem id="tab1" text="Over Time Lines"
                                    styleClass="AFStretchWidth"
-                                   inlineStyle="height:350.0px;"
+                                   
                                    rendered="#{sessionScope.page eq 'ot'}">
                   <af:panelCollection id="pc1" styleClass="AFStretchWidth">
                     <f:facet name="menus"/>
@@ -313,11 +320,9 @@
                               selectionListener="#{bindings.XxhcmOvertimeDetailsAllVO2.collectionModel.makeCurrent}"
                               rowSelection="single" id="t2"
                               columnStretching="last"
-                              styleClass="AFStretchWidth"
-                              inlineStyle="height:175px;"
                               partialTriggers="::cil1 ::cil2 :::employeeNameTRANSId"
                               binding="#{backingBeanScope.backing_employee.dtlTable}"
-                              scrollPolicy="scroll">
+                              scrollPolicy="scroll" autoHeightRows="7">
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.name}"
                                  sortable="true"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.label}"
@@ -1261,7 +1266,7 @@
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell5" halign="end"
                                      valign="middle">
-                          <af:outputLabel value="Comments" id="outputLabel3"/>
+                          <af:outputLabel value="Trip Description" id="outputLabel3"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell6" valign="bottom">

@@ -1059,7 +1059,14 @@ public class Employee {
         BigDecimal totlHrs = new BigDecimal(0);
         java.sql.Date overtimeDate = (java.sql.Date)ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getCurrentRow().getAttribute("OvertimeDate");
         RowSetIterator rsi = lineVO1.createRowSetIterator("total");
-        
+        int month = overtimeDate.getMonth();
+        String[] months = {"January", "February",
+              "March", "April", "May", "June", "July",
+              "August", "September", "October", "November",
+              "December"};
+
+              String monthStr = months[month];
+        System.out.println("Month selected is ==>"+monthStr);
         while(rsi.hasNext()){
             oracle.jbo.domain.Number hrs = (oracle.jbo.domain.Number)rsi.next().getAttribute("OvertimeHours");
             totlHrs = totlHrs.add(hrs.bigDecimalValue());
@@ -1075,7 +1082,8 @@ public class Employee {
         BigDecimal count = (BigDecimal)countcheckVO.first().getAttribute("Totalhrs");
         totlHrs = totlHrs.add(count!=null ? count : new BigDecimal(0));
         if(totlHrs.compareTo(new BigDecimal(40)) == 1){
-           return "Over time quota hours exceeded for the month";
+            
+           return "You have exceeded 40 hours in the "+monthStr+" month";
         }
         return errorMsg;
     }
@@ -1786,7 +1794,24 @@ public class Employee {
                 //            System.out.println(new SimpleDateFormat("EEEE",
                 //                                                    Locale.ENGLISH).format(day.getTime()));
                 BigDecimal dummy = null;
-                if (new SimpleDateFormat("EEEE",
+                //OT_HOL
+                
+                oracle.binding.OperationBinding op = ADFUtils.findOperation("validatePublicHoliday");
+                op.getParamsMap().put("otdate", domaiDay);
+                op.execute();
+                Integer holCnt = (Integer)op.getResult();
+                if(holCnt > 0){
+                    lineVO.getCurrentRow().setAttribute("OvertimeType",
+                                                        "OT_HOL");
+                    //OvertimeHours
+                    lineVO.getCurrentRow().setAttribute("OvertimeHours",
+                                                        dummy);
+                    lineVO.getCurrentRow().setAttribute("CalculatedHours",
+                                                        dummy);
+                    
+                    AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
+                }
+                else if (new SimpleDateFormat("EEEE",
                                          Locale.ENGLISH).format(day.getTime()).equalsIgnoreCase("friday")) {
                     lineVO.getCurrentRow().setAttribute("OvertimeType",
                                                         "OT_WE");
@@ -2680,7 +2705,7 @@ public class Employee {
         return (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
     }
 
-    public void withdrawACL(ActionEvent actionEvent) {
+    public String withdrawACL(ActionEvent actionEvent) {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -2688,24 +2713,21 @@ public class Employee {
                                              new BigDecimal(1));
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
-        ViewCriteria vc = actionHisVO.createViewCriteria();
-        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
-        vcr.setAttribute("ReqNumber",
-                         otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
-        vc.addRow(vcr);
-        actionHisVO.applyViewCriteria(vc);
-        actionHisVO.executeQuery();
-        if (actionHisVO.first() != null) {
-            actionHisVO.first().setAttribute("ApproverComments",
-                                             "Request Withdrawn");
-            actionHisVO.first().setAttribute("Page", "OT-W");
+        java.sql.Date dummyDate = null;
+        while(actionHisVO.hasNext()){
+            Row row = actionHisVO.next();
+            row.setAttribute("ApproverFlag", null);
+            row.setAttribute("LastUpdateDate", dummyDate);
+            row.setAttribute("ApprDate", null);
+            row.setAttribute("ApproverComments", dummyDate);
         }
 
         ADFUtils.findOperation("Commit").execute();
-        JSFUtils.addFacesInformationMessage("Request Withdrawn!");
-        //        appMenu.setDisabled(true);
-        //        AdfFacesContext.getCurrentInstance().addPartialTarget(appMenu);
+        JSFUtils.addFacesInformationMessage("Request is Withdrawn!");
+        //TODO : KMA : Send Email for manager
+        //TODO : KMA : Send Email for employee also stating the request is withdrawn
         AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
+        return "save";
     }
 
     public void setAppMenu(RichCommandButton appMenu) {

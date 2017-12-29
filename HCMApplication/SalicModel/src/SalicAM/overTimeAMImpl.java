@@ -3,6 +3,7 @@ package SalicAM;
 import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
 
+import SalicView.ValidatePublicHolidayVOImpl;
 import SalicView.XxhcmOtherExpenseTVOImpl;
 
 import SalicROVO.getUserARStatusROVOImpl;
@@ -1829,6 +1830,22 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public getUserARStatusROVOImpl getgetUserARStatusROVO1() {
         return (getUserARStatusROVOImpl) findViewObject("getUserARStatusROVO1");
+    }
+
+    /**
+     * Container's getter for ValidatePublicHolidayVO1.
+     * @return ValidatePublicHolidayVO1
+     */
+    public ValidatePublicHolidayVOImpl getValidatePublicHolidayVO1() {
+        return (ValidatePublicHolidayVOImpl) findViewObject("ValidatePublicHolidayVO1");
+    }
+    
+    public int validatePublicHoliday(Date otdate){
+        BigDecimal cnt = null;
+        getValidatePublicHolidayVO1().setNamedWhereClauseParam("bind_otdate", otdate);
+        getValidatePublicHolidayVO1().executeQuery();
+        cnt = (BigDecimal)getValidatePublicHolidayVO1().first().getAttribute("Countdata");
+        return cnt.intValue();
     }
 }
 

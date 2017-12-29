@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ValidatePublicHolidayVO"
+  Version="12.2.1.12.24"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="SalicView.ValidatePublicHolidayVORowImpl"
+  ComponentClass="SalicView.ValidatePublicHolidayVOImpl"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="bind_otdate"
+    Kind="where"
+    Type="java.sql.Date"/>
+  <SQLQuery><![CDATA[select count(*) countdata from xxstg_publicholidayDTLS where :bind_otdate between start_date and end_date]]></SQLQuery>
+  <ViewAttribute
+    Name="Countdata"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="COUNTDATA"
+    Expression="COUNTDATA"
+    SQLType="NUMERIC"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Countdata"/>
+  </AttrArray>
+</ViewObject>

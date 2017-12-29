@@ -45,4 +45,6 @@ public interface overTimeAM extends ApplicationModule {
     String getJobLevel(Number empId);
 
     void updateApproverStatus();
+
+    int validatePublicHoliday(Date otdate);
 }

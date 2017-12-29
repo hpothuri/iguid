@@ -649,5 +649,11 @@
             <Item Value="ApproverFlag"/>
          </AttrNames>
       </attributeValues>
+      <methodAction id="validatePublicHoliday" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="validatePublicHoliday" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.validatePublicHoliday.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.validatePublicHoliday_validatePublicHoliday_dataControl_dataProvider_validatePublicHoliday_result">
+         <NamedData NDName="otdate" NDType="java.sql.Date"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

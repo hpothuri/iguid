@@ -324,7 +324,7 @@ public class UserService
       loginBean =   mm.findSelfUserDetails(new LoginBean());
 //      UserService serv = new UserService(null, "paas.user@salic.com", "Welcome@123");
       //"300000009808202"
-      List<RolePojo> roles = mm.fetchRoles("paas.user@salic.com", "Welcome@123", loginBean.getPersonId());
+      List<RolePojo> roles = mm.fetchRoles("paas.user@salic.com", "Welc@me123", loginBean.getPersonId());
       
       for(RolePojo role : roles)
        System.err.println(role.getRoleName());

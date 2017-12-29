@@ -32,6 +32,7 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
    </list>
    <list n="listOfChildren">
+      <hash><url n="URL" path="SalicHcmWebServiceModule/SalicHcmWebServiceModule.jpr"/></hash>
       <hash><url n="URL" path="SalicModel/SalicModel.jpr"/></hash>
       <hash><url n="URL" path="SalicViewController/SalicViewController.jpr"/></hash>
    </list>

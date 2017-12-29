@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle-webservice-clients xmlns:ns0="http://java.sun.com/xml/ns/javaee">
+   <webservice-client>
+      <service-qname namespaceURI="http://xmlns.oracle.com/oxp/service/v2" localpart="ScheduleService"/>
+      <port-info>
+         <wsdl-port namespaceURI="http://xmlns.oracle.com/oxp/service/v2" localpart="ScheduleService"/>
+         <runtime/>
+         <operations>
+            <operation name="getDocumentData"/>
+            <operation name="getAllJobInstanceIDs"/>
+            <operation name="getAllScheduledReport"/>
+            <operation name="getAllScheduledReportInSession"/>
+            <operation name="getScheduledJobInfo"/>
+            <operation name="getScheduledJobInfoInSession"/>
+            <operation name="getScheduledReportStatus"/>
+            <operation name="getScheduledReportStatusInSession"/>
+            <operation name="getAllScheduledReportHistory"/>
+            <operation name="getAllScheduledReportHistoryInSession"/>
+            <operation name="getScheduledReportOutputInfo"/>
+            <operation name="getScheduledReportOutputInfoInSession"/>
+            <operation name="getDocumentDataInSession"/>
+            <operation name="downloadDocumentData"/>
+            <operation name="downloadDocumentDataInSession"/>
+            <operation name="getXMLData"/>
+            <operation name="getXMLDataInSession"/>
+            <operation name="downloadXMLData"/>
+            <operation name="downloadXMLDataInSession"/>
+            <operation name="resendScheduledReport"/>
+            <operation name="resendScheduledReportInSession"/>
+            <operation name="deleteJobHistory"/>
+            <operation name="deleteJobHistoryInSession"/>
+            <operation name="purgeJobHistory"/>
+            <operation name="purgeJobHistoryInSession"/>
+            <operation name="getScheduledReportDeliveryInfo"/>
+            <operation name="getScheduledReportDeliveryInfoInSession"/>
+            <operation name="scheduleReport"/>
+            <operation name="scheduleReportInSession"/>
+            <operation name="deleteSchedule"/>
+            <operation name="deleteScheduleInSession"/>
+            <operation name="resumeSchedule"/>
+            <operation name="resumeScheduleInSession"/>
+            <operation name="suspendSchedule"/>
+            <operation name="suspendScheduleInSession"/>
+            <operation name="cancelSchedule"/>
+            <operation name="cancelScheduleInSession"/>
+            <operation name="getDeliveryServiceDefinition"/>
+            <operation name="getDeliveryServiceDefinitionInSession"/>
+            <operation name="deliveryService"/>
+            <operation name="deliveryServiceInSession"/>
+         </operations>
+      </port-info>
+   </webservice-client>
+</oracle-webservice-clients>

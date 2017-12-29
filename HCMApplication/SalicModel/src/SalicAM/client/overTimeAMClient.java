@@ -131,6 +131,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public int validatePublicHoliday(Date otdate) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "validatePublicHoliday", new String[] { "java.sql.Date" },
+                                        new Object[] { otdate });
+        return ((Integer) _ret).intValue();
+    }
+
     public Boolean validateThreeChildsPerYear(BigDecimal empId, Date invDate, BigDecimal childId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validateThreeChildsPerYear",
