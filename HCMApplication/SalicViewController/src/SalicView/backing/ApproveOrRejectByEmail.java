@@ -24,7 +24,7 @@ public class ApproveOrRejectByEmail {
     public void initAppOrRejByMail(){
         String reqId = AESEncryption.decryptText((String) ADFUtils.evaluateEL("#{param.reqId}"));
         String appOrRejFlag = (String) ADFUtils.evaluateEL("#{param.appOrRej}");
-        String approverId = (String) ADFUtils.evaluateEL("#{param.approverId}");
+        String approverId = AESEncryption.decryptText((String) ADFUtils.evaluateEL("#{param.approverId}"));
         System.out.println("Req ID : "+reqId);
         System.out.println("App Or Rej flag : "+appOrRejFlag);
         System.out.println("Approver Id : "+approverId);
@@ -33,6 +33,7 @@ public class ApproveOrRejectByEmail {
             ADFUtils.findIterator("managerDashbaordROVO1Iterator").getViewObject();
         mgrVo.setNamedWhereClauseParam("p_emp_logged_in", new BigDecimal(approverId));
         mgrVo.executeQuery();
+        
         oracle.jbo.Row rows[] = mgrVo.getFilteredRows("ReqId", new BigDecimal(reqId));
         if(rows != null && rows.length > 0){
             mgrVo.setCurrentRow(rows[0]);
@@ -109,4 +110,5 @@ public class ApproveOrRejectByEmail {
             System.err.println("===EXE==" + e.toString());
         }
     }
+
 }
