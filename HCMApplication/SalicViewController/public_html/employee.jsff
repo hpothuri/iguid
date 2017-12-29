@@ -748,6 +748,20 @@
                               rowSelection="single" id="t7"
                               styleClass="AFStretchWidth"
                               partialTriggers="::cil7 ::cil9 ::cil8 :::employeeNameTRANSId :::pc5:cb11 :::pc5:t10:cb14 :::pc8:cb16">
+                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.name}"
+                                 sortable="false"
+                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}" id="c19">
+                        <af:inputDate value="#{row.bindings.InvDate.inputValue}"
+                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
+                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
+                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}" id="id2"
+                                      autoSubmit="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                      valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}"
+                                      minValue="#{backingBeanScope.backing_employee.minDateForEduAllowance}">
+                          <f:validator binding="#{row.bindings.InvDate.validator}"/>
+                          <af:convertDateTime pattern="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.format}"/>
+                        </af:inputDate>
+                      </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.name}"
                                  sortable="false"
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.label}" id="c24">
@@ -757,7 +771,7 @@
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvNum.tooltip}"
-                                      id="it34">
+                                      id="it34" autoSubmit="true">
                           <f:validator binding="#{row.bindings.InvNum.validator}"/>
                         </af:inputText>
                       </af:column>
@@ -770,25 +784,9 @@
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.tooltip}"
-                                      id="it19">
+                                      id="it19" autoSubmit="true">
                           <f:validator binding="#{row.bindings.InvTotal.validator}"/>
                         </af:inputText>
-                      </af:column>
-                      <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.name}"
-                                 sortable="false"
-                                 headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
-                                 id="c19">
-                        <af:inputDate value="#{row.bindings.InvDate.inputValue}"
-                                      label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
-                                      shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}"
-                                      id="id2" autoSubmit="true"
-                                      disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}"
-                                      minValue="#{backingBeanScope.backing_employee.minDateForEduAllowance}">
-                          <f:validator binding="#{row.bindings.InvDate.validator}"/>
-                          <af:convertDateTime pattern="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.format}"/>
-                        </af:inputDate>
                       </af:column>
                       <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.childTRANS.name}"
                                  sortable="false"
@@ -2486,7 +2484,7 @@
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
                           <f:validator binding="#{row.bindings.Attachment.validator}"/>
                         </af:inputText>
-                        <af:inputFile label="Label 1" id="if1"  value="#{viewScope.attachup}"
+                        <af:inputFile label="Label 1" id="if1"  value="#{viewScope.attachup}" required="true"
                                       valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}"
                                       autoSubmit="true"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>

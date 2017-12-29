@@ -32,10 +32,3 @@ def empIdTRANS_RecalcExpressionScript_RecalcExpression()
 true
 }
 
-
-@TransientValueExpression(attributeName="SalaryDate")
-def SalaryDate_ExpressionScript_Expression()
-{
-adf.currentDate
-}
-

@@ -312,7 +312,7 @@ public class OvertimeSearch {
                 BigDecimal month = new BigDecimal((String)reqDetailRow.getAttribute("Months"));
                 reqDetailRow.setAttribute("AdvAmt",salary.multiply(month).multiply(new BigDecimal(0.25)));
             }            
-            
+            line.getCurrentRow().setAttribute("SalaryDate", new java.sql.Date((new java.util.Date()).getTime()));
             //line.executeQuery();
 
 
@@ -480,6 +480,7 @@ public class OvertimeSearch {
                                                            Month);
 
             reqDetailRow.setAttribute("SalPeriod", Month);
+            line.getCurrentRow().setAttribute("SalaryDate", new java.sql.Date((new java.util.Date()).getTime()));
             
         }
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
