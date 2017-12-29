@@ -1494,11 +1494,11 @@
                           </af:inputText>
                         </af:gridCell>
                       </af:gridRow>
-                      <!--af:gridRow marginTop="12px" height="auto" id="gridRow4">
+                      <af:gridRow marginTop="12px" height="auto" id="gridRow4">
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell13" halign="end"
                                      valign="middle">
-                          <af:outputLabel value="Start Date" id="outputLabel6"/>
+                          <af:outputLabel  value="Start Date" id="outputLabel6" partialTriggers="soc16" visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell14" valign="middle">
@@ -1508,9 +1508,10 @@
                                         id="inputDate1"
                                         contentStyle="width:200px"
                                         simple="true"
+                                        visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         partialTriggers="soc16"
                                         binding="#{backingBeanScope.backing_employee.bstStDt}"
-                                        readOnly="true">
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
                             <f:validator binding="#{bindings.StartDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
                           </af:inputDate>
@@ -1518,12 +1519,13 @@
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell15" halign="end"
                                      valign="middle">
-                          <af:outputLabel value="End Date" id="outputLabel7"/>
+                          <af:outputLabel  partialTriggers="soc16" value="End Date" id="outputLabel7" visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"/>
                         </af:gridCell>
                         <af:gridCell marginStart="5px" width="25%"
                                      marginEnd="5px" id="gridCell16"
                                      valign="middle">
                           <af:inputDate value="#{bindings.EndDate.inputValue}"
+                          visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         required="#{bindings.EndDate.hints.mandatory}"
                                         shortDesc="#{bindings.EndDate.hints.tooltip}"
                                         id="inputDate2"
@@ -1531,12 +1533,12 @@
                                         simple="true"
                                         partialTriggers="soc16"
                                         binding="#{backingBeanScope.backing_employee.bstEdDt}"
-                                        readOnly="true">
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
                             <f:validator binding="#{bindings.EndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
                           </af:inputDate>
                         </af:gridCell>
-                      </af:gridRow-->
+                      </af:gridRow>
                       <af:gridRow marginTop="12px" height="auto"
                                   marginBottom="5px" id="gridRow10">
                         <af:gridCell width="23%"
@@ -1552,7 +1554,7 @@
                                         id="id9" 
                                         partialTriggers="soc16"
                                         autoSubmit="true"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}"
                                         contentStyle="width:200px;">
                             <f:validator binding="#{bindings.OrigStartDate.validator}"/>
@@ -1572,7 +1574,7 @@
                                         id="id10"
                                         autoSubmit="true"
                                         partialTriggers="soc16"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
                             <f:validator binding="#{bindings.OrigEndDate.validator}"/>
                             <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>

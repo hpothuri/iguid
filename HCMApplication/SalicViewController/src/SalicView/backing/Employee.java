@@ -3220,9 +3220,9 @@ rs.closeRowSetIterator();
             currRow.setAttribute("TripType",
                                  oldRow.getAttribute("TripType") == null ? "" :
                                  oldRow.getAttribute("TripType"));
-            currRow.setAttribute("BussTravReqNumValue",
-                                 oldRow.getAttribute("BussTravReqNumValue") == null ? "" :
-                                 oldRow.getAttribute("BussTravReqNumValue"));
+//            currRow.setAttribute("BussTravReqNumValue",
+//                                 oldRow.getAttribute("BussTravReqNumValue") == null ? "" :
+//                                 oldRow.getAttribute("BussTravReqNumValue"));
             currRow.setAttribute("AirlineTicketType",
                                  oldRow.getAttribute("AirlineTicketType") ==
                                  null ? "" :
@@ -3271,6 +3271,12 @@ rs.closeRowSetIterator();
             currRow.setAttribute("AdvPerdiem",
                                  oldRow.getAttribute("AdvPerdiem") == null ?
                                  "" : oldRow.getAttribute("AdvPerdiem"));
+            
+            if(currRow.getAttribute("AdvPerdiem") != null && "NO".equalsIgnoreCase(currRow.getAttribute("AdvPerdiem").toString())){
+                currRow.setAttribute("OrigStartDate", null);
+                currRow.setAttribute("OrigEndDate", null);
+            }
+            
             currRow.setAttribute("Description",
                                  oldRow.getAttribute("Description") == null ?
                                  "" : oldRow.getAttribute("Description"));
