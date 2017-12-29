@@ -1392,7 +1392,7 @@
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
                                         required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.mandatory}"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                        columns="60"
+                                        columns="80" rows="3"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.tooltip}"
                                         id="it41">
