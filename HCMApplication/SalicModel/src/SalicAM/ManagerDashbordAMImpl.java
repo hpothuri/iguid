@@ -194,6 +194,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         ArrayList<String> toRecepients = new ArrayList<String>();
         
+        getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
         getXxQpActionHistoryTVO1().executeQuery();
@@ -409,7 +410,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         }
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
        
-        
+        getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
+        getXxQpActionHistoryTVO1().executeQuery();
         Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
         if(rows != null && rows.length > 0){
             approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
@@ -451,8 +455,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
-               actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
+               actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+               actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -489,6 +493,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         }
         }
         else if(approveOrReject != null && "R".equalsIgnoreCase(approveOrReject)){
+            getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
+            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
+            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
+            getXxQpActionHistoryTVO1().executeQuery();
             Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
             if(rows != null && rows.length > 0){
                 approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
@@ -560,6 +568,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         EmailRequestPojo emailReq = new EmailRequestPojo();
                         emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmail(to);
+                        emailReq.setRequestId(new Integer(req_id+""));
                         emailReq.setToEmpName(managerName);
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:");
@@ -571,31 +580,209 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
+                        ArrayList<String> tableContentCols = new ArrayList<String>();
+                        LinkedHashMap<String, String> tableColumnDatatypes = null;
+                        String reqPage = reqType;
+                        
+                        if (reqPage.equalsIgnoreCase("ot")) {
+                            tableContentCols.add("Over Time Date");
+                            tableContentCols.add("Over Time Type");
+                            tableContentCols.add("Over Time Hours");
+                            tableContentCols.add("Calculated Hours");
+                            tableContentCols.add("Description");
+
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("OVERTIME_DATE", "DATE");
+                            tableColumnDatatypes.put("OVERTIME_TYPE", "STRING");
+                            tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
+                            tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+
+                        }
+                        else if(reqPage.equalsIgnoreCase("salary")){
+                            tableContentCols.add("Salary Period");
+                            tableContentCols.add("Comments");
+
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("SAL_PERIOD", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                        }
+                        else if(reqPage.equalsIgnoreCase("BusinessTrip")){
+                            tableContentCols.add("Trip Type");
+                            tableContentCols.add("Airline Ticket Type");
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Destination Category");
+                            tableContentCols.add("Number Of Days");
+                            tableContentCols.add("Exit Reentry Visa");
+                            tableContentCols.add("Destination Country");
+                            tableContentCols.add("Advance PerDiem");
+                            tableContentCols.add("Destination Visa Required");
+                            tableContentCols.add("Project Type");
+                            tableContentCols.add("Comments");
+                            
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+                            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+                            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+                            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+                            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+                            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+                            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+                            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("BusinessTripCompletion")){
+                            
+                            tableContentCols.add("Business Travel Request Number");
+                            tableContentCols.add("Trip Type");
+                            tableContentCols.add("Airline Ticket Type");
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Original Start Date");
+                            tableContentCols.add("Original End Date");
+                            tableContentCols.add("Destination Category");
+                            tableContentCols.add("Number Of Days");
+                            tableContentCols.add("Exit Reentry Visa");
+                            tableContentCols.add("Destination Country");
+                            tableContentCols.add("Advance PerDiem");
+                            tableContentCols.add("Destination Visa Required");
+                            tableContentCols.add("Project Type");
+                            tableContentCols.add("Comments");
+                            
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM", "STRING");
+                            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+                            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("ORIG_START_DATE", "DATE");
+                            tableColumnDatatypes.put("ORIG_END_DATE", "DATE");
+                            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+                            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+                            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+                            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+                            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+                            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+                            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("edu")){
+                            tableContentCols.add("Invoice Number");
+                            tableContentCols.add("Invoice Date");
+                            tableContentCols.add("Child Name");
+                            tableContentCols.add("School Grade");
+                            tableContentCols.add("Actual Amount");
+                            tableContentCols.add("School");
+                            tableContentCols.add("Age");
+                            tableContentCols.add("Semester");
+                            tableContentCols.add("Max Eligible Amount");
+                            tableContentCols.add("Available Amount");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("INV_NUM", "STRING");
+                            tableColumnDatatypes.put("INV_DATE", "DATE");
+                            tableColumnDatatypes.put("CHILD", "STRING");
+                            tableColumnDatatypes.put("GRADE", "STRING");
+                            tableColumnDatatypes.put("ACT_AMT", "STRING");
+                            tableColumnDatatypes.put("SCHOOL", "STRING");
+                            tableColumnDatatypes.put("AGE", "STRING");
+                            tableColumnDatatypes.put("SEMESTER", "STRING");
+                            tableColumnDatatypes.put("MAX_AMT", "STRING");
+                            tableColumnDatatypes.put("AVL_AMT", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("letter")){
+                            tableContentCols.add("Letter Type");
+                            tableContentCols.add("Letter To");
+                            tableContentCols.add("Others");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("LETTER_TYPE", "STRING");
+                            tableColumnDatatypes.put("LETTER_TO", "STRING");
+                            tableColumnDatatypes.put("OTHER", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("vacation")){
+                            tableContentCols.add("Leave");
+                            tableContentCols.add("Comments");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("LEAVE", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("house")){
+                            tableContentCols.add("Advance Amount");
+                            tableContentCols.add("Comments");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("ADV_AMT", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+
+
                         //Code for Sending email for second approver
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
-//                        Row vonew = getXxQpActionHistoryTVO1().createRow();
-//                        //xx_qp_action_history_s
-//                        apprSeqNew = apprSeqNew + 1;
-//                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
-//                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
-//                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
-//                        vonew.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
-//                        vonew.setAttribute("ApproverId", managerId);
-//                        vonew.setAttribute("ApproverUserName", managerName);
-//                        vonew.setAttribute("ApproverComments", null);
-//                        vonew.setAttribute("ApproverFlag", null);
-//                        
-//                        vonew.setAttribute("Type", "H");
-//                        vonew.setAttribute("Page", getStringBasedOnReqType(reqType));
-//                        vonew.setAttribute("ApprType", "Approval");
-//                        vonew.setAttribute("CreatedBy", empIdB.toString());
-//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
-//                        vonew.setAttribute("LastUpdatedBy", empIdB.toString());
-//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
-//                        vonew.setAttribute("LastUpdateLogin", empIdB.toString());
-//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
-//                        vonew.setAttribute("ReqNumber", reqNumber);
-//                        getXxQpActionHistoryTVO1().insertRow(vonew);
                         
                         if(jobLevelInt == 2){     
                             
@@ -613,37 +800,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 }else{
                                     managerName = null;
                                 }
-//                                Row vonew1 = getXxQpActionHistoryTVO1().createRow();
-//                                //xx_qp_action_history_s
-//                                apprSeqNew = apprSeqNew + 1;
-//                                SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
-//                                vonew1.setAttribute("ActionHistoryId", si1.getSequenceNumber());
-//                                vonew1.setAttribute("HeaderId", req_id.bigDecimalValue());
-//                                vonew1.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
-//                                vonew1.setAttribute("ApproverId", managerId);
-//                                vonew1.setAttribute("ApproverUserName", managerName);
-//                                vonew1.setAttribute("ApproverComments", null);
-//                                vonew1.setAttribute("ApproverFlag", null);
-//                                
-//                                vonew1.setAttribute("Type", "H");
-//                                vonew1.setAttribute("Page", getStringBasedOnReqType(reqType));
-//                                vonew1.setAttribute("ApprType", "Approval");
-//                                vonew1.setAttribute("CreatedBy", empIdB.toString());
-//                                //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
-//                                vonew1.setAttribute("LastUpdatedBy", empIdB.toString());
-//                                //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
-//                                vonew1.setAttribute("LastUpdateLogin", empIdB.toString());
-//                                //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
-//                                vonew1.setAttribute("ReqNumber", reqNumber);
-//                                getXxQpActionHistoryTVO1().insertRow(vonew1);
+                               
                         //String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                        emailReq = new EmailRequestPojo();
+//                        emailReq = new EmailRequestPojo();
                         emailReq.setToEmail(to);
                                 emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmpName(managerName);
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
-                        actionButtons = new LinkedHashMap<String, String>();
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
@@ -664,38 +828,218 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     approvgrpDet.executeQuery(); 
                     rsigrpDet = approvgrpDet.createRowSetIterator("grp");
                     while(rsigrpDet.hasNext()){
-                        getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();
-//                        Row vonewgrp = getXxQpActionHistoryTVO1().createRow();
-//                        //xx_qp_action_history_s
-//                        apprSeqNew = apprSeqNew + 1;
-//                        SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
-//                        vonewgrp.setAttribute("ActionHistoryId", si1.getSequenceNumber());
-//                        vonewgrp.setAttribute("HeaderId", req_id.bigDecimalValue());
-//                        vonewgrp.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
-//                        vonewgrp.setAttribute("ApproverId", grpRec.getEmployeeId());
-//                        vonewgrp.setAttribute("ApproverUserName", grpRec.getEmployeeName());
-//                        vonewgrp.setAttribute("ApproverComments", null);
-//                        vonewgrp.setAttribute("ApproverFlag", null);
-//                        
-//                        vonewgrp.setAttribute("Type", "H");
-//                        vonewgrp.setAttribute("Page", getStringBasedOnReqType(reqType));
-//                        vonewgrp.setAttribute("ApprType", "Approval");
-//                        vonewgrp.setAttribute("CreatedBy", empIdB.toString());
-//                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
-//                        vonewgrp.setAttribute("LastUpdatedBy", empIdB.toString());
-//                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
-//                        vonewgrp.setAttribute("LastUpdateLogin", empIdB.toString());
-//                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
-//                        vonewgrp.setAttribute("ReqNumber", reqNumber);
-//                        getXxQpActionHistoryTVO1().insertRow(vonewgrp);   
+                        getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();  
                         
                         String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                         EmailRequestPojo emailReq = new EmailRequestPojo();
                         emailReq.setToEmail(to);
                         emailReq.setRequestNo(reqNumber);
+                        emailReq.setRequestId(new Integer(req_id+""));
                         emailReq.setToEmpName(grpRec.getEmployeeName());
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                        
+                        
+                        ArrayList<String> tableContentCols = new ArrayList<String>();
+                        LinkedHashMap<String, String> tableColumnDatatypes = null;
+                        String reqPage = reqType;
+                        
+                        if (reqPage.equalsIgnoreCase("ot")) {
+                            tableContentCols.add("Over Time Date");
+                            tableContentCols.add("Over Time Type");
+                            tableContentCols.add("Over Time Hours");
+                            tableContentCols.add("Calculated Hours");
+                            tableContentCols.add("Description");
+
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("OVERTIME_DATE", "DATE");
+                            tableColumnDatatypes.put("OVERTIME_TYPE", "STRING");
+                            tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
+                            tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+
+                        }
+                        else if(reqPage.equalsIgnoreCase("salary")){
+                            tableContentCols.add("Salary Period");
+                            tableContentCols.add("Comments");
+
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("SAL_PERIOD", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                        }
+                        else if(reqPage.equalsIgnoreCase("BusinessTrip")){
+                            tableContentCols.add("Trip Type");
+                            tableContentCols.add("Airline Ticket Type");
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Destination Category");
+                            tableContentCols.add("Number Of Days");
+                            tableContentCols.add("Exit Reentry Visa");
+                            tableContentCols.add("Destination Country");
+                            tableContentCols.add("Advance PerDiem");
+                            tableContentCols.add("Destination Visa Required");
+                            tableContentCols.add("Project Type");
+                            tableContentCols.add("Comments");
+                            
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+                            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+                            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+                            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+                            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+                            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+                            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+                            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("BusinessTripCompletion")){
+                            
+                            tableContentCols.add("Business Travel Request Number");
+                            tableContentCols.add("Trip Type");
+                            tableContentCols.add("Airline Ticket Type");
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Original Start Date");
+                            tableContentCols.add("Original End Date");
+                            tableContentCols.add("Destination Category");
+                            tableContentCols.add("Number Of Days");
+                            tableContentCols.add("Exit Reentry Visa");
+                            tableContentCols.add("Destination Country");
+                            tableContentCols.add("Advance PerDiem");
+                            tableContentCols.add("Destination Visa Required");
+                            tableContentCols.add("Project Type");
+                            tableContentCols.add("Comments");
+                            
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM", "STRING");
+                            tableColumnDatatypes.put("TRIP_TYPE", "STRING");
+                            tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("ORIG_START_DATE", "DATE");
+                            tableColumnDatatypes.put("ORIG_END_DATE", "DATE");
+                            tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
+                            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+                            tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
+                            tableColumnDatatypes.put("DESTINATION_COUNTRY", "STRING");
+                            tableColumnDatatypes.put("ADV_PERDIEM", "STRING");
+                            tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
+                            tableColumnDatatypes.put("PROJ_TYPE", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("edu")){
+                            tableContentCols.add("Invoice Number");
+                            tableContentCols.add("Invoice Date");
+                            tableContentCols.add("Child Name");
+                            tableContentCols.add("School Grade");
+                            tableContentCols.add("Actual Amount");
+                            tableContentCols.add("School");
+                            tableContentCols.add("Age");
+                            tableContentCols.add("Semester");
+                            tableContentCols.add("Max Eligible Amount");
+                            tableContentCols.add("Available Amount");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("INV_NUM", "STRING");
+                            tableColumnDatatypes.put("INV_DATE", "DATE");
+                            tableColumnDatatypes.put("CHILD", "STRING");
+                            tableColumnDatatypes.put("GRADE", "STRING");
+                            tableColumnDatatypes.put("ACT_AMT", "STRING");
+                            tableColumnDatatypes.put("SCHOOL", "STRING");
+                            tableColumnDatatypes.put("AGE", "STRING");
+                            tableColumnDatatypes.put("SEMESTER", "STRING");
+                            tableColumnDatatypes.put("MAX_AMT", "STRING");
+                            tableColumnDatatypes.put("AVL_AMT", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("letter")){
+                            tableContentCols.add("Letter Type");
+                            tableContentCols.add("Letter To");
+                            tableContentCols.add("Others");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("LETTER_TYPE", "STRING");
+                            tableColumnDatatypes.put("LETTER_TO", "STRING");
+                            tableColumnDatatypes.put("OTHER", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("vacation")){
+                            tableContentCols.add("Leave");
+                            tableContentCols.add("Comments");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("LEAVE", "STRING");
+                            tableColumnDatatypes.put("MISSIONS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        else if(reqPage.equalsIgnoreCase("house")){
+                            tableContentCols.add("Advance Amount");
+                            tableContentCols.add("Comments");
+                            
+                            emailReq.setTableContentColumns(tableContentCols);
+
+
+                            emailReq.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+                                                     emailReq.getRequestId());
+
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("ADV_AMT", "STRING");
+                            tableColumnDatatypes.put("COMMENTS", "STRING");
+                            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+                        }
+                        
                         LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");

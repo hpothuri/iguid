@@ -1414,8 +1414,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
-               actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
+               actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+               actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -1735,8 +1735,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setMessage("<b> "+ reqType +
                             " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
         actionButtons = new LinkedHashMap<String, String>();
-        actionButtons.put("Approve", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=A");
-        actionButtons.put("Reject", "http:\\\\127.0.0.1\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+approverId+"&appOrRej=R");
+        actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+        actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
         actionButtons.put("More Info", "");
         emailReq.setActionButtons(actionButtons);
         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
