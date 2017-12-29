@@ -507,7 +507,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             emailReq.setToEmail(to);
             emailReq.setToEmpName(emailReq.getEmpName());
             emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is rejected");
-            emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected by "+firstLevelApproverName+"with hereunder information: <br><br> Reject Reason : "+rejectReason);
+            emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected by "+firstLevelApproverName+" with hereunder information: <br><br> Reject Reason : "+rejectReason);
             LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
             actionButtons = new LinkedHashMap<String, String>();
             actionButtons.put("More Info", "");
