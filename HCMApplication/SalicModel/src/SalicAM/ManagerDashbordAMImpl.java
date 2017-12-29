@@ -455,8 +455,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
-               actionButtons.put("Reject", "http:\\\\127.0.0.1:7101\\ess\\faces\\pages\\ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+               actionButtons.put("Approve", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+               actionButtons.put("Reject", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
