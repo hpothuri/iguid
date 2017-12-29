@@ -1347,6 +1347,10 @@ FROM  XXHCM_OVERTIME_DETAILS_ALL XxhcmOvertimeDetailsAllEO]]></SQLQuery>
     EntityAttrName="SalaryDate"
     EntityUsage="XxhcmOvertimeDetailsAllEO"
     AliasName="SALARY_DATE">
+    <TransientExpression
+      Name="ExpressionScript"
+      trustMode="untrusted"
+      CodeSourceName="XxhcmOvertimeDetailsAllVORow"/>
     <Properties>
       <SchemaBasedProperties>
         <LABEL

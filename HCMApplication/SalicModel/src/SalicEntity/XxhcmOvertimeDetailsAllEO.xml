@@ -908,7 +908,7 @@
       OnAttribute="SalaryDate"
       OperandType="EXPR"
       Inverse="false"
-      CompareType="GREATERTHAN">
+      CompareType="GREATERTHANEQUALTO">
       <validation:TransientExpression
         Name="ValidationRuleScript"
         CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
