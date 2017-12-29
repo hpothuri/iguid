@@ -115,7 +115,7 @@
                                         disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.rejectOkRequest}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
-                                        disabled="#{bindings.Status.inputValue ne 'Pending Approval'?'true':'false'}"
+                                        disabled="#{bindings.PayrollTansStatus.inputValue eq 'COMPLETED'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'true':'false'}"
                                         visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.withdrawACL}"
                                         action="save"/>
@@ -126,7 +126,7 @@
                     <af:commandMenuItem text="Delete" id="cmi7"
                                         action="#{backingBeanScope.backing_employee.deleteReqACL}"
                                         rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                        disabled="#{bindings.Status.inputValue ne 'APPROVE'?'true':'false'}"/>
+                                        disabled="#{bindings.PayrollTansStatus.inputValue eq 'COMPLETED'?'true':'false'}"/>
                   </af:menu>
                 </af:menuBar>
                 <af:commandButton text="Save &amp; Close"

@@ -655,5 +655,10 @@
                     ReturnName="data.overTimeAMDataControl.methodResults.validatePublicHoliday_validatePublicHoliday_dataControl_dataProvider_validatePublicHoliday_result">
          <NamedData NDName="otdate" NDType="java.sql.Date"/>
       </methodAction>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator" id="PayrollTansStatus">
+         <AttrNames>
+            <Item Value="PayrollTansStatus"/>
+         </AttrNames>
+      </attributeValues>
    </bindings>
 </pageDefinition>
