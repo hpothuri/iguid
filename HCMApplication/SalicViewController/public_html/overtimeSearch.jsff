@@ -195,6 +195,7 @@
               
                     <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}">
                       <af:setPropertyListener from="add" to="#{sessionScope.mode}" type="action"/>
+                      <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
                     </af:commandButton>
                     
               <af:spacer width="40" height="20" id="sde1"/>
