@@ -100,7 +100,14 @@
         <af:panelCollection id="pc1"  styleClass="AFStretchWidth"
                                 inlineStyle="height:440.0px;">
           <f:facet name="menus"/>
-          <f:facet name="toolbar"/>
+          <f:facet name="toolbar">
+            <af:toolbar id="t3">
+              <af:button id="b1" icon="/images/excel.png">
+                <af:exportCollectionActionListener type="excelHTML" exportedId="t2" filename="ManagerDashboard.xls"
+                                                   title="Manager Dashboard"/>
+              </af:button>
+            </af:toolbar>
+          </f:facet>
           <f:facet name="statusbar"/>
           <af:table value="#{bindings.XxQpActionHistoryTVO1.collectionModel}"
                     var="row" rows="#{bindings.XxQpActionHistoryTVO1.rangeSize}"

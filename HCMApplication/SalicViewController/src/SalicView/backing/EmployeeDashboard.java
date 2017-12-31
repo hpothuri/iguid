@@ -14,6 +14,8 @@ import oracle.adf.view.rich.component.rich.data.RichTable;
 
 import oracle.adf.view.rich.component.rich.layout.RichPanelBox;
 import oracle.adf.view.rich.component.rich.layout.RichPanelDashboard;
+import oracle.adf.view.rich.component.rich.layout.RichToolbar;
+import oracle.adf.view.rich.component.rich.nav.RichButton;
 import oracle.adf.view.rich.component.rich.nav.RichCommandLink;
 import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
 import oracle.adf.view.rich.component.rich.output.RichPanelCollection;
@@ -67,6 +69,8 @@ public class EmployeeDashboard {
 
     private RichTable t2;
     private RichPanelBox pb61;
+    private RichToolbar t3;
+    private RichButton b1;
 
 
     public void setPd1(RichPanelDashboard pd1) {
@@ -331,5 +335,21 @@ public class EmployeeDashboard {
                 ADFContext aDFContext = ADFContext.getCurrent();
                 aDFContext.getPageFlowScope().put("eempId",empId);
         
+    }
+
+    public void setT3(RichToolbar t3) {
+        this.t3 = t3;
+    }
+
+    public RichToolbar getT3() {
+        return t3;
+    }
+
+    public void setB1(RichButton b1) {
+        this.b1 = b1;
+    }
+
+    public RichButton getB1() {
+        return b1;
     }
 }

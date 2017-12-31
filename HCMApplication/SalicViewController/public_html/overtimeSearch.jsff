@@ -74,6 +74,10 @@
                       <af:fileDownloadActionListener method="#{JasperReportBean.onClickPDFReport}"
                                                      contentType="application/pdf"/>
                     </af:commandImageLink>
+                    <af:button id="b1" icon="/images/excel.png">
+                      <af:exportCollectionActionListener type="excelHTML" exportedId="t3" filename="SearchResults.xls"
+                                                         title="Search Results"/>
+                    </af:button>
                   </af:toolbar>
                 </f:facet>
                 <f:facet name="statusbar"/>

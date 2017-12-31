@@ -287,6 +287,11 @@
                                          disabled="#{bindings.ApproverFlag.inputValue eq 'A' ? 'true' : 'false' or bindings.ApproverFlag.inputValue eq 'R'? 'true' :'false'}"
                                          partialTriggers="t2"/>
                               <af:button text="Request More Info" id="b3"/>
+                              <af:button id="b4" icon="/images/excel.png">
+                                 <af:exportCollectionActionListener type="excelHTML" exportedId="t2"
+                                                                    filename="ManagerDashboard.xls"
+                                                                    title="Manager Dashboard"/>
+                              </af:button>
                            </af:toolbar>
                         </f:facet>
                         <f:facet name="statusbar"/>

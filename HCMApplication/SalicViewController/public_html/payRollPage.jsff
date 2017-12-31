@@ -295,6 +295,12 @@
                                                 <af:commandButton text="Initiate Payroll Transfer"
                                                                   id="cb6"
                                                                   action="topayrollTransfer"/>
+                                                <af:button id="b1" icon="/images/excel.png">
+                                                      <af:exportCollectionActionListener type="excelHTML"
+                                                                                         exportedId="t2"
+                                                                                         filename="PayrollDashboard.xls"
+                                                                                         title="Payroll Dashboard"/>
+                                                </af:button>
                                           </af:toolbar>
                                     </f:facet>
                                     <f:facet name="statusbar"/>

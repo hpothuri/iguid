@@ -285,7 +285,16 @@
                                                   styleClass="AFStretchWidth"
                                                   inlineStyle="height:440.0px;">
                                     <f:facet name="menus"/>
-                                    <f:facet name="toolbar"/>
+                                    <f:facet name="toolbar">
+                                          <af:toolbar id="t3">
+                                                <af:button id="b1" icon="/images/excel.png">
+                                                      <af:exportCollectionActionListener type="excelHTML"
+                                                                                         exportedId="t2"
+                                                                                         filename="HRDashboard.xls"
+                                                                                         title="HR Dashboard"/>
+                                                </af:button>
+                                          </af:toolbar>
+                                    </f:facet>
                                     <f:facet name="statusbar"/>
                                     <af:table value="#{bindings.hrAdminObjROVO11.collectionModel}"
                                               var="row"
