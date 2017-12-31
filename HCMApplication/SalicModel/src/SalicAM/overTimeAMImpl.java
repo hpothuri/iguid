@@ -1,5 +1,6 @@
 package SalicAM;
 
+import SalicROVO.FetchEmailActionLinkVOImpl;
 import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
 
@@ -1138,7 +1139,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     public void prepareMailTemplateAndSend(String approveOrReject) {
         EmailRequestPojo emailReq = new EmailRequestPojo();
         
-     
+        ViewObjectImpl emailVO = getFetchEmailActionLinkVO1();
+        emailVO.executeQuery();
+        String emailUrl = "";
+        if(emailVO.first() != null){
+            emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
+        }
         
         ViewObjectImpl otHdrVO = getXxhcmOvertimeHeadersAllVO1();
         
@@ -1415,8 +1421,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
-               actionButtons.put("Reject", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+               actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+               actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -1479,6 +1485,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
 
     public void prepareMailTemplateAndSend() {
         EmailRequestPojo emailReq = new EmailRequestPojo();
+        
+        ViewObjectImpl emailVO = getFetchEmailActionLinkVO1();
+        emailVO.executeQuery();
+        String emailUrl = "";
+        if(emailVO.first() != null){
+            emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
+        }
         
         String reqType =  getStringBasedOnReqType((String) ADFContext.getCurrent().getSessionScope()
                                                                                .get("page"));
@@ -1736,8 +1749,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setMessage("<b> "+ reqType +
                             " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
         actionButtons = new LinkedHashMap<String, String>();
-        actionButtons.put("Approve", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
-        actionButtons.put("Reject", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+        actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+        actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
         actionButtons.put("More Info", "");
         emailReq.setActionButtons(actionButtons);
         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -1846,6 +1859,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         getValidatePublicHolidayVO1().executeQuery();
         cnt = (BigDecimal)getValidatePublicHolidayVO1().first().getAttribute("Countdata");
         return cnt.intValue();
+    }
+
+    /**
+     * Container's getter for FetchEmailActionLinkVO1.
+     * @return FetchEmailActionLinkVO1
+     */
+    public FetchEmailActionLinkVOImpl getFetchEmailActionLinkVO1() {
+        return (FetchEmailActionLinkVOImpl) findViewObject("FetchEmailActionLinkVO1");
     }
 }
 

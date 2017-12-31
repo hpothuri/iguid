@@ -2,6 +2,7 @@ package SalicAM;
 
 import SalicAM.common.ManagerDashbordAM;
 
+import SalicROVO.FetchEmailActionLinkVOImpl;
 import SalicROVO.GetJobLevelROVOImpl;
 import SalicROVO.GetManagerDetailsROVOImpl;
 import SalicROVO.getApprovalGrpDetailsROVOImpl;
@@ -180,7 +181,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
     public void prepareMailTemplateAndSend(String approveOrReject) {
         EmailRequestPojo emailReq = new EmailRequestPojo();
         
-     
+        ViewObjectImpl emailVO = getFetchEmailActionLinkVO1();
+        emailVO.executeQuery();
+        String emailUrl = "";
+        if(emailVO.first() != null){
+            emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
+        }
         
         ViewObjectImpl otHdrVO = getmanagerDashbaordROVO1();
         
@@ -455,8 +461,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
                actionButtons = new LinkedHashMap<String, String>();
-               actionButtons.put("Approve", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
-               actionButtons.put("Reject", "https://129.150.78.218:7002/ess/faces/pages/ApproveOrRejectByEmail.jsf?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+               actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+               actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
                actionButtons.put("More Info", "");
                emailReq.setActionButtons(actionButtons);
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
@@ -1150,5 +1156,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
      */
     public ViewObjectImpl getemployeeROVO1() {
         return (ViewObjectImpl) findViewObject("employeeROVO1");
+    }
+
+    /**
+     * Container's getter for FetchEmailActionLinkVO1.
+     * @return FetchEmailActionLinkVO1
+     */
+    public FetchEmailActionLinkVOImpl getFetchEmailActionLinkVO1() {
+        return (FetchEmailActionLinkVOImpl) findViewObject("FetchEmailActionLinkVO1");
     }
 }

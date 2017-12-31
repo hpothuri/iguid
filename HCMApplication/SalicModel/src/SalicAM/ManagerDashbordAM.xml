@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ManagerDashbordAM"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.ManagerDashbordAMImpl"
@@ -56,6 +56,9 @@
   <ViewUsage
     Name="employeeROVO1"
     ViewObjectName="SalicROVO.employeeROVO"/>
+  <ViewUsage
+    Name="FetchEmailActionLinkVO1"
+    ViewObjectName="SalicROVO.FetchEmailActionLinkVO"/>
   <ViewLinkUsage
     Name="manager_QpActionHistory_VL2"
     ViewLinkObjectName="SalicVL.manager_QpActionHistory_VL"
