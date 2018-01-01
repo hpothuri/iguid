@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -33,7 +33,8 @@
        XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS, 
        XxhcmOvertimeHeadersAllEO.REQ_TYPE, 
        XxhcmOvertimeHeadersAllEO.HDL_RES, 
-       XxhcmOvertimeHeadersAllEO.UCM_RES"
+       XxhcmOvertimeHeadersAllEO.UCM_RES, 
+       XxhcmOvertimeHeadersAllEO.REQ_STATUS"
   FromList="XXHCM_OVERTIME_HEADERS_ALL XxhcmOvertimeHeadersAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -64,7 +65,7 @@
     RowLevelBinds="true">
     <ViewCriteriaUsage
       Name="findById"
-      FullName="SalicROVO.employeeROVO.findById"/>
+      FullName="SalicView.XxhcmOvertimeHeadersAllVO.findById"/>
     <ParameterMap>
       <PIMap Variable="BV_EMP_ID">
         <TransientExpression
@@ -514,6 +515,12 @@ return null;
     EntityAttrName="UcmRes"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="UCM_RES"/>
+  <ViewAttribute
+    Name="ReqStatus"
+    PrecisionRule="true"
+    EntityAttrName="ReqStatus"
+    EntityUsage="XxhcmOvertimeHeadersAllEO"
+    AliasName="REQ_STATUS"/>
   <ViewCriteria
     Name="XxhcmOvertimeHeadersAllVOCriteria"
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"

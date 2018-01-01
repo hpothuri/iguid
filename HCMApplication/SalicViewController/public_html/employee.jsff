@@ -448,7 +448,7 @@
                                   disabled="true">
                       <f:validator binding="#{bindings.Months.validator}"/>
                     </af:inputText>
-                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="#{bindings.SalaryDate.hints.mandatory}"
+                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="true"
                                   columns="#{bindings.SalaryDate.hints.displayWidth}"
                                   label="Advance Date"
                                   disabled="#{sessionScope.mode eq 'edit'}"
@@ -490,7 +490,7 @@
                                           value="#{bindings.Leave.inputValue}"
                                           label="#{bindings.Leave.hints.label}"
                                           model="#{bindings.Leave.listOfValuesModel}"
-                                          required="#{bindings.Leave.hints.mandatory}"
+                                          required="true"
                                           columns="#{bindings.Leave.hints.displayWidth}"
                                           shortDesc="#{bindings.Leave.hints.tooltip}"
                                           contentStyle="width:180px;"
@@ -529,7 +529,7 @@
                   <af:panelFormLayout id="pfl4" rows="2">
                     <af:selectOneChoice value="#{bindings.SalPeriod.inputValue}"
                                         label="Salary Period"
-                                        required="#{bindings.SalPeriod.hints.mandatory}"
+                                        required="true"
                                         shortDesc="#{bindings.SalPeriod.hints.tooltip}"
                                         id="soc2" contentStyle="width:200px;"
                                         binding="#{backingBeanScope.backing_employee.soc2}"
@@ -540,7 +540,7 @@
                       <f:selectItems value="#{bindings.SalPeriod.items}"
                                      id="si2"/>
                     </af:selectOneChoice>
-                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="#{bindings.SalaryDate.hints.mandatory}"
+                    <af:inputDate value="#{bindings.SalaryDate.inputValue}" required="true"
                                   columns="#{bindings.SalaryDate.hints.displayWidth}"
                                   label="Advance Date"
                                   disabled="#{sessionScope.mode eq 'edit'}"
@@ -753,7 +753,7 @@
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}" id="c19">
                         <af:inputDate value="#{row.bindings.InvDate.inputValue}"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.label}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.mandatory}"
+                                      required="true"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvDate.tooltip}" id="id2"
                                       autoSubmit="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                       valueChangeListener="#{backingBeanScope.backing_employee.invDateVC}"
@@ -828,7 +828,7 @@
                         <af:inputText value="#{row.bindings.School.inputValue}" autoSubmit="true"
                                       label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.label}"
                                       disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                      required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.mandatory}"
+                                      required="true"
                                       columns="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.displayWidth}"
                                       maximumLength="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.precision}"
                                       shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.School.tooltip}"
@@ -841,7 +841,7 @@
                                  headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.label}"
                                  id="c33" width="50">
                         <af:selectOneChoice value="#{row.bindings.Grade.inputValue}" label="#{row.bindings.Grade.label}"
-                                            required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.mandatory}"
+                                            required="true"
                                             shortDesc="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.Grade.tooltip}"
                                             disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                             id="soc8" autoSubmit="true" simple="true">
@@ -948,7 +948,7 @@
                     <af:panelLabelAndMessage label="#{bindings.LetterTo.label}" id="plam11">
                       <af:selectOneChoice value="#{bindings.LetterTo.inputValue}" label="#{bindings.LetterTo.label}"
                                           disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                          required="#{bindings.LetterTo.hints.mandatory}"
+                                          required="true"
                                           shortDesc="#{bindings.LetterTo.hints.tooltip}" id="soc6"
                                           contentStyle="width:200px" autoSubmit="true" simple="true">
                         <f:selectItems value="#{bindings.LetterTo.items}" id="si6"/>
@@ -957,7 +957,7 @@
                     <af:panelLabelAndMessage label="#{bindings.LetterType.label}" id="plam12">
                       <af:selectOneChoice value="#{bindings.LetterType.inputValue}" label="#{bindings.LetterType.label}"
                                           disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                          required="#{bindings.LetterType.hints.mandatory}"
+                                          required="true"
                                           shortDesc="#{bindings.LetterType.hints.tooltip}" id="soc5"
                                           contentStyle="width:200px" simple="true">
                         <f:selectItems value="#{bindings.LetterType.items}" id="si5"/>
@@ -965,7 +965,7 @@
                     </af:panelLabelAndMessage>
                     <af:inputText value="#{bindings.Other.inputValue}"
                                   label="Others (Arabic)"  partialTriggers="soc6" disabled="#{bindings.LetterTo.attributeValue ne 'OTHERS' || sessionScope.mode=='edit'?'true':'false'}"
-                                  required="#{bindings.Other.hints.mandatory}"
+                                  required="#{bindings.LetterTo.attributeValue ne 'OTHERS'}"
                                   maximumLength="#{bindings.Other.hints.precision}"
                                   shortDesc="#{bindings.Other.hints.tooltip}"
                                   id="it17" contentStyle="width:200px">
@@ -997,9 +997,8 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.TripType.inputValue}"
                                               label="#{bindings.TripType.label}"
-                                              required="#{bindings.TripType.hints.mandatory}"
                                               shortDesc="#{bindings.TripType.hints.tooltip}"
-                                              id="soc9" simple="true"
+                                              id="soc9" simple="true" required ="true"
                                               contentStyle="width:200px"
                                               readOnly="#{sessionScope.mode=='edit'?'true':'false'}">
                             <f:selectItems value="#{bindings.TripType.items}"
@@ -1014,17 +1013,17 @@
                                      marginEnd="5px" id="gc13" valign="middle">
                           <af:inputText value="#{bindings.AirlineTicketType.inputValue}"
                                         simple="true"
-                                        required="#{bindings.AirlineTicketType.hints.mandatory}"
+                                        required ="true"
                                         columns="#{bindings.AirlineTicketType.hints.displayWidth}"
                                         maximumLength="#{bindings.AirlineTicketType.hints.precision}"
                                         shortDesc="#{bindings.AirlineTicketType.hints.tooltip}"
-                                        id="it27" contentStyle="width:200px"
+                                        id="it27" contentStyle="width:200px" 
                                         rendered="false">
                             <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
                           </af:inputText>
                           <af:selectOneChoice value="#{bindings.AirlineTicketType1.inputValue}"
                                               label="#{bindings.AirlineTicketType1.label}"
-                                              required="#{bindings.AirlineTicketType1.hints.mandatory}"
+                                              required ="false"
                                               shortDesc="#{bindings.AirlineTicketType1.hints.tooltip}"
                                               id="soc17"
                                               contentStyle="width:200px"
@@ -1085,9 +1084,9 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.DestCategory.inputValue}"
                                               label="#{bindings.DestCategory.label}"
-                                              required="#{bindings.DestCategory.hints.mandatory}"
+                                             required ="true"
                                               shortDesc="#{bindings.DestCategory.hints.tooltip}"
-                                              id="soc10" simple="true"
+                                              id="soc10" simple="true" 
                                               contentStyle="width:200px"
                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCategory}"
                                               autoSubmit="true"
@@ -1105,7 +1104,7 @@
                                      marginEnd="5px" id="gc2" valign="middle">
                           <af:inputText value="#{bindings.NumberOfDays.inputValue}"
                                         simple="true"
-                                        required="#{bindings.NumberOfDays.hints.mandatory}"
+                                        required ="false"
                                         columns="#{bindings.NumberOfDays.hints.displayWidth}"
                                         maximumLength="#{bindings.NumberOfDays.hints.precision}"
                                         shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
@@ -1128,7 +1127,7 @@
                                      valign="middle">
                                      <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
                                               label="#{bindings.DestinationCountry.label}"
-                                              required="#{bindings.DestinationCountry.hints.mandatory}"
+                                              required ="true"
                                               shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc25"
                                               simple="true" partialTriggers="soc10"
                                               contentStyle="width:200px"
@@ -1155,7 +1154,7 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
                                               label="#{bindings.DestCountryCity.label}"
-                                              required="#{bindings.DestCountryCity.hints.mandatory}"
+                                              required ="true"
                                               shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc18"
                                               autoSubmit="true" partialTriggers="soc25" 
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -1178,7 +1177,7 @@
                                      marginEnd="5px" id="gc7" valign="middle">
                           <af:selectOneChoice value="#{bindings.ProjType.inputValue}"
                                               label="#{bindings.ProjType.label}"
-                                              required="#{bindings.ProjType.hints.mandatory}"
+                                              required ="true"
                                               shortDesc="#{bindings.ProjType.hints.tooltip}"
                                               id="soc15" simple="true"
                                               contentStyle="width:200px"
@@ -1195,7 +1194,7 @@
                         <af:gridCell marginStart="5px" width="25%" id="gc18" valign="middle">
                           <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
                                               label="#{bindings.ExitRerentryVisa.label}"
-                                              required="#{bindings.ExitRerentryVisa.hints.mandatory}"
+                                              required ="true"
                                              disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="soc11"
                                               simple="true" contentStyle="width:200px">
@@ -1208,7 +1207,7 @@
                         <af:gridCell marginStart="5px" width="25%" marginEnd="5px" id="gc15" valign="middle">
                           <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
                                               label="#{bindings.DestVisaRequired.label}"
-                                              required="#{bindings.DestVisaRequired.hints.mandatory}"
+                                              required ="true"
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="soc12"
                                               simple="true" contentStyle="width:200px">
@@ -1228,7 +1227,7 @@
                                      id="gridCell2" valign="middle">
                           <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}"
                                               label="#{bindings.AdvPerdiem.label}"
-                                              required="#{bindings.AdvPerdiem.hints.mandatory}"
+                                              required ="true"
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="soc14" simple="true"
                                               contentStyle="width:200px"
@@ -1356,7 +1355,7 @@
                                    id="c26" width="130">
                           <af:inputDate value="#{row.bindings.StartDate.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.mandatory}"
+                                        required ="true"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.tooltip}"
                                         id="id7"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -1372,7 +1371,7 @@
                                    id="c25" width="130">
                           <af:inputDate value="#{row.bindings.EndDate.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.mandatory}"
+                                        required ="true"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.tooltip}"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         id="id8"
@@ -1388,7 +1387,7 @@
                                    id="c20" width="180">
                           <af:inputText value="#{row.bindings.Activity.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.mandatory}"
+                                        required ="true"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="80" rows="3"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
@@ -1429,7 +1428,7 @@
                                                 value="#{bindings.BussTravReqNumValue.inputValue}"
                                                 label="#{bindings.BussTravReqNumValue.hints.label}"
                                                 model="#{bindings.BussTravReqNumValue.listOfValuesModel}"
-                                                required="#{bindings.BussTravReqNumValue.hints.mandatory}"
+                                                required ="true"
                                                 columns="#{bindings.BussTravReqNumValue.hints.displayWidth}"
                                                  valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
                                                 partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
@@ -1456,7 +1455,7 @@
                                      id="gridCell10" valign="middle">
                           <af:selectOneChoice value="#{bindings.TripType.inputValue}"
                                               label="#{bindings.TripType.label}"
-                                              required="#{bindings.TripType.hints.mandatory}"
+                                              required ="true"
                                               shortDesc="#{bindings.TripType.hints.tooltip}"
                                               readOnly="#{sessionScope.mode=='edit'?'true':'false'}"
                                               id="selectOneChoice1"
@@ -1501,7 +1500,7 @@
                         <af:gridCell marginStart="5px" width="25%"
                                      id="gridCell14" valign="middle">
                           <af:inputDate value="#{bindings.StartDate.inputValue}"
-                                        required="#{bindings.StartDate.hints.mandatory}"
+                                        required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         shortDesc="#{bindings.StartDate.hints.tooltip}"
                                         id="inputDate1"
                                         contentStyle="width:200px"
@@ -1524,7 +1523,7 @@
                                      valign="middle">
                           <af:inputDate value="#{bindings.EndDate.inputValue}"
                           visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        required="#{bindings.EndDate.hints.mandatory}"
+                                        required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
                                         shortDesc="#{bindings.EndDate.hints.tooltip}"
                                         id="inputDate2"
                                         contentStyle="width:200px"
@@ -1547,7 +1546,7 @@
                         <af:gridCell marginStart="5px" width="27%" id="gridCell44"
                                      valign="middle">
                           <af:inputDate value="#{bindings.OrigStartDate.inputValue}"
-                                        required="#{bindings.OrigStartDate.hints.mandatory}"
+                                        required="true"
                                         shortDesc="#{bindings.OrigStartDate.hints.tooltip}"
                                         id="id9" 
                                         partialTriggers="soc16"
@@ -1567,7 +1566,7 @@
                         <af:gridCell marginStart="5px" width="27%" id="gridCell43"
                                      valign="middle">
                           <af:inputDate value="#{bindings.OrigEndDate.inputValue}"
-                                        required="#{bindings.OrigEndDate.hints.mandatory}"
+                                        required="true"
                                         shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
                                         id="id10"
                                         autoSubmit="true"
@@ -1590,7 +1589,7 @@
                                      id="gridCell18" valign="middle">
                           <af:selectOneChoice value="#{bindings.DestCategory.inputValue}"
                                               label="#{bindings.DestCategory.label}"
-                                              required="#{bindings.DestCategory.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.DestCategory.hints.tooltip}"
                                               id="selectOneChoice2"
                                               simple="true"
@@ -1637,7 +1636,7 @@
                                      id="gridCell22" valign="middle">
                           <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
                                               label="#{bindings.ExitRerentryVisa.label}"
-                                              required="#{bindings.ExitRerentryVisa.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
                                               id="selectOneChoice3"
                                               simple="true"
@@ -1660,7 +1659,7 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
                                               label="#{bindings.DestVisaRequired.label}"
-                                              required="#{bindings.DestVisaRequired.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
                                               id="selectOneChoice4"
                                               simple="true"
@@ -1684,7 +1683,7 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
                                               label="#{bindings.DestinationCountry.label}"
-                                              required="#{bindings.DestinationCountry.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc20"
                                               simple="true" partialTriggers="selectOneChoice2"
                                               contentStyle="width:200px"
@@ -1712,7 +1711,7 @@
                                      id="gridCell26" valign="middle">
                                      <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
                                               label="#{bindings.DestCountryCity.label}"
-                                              required="#{bindings.DestCountryCity.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc19"
                                               autoSubmit="true" partialTriggers="soc16 soc20" 
                                               disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
@@ -1734,7 +1733,7 @@
                                      valign="middle">
                           <af:selectOneChoice value="#{bindings.ProjType.inputValue}"
                                               label="#{bindings.ProjType.label}"
-                                              required="#{bindings.ProjType.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.ProjType.hints.tooltip}"
                                               id="selectOneChoice6"
                                               simple="true"
@@ -1760,7 +1759,7 @@
                                      id="gridCell30" valign="middle">
                           <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}"
                                               label="#{bindings.AdvPerdiem.label}"
-                                              required="#{bindings.AdvPerdiem.hints.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
                                               id="selectOneChoice7"
                                               simple="true" 
@@ -1886,7 +1885,7 @@
                                    id="c56" width="130">
                           <af:inputDate value="#{row.bindings.StartDate.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.mandatory}"
+                                        required="true"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.tooltip}"
                                         id="id12"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -1902,7 +1901,7 @@
                                    id="c57" width="130">
                           <af:inputDate value="#{row.bindings.EndDate.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.mandatory}"
+                                        required="true"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.tooltip}"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         id="id13"
@@ -1918,7 +1917,7 @@
                                    id="c59" width="180">
                           <af:inputText value="#{row.bindings.Activity.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
-                                        required="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.mandatory}"
+                                        required="true"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         columns="60"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
@@ -2070,7 +2069,7 @@
                                               valueChangeListener="#{backingBeanScope.backing_employee.changeCurrency}"
                                             autoSubmit="true"
                                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                              required="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.mandatory}"
+                                              required="true"
                                               shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.Currency.tooltip}"
                                               id="it51" valuePassThru="true">
                             <f:selectItems value="#{row.bindings.Currency.items}" id="si16"/>
@@ -2095,7 +2094,7 @@
                                    sortable="false" headerText="Expense  Amount" id="c43">
                           <af:inputText value="#{row.bindings.OtherExpn.inputValue}"
                                         label="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.label}"
-                                        required="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.mandatory}"
+                                        required="true"
                                         columns="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.displayWidth}"
                                         maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.precision}"
                                         shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.OtherExpn.tooltip}" id="it48"
@@ -2355,6 +2354,13 @@
                                  id="c11" width="175">
                         <af:outputText value="#{row.LastUpdateDate}" id="ot16">
                           <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.format}"/>
+                        </af:outputText>
+                      </af:column>
+                      <af:column headerText="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.label}" id="c61">
+                        <af:outputText value="#{row.ApprBy}"
+                                       shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.tooltip}" id="ot29">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.format}"/>
                         </af:outputText>
                       </af:column>
                       <af:column sortable="false" headerText="Approved Date" id="c60">

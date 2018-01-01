@@ -270,6 +270,7 @@ public class OvertimeSearch {
         reqHeaderRow.setAttribute("RequestDate", date1);
         
         reqHeaderRow.setAttribute("Status", "New");
+        reqHeaderRow.setAttribute("ReqStatus", "New");
         reqHeaderRow.setAttribute("EmpId", empRow.getAttribute("EmpId"));
         reqHeaderRow.setAttribute("departmentTRANS", empRow.getAttribute("Department"));
         reqHeaderRow.setAttribute("empNumberTRANS", empRow.getAttribute("EmpNumber"));

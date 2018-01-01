@@ -108,7 +108,7 @@ import view.session.LoginBean;
 
 public class Employee {
 
-
+    private String displayReqStatus;
     private RichInputListOfValues employeeNameTRANSId;
     private UIXGroup g1;
     private RichInputText it1;
@@ -1230,7 +1230,10 @@ public class Employee {
             lineVO.getCurrentRow().setAttribute("OrigEndDate",
                                                 lineVO.getCurrentRow().getAttribute("EndDate"));
 
-
+                String reqStatus = (String)otHdrVO.getCurrentRow().getAttribute("ReqStatus");
+                if(reqStatus.equalsIgnoreCase("New"))      {
+                    otHdrVO.getCurrentRow().setAttribute("ReqStatus","SUBMITTED");
+                }
             if ("ot".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
                 String errorMsg = validateEmpOverTimeEligibility((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
                 if(errorMsg!=null){
@@ -2709,6 +2712,7 @@ public class Employee {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
+        otHdrVO.getCurrentRow().setAttribute("ReqStatus","WITHDRAWN");
         otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                              new BigDecimal(1));
         ViewObject actionHisVO =
@@ -2741,7 +2745,8 @@ public class Employee {
     public String deleteReqACL() {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        otHdrVO.getCurrentRow().setAttribute("Status", "Deleted");
+        otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
+        otHdrVO.getCurrentRow().setAttribute("ReqStatus","DELETED");
         return null;
     }
 
@@ -4036,5 +4041,53 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
 
     public RichTable getPurposeOfTrvTable() {
         return purposeOfTrvTable;
+    }
+
+
+    public void setDisplayReqStatus(String displayReqStatus) {
+        this.displayReqStatus = displayReqStatus;
+    }
+
+    public String getDisplayReqStatus() {
+        ViewObject mgrVo =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        String reqStatus = (String)mgrVo.getCurrentRow().getAttribute("Status");
+        String reqActionStatus = (String)mgrVo.getCurrentRow().getAttribute("ReqStatus");
+        String payRollStatus = (String)mgrVo.getCurrentRow().getAttribute("PayrollTansStatus");
+        //Update payroll transfer
+        if(payRollStatus!=null && payRollStatus.equalsIgnoreCase("COMPLETED")){
+            return "Transferred to Payroll";
+        }
+        //New
+        if(reqStatus.equalsIgnoreCase("New")){
+            return "New";
+        }
+        //Pending Approval
+//REJECT
+//APPROVE
+        //Draft
+        if(reqStatus.equalsIgnoreCase("Draft") && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
+            return "Draft";
+        }
+        // Pending for Approval
+        if(reqStatus.equalsIgnoreCase("Pending Approval") && (reqActionStatus.equalsIgnoreCase("Pending Approval")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
+            return "Pending Approval";
+        }
+        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+            return "Cancelled, Pending Approval";
+        }
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+            return "Cancelled, Approved";
+        }
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+            return "Cancelled, Rejected";
+        }
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("APPROVE")){
+            return "Approved";
+        }
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("REJECT")){
+            return "Rejected";
+        }
+        return displayReqStatus;
     }
 }

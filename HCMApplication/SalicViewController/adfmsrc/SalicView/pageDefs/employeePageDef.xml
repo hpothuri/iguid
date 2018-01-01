@@ -179,6 +179,7 @@
                <Item Value="Type"/>
                <Item Value="LastUpdateDate"/>
                <Item Value="ApprDate"/>
+               <Item Value="ApprBy"/>
             </AttrNames>
          </nodeDefinition>
       </tree>
@@ -658,6 +659,11 @@
       <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator" id="PayrollTansStatus">
          <AttrNames>
             <Item Value="PayrollTansStatus"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator" id="ReqStatus">
+         <AttrNames>
+            <Item Value="ReqStatus"/>
          </AttrNames>
       </attributeValues>
    </bindings>

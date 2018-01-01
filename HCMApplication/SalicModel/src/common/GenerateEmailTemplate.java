@@ -31,8 +31,8 @@ public class GenerateEmailTemplate {
     private static String FROM_USER = "paas.user@salic.com";
     private static String FROM_USER_PASSWORD = "Salic@123";
     
-//    private static String FROM_USER = "";
-//    private static String FROM_USER_PASSWORD = "";
+//    private static String FROM_USER = "muralikona.oracle@gmail.com";
+//    private static String FROM_USER_PASSWORD = "k1m2k3k1";
 
     public static Map<String, String> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
         Map<String, String> emailHapmap = new HashMap<String, String>();
@@ -96,7 +96,7 @@ public class GenerateEmailTemplate {
                 i++;
             }
 
-            linebodyInfo = lineheaderinfo + linebodyInfo + "</table>" + "<br>" + "<br>";
+            linebodyInfo = lineheaderinfo + linebodyInfo+ "<br>" + "<br>" + "</table>" ;
             }
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
 //                "<button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>More Info</button>" +

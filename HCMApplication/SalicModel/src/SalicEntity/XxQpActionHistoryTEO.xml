@@ -220,6 +220,13 @@
     Type="java.sql.Date"
     ColumnType="DATE"
     TableName="XX_QP_ACTION_HISTORY_T"/>
+  <Attribute
+    Name="ApprBy"
+    ColumnName="APPR_BY"
+    SQLType="NUMERIC"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    TableName="XX_QP_ACTION_HISTORY_T"/>
   <Key
     Name="SysC004689">
     <DesignTime>
