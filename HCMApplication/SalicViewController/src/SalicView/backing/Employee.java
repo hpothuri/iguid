@@ -2720,13 +2720,22 @@ public class Employee {
         java.sql.Date dummyDate = null;
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
-            row.setAttribute("ApproverFlag", null);
-            row.setAttribute("LastUpdateDate", dummyDate);
-            row.setAttribute("ApprDate", null);
-            row.setAttribute("ApproverComments", dummyDate);
+//            row.setAttribute("ApproverFlag", null);
+//            row.setAttribute("LastUpdateDate", dummyDate);
+//            row.setAttribute("ApprDate", null);
+//            row.setAttribute("ApproverComments", dummyDate);
+            row.remove();
         }
 
         ADFUtils.findOperation("Commit").execute();
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        op.execute();
+        ADFUtils.findOperation("Commit").execute();
+        
         JSFUtils.addFacesInformationMessage("Request is Withdrawn!");
         //TODO : KMA : Send Email for manager
         //TODO : KMA : Send Email for employee also stating the request is withdrawn
@@ -2747,6 +2756,24 @@ public class Employee {
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
         otHdrVO.getCurrentRow().setAttribute("ReqStatus","DELETED");
+        ViewObject actionHisVO =
+            ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
+        java.sql.Date dummyDate = null;
+        while(actionHisVO.hasNext()){
+            Row row = actionHisVO.next();
+            row.remove();
+        }
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        op.execute();
+        ADFUtils.findOperation("Commit").execute();
+        
+        JSFUtils.addFacesInformationMessage("Request is cancelled successfully and pending for approval!");
+        
         return null;
     }
 

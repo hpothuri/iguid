@@ -5,14 +5,20 @@
   <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
                    id="pt1">
     <f:facet name="pageContents">
-      <af:panelStretchLayout 
-                             id="psl1"
-                             styleClass="page-container AFStretchWidth"
-                             inlineStyle="height:590.0px;" bottomHeight="49px">
-        <f:facet name="bottom"/>
-        <f:facet name="center">
-          <af:panelGroupLayout 
-                               id="panelGroupLayout1" layout="scroll">
+      <af:resource type="javascript">
+      var scrollTop = 0;
+      var scrollLeft = 0;
+      function stopAutoScroll(data){
+          if(data.status = "begin"){
+              scrollTop = window.pageYOffset;
+              scrollLeft = window.pageXOffset;
+          }
+          if(data.status = "success"){
+          window.scrollTo(scrollTop,scrollLeft)
+              
+          }
+      }
+      </af:resource>
             <af:panelGroupLayout 
                                  id="pgl5" layout="horizontal">
               <af:panelGroupLayout 
@@ -982,14 +988,14 @@
                     </af:inputText>
                   </af:panelFormLayout>
                 </af:showDetailItem>
-                <af:showDetailItem text=" Business Trip" id="showDetailItem2"
+                <af:showDetailItem text=" Business Trip" id="showDetailItem2" styleClass="AFStretchWidth"
                                    rendered="#{sessionScope.page eq 'BusinessTrip'}"
-                                   inflexibleHeight="100">
+                                   >
                   <af:panelBox text="Request Info" id="pb8">
                     <f:facet name="toolbar"/>
-                    <af:panelGridLayout id="pgl1">
+                    <af:panelGridLayout styleClass="AFStretchWidth" id="pgl1">
                       <af:gridRow marginTop="12px" height="auto" id="gr5">
-                        <af:gridCell marginStart="5px" width="25%" id="gc8"
+                        <af:gridCell marginStart="5px" width="20%" id="gc8"
                                      halign="end" valign="middle">
                           <af:outputLabel value="Trip Type" id="ol2"/>
                         </af:gridCell>
@@ -1312,7 +1318,7 @@
                                 fetchSize="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
                                 rowBandingInterval="0" id="t10"
                                 partialTriggers="::cb11 ::cb12 cb14 :::pc8:cb17 :::pc8:t17:cb19" varStatus="vs"
-                                columnStretching="column:c20" rowSelection="single"
+                                 rowSelection="single"
                                 selectedRowKeys="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.selectedRow}"
                               selectionListener="#{bindings.XxhcmPurposeOfTrvl_VO1.collectionModel.makeCurrent}"
                                 binding="#{backingBeanScope.backing_employee.purposeOfTrvTable}">
@@ -1362,6 +1368,7 @@
                                         minValue="#{bindings.StartDate.inputValue}"
                                         maxValue="#{bindings.EndDate.inputValue}">
                             <f:validator binding="#{row.bindings.StartDate.validator}"/>
+                        
                             <af:convertDateTime pattern="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.StartDate.format}"/>
                           </af:inputDate>
                         </af:column>
@@ -1384,12 +1391,11 @@
                         <af:column sortProperty="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.name}"
                                    sortable="false"
                                    headerText="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
-                                   id="c20" width="180">
+                                   id="c20" width="400" minimumWidth="12">
                           <af:inputText value="#{row.bindings.Activity.inputValue}"
                                         label="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.label}"
                                         required ="true"
-                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                        columns="80" rows="3"
+                                        columns="80" rows="2"
                                         maximumLength="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.precision}"
                                         shortDesc="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.Activity.tooltip}"
                                         id="it41">
@@ -1408,6 +1414,7 @@
                 </af:showDetailItem>
                 <af:showDetailItem text="Business Trip Completion"
                                    id="showDetailItem3"
+                                   styleClass="AFStretchWidth"
                                    rendered="#{sessionScope.page eq 'BusinessTripCompletion'}">
                   <af:panelBox text="Business Travel Info" id="pb4">
                     <f:facet name="toolbar"/>
@@ -2519,12 +2526,6 @@
                 </af:showDetailItem>
               </af:panelTabbed>
             </af:panelBox>
-          </af:panelGroupLayout>
-        </f:facet>
-        <f:facet name="start"/>
-        <f:facet name="top"/>
-      </af:panelStretchLayout>
     </f:facet>
   </af:pageTemplate>
-
 </jsp:root>

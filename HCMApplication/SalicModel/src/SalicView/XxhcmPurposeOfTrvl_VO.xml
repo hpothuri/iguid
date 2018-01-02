@@ -71,7 +71,14 @@
     PrecisionRule="true"
     EntityAttrName="Activity"
     EntityUsage="XxhcmPurposeOfTrvl_EO"
-    AliasName="ACTIVITY"/>
+    AliasName="ACTIVITY">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="130"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="AttributeCategory"
     PrecisionRule="true"
