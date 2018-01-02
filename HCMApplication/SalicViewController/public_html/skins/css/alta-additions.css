@@ -848,6 +848,10 @@ af|panelWindow.fuse-popup::content {
     width: 922px !important;
 }
 
+af|panelGroupLayout{
+    background-color: white !important;
+}
+
 af|panelWindow::main, af|dialog::main {
   background-color:  -tr-property-ref(".FusePageContainerBG:alias","background-color");
 }
