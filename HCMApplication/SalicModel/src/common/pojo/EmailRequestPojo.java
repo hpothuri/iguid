@@ -16,11 +16,10 @@ public class EmailRequestPojo {
     private String[] toEmail;
     private String message;
     private String subject;
-    private ArrayList<String> tableContentColumns = new ArrayList<String>();
-    private String detailsQuery;
-    private LinkedHashMap<String, String> tableColumnDatatypes = new LinkedHashMap<String, String>();
     private String toEmpName;
     private LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+    private ArrayList<EmailTableDetailsPojo> tableDetails = new ArrayList<EmailTableDetailsPojo>();
+    
 
     public void setRequestId(Integer requestId) {
         this.requestId = requestId;
@@ -78,30 +77,6 @@ public class EmailRequestPojo {
         return subject;
     }
 
-    public void setTableContentColumns(ArrayList<String> tableContentColumns) {
-        this.tableContentColumns = tableContentColumns;
-    }
-
-    public ArrayList<String> getTableContentColumns() {
-        return tableContentColumns;
-    }
-
-    public void setDetailsQuery(String detailsQuery) {
-        this.detailsQuery = detailsQuery;
-    }
-
-    public String getDetailsQuery() {
-        return detailsQuery;
-    }
-
-    public void setTableColumnDatatypes(LinkedHashMap<String, String> tableColumnDatatypes) {
-        this.tableColumnDatatypes = tableColumnDatatypes;
-    }
-
-    public LinkedHashMap<String, String> getTableColumnDatatypes() {
-        return tableColumnDatatypes;
-    }
-
     public void setToEmpName(String toEmpName) {
         this.toEmpName = toEmpName;
     }
@@ -124,5 +99,13 @@ public class EmailRequestPojo {
 
     public String getEmpNumber() {
         return empNumber;
+    }
+
+    public void setTableDetails(ArrayList<EmailTableDetailsPojo> tableDetails) {
+        this.tableDetails = tableDetails;
+    }
+
+    public ArrayList<EmailTableDetailsPojo> getTableDetails() {
+        return tableDetails;
     }
 }

@@ -21,6 +21,9 @@ import javax.mail.internet.MimeMessage;
 import oracle.jbo.server.DBTransaction;
 
 import common.pojo.EmailRequestPojo;
+import common.pojo.EmailTableDetailsPojo;
+
+import java.util.ArrayList;
 
 
 public class GenerateEmailTemplate {
@@ -39,71 +42,65 @@ public class GenerateEmailTemplate {
         Statement statement = dbTrans.createStatement(0);
         try {
             String message = null;
-            String linebodyInfo = "";
-            String linedetailsQuery = emailReq.getDetailsQuery();
-//                "select OVERTIME_DATE,OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
-//                emailReq.getRequestId();
 
-
+            ArrayList<EmailTableDetailsPojo> tableDetails = emailReq.getTableDetails();
             String emailSubject = emailReq.getSubject();
-//                "Overtime request (" + emailReq.getRequestNo() +
-//                ") is submitted for approval, Pending for HR varification.";
+            String emailBody = "";
 
-            message = prepareStylizedBodyMessage(emailReq.getMessage(),emailReq.getToEmpName());
-            
-//            message =
-//                "<div style='background-image:url()'" +
-//                "<div style='margin-left:80px;margin-top:20px;font-size:14px;font-family:arial;font-weight:bolder;'>Dear <b>" +
-//                emailReq.getEmpName() + "</b>,</div>" +
-//                "<div style='margin-top:20px;font-size:14px;font-family:arial;'>Your <b> overtime request </b> is submitted and pending for HR varification with hereunder information: </div><br>";
+            if (tableDetails != null && tableDetails.size() > 0) {
+                for (EmailTableDetailsPojo tableDetail : tableDetails) {
+                    String linedetailsQuery = tableDetail.getDetailsQuery();
 
-            String lineheaderinfo = "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>Sr.#</th>";
-            for(String headerCol : emailReq.getTableContentColumns()){
-                 lineheaderinfo = lineheaderinfo + "<th  style='font-weight:bolder'>"+headerCol+"</th>";               
-            }
-            lineheaderinfo= lineheaderinfo + "</tr>";
-           
-//            String lineheaderinfo =
-//                           "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>sr.#</th><th  style='font-weight:bolder'>Ovetime Date</th><th style='font-weight:bolder;'>Ovetime Type</th><th style='font-weight:bolder;'>Overtime Hours</th><th style='font-weight:bolder;'>Calculated  Hours</th><th style='font-weight:bolder;'>Description</th></tr>";
-            if(linedetailsQuery!=null){
-            ResultSet resultSet1 = statement.executeQuery(linedetailsQuery);
-
-            int i = 1;
-            while (resultSet1.next()) {
-                linebodyInfo +=
-                    "<tr><td align='center'>" + i + "</td>";
-                for(Map.Entry<String, String> entry : emailReq.getTableColumnDatatypes().entrySet()){
-                    if(entry.getValue() != null && "DATE".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + (resultSet1.getDate(entry.getKey()) != null ? resultSet1.getDate(entry.getKey()) : "") +
-                                            "</td>";
+                    emailBody = emailBody +
+                        "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>Sr.#</th>";
+                    for (String headerCol : tableDetail.getTableContentColumns()) {
+                        emailBody = emailBody + "<th  style='font-weight:bolder'>" + headerCol + "</th>";
                     }
-                    else if(entry.getValue() != null && "STRING".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + (resultSet1.getString(entry.getKey()) != null ? resultSet1.getString(entry.getKey()) : "") +
-                                            "</td>";
-                    }
-                    else if(entry.getValue() != null && "NUMBER".equalsIgnoreCase(entry.getValue())){
-                        linebodyInfo += "<td align='center'>" + (resultSet1.getBigDecimal(entry.getKey()) != null ? resultSet1.getBigDecimal(entry.getKey()) : "") +
-                                            "</td>";
+                    emailBody = emailBody + "</tr>";
+
+                    if (linedetailsQuery != null) {
+                        ResultSet resultSet1 = statement.executeQuery(linedetailsQuery);
+
+                        int i = 1;
+                        while (resultSet1.next()) {
+                            emailBody += "<tr><td align='center'>" + i + "</td>";
+                            for (Map.Entry<String, String> entry : tableDetail.getTableColumnDatatypes().entrySet()) {
+                                if (entry.getValue() != null && "DATE".equalsIgnoreCase(entry.getValue())) {
+                                    emailBody +=
+                                        "<td align='center'>" +
+                                        (resultSet1.getDate(entry.getKey()) != null ?
+                                         resultSet1.getDate(entry.getKey()) : "") + "</td>";
+                                } else if (entry.getValue() != null && "STRING".equalsIgnoreCase(entry.getValue())) {
+                                    emailBody +=
+                                        "<td align='center'>" +
+                                        (resultSet1.getString(entry.getKey()) != null ?
+                                         resultSet1.getString(entry.getKey()) : "") + "</td>";
+                                } else if (entry.getValue() != null && "NUMBER".equalsIgnoreCase(entry.getValue())) {
+                                    emailBody +=
+                                        "<td align='center'>" +
+                                        (resultSet1.getBigDecimal(entry.getKey()) != null ?
+                                         resultSet1.getBigDecimal(entry.getKey()) : "") + "</td>";
+                                }
+                            }
+                            emailBody += "</tr>";
+
+                            i++;
+                        }
+
+                        emailBody = emailBody + "<br>" + "<br>" + "</table><br>";
                     }
                 }
-                linebodyInfo += "</tr>";
-//                linebodyInfo +=
-//                    "<tr><td align='center'>" + i + "</td><td align='center'>" + resultSet1.getDate("OVERTIME_DATE") +
-//                    "</td><td align='center'>" + resultSet1.getString("OVERTIME_TYPE") + "</td><td align='center'>" +
-//                    resultSet1.getString("OVERTIME_HOURS") + "</td><td align='center'>" +
-//                    resultSet1.getString("CALCULATED_HOURS") + "</td><td align='center'>" +
-//                    resultSet1.getString("MISSIONS") + "</td></tr>";
-                i++;
             }
 
-            linebodyInfo = lineheaderinfo + linebodyInfo+ "<br>" + "<br>" + "</table>" ;
-            }
+
+            message = prepareStylizedBodyMessage(emailReq.getMessage(), emailReq.getToEmpName());
+
+
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
-//                "<button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>More Info</button>" +
-//                "</div>";
+
             String bestRegardsmessage = "<br><br>Best Regards,<br>Employee Self Service Process";
-            
-            String body = message + linebodyInfo + actionBody + bestRegardsmessage;
+
+            String body = message + emailBody + actionBody + bestRegardsmessage;
             emailHapmap.put("subject", emailSubject);
             emailHapmap.put("body", body);
 

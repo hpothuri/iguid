@@ -50,6 +50,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import common.GenerateEmailTemplate;
 
+import common.pojo.EmailTableDetailsPojo;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -1177,21 +1179,25 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         String secondLevelApproverName = "";
         String rejectReason = "";
         
-        ArrayList<String> tableContentCols = new ArrayList<String>();
-        LinkedHashMap<String, String> tableColumnDatatypes = null;
         String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
         
         if (reqPage.equalsIgnoreCase("ot")) {
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Over Time Date");
             tableContentCols.add("Over Time Type");
             tableContentCols.add("Over Time Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1200,26 +1206,44 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
             tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
 
         }
         else if(reqPage.equalsIgnoreCase("salary")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Salary Period");
             tableContentCols.add("Comments");
 
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("SAL_PERIOD", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
             
         }
         else if(reqPage.equalsIgnoreCase("BusinessTrip")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Trip Type");
             tableContentCols.add("Airline Ticket Type");
             tableContentCols.add("Start Date");
@@ -1234,10 +1258,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Comments");
             
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1253,9 +1277,40 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Start Date");
+            tableContentCols.add("End Date");
+            tableContentCols.add("Activity");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                     emailReq.getRequestId()+")");
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("START_DATE", "DATE");
+            tableColumnDatatypes.put("END_DATE", "DATE");
+            tableColumnDatatypes.put("ACTIVITY", "STRING");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("BusinessTripCompletion")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Business Travel Request Number");
             tableContentCols.add("Trip Type");
@@ -1274,10 +1329,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Comments");
             
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1296,9 +1351,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("edu")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Invoice Number");
             tableContentCols.add("Invoice Date");
             tableContentCols.add("Child Name");
@@ -1310,10 +1374,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Max Eligible Amount");
             tableContentCols.add("Available Amount");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1327,54 +1391,84 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("SEMESTER", "STRING");
             tableColumnDatatypes.put("MAX_AMT", "STRING");
             tableColumnDatatypes.put("AVL_AMT", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("letter")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Letter Type");
             tableContentCols.add("Letter To");
             tableContentCols.add("Others");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LETTER_TYPE", "STRING");
             tableColumnDatatypes.put("LETTER_TO", "STRING");
             tableColumnDatatypes.put("OTHER", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("vacation")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Leave");
             tableContentCols.add("Comments");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LEAVE", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("house")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Advance Amount");
             tableContentCols.add("Comments");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("ADV_AMT", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
@@ -1530,22 +1624,26 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                             "</b> is submitted and pending for approval from "+approverName+" with hereunder information:");
         emailReq.setSubject("FYI : " + reqType + " request (" + emailReq.getRequestNo() + ")"+
                             " is submitted for approval, Pending with "+approverName);
-        LinkedHashMap<String, String> tableColumnDatatypes = null;
         String reqPage = (String) ADFContext.getCurrent()
                                             .getSessionScope()
                                             .get("page");
-        ArrayList<String> tableContentCols = new ArrayList<String>();
         if (reqPage.equalsIgnoreCase("ot")) {
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Over Time Date");
             tableContentCols.add("Over Time Type");
             tableContentCols.add("Over Time Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select OVERTIME_DATE,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'OT_TYPE' and dtl.lookup_value_name=OVERTIME_TYPE) OVERTIME_TYPE,OVERTIME_HOURS,CALCULATED_HOURS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1554,25 +1652,43 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("OVERTIME_HOURS", "STRING");
             tableColumnDatatypes.put("CALCULATED_HOURS", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("salary")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Salary Period");
             tableContentCols.add("Comments");
 
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("SAL_PERIOD", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
             
         }
         else if(reqPage.equalsIgnoreCase("BusinessTrip")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Trip Type");
             tableContentCols.add("Airline Ticket Type");
             tableContentCols.add("Start Date");
@@ -1587,10 +1703,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Comments");
             
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1606,9 +1722,40 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Start Date");
+            tableContentCols.add("End Date");
+            tableContentCols.add("Activity");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                     emailReq.getRequestId()+")");
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("START_DATE", "DATE");
+            tableColumnDatatypes.put("END_DATE", "DATE");
+            tableColumnDatatypes.put("ACTIVITY", "STRING");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("BusinessTripCompletion")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Business Travel Request Number");
             tableContentCols.add("Trip Type");
@@ -1627,10 +1774,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Comments");
             
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1649,9 +1796,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("edu")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Invoice Number");
             tableContentCols.add("Invoice Date");
             tableContentCols.add("Child Name");
@@ -1663,10 +1819,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Max Eligible Amount");
             tableContentCols.add("Available Amount");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1680,54 +1836,84 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("SEMESTER", "STRING");
             tableColumnDatatypes.put("MAX_AMT", "STRING");
             tableColumnDatatypes.put("AVL_AMT", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("letter")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Letter Type");
             tableContentCols.add("Letter To");
             tableContentCols.add("Others");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LETTER_TYPE", "STRING");
             tableColumnDatatypes.put("LETTER_TO", "STRING");
             tableColumnDatatypes.put("OTHER", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("vacation")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Leave");
             tableContentCols.add("Comments");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LEAVE", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("house")){
+            
+            ArrayList<EmailTableDetailsPojo> emailTableDetails = new ArrayList<EmailTableDetailsPojo>();    
+            EmailTableDetailsPojo tableDetail = new EmailTableDetailsPojo(); 
+            ArrayList<String> tableContentCols = new ArrayList<String>();
+            LinkedHashMap<String, String> tableColumnDatatypes = null;
+            
             tableContentCols.add("Advance Amount");
             tableContentCols.add("Comments");
             
-            emailReq.setTableContentColumns(tableContentCols);
+            tableDetail.setTableContentColumns(tableContentCols);
 
 
-            emailReq.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("ADV_AMT", "STRING");
             tableColumnDatatypes.put("COMMENTS", "STRING");
-            emailReq.setTableColumnDatatypes(tableColumnDatatypes);
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            emailReq.setTableDetails(emailTableDetails);
         }
         LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
         actionButtons.put("More Info", "");
