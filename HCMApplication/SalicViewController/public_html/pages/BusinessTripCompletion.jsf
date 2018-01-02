@@ -3,7 +3,9 @@
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
     <af:document title="Business Trip Completion" id="d1">
         <af:form  usesUpload="true" id="f1">
-            <af:region value="#{bindings.overtimeSearchBTF1.regionModel}" id="r1"/>
+            <af:panelGroupLayout id="pgl1" layout="vertical">
+                <af:region value="#{bindings.overtimeSearchBTF1.regionModel}" id="r1"/>
+            </af:panelGroupLayout>
         </af:form>
     </af:document>
 </f:view>
