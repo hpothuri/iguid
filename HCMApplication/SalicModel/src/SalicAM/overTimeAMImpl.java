@@ -1261,7 +1261,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'PROJ_TYPE' and dtl.lookup_value_name=PROJ_TYPE) PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1317,8 +1317,6 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Airline Ticket Type");
             tableContentCols.add("Start Date");
             tableContentCols.add("End Date");
-            tableContentCols.add("Original Start Date");
-            tableContentCols.add("Original End Date");
             tableContentCols.add("Destination Category");
             tableContentCols.add("Number Of Days");
             tableContentCols.add("Exit Reentry Visa");
@@ -1332,17 +1330,15 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM_VALUE,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'PROJ_TYPE' and dtl.lookup_value_name=PROJ_TYPE) PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
-            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM", "STRING");
+            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM_VALUE", "STRING");
             tableColumnDatatypes.put("TRIP_TYPE", "STRING");
             tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
             tableColumnDatatypes.put("START_DATE", "DATE");
             tableColumnDatatypes.put("END_DATE", "DATE");
-            tableColumnDatatypes.put("ORIG_START_DATE", "DATE");
-            tableColumnDatatypes.put("ORIG_END_DATE", "DATE");
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");
@@ -1706,7 +1702,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'PROJ_TYPE' and dtl.lookup_value_name=PROJ_TYPE) PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1762,8 +1758,6 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableContentCols.add("Airline Ticket Type");
             tableContentCols.add("Start Date");
             tableContentCols.add("End Date");
-            tableContentCols.add("Original Start Date");
-            tableContentCols.add("Original End Date");
             tableContentCols.add("Destination Category");
             tableContentCols.add("Number Of Days");
             tableContentCols.add("Exit Reentry Visa");
@@ -1777,17 +1771,15 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,ORIG_START_DATE,ORIG_END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select BUSS_TRAV_REQ_NUM_VALUE,TRIP_TYPE,AIRLINE_TICKET_TYPE,START_DATE,END_DATE,DEST_CATEGORY,NUMBER_OF_DAYS,EXIT_RERENTRY_VISA,(select country_name from country where country_id = DESTINATION_COUNTRY) DESTINATION_COUNTRY,ADV_PERDIEM,DEST_VISA_REQUIRED,(select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'PROJ_TYPE' and dtl.lookup_value_name=PROJ_TYPE) PROJ_TYPE,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
-            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM", "STRING");
+            tableColumnDatatypes.put("BUSS_TRAV_REQ_NUM_VALUE", "STRING");
             tableColumnDatatypes.put("TRIP_TYPE", "STRING");
             tableColumnDatatypes.put("AIRLINE_TICKET_TYPE", "STRING");
             tableColumnDatatypes.put("START_DATE", "DATE");
             tableColumnDatatypes.put("END_DATE", "DATE");
-            tableColumnDatatypes.put("ORIG_START_DATE", "DATE");
-            tableColumnDatatypes.put("ORIG_END_DATE", "DATE");
             tableColumnDatatypes.put("DEST_CATEGORY", "STRING");
             tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
             tableColumnDatatypes.put("EXIT_RERENTRY_VISA", "STRING");

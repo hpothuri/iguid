@@ -1603,7 +1603,7 @@ public class Employee {
                     lineVO.getCurrentRow().setAttribute("DestCategory",
                                                         this.bstDestCateLOV.getValue());
                     
-                    lineVO.getCurrentRow().setAttribute("DestinationCountry",countryValue);
+//                    lineVO.getCurrentRow().setAttribute("DestinationCountry",countryValue);
                     System.err.println("NOFDAYS" +
                                        this.bstNoOfDays.getValue());
                     //lineVO.getCurrentRow().setAttribute("NumberOfDays",
@@ -3709,6 +3709,7 @@ rs.closeRowSetIterator();
                                                        valueChangeEvent.getNewValue());
         ADFContext.getCurrent().getSessionScope().put("CurrentCountry", valueChangeEvent.getNewValue());
         countryValue= (BigDecimal)valueChangeEvent.getNewValue();
+        ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getCurrentRow().setAttribute("DestinationCountry", valueChangeEvent.getNewValue());
     }
 
     public void actualSdate(ValueChangeEvent valueChangeEvent) {
