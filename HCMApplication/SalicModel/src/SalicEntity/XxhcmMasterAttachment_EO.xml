@@ -64,7 +64,7 @@
   </Attribute>
   <Attribute
     Name="FileType"
-    Precision="60"
+    Precision="200"
     ColumnName="FILE_TYPE"
     SQLType="VARCHAR"
     Type="java.lang.String"

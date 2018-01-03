@@ -277,7 +277,7 @@
             </af:panelBox>
             <af:separator id="s2"/>
             <af:panelBox text="Request Details" id="pb1"
-                         inlineStyle="width:1295px;border-color:transparent;"
+                         inlineStyle="border-color:transparent;"
                          styleClass="AFStretchWidth"
                          showDisclosure="false">
               <f:facet name="toolbar"/>
@@ -415,7 +415,7 @@
                     </af:table>
                   </af:panelCollection>
                 </af:showDetailItem>
-                <af:showDetailItem text="Advance Details" id="sdi3"
+                <af:showDetailItem text="Advance Details" styleClass="AFStretchWidth" id="sdi3"
                                    rendered="#{sessionScope.page eq 'house'}">
                   <af:panelFormLayout id="pfl2" rows="2">
                     <af:panelLabelAndMessage label="#{bindings.AdvAmt.hints.label}" id="plam9">
@@ -476,7 +476,7 @@
                     </af:inputText>
                   </af:panelFormLayout>
                 </af:showDetailItem>
-                <af:showDetailItem text="Vacation Allowance" id="sdi4"
+                <af:showDetailItem text="Vacation Allowance" styleClass="AFStretchWidth" id="sdi4"
                                    rendered="#{sessionScope.page eq 'vacation'}">
                   <af:panelFormLayout id="pfl3" rows="2">
                     <af:inputText value="#{bindings.EmpIdVacation.inputValue}"
@@ -530,7 +530,7 @@
                     </af:inputText>
                   </af:panelFormLayout>
                 </af:showDetailItem>
-                <af:showDetailItem text="Salary In Advance" id="sdi5"
+                <af:showDetailItem text="Salary In Advance" styleClass="AFStretchWidth" id="sdi5"
                                    rendered="#{sessionScope.page eq 'salary'}">
                   <af:panelFormLayout id="pfl4" rows="2">
                     <af:selectOneChoice value="#{bindings.SalPeriod.inputValue}"
@@ -568,7 +568,7 @@
                     </af:inputText>
                   </af:panelFormLayout>
                 </af:showDetailItem>
-                <af:showDetailItem text="Education Allowance" id="sdi6"
+                <af:showDetailItem text="Education Allowance" styleClass="AFStretchWidth" id="sdi6"
                                    rendered="#{sessionScope.page eq 'edu'}">
                   <af:panelBox id="pb3" showHeader="never"
                                showDisclosure="false"
@@ -948,7 +948,7 @@
                     </af:table>
                   </af:panelCollection>
                 </af:showDetailItem>
-                <af:showDetailItem text="HR Letter" id="showDetailItem1"
+                <af:showDetailItem text="HR Letter" styleClass="AFStretchWidth" id="showDetailItem1"
                                    rendered="#{sessionScope.page eq 'letter'}">
                   <af:panelFormLayout id="pfl6" rows="2">
                     <af:panelLabelAndMessage label="#{bindings.LetterTo.label}" id="plam11">
@@ -988,7 +988,7 @@
                     </af:inputText>
                   </af:panelFormLayout>
                 </af:showDetailItem>
-                <af:showDetailItem text=" Business Trip" id="showDetailItem2" styleClass="AFStretchWidth"
+                <af:showDetailItem text="Business Trip" id="showDetailItem2" styleClass="AFStretchWidth"
                                    rendered="#{sessionScope.page eq 'BusinessTrip'}"
                                    >
                   <af:panelBox text="Request Info" id="pb8">
@@ -2109,7 +2109,7 @@
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
                           <f:validator binding="#{row.bindings.Attachment.validator}"/>
                         </af:inputText>
-                        <af:inputFile label="Label 1" id="if1"  value="#{viewScope.attachup}" required="true"
+                        <af:inputFile label="Label 1" id="if1" required="true"
                                       valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}"
                                       autoSubmit="true"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
