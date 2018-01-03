@@ -79,7 +79,7 @@
       <property
          name="fromOutcome">taskFlowReturn1</property>
       <property
-         name="sdm:polyPoints">B50,680.7783,580.0762,91.5,580.0762,B50</property>
+         name="sdm:polyPoints">B56,684.2783,580.0762,91.5,580.0762,B50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
