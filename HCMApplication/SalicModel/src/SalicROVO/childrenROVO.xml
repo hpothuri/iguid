@@ -45,12 +45,14 @@
       </SchemaBasedProperties>
     </Properties>
   </Variable>
-  <SQLQuery><![CDATA[SELECT HDR.PERSON_ID,HDR.CONTACT_PERSON_ID CHILD_PERSON_ID,HDR.DISPLAY_NAME CHILD_NAME,PERS.DISPLAY_NAME FATHER_NAME,   
-  nvl((select floor(months_between(TRUNC(:bindInvDate), to_date((select DATE_OF_BIRTH from XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID), 'DD-MM-YYYY'))/12) as age from dual),0) AGE   
-FROM XXSTG_CHILD HDR,XXSTG_PERSON PERS   
-WHERE HDR.PERSON_ID = PERS.PERSON_ID   
-and (SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID)>=4  
-and (SELECT age FROM XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID)<=19]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT HDR.PERSON_ID,HDR.CONTACT_PERSON_ID CHILD_PERSON_ID,HDR.DISPLAY_NAME CHILD_NAME,PERS.DISPLAY_NAME FATHER_NAME,    
+  nvl((select floor(months_between(TRUNC(:bindInvDate), to_date((select DATE_OF_BIRTH from XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID), 'DD-MM-YYYY'))/12) as age from dual),0) AGE    
+FROM XXSTG_CHILD HDR,XXSTG_PERSON PERS    
+WHERE HDR.PERSON_ID = PERS.PERSON_ID    
+and nvl((select floor(months_between(TRUNC(sysdate),  
+  to_date((select DATE_OF_BIRTH from XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID), 'DD-MM-YYYY'))/12) as age from dual),0)>=4   
+and nvl((select floor(months_between(TRUNC(sysdate),  
+  to_date((select DATE_OF_BIRTH from XXSTG_PERSON where person_id = HDR.CONTACT_PERSON_ID), 'DD-MM-YYYY'))/12) as age from dual),0)<=19]]></SQLQuery>
   <ViewAttribute
     Name="PersonId"
     IsUpdateable="false"
