@@ -1255,415 +1255,189 @@
                                    rendered="#{sessionScope.page eq 'BusinessTripCompletion'}">
                   <af:panelBox text="Business Travel Info" id="pb4">
                     <f:facet name="toolbar"/>
-                    <af:panelGridLayout id="pgl8">
-                      <af:gridRow marginTop="5px" height="auto"
-                                  marginBottom="5px" id="gr9">
-                        <af:gridCell marginStart="5px" width="25%" id="gc33"
-                                     halign="end">
-                          <af:outputLabel value="Business Travel Request Number" id="ol17"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="1px" width="0%" id="gc32">
-                          <af:inputText value="#{bindings.empIdTRANS.inputValue}" partialTriggers="employeeNameTRANSId"
-                                        visible="false" id="ot22" label="Label 22"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="2px" width="50%" id="gc34">
-                          <af:inputListOfValues id="soc16"
-                                                popupTitle="Search and Select: Business Travel Request Number"
-                                                value="#{bindings.BussTravReqNumValue.inputValue}"
-                                                label="#{bindings.BussTravReqNumValue.hints.label}"
-                                                model="#{bindings.BussTravReqNumValue.listOfValuesModel}"
-                                                required ="true"
-                                                columns="#{bindings.BussTravReqNumValue.hints.displayWidth}"
-                                                 valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
-                                                partialTriggers="employeeNameTRANSId ot22" autoSubmit="true"
-                                                simple="true" shortDesc="#{bindings.BussTravReqNumValue.hints.tooltip}"
-                                                contentStyle="width:200px;"
-                                                disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                                binding="#{backingBeanScope.backing_employee.bussTrReq1}"
-                                                launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
-                            <f:validator binding="#{bindings.BussTravReqNumValue.validator}"/>
-                          </af:inputListOfValues>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gc31"/>
-                      </af:gridRow>
-                    </af:panelGridLayout>
-                    <af:panelGridLayout id="panelGridLayout1">
-                      <af:gridRow marginTop="12px" height="auto" id="gridRow3">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell9" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Trip Type" id="outputLabel4"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell10" valign="middle">
-                          <af:selectOneChoice value="#{bindings.TripType.inputValue}"
-                                              label="#{bindings.TripType.label}"
-                                              required ="true"
-                                              shortDesc="#{bindings.TripType.hints.tooltip}"
-                                              readOnly="#{sessionScope.mode=='edit'?'true':'false'}"
-                                              id="selectOneChoice1"
-                                              simple="true"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
-                                              contentStyle="width:200px"
-                                              partialTriggers="soc16"
-                                              >
-                            <f:selectItems value="#{bindings.TripType.items}"
-                                           id="selectItems1"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell11" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Airline Ticket Type"
-                                          id="outputLabel5"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell12"
-                                     valign="middle">
-                          <af:inputText value="#{bindings.AirlineTicketType.inputValue}"
-                                        simple="true"
-                                        required="#{bindings.AirlineTicketType.hints.mandatory}"
-                                        columns="#{bindings.AirlineTicketType.hints.displayWidth}"
-                                        maximumLength="#{bindings.AirlineTicketType.hints.precision}"
-                                        shortDesc="#{bindings.AirlineTicketType.hints.tooltip}"
-                                        id="inputText1"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
-                                        contentStyle="width:200px" partialTriggers="soc16"
-                                        readOnly="true">
-                            <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
-                          </af:inputText>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto" id="gridRow4">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell13" halign="end"
-                                     valign="middle">
-                          <af:outputLabel  value="Start Date" id="outputLabel6" partialTriggers="soc16" visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell14" valign="middle">
-                          <af:inputDate value="#{bindings.StartDate.inputValue}"
-                                        required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        shortDesc="#{bindings.StartDate.hints.tooltip}"
-                                        id="inputDate1"
-                                        contentStyle="width:200px"
-                                        simple="true"
-                                        visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        partialTriggers="soc16"
-                                        binding="#{backingBeanScope.backing_employee.bstStDt}"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
-                            <f:validator binding="#{bindings.StartDate.validator}"/>
-                            <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
-                          </af:inputDate>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell15" halign="end"
-                                     valign="middle">
-                          <af:outputLabel  partialTriggers="soc16" value="End Date" id="outputLabel7" visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell16"
-                                     valign="middle">
-                          <af:inputDate value="#{bindings.EndDate.inputValue}"
-                          visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        shortDesc="#{bindings.EndDate.hints.tooltip}"
-                                        id="inputDate2"
-                                        contentStyle="width:200px"
-                                        simple="true"
-                                        partialTriggers="soc16"
-                                        binding="#{backingBeanScope.backing_employee.bstEdDt}"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
-                            <f:validator binding="#{bindings.EndDate.validator}"/>
-                            <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
-                          </af:inputDate>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto"
-                                  marginBottom="5px" id="gridRow10">
-                        <af:gridCell width="23%"
-                                     id="gridCell39" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Actual Start Date" id="ol19"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="27%" id="gridCell44"
-                                     valign="middle">
-                          <af:inputDate value="#{bindings.OrigStartDate.inputValue}"
-                                        required="true"
-                                        shortDesc="#{bindings.OrigStartDate.hints.tooltip}"
-                                        id="id9" 
-                                        partialTriggers="soc16"
-                                        autoSubmit="true"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}"
-                                        contentStyle="width:200px;">
-                            <f:validator binding="#{bindings.OrigStartDate.validator}"/>
-                            <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
-                          </af:inputDate>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="23%"
-                                     id="gridCell41" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Actual End Date" id="ol20"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="27%" id="gridCell43"
-                                     valign="middle">
-                          <af:inputDate value="#{bindings.OrigEndDate.inputValue}"
-                                        required="true"
-                                        shortDesc="#{bindings.OrigEndDate.hints.tooltip}"
-                                        id="id10"
-                                        autoSubmit="true"
-                                        partialTriggers="soc16"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
-                                        valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}">
-                            <f:validator binding="#{bindings.OrigEndDate.validator}"/>
-                            <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>
-                          </af:inputDate>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto" id="gridRow5">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell17" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Destination Category"
-                                          id="outputLabel8"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell18" valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestCategory.inputValue}"
-                                              label="#{bindings.DestCategory.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.DestCategory.hints.tooltip}"
-                                              id="selectOneChoice2"
-                                              simple="true"
-                                              contentStyle="width:200px"
-                                              readOnly="true"
-                                              partialTriggers="soc16"
-                                              binding="#{backingBeanScope.backing_employee.bstDestCateLOV}"
-                                              >
-                            <f:selectItems value="#{bindings.DestCategory.items}"
-                                           id="selectItems2"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell19" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Number of Days"
-                                          id="outputLabel9"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell20"
-                                     valign="middle">
-                          <af:inputText value="#{bindings.NumberOfDays.inputValue}"
-                                        simple="true"
-                                        required="#{bindings.NumberOfDays.hints.mandatory}"
-                                        columns="#{bindings.NumberOfDays.hints.displayWidth}"
-                                        maximumLength="#{bindings.NumberOfDays.hints.precision}"
-                                        shortDesc="#{bindings.NumberOfDays.hints.tooltip}"
-                                        id="inputText2" 
-                                        contentStyle="width:200px;text-align:left" partialTriggers="soc16"
-                                        binding="#{backingBeanScope.backing_employee.bstNoOfDays}"
-                                        readOnly="true">
-                            <f:validator binding="#{bindings.NumberOfDays.validator}"/>
-                          </af:inputText>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto" id="gridRow6">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell21" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Exit Rerentry Visa"
-                                          id="outputLabel10"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell22" valign="middle">
-                          <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
-                                              label="#{bindings.ExitRerentryVisa.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}"
-                                              id="selectOneChoice3"
-                                              simple="true"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
-                                              contentStyle="width:200px"
-                                              partialTriggers="soc16"
-                                              >
-                            <f:selectItems value="#{bindings.ExitRerentryVisa.items}"
-                                           id="selectItems3"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell23" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Destination Visa Required"
-                                          id="outputLabel11"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell24"
-                                     valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
-                                              label="#{bindings.DestVisaRequired.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.DestVisaRequired.hints.tooltip}"
-                                              id="selectOneChoice4"
-                                              simple="true"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
-                                              contentStyle="width:200px"
-                                              partialTriggers="soc16"
-                                              >
-                            <f:selectItems value="#{bindings.DestVisaRequired.items}"
-                                           id="selectItems4"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto"
-                                  marginBottom="5px" id="gr10">
-                        <af:gridCell marginStart="5px" width="25%" id="gc35"
-                                     halign="end" valign="middle">
-                          <af:outputLabel value="Destination Country"
-                                          id="ol22"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%" id="gc36"
-                                     valign="middle">
-                          <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
-                                              label="#{bindings.DestinationCountry.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc20"
-                                              simple="true" partialTriggers="selectOneChoice2"
-                                              contentStyle="width:200px"
-                                              autoSubmit="true"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
-                                               valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
-                                              binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
-                            <f:selectItems value="#{bindings.DestinationCountry.items}" id="si13"/>
-                            <f:validator binding="#{bindings.DestinationCountry.validator}"/>
-                          </af:selectOneChoice>
-                          <af:outputText value="#{bindings.Country_Trans.inputValue}"
-                                         id="ot23" partialTriggers="soc25"
-                                         rendered="false"/>
-                        </af:gridCell>
-                        </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto"
-                                  marginBottom="5px" id="gridRow7">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell25" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Destination City"
-                                          id="outputLabel12"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell26" valign="middle">
-                                     <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
-                                              label="#{bindings.DestCountryCity.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc19"
-                                              autoSubmit="true" partialTriggers="soc16 soc20" 
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}" simple="true"
-                                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
-                                                binding="#{backingBeanScope.backing_employee.bstDestCount}"
-                                                contentStyle="width:200px;">
-                            <f:selectItems value="#{bindings.DestCountryCity.items}" id="si19"/>
-                            <f:validator binding="#{bindings.DestCountryCity.validator}"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell27" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Project Type"
-                                          id="outputLabel13"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell28"
-                                     valign="middle">
-                          <af:selectOneChoice value="#{bindings.ProjType.inputValue}"
-                                              label="#{bindings.ProjType.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.ProjType.hints.tooltip}"
-                                              id="selectOneChoice6"
-                                              simple="true"
-                                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
-                                              contentStyle="width:200px"
-                                              
-                                              partialTriggers="soc16"
-                                              >
-                            <f:selectItems value="#{bindings.ProjType.items}"
-                                           id="selectItems6"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto"
-                                  marginBottom="5px" id="gridRow8">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell29" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Advance PerDiem"
-                                          id="outputLabel14"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell30" valign="middle">
-                          <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}"
-                                              label="#{bindings.AdvPerdiem.label}"
-                                              required="true"
-                                              shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
-                                              id="selectOneChoice7"
-                                              simple="true" 
-                                              readOnly="true"
-                                              contentStyle="width:200px"
-                                              partialTriggers="soc16">
-                            <f:selectItems value="#{bindings.AdvPerdiem.items}"
-                                           id="selectItems7"/>
-                          </af:selectOneChoice>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell31" halign="end"
-                                     valign="middle">
-                          <af:outputLabel value="Description"
-                                          id="outputLabel15" rendered="false"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell32"
-                                     valign="middle">
-                          <af:inputText value="#{bindings.Description1.inputValue}"
-                                        simple="true"
-                                        required="#{bindings.Description1.hints.mandatory}"
-                                        columns="#{bindings.Description1.hints.displayWidth}"
-                                        maximumLength="#{bindings.Description1.hints.precision}"
-                                        shortDesc="#{bindings.Description1.hints.tooltip}"
-                                        id="inputText3"
-                                        contentStyle="width:200px" rows="3" partialTriggers="soc16"
-                                        readOnly="true" rendered="false">
-                            <f:validator binding="#{bindings.Description1.validator}"/>
-                          </af:inputText>
-                        </af:gridCell>
-                      </af:gridRow>
-                      <af:gridRow marginTop="12px" height="auto"
-                                  marginBottom="5px" id="gridRow9">
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell33" halign="end">
-                          <af:outputLabel value="Comments" id="outputLabel16"/>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell34">
-                          <af:inputText value="#{bindings.Comments.inputValue}"
-                                        simple="true"
-                                        required="#{bindings.Comments.hints.mandatory}"
-                                        columns="#{bindings.Comments.hints.displayWidth}"
-                                        maximumLength="#{bindings.Comments.hints.precision}"
-                                        shortDesc="#{bindings.Comments.hints.tooltip}"
-                                        id="inputText4"
-                                        contentStyle="width:200px" rows="3" partialTriggers="soc16"
-                                        disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
-                            <f:validator binding="#{bindings.Comments.validator}"/>
-                          </af:inputText>
-                        </af:gridCell>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     id="gridCell35" halign="end"
-                                     valign="middle"/>
-                        <af:gridCell marginStart="5px" width="25%"
-                                     marginEnd="5px" id="gridCell36"
-                                     valign="middle"/>
-                      </af:gridRow>
-                    </af:panelGridLayout>
+              <af:panelFormLayout id="pfl8" maxColumns="2" rows="7" labelWidth="250px">
+                <f:facet name="footer"/>
+                <af:panelLabelAndMessage label="Business Travel Request Number" id="plam26">
+                  <af:inputListOfValues id="soc16" popupTitle="Search and Select: Business Travel Request Number"
+                                        value="#{bindings.BussTravReqNumValue.inputValue}"
+                                        label="#{bindings.BussTravReqNumValue.hints.label}"
+                                        model="#{bindings.BussTravReqNumValue.listOfValuesModel}" required="true"
+                                        columns="#{bindings.BussTravReqNumValue.hints.displayWidth}"
+                                        valueChangeListener="#{backingBeanScope.backing_employee.BusinessTravelReqVCL}"
+                                        partialTriggers="employeeNameTRANSId" autoSubmit="true" simple="true"
+                                        shortDesc="#{bindings.BussTravReqNumValue.hints.tooltip}"
+                                        contentStyle="width:200px;"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        binding="#{backingBeanScope.backing_employee.bussTrReq1}"
+                                        launchPopupListener="#{backingBeanScope.backing_employee.onPopupLaunchBr}">
+                    <f:validator binding="#{bindings.BussTravReqNumValue.validator}"/>
+                  </af:inputListOfValues>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Trip Type" id="plam27">
+                  <af:selectOneChoice value="#{bindings.TripType.inputValue}" label="#{bindings.TripType.label}"
+                                      required="true" shortDesc="#{bindings.TripType.hints.tooltip}"
+                                      readOnly="#{sessionScope.mode=='edit'?'true':'false'}" id="selectOneChoice1"
+                                      simple="true" disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
+                                      contentStyle="width:200px" partialTriggers="soc16">
+                    <f:selectItems value="#{bindings.TripType.items}" id="selectItems1"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Start Date" id="plam29"
+                                         visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}" partialTriggers="soc16">
+                  <af:inputDate value="#{bindings.StartDate.inputValue}"
+                                required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
+                                shortDesc="#{bindings.StartDate.hints.tooltip}" id="inputDate1"
+                                contentStyle="width:200px" simple="true"
+                                binding="#{backingBeanScope.backing_employee.bstStDt}"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                autoSubmit="true"
+                                valueChangeListener="#{backingBeanScope.backing_employee.onBtcStartDateVC}">
+                    <f:validator binding="#{bindings.StartDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
+                  </af:inputDate>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Actual Start Date" id="plam31">
+                  <af:inputDate value="#{bindings.OrigStartDate.inputValue}" required="true"
+                                shortDesc="#{bindings.OrigStartDate.hints.tooltip}" id="id9" partialTriggers="soc16"
+                                autoSubmit="true"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
+                                valueChangeListener="#{backingBeanScope.backing_employee.actualSdate}"
+                                contentStyle="width:200px;" simple="true">
+                    <f:validator binding="#{bindings.OrigStartDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.OrigStartDate.format}"/>
+                  </af:inputDate>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Airline Ticket Type" id="plam28">
+                  <af:inputText value="#{bindings.AirlineTicketType.inputValue}" simple="true"
+                                required="#{bindings.AirlineTicketType.hints.mandatory}"
+                                columns="#{bindings.AirlineTicketType.hints.displayWidth}"
+                                maximumLength="#{bindings.AirlineTicketType.hints.precision}"
+                                shortDesc="#{bindings.AirlineTicketType.hints.tooltip}" id="inputText1"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null}" contentStyle="width:200px"
+                                partialTriggers="soc16">
+                    <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
+                  </af:inputText>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Destination Category" id="plam33">
+                  <af:selectOneChoice value="#{bindings.DestCategory.inputValue}" label="#{bindings.DestCategory.label}"
+                                      required="true" shortDesc="#{bindings.DestCategory.hints.tooltip}"
+                                      id="selectOneChoice2" simple="true" contentStyle="width:200px"
+                                      partialTriggers="soc16"
+                                      binding="#{backingBeanScope.backing_employee.bstDestCateLOV}" disabled="true">
+                    <f:selectItems value="#{bindings.DestCategory.items}" id="selectItems2"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Destination Country" id="plam37">
+                  <af:selectOneChoice value="#{bindings.DestinationCountry.inputValue}"
+                                      label="#{bindings.DestinationCountry.label}" required="true"
+                                      shortDesc="#{bindings.DestinationCountry.hints.tooltip}" id="soc20" simple="true"
+                                      partialTriggers="selectOneChoice2" contentStyle="width:200px" autoSubmit="true"
+                                      disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                      valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountry}"
+                                      binding="#{backingBeanScope.backing_employee.bstCountryLOV}">
+                    <f:selectItems value="#{bindings.DestinationCountry.items}" id="si13"/>
+                    <f:validator binding="#{bindings.DestinationCountry.validator}"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Destination City" id="plam38">
+                  <af:selectOneChoice value="#{bindings.DestCountryCity.inputValue}"
+                                      label="#{bindings.DestCountryCity.label}" required="true"
+                                      shortDesc="#{bindings.DestCountryCity.hints.tooltip}" id="soc19" autoSubmit="true"
+                                      partialTriggers="soc16 soc20"
+                                      disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                      simple="true"
+                                      valueChangeListener="#{backingBeanScope.backing_employee.onChangeDestCountryCity}"
+                                      binding="#{backingBeanScope.backing_employee.bstDestCount}"
+                                      contentStyle="width:200px;">
+                    <f:selectItems value="#{bindings.DestCountryCity.items}" id="si19"/>
+                    <f:validator binding="#{bindings.DestCountryCity.validator}"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Exit Rerentry Visa" id="plam35">
+                  <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}"
+                                      label="#{bindings.ExitRerentryVisa.label}" required="true"
+                                      shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="selectOneChoice3"
+                                      simple="true"
+                                      disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                      contentStyle="width:200px" partialTriggers="soc16">
+                    <f:selectItems value="#{bindings.ExitRerentryVisa.items}" id="selectItems3"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage id="plam43"/>
+                <af:panelLabelAndMessage label="Advance PerDiem" id="plam40">
+                  <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}" label="#{bindings.AdvPerdiem.label}"
+                                      required="true" shortDesc="#{bindings.AdvPerdiem.hints.tooltip}"
+                                      id="selectOneChoice7" simple="true" contentStyle="width:200px"
+                                      partialTriggers="soc16" disabled="true">
+                    <f:selectItems value="#{bindings.AdvPerdiem.items}" id="selectItems7"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="End Date" id="plam30"
+                                         visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}" partialTriggers="soc16">
+                  <af:inputDate value="#{bindings.EndDate.inputValue}"
+                                required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
+                                shortDesc="#{bindings.EndDate.hints.tooltip}" id="inputDate2" contentStyle="width:200px"
+                                simple="true"
+                                binding="#{backingBeanScope.backing_employee.bstEdDt}"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                autoSubmit="true"
+                                valueChangeListener="#{backingBeanScope.backing_employee.onBtcEndDateVC}">
+                    <f:validator binding="#{bindings.EndDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
+                  </af:inputDate>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Actual End Date" id="plam32">
+                  <af:inputDate value="#{bindings.OrigEndDate.inputValue}" required="true"
+                                shortDesc="#{bindings.OrigEndDate.hints.tooltip}" id="id10" autoSubmit="true"
+                                partialTriggers="soc16"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
+                                valueChangeListener="#{backingBeanScope.backing_employee.actualEdate}" simple="true">
+                    <f:validator binding="#{bindings.OrigEndDate.validator}"/>
+                    <af:convertDateTime pattern="#{bindings.OrigEndDate.format}"/>
+                  </af:inputDate>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Number of Days" id="plam34">
+                  <af:inputText value="#{bindings.NumberOfDays.inputValue}" simple="true"
+                                required="#{bindings.NumberOfDays.hints.mandatory}"
+                                columns="#{bindings.NumberOfDays.hints.displayWidth}"
+                                maximumLength="#{bindings.NumberOfDays.hints.precision}"
+                                shortDesc="#{bindings.NumberOfDays.hints.tooltip}" id="inputText2"
+                                contentStyle="width:200px;text-align:left" partialTriggers="soc16"
+                                binding="#{backingBeanScope.backing_employee.bstNoOfDays}" disabled="true">
+                    <f:validator binding="#{bindings.NumberOfDays.validator}"/>
+                  </af:inputText>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Destination Visa Required" id="plam36">
+                  <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
+                                      label="#{bindings.DestVisaRequired.label}" required="true"
+                                      shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="selectOneChoice4"
+                                      simple="true"
+                                      disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                      contentStyle="width:200px" partialTriggers="soc16">
+                    <f:selectItems value="#{bindings.DestVisaRequired.items}" id="selectItems4"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Project Type" id="plam39">
+                  <af:selectOneChoice value="#{bindings.ProjType.inputValue}" label="#{bindings.ProjType.label}"
+                                      required="true" shortDesc="#{bindings.ProjType.hints.tooltip}"
+                                      id="selectOneChoice6" simple="true"
+                                      disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                      contentStyle="width:200px" partialTriggers="soc16">
+                    <f:selectItems value="#{bindings.ProjType.items}" id="selectItems6"/>
+                  </af:selectOneChoice>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Comments" id="plam42">
+                  <af:inputText value="#{bindings.Comments.inputValue}" simple="true"
+                                required="#{bindings.Comments.hints.mandatory}"
+                                columns="#{bindings.Comments.hints.displayWidth}"
+                                maximumLength="#{bindings.Comments.hints.precision}"
+                                shortDesc="#{bindings.Comments.hints.tooltip}" id="inputText4"
+                                contentStyle="width:200px" rows="3" partialTriggers="soc16"
+                                disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}">
+                    <f:validator binding="#{bindings.Comments.validator}"/>
+                  </af:inputText>
+                </af:panelLabelAndMessage>
+              </af:panelFormLayout>
                   </af:panelBox>
                   <af:panelBox text="Purpose of Travel" id="pb10">
                     <f:facet name="toolbar"/>
@@ -1798,7 +1572,7 @@
                                         id="it42"
                                         disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                         autoSubmit="true"
-                                        partialTriggers="soc16 id10 id9" readOnly="true">
+                                        partialTriggers="soc16 id9 id10 inputDate1 inputDate2" readOnly="true">
                             <f:validator binding="#{bindings.NumberOfDays.validator}"/>
                           </af:inputText>
                           <af:outputText value="#{bindings.NumberOfDays.inputValue}"
