@@ -78,7 +78,6 @@
       <page path="/WEB-INF/PayrollTransfer.xml#PayrollTransfer@ExecuteWithParams"
             usageId="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
       <page path="/pages/OvertimeRequest.jsf" usageId="SalicView_OvertimeRequestPageDef"/>
-      <page path="/pages/BusinessTrip.jsf" usageId="SalicView_BusinessTripPageDef"/>
       <page path="/pages/BusinessTripCompletion.jsf" usageId="SalicView_BusinessTripCompletionPageDef"/>
       <page path="/pages/HousingAdvance.jsf" usageId="SalicView_HousingAdvancePageDef"/>
       <page path="/pages/SalaryInAdvance.jsf" usageId="SalicView_SalaryInAdvancePageDef"/>
@@ -185,7 +184,6 @@
       <page id="SalicView_PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"
             path="SalicView.pageDefs.PayrollTransfer_PayrollTransfer_ExecuteWithParamsPageDef"/>
       <page id="SalicView_OvertimeRequestPageDef" path="pages.OvertimeRequestPageDef"/>
-      <page id="SalicView_BusinessTripPageDef" path="pages.BusinessTripPageDef"/>
       <page id="SalicView_BusinessTripCompletionPageDef" path="pages.BusinessTripCompletionPageDef"/>
       <page id="SalicView_HousingAdvancePageDef" path="pages.HousingAdvancePageDef"/>
       <page id="SalicView_SalaryInAdvancePageDef" path="pages.SalaryInAdvancePageDef"/>
