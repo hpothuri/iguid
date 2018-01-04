@@ -1976,10 +1976,8 @@
                         </af:outputText>
                       </af:column>
                       <af:column headerText="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.label}" id="c61">
-                        <af:outputText value="#{row.ApprBy}"
-                                       shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.tooltip}" id="ot29">
-                          <af:convertNumber groupingUsed="false"
-                                            pattern="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.format}"/>
+                        <af:outputText value="#{row.ApprByUserName}"
+                                       shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprByUserName.tooltip}" id="ot29">
                         </af:outputText>
                       </af:column>
                       <af:column sortable="false" headerText="Approved Date" id="c60">
@@ -2057,16 +2055,12 @@
                                  sortable="false"
                                  headerText="File Name"
                                  id="c4" width="200">
-                        <af:inputText value="#{row.bindings.FileName.inputValue}"
-                                      label="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.label}"
-                                      required="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.mandatory}"
-                                      columns="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.displayWidth}"
-                                      maximumLength="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.precision}"
-                                      shortDesc="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.tooltip}"
-                                      id="it3" readOnly="true">
-                          <f:validator binding="#{row.bindings.FileName.validator}"/>
-                        </af:inputText>
-                      </af:column>
+                  <af:link shortDesc="#{bindings.XxhcmMasterAttachment_VO2.hints.FileName.tooltip}" id="it3"
+                           text="#{row.bindings.FileName.inputValue}">
+                    <af:fileDownloadActionListener filename="#{row.bindings.FileName.inputValue}"
+                                                   method="#{backingBeanScope.backing_employee.downloadFileListener}"/>
+                  </af:link>
+                </af:column>
                       <af:column sortProperty="#{bindings.XxhcmMasterAttachment_VO2.hints.FileType.name}"
                                  sortable="false"
                                  headerText="File Type"
@@ -2091,7 +2085,8 @@
                                       columns="400"
                                       maximumLength="#{bindings.XxhcmMasterAttachment_VO2.hints.Description.precision}"
                                       shortDesc="#{bindings.XxhcmMasterAttachment_VO2.hints.Description.tooltip}"
-                                      id="it4">
+                                      id="it4"
+                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
                           <f:validator binding="#{row.bindings.Description.validator}"/>
                         </af:inputText>
                       </af:column>
@@ -2115,11 +2110,8 @@
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
                       </af:column>
                       <af:column id="c17" headerText="Download" align="center"
-                                 width="100">
-                        <af:commandButton text="Download" partialTriggers="if1" id="cb9">
-                          <af:fileDownloadActionListener filename="#{row.bindings.FileName.inputValue}"
-                                                         method="#{backingBeanScope.backing_employee.downloadFileListener}"/>
-                        </af:commandButton>
+                                 width="100" rendered="false">
+                        <af:commandButton text="Download" partialTriggers="if1" id="cb9"/>
                       </af:column>
                       <af:column id="c18" headerText="Delete" align="center"
                                  width="60">

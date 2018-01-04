@@ -4,33 +4,14 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxQpActionHistoryTVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
-  SelectList="XxQpActionHistoryTEO.ACTION_HISTORY_ID, 
-       XxQpActionHistoryTEO.HEADER_ID, 
-       XxQpActionHistoryTEO.APPROVE_LEVEL, 
-       XxQpActionHistoryTEO.APPROVER_ID, 
-       XxQpActionHistoryTEO.APPROVER_USER_NAME, 
-       XxQpActionHistoryTEO.APPROVER_COMMENTS, 
-       XxQpActionHistoryTEO.APPROVER_FLAG, 
-       XxQpActionHistoryTEO.TYPE, 
-       XxQpActionHistoryTEO.CREATED_BY, 
-       XxQpActionHistoryTEO.CREATION_DATE, 
-       XxQpActionHistoryTEO.LAST_UPDATED_BY, 
-       XxQpActionHistoryTEO.LAST_UPDATE_DATE, 
-       XxQpActionHistoryTEO.LAST_UPDATE_LOGIN, 
-       XxQpActionHistoryTEO.ROWID, 
-       XxQpActionHistoryTEO.PAGE, 
-       XxQpActionHistoryTEO.REQ_NUMBER, 
-       XxQpActionHistoryTEO.APPR_TYPE, 
-       XxQpActionHistoryTEO.APPR_DATE, 
-       XxQpActionHistoryTEO.APPR_BY"
-  FromList="XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO"
   BindingStyle="OracleName"
-  CustomQuery="false"
-  PageIterMode="Full"
-  Where="XxQpActionHistoryTEO.PAGE=:p_req_typ"
-  OrderBy="XxQpActionHistoryTEO.APPROVE_LEVEL DESC">
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
   <Variable
     Name="BV_USR_NM"
     Kind="viewcriteria"
@@ -47,6 +28,28 @@
     Name="p_req_id"
     Kind="viewcriteria"
     Type="java.math.BigDecimal"/>
+  <SQLQuery><![CDATA[SELECT XxQpActionHistoryTEO.ACTION_HISTORY_ID,   
+       XxQpActionHistoryTEO.HEADER_ID,   
+       XxQpActionHistoryTEO.APPROVE_LEVEL,   
+       XxQpActionHistoryTEO.APPROVER_ID,   
+       XxQpActionHistoryTEO.APPROVER_USER_NAME,   
+       XxQpActionHistoryTEO.APPROVER_COMMENTS,   
+       XxQpActionHistoryTEO.APPROVER_FLAG,   
+       XxQpActionHistoryTEO.TYPE,   
+       XxQpActionHistoryTEO.CREATED_BY,   
+       XxQpActionHistoryTEO.CREATION_DATE,   
+       XxQpActionHistoryTEO.LAST_UPDATED_BY,   
+       XxQpActionHistoryTEO.LAST_UPDATE_DATE,   
+       XxQpActionHistoryTEO.LAST_UPDATE_LOGIN,   
+       XxQpActionHistoryTEO.ROWID,   
+       XxQpActionHistoryTEO.PAGE,   
+       XxQpActionHistoryTEO.REQ_NUMBER,   
+       XxQpActionHistoryTEO.APPR_TYPE,   
+       XxQpActionHistoryTEO.APPR_DATE,   
+       XxQpActionHistoryTEO.APPR_BY, 
+       (select display_name from xxstg_person where person_id = XxQpActionHistoryTEO.APPR_BY) APPR_BY_USER_NAME 
+FROM  XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO  
+WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
   <EntityUsage
     Name="XxQpActionHistoryTEO"
     Entity="SalicEntity.XxQpActionHistoryTEO"/>
@@ -227,6 +230,21 @@
           ResId="SalicView.XxQpActionHistoryTVO.ApprBy_LABEL"/>
       </SchemaBasedProperties>
     </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApprByUserName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="500"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APPR_BY_USER_NAME"
+    Expression="APPR_BY_USER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
   </ViewAttribute>
   <ViewCriteria
     Name="XxQpActionHistoryTVOCriteria"
