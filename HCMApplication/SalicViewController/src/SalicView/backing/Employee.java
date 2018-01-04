@@ -2719,6 +2719,7 @@ public class Employee {
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
         actionHisVO.reset();
+        actionHisVO.first().remove();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
 //            row.setAttribute("ApproverFlag", null);
@@ -2760,11 +2761,17 @@ public class Employee {
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
+        actionHisVO.reset();
+        actionHisVO.first().remove();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
+        //            row.setAttribute("ApproverFlag", null);
+        //            row.setAttribute("LastUpdateDate", dummyDate);
+        //            row.setAttribute("ApprDate", null);
+        //            row.setAttribute("ApproverComments", dummyDate);
             row.remove();
         }
-        
+        ADFUtils.findOperation("Commit").execute();
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
@@ -2775,7 +2782,7 @@ public class Employee {
         
         JSFUtils.addFacesInformationMessage("Request is cancelled successfully and pending for approval!");
         
-        return null;
+        return "save";
     }
 
     public void setAttTable(RichTable attTable) {
@@ -4148,28 +4155,29 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         String reqActionStatus = (String)mgrVo.getCurrentRow().getAttribute("ReqStatus");
         String payRollStatus = (String)mgrVo.getCurrentRow().getAttribute("PayrollTansStatus");
         //Update payroll transfer
+        //Pending Approval
+        //REJECT
+        //APPROVE
+        //Draft
+        //New
         if(payRollStatus!=null && payRollStatus.equalsIgnoreCase("COMPLETED")){
             return "Transferred to Payroll";
-        }
-        //New
+        }        
         if(reqStatus.equalsIgnoreCase("New")){
             return "New";
         }
-        //Pending Approval
-//REJECT
-//APPROVE
-        //Draft
         if(reqStatus.equalsIgnoreCase("Draft") && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
             return "Draft";
         }
-        // Pending for Approval
-        if(reqStatus.equalsIgnoreCase("Pending Approval") && (reqActionStatus.equalsIgnoreCase("Pending Approval")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
-            return "Pending Approval";
-        }
-        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+        // Cancelled, Pending Approval
+        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Pending Approval";
         }
-        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+        //Pending Approval
+        if(reqStatus.equalsIgnoreCase("Pending Approval")){
+            return "Pending Approval";
+        }        
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Approved";
         }
         if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("CANCEL")){

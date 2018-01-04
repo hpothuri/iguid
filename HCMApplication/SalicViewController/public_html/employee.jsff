@@ -259,7 +259,7 @@
                 </af:panelLabelAndMessage>
                 <af:panelLabelAndMessage label="#{bindings.Status.hints.label}"
                                          id="plam8">
-                  <af:outputText value="#{bindings.Status.inputValue eq 'APPROVE' ? 'Approved' : bindings.Status.inputValue eq 'New' ? 'New' : bindings.Status.inputValue eq 'REJECT'?'Rejected':bindings.Status.inputValue eq 'Draft'?'Draft':bindings.Status.inputValue eq 'Pending Approval'?'Pending For Approval':'New'}"
+                  <af:outputText value="#{backingBeanScope.backing_employee.displayReqStatus}"
                                  id="ot10"
                                  binding="#{backingBeanScope.backing_employee.ot10}"
                                  partialTriggers="cmi2 cb2"/>
