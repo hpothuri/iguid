@@ -38,6 +38,7 @@
           <Item Value="Attribute3"/>
           <Item Value="PayrollTansStatus"/>
           <Item Value="PayrollTansComments"/>
+          <Item Value="DispStatus"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

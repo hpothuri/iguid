@@ -35,6 +35,7 @@
           <Item Value="Description"/>
           <Item Value="ReqType"/>
           <Item Value="ReqId"/>
+          <Item Value="DispStatus"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

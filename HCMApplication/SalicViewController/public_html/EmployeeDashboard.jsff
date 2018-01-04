@@ -332,7 +332,7 @@
                                           </af:column>
                                           <af:column sortProperty="#{bindings.employeeDashboardROVO1.hints.Status.name}"
                                                      sortable="false"
-                                                     headerText="Approval Status"
+                                                     headerText="Request Status"
                                                      id="c1" width="959">
                                                 <af:inputText value="#{row.bindings.Status.inputValue}"
                                                               label="#{bindings.employeeDashboardROVO1.hints.Status.label}"
@@ -446,7 +446,7 @@
                                                      sortable="false"
                                                      headerText="Approval Status"
                                                      id="c11" width="120">
-                                                <af:outputText value="#{row.Status eq 'APPROVE' ? 'Approved':row.Status eq 'REJECT'?'Rejected':row.Status}"
+                                                <af:outputText value="#{row.DispStatus}"
                                                                id="ot3"/>
                                           </af:column>
                                           <af:column id="c13"

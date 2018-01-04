@@ -167,7 +167,7 @@
                              sortable="true"
                              headerText="#{bindings.otHdrROVO1.hints.Status.label}"
                              id="c2" width="125" filterable="true">
-                    <af:outputText value="#{row.Status eq 'APPROVE'?'Approved':row.Status eq 'REJECT'?'Rejected':row.Status}" id="ot2"/>
+                    <af:outputText value="#{row.DispStatus}" id="ot2"/>
                   </af:column>
                   <af:column sortProperty="#{bindings.otHdrROVO1.hints.LineApproval.name}"
                              sortable="true"

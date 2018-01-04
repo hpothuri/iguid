@@ -458,16 +458,16 @@
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.Status.name}"
                                                      sortable="true"
-                                                     headerText="Approval Status"
+                                                     headerText="Request Status"
                                                      id="c10" width="130">
-                                                <af:outputText value="#{row.Status eq 'APPROVE' ? 'Approved':row.Status eq 'REJECT'?'Rejected':row.Status}"
+                                                <af:outputText value="#{row.DispStatus}"
                                                                id="ot5"/>
                                           </af:column>
                                           <af:column id="c17"
                                           sortProperty="#{bindings.payRollObjROVO11.hints.PayrollTansStatus.name}"
                                                      headerText="Payroll Transfer Status"
                                                      width="150"
-                                                     sortable="true">
+                                                     sortable="true" rendered="false">
                                                 <af:outputText value="#{row.PayrollTansStatus eq 'Draft'?'Draft':'Completed'}"
                                                                id="ot16"/>
                                           </af:column>

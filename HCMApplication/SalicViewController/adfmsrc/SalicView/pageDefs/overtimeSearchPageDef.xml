@@ -71,6 +71,7 @@
           <Item Value="RequestNumber"/>
           <Item Value="ReqId"/>
           <Item Value="ReqType"/>
+          <Item Value="DispStatus"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

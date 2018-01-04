@@ -4180,7 +4180,7 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Approved";
         }
-        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("CANCEL")){
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Rejected";
         }
         if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("APPROVE")){

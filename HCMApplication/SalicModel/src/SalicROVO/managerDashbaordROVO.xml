@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="managerDashbaordROVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -103,7 +103,8 @@
   FROM XX_QP_ACTION_HISTORY_T where          
   header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID         
   AND approver_id  = decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)) 
-  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents        
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents,
+  (select XXSALIC_HCM_PKG.getDisplayReqStatus(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) from dual) disp_status
   FROM              
     XXHCM_OVERTIME_HEADERS_ALL            
     where status not in ('draft') and req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE ( (appr_by = :p_emp_logged_in and APPROVER_FLAG IN ('A','R'))  
@@ -530,6 +531,31 @@
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
+    Name="ApproverComments"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="approver_commnents"
+    SQLType="VARCHAR"
+    Expression="approver_commnents"/>
+  <ViewAttribute
+    Name="DispStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DISP_STATUS"
+    Expression="DISP_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
     Name="EmployeeName"
     IsSelected="false"
     IsPersistent="false"
@@ -642,16 +668,6 @@ employeeROVO.first().getAttribute("Grade")
         Value="EmpId"/>
     </Dependencies>
   </ViewAttribute>
-  <ViewAttribute
-    Name="ApproverComments"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Type="java.lang.String"
-    ColumnType="CHAR"
-    AliasName="approver_commnents"
-    SQLType="VARCHAR"
-    Expression="approver_commnents"/>
   <ViewAttribute
     Name="ApprComments"
     IsSelected="false"
