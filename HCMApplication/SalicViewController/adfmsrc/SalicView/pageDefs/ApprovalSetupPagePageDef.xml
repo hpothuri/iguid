@@ -31,6 +31,8 @@
           <Item Value="ApprLevel"/>
           <Item Value="CustApprGroupId"/>
           <Item Value="ApprGroupId"/>
+          <Item Value="PayrollGroup" Binds="PayrollGroup"/>
+          <Item Value="TicketGroup" Binds="TicketGroup"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -54,5 +56,23 @@
             InstanceName="ApprovalAMDataControl.XxhcmApprSetupDtl_VO1"
             DataControl="ApprovalAMDataControl" RequiresUpdateModel="false"
             Action="removeCurrentRow"/>
+    <button IterBinding="XxhcmApprSetupDtl_VO1Iterator" id="PayrollGroup" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="PayrollGroup"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="XxhcmApprSetupDtl_VO1Iterator" id="TicketGroup" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="TicketGroup"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
   </bindings>
 </pageDefinition>

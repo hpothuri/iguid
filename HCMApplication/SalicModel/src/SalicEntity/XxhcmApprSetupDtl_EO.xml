@@ -4,16 +4,12 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmApprSetupDtl_EO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_APPR_SETUP_DTL"
   AliasName="XxhcmApprSetupDtl_EO"
-  BindingStyle="OracleName"
-  UseGlueCode="false">
-  <DesignTime>
-    <AttrArray Name="_publishEvents"/>
-  </DesignTime>
+  BindingStyle="OracleName">
   <Attribute
     Name="ApprDtlId"
     ColumnName="APPR_DTL_ID"
@@ -25,7 +21,8 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
-    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("APPR_SETUP_DTL_S",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[(new oracle.jbo.server.SequenceImpl("APPR_SETUP_DTL_S",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="ApprHdrId"
@@ -230,7 +227,8 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="11"/>
     </DesignTime>
-    <TransientExpression><![CDATA[adf.currentDateTime]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[adf.currentDateTime]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="LastUpdatedBy"
@@ -258,7 +256,8 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="11"/>
     </DesignTime>
-    <TransientExpression><![CDATA[adf.currentDateTime]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[adf.currentDateTime]]></TransientExpression>
   </Attribute>
   <Attribute
     Name="LastUpdateLogin"
@@ -272,6 +271,32 @@
     DefaultValue="1">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="16"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="TicketGroup"
+    Precision="1"
+    ColumnName="TICKET_GROUP"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_APPR_SETUP_DTL"
+    DefaultValue="N">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PayrollGroup"
+    Precision="1"
+    ColumnName="PAYROLL_GROUP"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_APPR_SETUP_DTL"
+    DefaultValue="N">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
     </DesignTime>
   </Attribute>
   <Key

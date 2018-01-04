@@ -173,6 +173,18 @@
                   <f:validator binding="#{row.bindings.ApprLevel.validator}"/>
                 </af:inputText>
               </af:column>
+              <af:column headerText="Payroll Group" id="c8">
+                <af:selectBooleanCheckbox value="#{row.bindings.PayrollGroup.inputValue}"
+                                          label="#{row.bindings.PayrollGroup.label}"
+                                          shortDesc="#{bindings.XxhcmApprSetupDtl_VO1.hints.PayrollGroup.tooltip}"
+                                          id="sbc1"/>
+              </af:column>
+              <af:column headerText="Ticket Group" id="c9">
+                <af:selectBooleanCheckbox value="#{row.bindings.TicketGroup.inputValue}"
+                                          label="#{row.bindings.TicketGroup.label}"
+                                          shortDesc="#{bindings.XxhcmApprSetupDtl_VO1.hints.TicketGroup.tooltip}"
+                                          id="sbc2"/>
+              </af:column>
             </af:table>
           </af:panelCollection>
         </af:panelBox>

@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmApprSetupDtl_VO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmApprSetupDtl_EO.APPR_DTL_ID, 
        XxhcmApprSetupDtl_EO.APPR_GROUP_ID, 
@@ -26,12 +26,13 @@
        XxhcmApprSetupDtl_EO.CUST_APPR_GROUP_ID, 
        XxhcmApprSetupDtl_EO.LAST_UPDATE_DATE, 
        XxhcmApprSetupDtl_EO.LAST_UPDATE_LOGIN, 
-       XxhcmApprSetupDtl_EO.LAST_UPDATED_BY"
+       XxhcmApprSetupDtl_EO.LAST_UPDATED_BY, 
+       XxhcmApprSetupDtl_EO.PAYROLL_GROUP, 
+       XxhcmApprSetupDtl_EO.TICKET_GROUP"
   FromList="XXHCM_APPR_SETUP_DTL XxhcmApprSetupDtl_EO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -60,6 +61,7 @@
     <AttrArray Name="AttrNames">
       <Item Value="ApprGroupId"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
       <Item Value="LookupValueId"/>
     </AttrArray>
@@ -78,6 +80,7 @@
     <AttrArray Name="AttrNames">
       <Item Value="CustApprGroupId"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="ListAttrNames">
       <Item Value="ApprovalListId"/>
     </AttrArray>
@@ -256,6 +259,32 @@
     EntityUsage="XxhcmApprSetupDtl_EO"
     AliasName="LAST_UPDATED_BY"
     IsUpdateable="false"/>
+  <ViewAttribute
+    Name="PayrollGroup"
+    PrecisionRule="true"
+    EntityAttrName="PayrollGroup"
+    EntityUsage="XxhcmApprSetupDtl_EO"
+    AliasName="PAYROLL_GROUP">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="check_box"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TicketGroup"
+    PrecisionRule="true"
+    EntityAttrName="TicketGroup"
+    EntityUsage="XxhcmApprSetupDtl_EO"
+    AliasName="TICKET_GROUP">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="check_box"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="SalicModel.SalicModelBundle"/>
