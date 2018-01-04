@@ -2718,6 +2718,7 @@ public class Employee {
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
+        actionHisVO.reset();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
 //            row.setAttribute("ApproverFlag", null);

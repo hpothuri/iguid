@@ -5,21 +5,8 @@
   <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
                    id="pt1">
     <f:facet name="pageContents">
-      <af:panelGroupLayout id="pgl1" styleClass="AFStretchWidth"
-                           halign="center" layout="scroll">
         <af:commandButton text="Add" id="cb1" action="add" rendered="false"/>
-        <af:panelHeader text = "" id="ph1">
-          <f:facet name="context"/>
-          <f:facet name="menuBar"/>
-          <f:facet name="toolbar"/>
-          <f:facet name="legend"/>
-          <f:facet name="info"/>
-          <af:panelBox id="pb1"
-                       inlineStyle="height:inherit;width:1310px;border-color:transparent;"
-                       showDisclosure="false" rendered="false">
-            <f:facet name="toolbar"/>
-          </af:panelBox>
-          <af:panelGroupLayout id="pgl2">
+          <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
             <af:panelDrawer position="left" id="pd1" height="528" width="382">
               <af:showDetailItem id="dr1" shortDesc="Search"
                                  inlineStyle="border-color:transparent;"
@@ -59,7 +46,6 @@
             <af:panelBox text="Search Result" id="pb3">
               <f:facet name="toolbar"/>
               <af:panelCollection id="pc1" styleClass="AFStretchWidth"
-                                  inlineStyle="height:440.0px;"
                                   rendered="true">
                 <f:facet name="menus"/>
                 <f:facet name="toolbar">
@@ -208,8 +194,7 @@
               </af:panelCollection>
             </af:panelBox>
           </af:panelGroupLayout>
-        </af:panelHeader>
-      </af:panelGroupLayout>
+        
     </f:facet>
     <f:facet name="footerStart"/>
     <f:facet name="footer"/>

@@ -105,6 +105,7 @@
       <page path="/pages/ApproveOrRejectByEmail.jsf" usageId="SalicView_ApproveOrRejectByEmailPageDef"/>
       <page path="/WEB-INF/ApproveOrRejectEmailTF.xml#ApproveOrRejectEmailTF@initAppOrRej"
             usageId="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
+      <page path="/pages/BusinessTrip.jsf" usageId="SalicView_BusinessTripPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -211,6 +212,7 @@
       <page id="SalicView_ApproveOrRejectByEmailPageDef" path="pages.ApproveOrRejectByEmailPageDef"/>
       <page id="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"
             path="SalicView.pageDefs.ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
+      <page id="SalicView_BusinessTripPageDef" path="pages.BusinessTripPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"
