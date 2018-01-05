@@ -36,6 +36,7 @@
           <Item Value="ReqType"/>
           <Item Value="ReqId"/>
           <Item Value="DispStatus"/>
+          <Item Value="LastApprovedBy"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

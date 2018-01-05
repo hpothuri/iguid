@@ -545,7 +545,7 @@
                               </af:menuBar>
                            </af:column>
                            <af:column  headerText="Approver Comments"
-                                      id="c26">
+                                      id="c26" width="200">
                               <af:inputText value="#{row.bindings.ApproverComments.inputValue}"
                               rendered="#{row.ApproverFlag eq 'A' ? 'true' : 'false' or row.ApproverFlag eq 'R'? 'true' :'false' }"
                                             label="#{bindings.managerDashbaordROVO11.hints.ApproverComments.label}"
@@ -630,13 +630,13 @@
                                       width="150"
                                       sortProperty="#{bindings.managerDashbaordROVO11.hints.ApproverUserName.name}"
                                       filterable="true" sortable="false">
-                              <af:outputText value="#{row.ApproverUserName}"
+                              <af:outputText value="#{row.LastApprovedBy}"
                                              id="ot13"/>
                            </af:column>
                            <af:column sortProperty="#{bindings.managerDashbaordROVO11.hints.Description.name}"
                                       sortable="false"
                                       headerText="Approver Comments" id="c18"
-                                      width="300" filterable="true">
+                                      width="300" filterable="true" rendered="false">
                               <af:outputText value="#{row.Description}"
                                              id="ot8"/>
                            </af:column>

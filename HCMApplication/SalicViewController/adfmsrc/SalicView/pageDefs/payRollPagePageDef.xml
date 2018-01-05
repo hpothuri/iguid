@@ -12,12 +12,13 @@
   </executables>
   <bindings>
     <tree IterBinding="payRollObjROVO1Iterator" id="payRollObjROVO1">
-      <nodeDefinition DefName="SalicROVO.payRollObjROVO"
-                      Name="payRollObjROVO10">
+      <nodeDefinition DefName="SalicROVO.payRollObjROVO" Name="payRollObjROVO10">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
           <Item Value="Status"/>
+          <Item Value="LastApprovedBy"/>
+          <Item Value="LastApproverComments"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -39,6 +40,8 @@
           <Item Value="PayrollTansStatus"/>
           <Item Value="PayrollTansComments"/>
           <Item Value="DispStatus"/>
+          <Item Value="LastApprovedBy"/>
+          <Item Value="LastApproverComments"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

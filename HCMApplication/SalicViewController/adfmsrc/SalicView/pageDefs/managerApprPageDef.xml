@@ -35,6 +35,8 @@
           <Item Value="Grade"/>
           <Item Value="ReqId"/>
           <Item Value="ApproverFlag"/>
+          <Item Value="DispStatus"/>
+          <Item Value="LastApprovedBy"/>
         </AttrNames>
       </nodeDefinition>
     </tree>
@@ -58,6 +60,8 @@
           <Item Value="ApproverFlag"/>
           <Item Value="ApproverComments"/>
           <Item Value="ApprComments"/>
+          <Item Value="DispStatus"/>
+          <Item Value="LastApprovedBy"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

@@ -452,7 +452,7 @@
                                           <af:column id="c13"
                                                      headerText="Action By"
                                                      width="250">
-                                                <af:outputText value="#{row.ApproverUserName}"
+                                                <af:outputText value="#{row.LastApprovedBy}"
                                                                id="ot9"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.employeeDashboardROVO11.hints.Description.name}"
