@@ -1,5 +1,7 @@
 package SalicAM;
 
+import java.sql.SQLException;
+
 import SalicROVO.FetchEmailActionLinkVOImpl;
 import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
@@ -31,6 +33,8 @@ import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
 import SalicROVO.getApprovalGrpDetailsROVORowImpl;
 //grpRec
+import com.oracle.xmlns.oxp.service.v2.ScheduleServiceClient;
+
 import common.AESEncryption;
 
 import common.pojo.EmailRequestPojo;
@@ -53,7 +57,10 @@ import common.GenerateEmailTemplate;
 import common.pojo.EmailTableDetailsPojo;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.sql.Statement;
 
 import java.text.SimpleDateFormat;
 
@@ -1144,6 +1151,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         ViewObjectImpl emailVO = getFetchEmailActionLinkVO1();
         emailVO.executeQuery();
         String emailUrl = "";
+        ADFContext aDFContext = ADFContext.getCurrent();
+        BigDecimal empIdLogged = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
         if(emailVO.first() != null){
             emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
         }
@@ -1157,7 +1166,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
         //emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
         ViewObject empManagerDet = getemployeeROVO1();
-        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
+        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empIdLogged.toString());
         empManagerDet.executeQuery();
         String empNameR = null;;
         if(empManagerDet.hasNext()){
@@ -1470,7 +1479,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
        
         
-        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empIdLogged.toString());
         if(rows != null && rows.length > 0){
             approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
             firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
@@ -1538,6 +1547,32 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
 
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                
+                    
+                    if(reqPage.equalsIgnoreCase("letter")){
+                        String letter_to = null;
+                            String letterType = null;
+                            String empPr = null;
+                    try {
+                                Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                                                   .getConnection()
+                                                                   .createStatement();
+                                String query =
+                                    "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER,b.emp_id from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b where a.req_id= b.req_id and b.REQ_ID=" +
+                                    emailReq.getRequestId();
+                                ResultSet rs = stmt.executeQuery(query);
+                        rs.next();
+                                letter_to  = rs.getString("LETTER_TO");    
+                        letterType = rs.getString("LETTER_TYPE");
+                            System.out.println("emp id =>"+emailReq.getEmpId()+" letter to==>"+letter_to+" letter type==>"+letterType);
+                        } catch (SQLException sqle) {
+                                // TODO: Add catch code
+                                sqle.printStackTrace();
+                            }
+                    
+                            ScheduleServiceClient ssc = new ScheduleServiceClient();
+                            ssc.scheduleReportForHrLetter(emailReq.getEmpId(), letter_to,letterType);
+                        }
                 //empNameR
                     try {
                         sendFYINotification(emailReq.getRequestNo(), new oracle.jbo.domain.Number(emailReq.getEmpId()),

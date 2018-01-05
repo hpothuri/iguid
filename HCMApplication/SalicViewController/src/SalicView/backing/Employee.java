@@ -1653,7 +1653,13 @@ public class Employee {
         updateApproveRejection(mgrVO.getCurrentRow().getAttribute("ReqId"), "A",
                        (String)mgrVO.getCurrentRow().getAttribute("RequestNumber")
                        );
-
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "A");
         op.execute();
@@ -2708,6 +2714,7 @@ public class Employee {
         return (DCBindingContainer)BindingContext.getCurrent().getCurrentBindingsEntry();
     }
 
+
     public String withdrawACL(ActionEvent actionEvent) {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
@@ -2722,10 +2729,10 @@ public class Employee {
         actionHisVO.first().remove();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
-//            row.setAttribute("ApproverFlag", null);
-//            row.setAttribute("LastUpdateDate", dummyDate);
-//            row.setAttribute("ApprDate", null);
-//            row.setAttribute("ApproverComments", dummyDate);
+    //            row.setAttribute("ApproverFlag", null);
+    //            row.setAttribute("LastUpdateDate", dummyDate);
+    //            row.setAttribute("ApprDate", null);
+    //            row.setAttribute("ApproverComments", dummyDate);
             row.remove();
         }
 
@@ -2739,6 +2746,38 @@ public class Employee {
         ADFUtils.findOperation("Commit").execute();
         
         JSFUtils.addFacesInformationMessage("Request is Withdrawn!");
+        //TODO : KMA : Send Email for manager
+        //TODO : KMA : Send Email for employee also stating the request is withdrawn
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
+        return "save";
+    }
+    public String reqMoreACL(ActionEvent actionEvent) {
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
+        otHdrVO.getCurrentRow().setAttribute("ReqStatus","REQUESTMOREINFO");
+        otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
+                                             new BigDecimal(1));
+        ViewObject actionHisVO =
+            ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
+        java.sql.Date dummyDate = null;
+        actionHisVO.reset();
+        actionHisVO.first().remove();
+        while(actionHisVO.hasNext()){
+            Row row = actionHisVO.next();
+            row.remove();
+        }
+
+        ADFUtils.findOperation("Commit").execute();
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        op.execute();
+        ADFUtils.findOperation("Commit").execute();
+        
+        JSFUtils.addFacesInformationMessage("Requested employee to update more information");
         //TODO : KMA : Send Email for manager
         //TODO : KMA : Send Email for employee also stating the request is withdrawn
         AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);

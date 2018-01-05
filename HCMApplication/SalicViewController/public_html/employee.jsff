@@ -126,6 +126,7 @@
                                         actionListener="#{backingBeanScope.backing_employee.withdrawACL}"
                                         action="save"/>
                     <af:commandMenuItem text="Request More Info" id="cmi6"
+                    action="#{backingBeanScope.backing_employee.reqMoreACL}"
                     visible="#{sessionScope.search eq 'mngr'?'true':'false'}"
                     disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         />
