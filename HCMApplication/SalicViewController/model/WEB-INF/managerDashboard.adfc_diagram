@@ -119,11 +119,11 @@
       islink="true"
       id="ControlFlowCase11"
       from="MethodCall4"
-      to="View3">
+      to="MethodCall2">
       <property
          name="fromOutcome">Execute</property>
       <property
-         name="sdm:polyPoints">B50,933.4531,171.5747,259.43457,171.5747,B50</property>
+         name="sdm:polyPoints">B50,933.4531,171.5747,91.5,179.22412,B50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"

@@ -59,6 +59,9 @@
   <ViewUsage
     Name="FetchEmailActionLinkVO1"
     ViewObjectName="SalicROVO.FetchEmailActionLinkVO"/>
+  <ViewUsage
+    Name="FetchDestVisaReqdVO1"
+    ViewObjectName="SalicView.FetchDestVisaReqdVO"/>
   <ViewLinkUsage
     Name="manager_QpActionHistory_VL2"
     ViewLinkObjectName="SalicVL.manager_QpActionHistory_VL"

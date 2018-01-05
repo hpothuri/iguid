@@ -112,7 +112,7 @@
       <from-activity-id id="__60">Execute</from-activity-id>
       <control-flow-case id="__63">
         <from-outcome id="__62">Execute</from-outcome>
-        <to-activity-id id="__61">managerAppr</to-activity-id>
+        <to-activity-id id="__61">load</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__34">

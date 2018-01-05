@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="getApprovalSetupDetailsROVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -24,12 +24,12 @@
     Name="p_appr_type"
     Kind="where"
     Type="java.lang.String"/>
-  <SQLQuery><![CDATA[SELECT XASD.appr_level,XASD.appr_group_id,XASD.CUST_APPR_GROUP_ID   
-  FROM XXHCM_APPR_SETUP_HDR XASH,   
-    XXHCM_APPR_SETUP_DTL XASD   
-  WHERE XASH.APPR_HDR_ID     = XASD.APPR_HDR_ID   
-  AND XASH.REQUEST_TYPE      =:p_req_type   
-  AND APPR_TYPE=:p_appr_type  
+  <SQLQuery><![CDATA[SELECT XASD.appr_level,XASD.appr_group_id,XASD.CUST_APPR_GROUP_ID,XASD.PAYROLL_GROUP,XASD.TICKET_GROUP    
+  FROM XXHCM_APPR_SETUP_HDR XASH,    
+    XXHCM_APPR_SETUP_DTL XASD    
+  WHERE XASH.APPR_HDR_ID     = XASD.APPR_HDR_ID    
+  AND XASH.REQUEST_TYPE      =:p_req_type    
+  AND APPR_TYPE=:p_appr_type   
   order by XASD.appr_level asc]]></SQLQuery>
   <ViewAttribute
     Name="ApprLevel"
@@ -61,6 +61,36 @@
     AliasName="CUST_APPR_GROUP_ID"
     Expression="CUST_APPR_GROUP_ID"
     SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="PayrollGroup"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PAYROLL_GROUP"
+    Expression="PAYROLL_GROUP"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TicketGroup"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TICKET_GROUP"
+    Expression="TICKET_GROUP"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="ApprLevel"/>
   </AttrArray>

@@ -4205,27 +4205,27 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         if(reqStatus.equalsIgnoreCase("New")){
             return "New";
         }
-        if(reqStatus.equalsIgnoreCase("Draft") && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
+        if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
             return "Draft";
         }
         // Cancelled, Pending Approval
-        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus.equalsIgnoreCase("DELETED")){
+        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Pending Approval";
         }
         //Pending Approval
         if(reqStatus.equalsIgnoreCase("Pending Approval")){
             return "Pending Approval";
         }        
-        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("DELETED")){
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Approved";
         }
-        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("DELETED")){
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
             return "Cancelled, Rejected";
         }
-        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus.equalsIgnoreCase("APPROVE")){
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("APPROVE")){
             return "Approved";
         }
-        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus.equalsIgnoreCase("REJECT")){
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("REJECT")){
             return "Rejected";
         }
         return displayReqStatus;

@@ -44,6 +44,26 @@ public class getApprovalSetupDetailsROVORowImpl extends ViewRowImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        PayrollGroup {
+            protected Object get(getApprovalSetupDetailsROVORowImpl obj) {
+                return obj.getPayrollGroup();
+            }
+
+            protected void put(getApprovalSetupDetailsROVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
+        ,
+        TicketGroup {
+            protected Object get(getApprovalSetupDetailsROVORowImpl obj) {
+                return obj.getTicketGroup();
+            }
+
+            protected void put(getApprovalSetupDetailsROVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
@@ -72,9 +92,12 @@ public class getApprovalSetupDetailsROVORowImpl extends ViewRowImpl {
         }
     }
 
+
     public static final int APPRLEVEL = AttributesEnum.ApprLevel.index();
     public static final int APPRGROUPID = AttributesEnum.ApprGroupId.index();
     public static final int CUSTAPPRGROUPID = AttributesEnum.CustApprGroupId.index();
+    public static final int PAYROLLGROUP = AttributesEnum.PayrollGroup.index();
+    public static final int TICKETGROUP = AttributesEnum.TicketGroup.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -104,6 +127,22 @@ public class getApprovalSetupDetailsROVORowImpl extends ViewRowImpl {
      */
     public BigDecimal getCustApprGroupId() {
         return (BigDecimal) getAttributeInternal(CUSTAPPRGROUPID);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute PayrollGroup.
+     * @return the PayrollGroup
+     */
+    public String getPayrollGroup() {
+        return (String) getAttributeInternal(PAYROLLGROUP);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute TicketGroup.
+     * @return the TicketGroup
+     */
+    public String getTicketGroup() {
+        return (String) getAttributeInternal(TICKETGROUP);
     }
 
     /**

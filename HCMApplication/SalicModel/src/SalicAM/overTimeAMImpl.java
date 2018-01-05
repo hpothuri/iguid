@@ -6,6 +6,7 @@ import SalicROVO.FetchEmailActionLinkVOImpl;
 import SalicROVO.ValidateOTonLeaveROVOImpl;
 import SalicROVO.ValidateOverTimeReqVOImpl;
 
+import SalicView.FetchDestVisaReqdVOImpl;
 import SalicView.ValidatePublicHolidayVOImpl;
 import SalicView.XxhcmOtherExpenseTVOImpl;
 
@@ -719,6 +720,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 BigDecimal ApprLevel = apprSetRow.getApprLevel();
                 BigDecimal ApprGroupId= apprSetRow.getApprGroupId();
                 BigDecimal CustApprGroupId= apprSetRow.getCustApprGroupId();
+                String payrollGroup = apprSetRow.getPayrollGroup();
+                String ticketGroup = apprSetRow.getTicketGroup();
                 BigDecimal managerId = null;
                 String managerName = null;
                 //Superwiser
@@ -740,8 +743,36 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmail(to);
                         emailReq.setToEmpName(managerName);
-                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") is approved successfully.");
-                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                        if(ticketGroup != null && "Y".equalsIgnoreCase(ticketGroup)){
+                            if(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)){
+                                FetchDestVisaReqdVOImpl destVisaVO = getFetchDestVisaReqdVO1();
+                                destVisaVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
+                                destVisaVO.executeQuery();
+                                if(destVisaVO.first() != null){
+                                    String visaReqd = (String) destVisaVO.first().getAttribute("DestVisaRequired");
+                                    if(visaReqd != null && "YES".equalsIgnoreCase(visaReqd)){
+                                        emailReq.setSubject("Action required for "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" which is approved by "+managerName+" is pending with ticket group");
+                                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is finally approved by "+managerName+" and pending with ticket group with hereunder details:");          
+                                    }
+                                    else{
+                                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
+                                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:");   
+                                    }
+                                }
+                            }
+                            else{
+                                emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
+                                emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:");   
+                            }
+                        }
+                        else if(payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)){
+                            emailReq.setSubject("Action required for "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" which is approved by "+managerName+" is pending with payroll group");
+                            emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is finally approved by "+managerName+" and pending with payroll group with hereunder details:");   
+                        }
+                        else{
+                            emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
+                            emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:");   
+                        }
                         LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
@@ -2080,6 +2111,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
      */
     public FetchEmailActionLinkVOImpl getFetchEmailActionLinkVO1() {
         return (FetchEmailActionLinkVOImpl) findViewObject("FetchEmailActionLinkVO1");
+    }
+
+    /**
+     * Container's getter for FetchDestVisaReqdVO1.
+     * @return FetchDestVisaReqdVO1
+     */
+    public FetchDestVisaReqdVOImpl getFetchDestVisaReqdVO1() {
+        return (FetchDestVisaReqdVOImpl) findViewObject("FetchDestVisaReqdVO1");
     }
 }
 

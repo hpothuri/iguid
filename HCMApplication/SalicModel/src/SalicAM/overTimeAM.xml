@@ -142,6 +142,9 @@
    <ViewUsage
       Name="FetchEmailActionLinkVO1"
       ViewObjectName="SalicROVO.FetchEmailActionLinkVO"/>
+   <ViewUsage
+      Name="FetchDestVisaReqdVO1"
+      ViewObjectName="SalicView.FetchDestVisaReqdVO"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"
