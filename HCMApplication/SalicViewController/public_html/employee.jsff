@@ -2111,7 +2111,7 @@
                                       valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}"
                                       autoSubmit="true"
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
-                                      value="#{row.bindings.Attachment.inputValue}"/>
+                                      />
                       </af:column>
                       <af:column id="c17" headerText="Download" align="center"
                                  width="100" rendered="false">

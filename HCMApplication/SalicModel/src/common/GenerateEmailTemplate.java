@@ -1,5 +1,7 @@
 package common;
 
+import java.io.IOException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +25,24 @@ import oracle.jbo.server.DBTransaction;
 import common.pojo.EmailRequestPojo;
 import common.pojo.EmailTableDetailsPojo;
 
+import java.io.BufferedInputStream;
+
+import java.io.ByteArrayOutputStream;
+
+import java.sql.Blob;
+
 import java.util.ArrayList;
+
+import javax.activation.DataHandler;
+
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+
+import javax.mail.BodyPart;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 
 public class GenerateEmailTemplate {
@@ -37,8 +56,8 @@ public class GenerateEmailTemplate {
 //    private static String FROM_USER = "muralikona.oracle@gmail.com";
 //    private static String FROM_USER_PASSWORD = "k1m2k3k1";
 
-    public static Map<String, String> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
-        Map<String, String> emailHapmap = new HashMap<String, String>();
+    public static Map<String, Object> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
+        Map<String, Object> emailHapmap = new HashMap<String, Object>();
         Statement statement = dbTrans.createStatement(0);
         try {
             String message = null;
@@ -97,13 +116,16 @@ public class GenerateEmailTemplate {
 
 
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
+            
+             ArrayList<MimeBodyPart> bodyParts = fetchAttachments(emailReq.getRequestId()+"", dbTrans);
 
             String bestRegardsmessage = "<br><br>Best Regards";
 
             String body = message + emailBody + actionBody + bestRegardsmessage;
             emailHapmap.put("subject", emailSubject);
             emailHapmap.put("body", body);
-
+            emailHapmap.put("bodyParts", bodyParts);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -116,7 +138,7 @@ public class GenerateEmailTemplate {
         return emailHapmap;
     }
 
-    public static void sendFromGMail(String[] to, String subject, String body) {
+    public static void sendFromGMail(String[] to, String subject, String body, ArrayList<MimeBodyPart> bodyParts) {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -154,7 +176,21 @@ public class GenerateEmailTemplate {
 
             message.setRecipients(Message.RecipientType.TO, toAddress);
             message.setSubject(subject);
-            message.setContent(body, "text/html");
+//            message.setContent(body, "text/html");
+            
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(body, "text/html");
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            
+            if(bodyParts != null && bodyParts.size() > 0){
+                for(MimeBodyPart bodyPart : bodyParts){
+                    if(bodyPart != null)
+                        multipart.addBodyPart(bodyPart);
+                }
+            }
+            
+            message.setContent(multipart);
 
             Transport.send(message);
 
@@ -182,5 +218,67 @@ public class GenerateEmailTemplate {
         msg+= "</div>";
         
         return msg;
+    }
+    
+    private static ArrayList<MimeBodyPart> fetchAttachments(String reqId, DBTransaction dbTrans) {
+        ArrayList<MimeBodyPart> bodyParts = new ArrayList<MimeBodyPart>();
+        if (reqId != null) {
+            Statement statement = dbTrans.createStatement(0);
+            try {
+                String query =
+                    "select file_name, file_type, attachment from xxhcm_master_attachment where master_ref_id = " +
+                    reqId;
+                ResultSet resultSet1 = statement.executeQuery(query);
+                while (resultSet1.next()) {
+                    String fileName = resultSet1.getString(1);
+                    String fileType = resultSet1.getString(2);
+                    java.sql.Blob file = resultSet1.getBlob(3);
+                    MimeBodyPart att = fetchBodyPartFromBlob(file, fileType, fileName);
+                    if(att != null){
+                        bodyParts.add(att);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bodyParts;
+    }
+    
+    private static MimeBodyPart fetchBodyPartFromBlob(Blob blob, String fileType, String fileName){
+        byte[] bytearray = null; 
+        MimeBodyPart att = null;
+        try {
+            BufferedInputStream bis = new BufferedInputStream(blob.getBinaryStream());
+            ByteArrayOutputStream bao = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int length = 0;
+            while ((length = bis.read(buffer)) != -1) {
+                bao.write(buffer, 0, length);
+            }
+            bao.close();
+            bis.close();
+            bytearray = bao.toByteArray();
+            
+            ByteArrayDataSource bds = new ByteArrayDataSource(bytearray, fileType);
+            
+            att = new MimeBodyPart();  
+            att.setDataHandler(new DataHandler(bds)); 
+            att.setFileName(fileName); 
+            
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (MessagingException me) {
+            me.printStackTrace();
+        }
+        return att;
     }
 }

@@ -600,11 +600,11 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 actionButtons.put("More Info", "");
                 emailReq.setActionButtons(actionButtons);
                 
-                Map<String, String> emailHapmap =
+                Map<String, Object> emailHapmap =
                     GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                 //Code for Sending email to employee about first level approval complete and nexi is pending
-                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"",(ArrayList) emailHapmap.get("bodyParts"));
                 
                 //To second approver
                String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
@@ -622,7 +622,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                //Code for Sending email for second approver
-               GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+               GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 
             }
             else{
@@ -636,7 +636,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
                 emailReq.setActionButtons(actionButtons);
-                Map<String, String> emailHapmap =
+                Map<String, Object> emailHapmap =
                     GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                 emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                     
@@ -665,7 +665,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             ssc.scheduleReportForHrLetter(emailReq.getEmpId(), letter_to,letterType);
                         }
                 //Code for Sending email for second approver
-                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 //empNameR
                     try {
                         sendFYINotification(emailReq.getRequestNo(), new oracle.jbo.domain.Number(emailReq.getEmpId()),
@@ -696,12 +696,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             actionButtons = new LinkedHashMap<String, String>();
             actionButtons.put("More Info", "");
             emailReq.setActionButtons(actionButtons);
-            Map<String, String> emailHapmap =
+            Map<String, Object> emailHapmap =
                 GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
             //Code for Sending email for employee
-            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         }
     }
     
@@ -790,7 +790,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
-                        Map<String, String> emailHapmap =
+                        Map<String, Object> emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         
@@ -1132,7 +1132,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                         
                         if(jobLevelInt == 2){     
                             
@@ -1166,7 +1166,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                             }
                         }
                     }                    
@@ -1530,12 +1530,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
-                        Map<String, String> emailHapmap =
+                        Map<String, Object> emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                     }
                     rsigrpDet.closeRowSetIterator();
                 }

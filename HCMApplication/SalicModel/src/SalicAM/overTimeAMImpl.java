@@ -676,12 +676,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             actionButtons = new LinkedHashMap<String, String>();
             actionButtons.put("More Info", "");
             emailReq.setActionButtons(actionButtons);
-            Map<String, String> emailHapmap =
+            Map<String, Object> emailHapmap =
                 GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
             //Code for Sending email for second approver
-            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
             //empNameR
                 try {
                     sendFYINotification(emailReq.getRequestNo(), new oracle.jbo.domain.Number(emailReq.getEmpId()),
@@ -777,12 +777,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
-                        Map<String, String> emailHapmap =
+                        Map<String, Object> emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
     //                        Row vonew = getXxQpActionHistoryTVO1().createRow();
     //                        //xx_qp_action_history_s
     //                        apprSeqNew = apprSeqNew + 1;
@@ -862,7 +862,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                             }
                         }
                     }                    
@@ -910,12 +910,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
-                        Map<String, String> emailHapmap =
+                        Map<String, Object> emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                     }
                     rsigrpDet.closeRowSetIterator();
                 }
@@ -1590,11 +1590,11 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 actionButtons.put("More Info", "");
                 emailReq.setActionButtons(actionButtons);
                 
-                Map<String, String> emailHapmap =
+                Map<String, Object> emailHapmap =
                     GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                 //Code for Sending email to employee about first level approval complete and nexi is pending
-                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 
                 //To second approver
                String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
@@ -1612,7 +1612,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                //Code for Sending email for second approver
-               GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+               GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 
             }
             else{
@@ -1626,12 +1626,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
                 emailReq.setActionButtons(actionButtons);
-                Map<String, String> emailHapmap =
+                Map<String, Object> emailHapmap =
                     GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                 emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                 //Code for Sending email for second approver
-                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 
                     
                     if(reqPage.equalsIgnoreCase("letter")){
@@ -1684,12 +1684,12 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             actionButtons = new LinkedHashMap<String, String>();
             actionButtons.put("More Info", "");
             emailReq.setActionButtons(actionButtons);
-            Map<String, String> emailHapmap =
+            Map<String, Object> emailHapmap =
                 GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
             //Code for Sending email for second approver
-            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         }
     }
 
@@ -2079,11 +2079,11 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         actionButtons.put("More Info", "");
         emailReq.setActionButtons(actionButtons);
         
-        Map<String, String> emailHapmap =
+        Map<String, Object> emailHapmap =
             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
         //Code for Sending email
-        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         
         
         //To mamager
@@ -2102,7 +2102,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
         //Code for Sending email for Manager approval
-        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
+        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         
     }
     
