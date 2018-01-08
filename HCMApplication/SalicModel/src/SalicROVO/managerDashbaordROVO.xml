@@ -97,13 +97,13 @@
 (SELECT nvl(approver_flag,'P')         
   FROM XX_QP_ACTION_HISTORY_T where           
   header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID          
-  AND approver_id = decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
-  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_flag,         
+  AND approver_id = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_flag,         
   (SELECT approver_comments         
   FROM XX_QP_ACTION_HISTORY_T where           
   header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID          
-  AND approver_id  = decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
-  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',:p_emp_logged_in,'R',:p_emp_logged_in,XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents, 
+  AND approver_id  = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents, 
   (select XXSALIC_HCM_PKG.getDisplayReqStatus(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) from dual) disp_status, 
   (select display_name from xxstg_person where person_id = (select appr_by from (select appr_by from XX_QP_ACTION_HISTORY_T where HEADER_ID = (XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) and approver_flag is not null order by approve_level desc) where rownum =1)) last_approved_by 
   FROM               

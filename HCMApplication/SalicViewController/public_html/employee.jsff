@@ -1008,7 +1008,7 @@
                         <af:selectOneChoice value="#{bindings.AirlineTicketType1.inputValue}"
                                             label="Airline Ticket Type" required="false"
                                             shortDesc="#{bindings.AirlineTicketType1.hints.tooltip}" id="soc17"
-                                            contentStyle="width:200px" autoSubmit="true" readOnly="true"
+                                            contentStyle="width:200px" autoSubmit="true" disabled="true"
                                             binding="#{backingBeanScope.backing_employee.btAirtickTyp}"
                                             valueChangeListener="#{backingBeanScope.backing_employee.onChangeAirTicketType}"
                                             simple="true">
@@ -1081,7 +1081,7 @@
                                       shortDesc="#{bindings.NumberOfDays.hints.tooltip}" id="it30"
                                       contentStyle="width:200px;text-align:left;"
                                       binding="#{backingBeanScope.backing_employee.noOfDays}"
-                                      partialTriggers="id5 id6 soc10" readOnly="true" disabled="true"
+                                      partialTriggers="id5 id6 soc10" disabled="true" 
                                       label="Number of Days" simple="true">
                           <f:validator binding="#{bindings.NumberOfDays.validator}"/>
                         </af:inputText>
@@ -1297,7 +1297,7 @@
                     <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
                   </af:inputDate>
                 </af:panelLabelAndMessage>
-                <af:panelLabelAndMessage label="Actual Start Date" id="plam31">
+                <af:panelLabelAndMessage label="Actual Start Date" id="plam31" rendered="false">
                   <af:inputDate value="#{bindings.OrigStartDate.inputValue}" required="true"
                                 shortDesc="#{bindings.OrigStartDate.hints.tooltip}" id="id9" partialTriggers="soc16"
                                 autoSubmit="true"
@@ -1387,7 +1387,7 @@
                     <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
                   </af:inputDate>
                 </af:panelLabelAndMessage>
-                <af:panelLabelAndMessage label="Actual End Date" id="plam32">
+                <af:panelLabelAndMessage label="Actual End Date" id="plam32" rendered="false">
                   <af:inputDate value="#{bindings.OrigEndDate.inputValue}" required="true"
                                 shortDesc="#{bindings.OrigEndDate.hints.tooltip}" id="id10" autoSubmit="true"
                                 partialTriggers="soc16"
@@ -1640,7 +1640,9 @@
                                             disabled="#{!bindings.CreateInsert4.enabled}"
                                             id="cb15" immediate="true"
                                             partialSubmit="true"/>
-                        </af:toolbar>
+                    <af:button actionListener="#{bindings.Delete5.execute}" text="Delete"
+                               disabled="#{!bindings.Delete5.enabled}" id="b4" immediate="true"/>
+                  </af:toolbar>
                       </f:facet>
                       <f:facet name="statusbar"/>
                       <af:table value="#{bindings.XxhcmOtherExpenseTVO1.collectionModel}"
@@ -1650,7 +1652,7 @@
                                 fetchSize="#{bindings.XxhcmOtherExpenseTVO1.rangeSize}"
                                 rowBandingInterval="0" id="t12"
                                 varStatus="vs" columnStretching="column:c40"
-                                partialTriggers="::cb15">
+                                partialTriggers="::cb15 ::b4">
                         <af:column id="c50" headerText="S.No" align="center"
                                    width="35">
                           <af:outputLabel value="#{vs.index+1}" id="ol18"/>
@@ -2047,7 +2049,7 @@
                               rowSelection="single" id="t5" varStatus="vs"
                               columnStretching="column:c14"
                               binding="#{backingBeanScope.backing_employee.attTable}"
-                              partialTriggers="::cb4 cl1">
+                              partialTriggers="::cb4 cl1 cil6">
                       <af:column id="c16" headerText="S.No" align="center"
                                  width="50">
                         <af:outputText value="#{vs.index+1}" id="ot18"/>
@@ -2105,10 +2107,11 @@
                                       disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
                           <f:validator binding="#{row.bindings.Attachment.validator}"/>
                         </af:inputText>
-                        <af:inputFile label="Label 1" id="if1" required="true"
+                        <af:inputFile label="Label 1" id="if1"
                                       valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}"
                                       autoSubmit="true"
-                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
+                                      disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
+                                      value="#{row.bindings.Attachment.inputValue}"/>
                       </af:column>
                       <af:column id="c17" headerText="Download" align="center"
                                  width="100" rendered="false">
@@ -2124,7 +2127,8 @@
                                              id="cil6"
                                              actionListener="#{bindings.Delete1.execute}"
                                              icon="/images/delete_dwn.png"
-                                             disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
+                                             disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
+                                          immediate="true"/>
                       </af:column>
                     </af:table>
                   </af:panelCollection>

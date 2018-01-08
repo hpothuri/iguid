@@ -12,6 +12,8 @@ import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
 import SalicView.FetchDestVisaReqdVOImpl;
 
+import com.oracle.xmlns.oxp.service.v2.ScheduleServiceClient;
+
 import common.AESEncryption;
 import common.GenerateEmailTemplate;
 
@@ -20,7 +22,10 @@ import common.pojo.EmailTableDetailsPojo;
 
 import java.math.BigDecimal;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,6 +39,7 @@ import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewCriteriaRow;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
+import oracle.jbo.server.RowQualifier;
 import oracle.jbo.server.SequenceImpl;
 import oracle.jbo.server.ViewLinkImpl;
 import oracle.jbo.server.ViewObjectImpl;
@@ -513,13 +519,19 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
         getXxQpActionHistoryTVO1().executeQuery();
-        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+//            
+//            RowQualifier rowQualifier = new RowQualifier(vo);  
+//                 rowQualifier.setWhereClause("AttributeName=AttributeValue");  
+//                 filteredRows = vo.getFilteredRows(rowQualifier);    
+        ViewObject vo =  getXxQpActionHistoryTVO1();
+        vo.executeQuery();
+        Row[] rows = vo.getFilteredRows("ApprBy", empId);
         if(rows != null && rows.length > 0){
             approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
             firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
             rejectReason = (String)rows[0].getAttribute("ApproverComments");
             BigDecimal nextLevel = approveLevel.add(new BigDecimal(1));
-            rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", nextLevel);
+            rows = vo.getFilteredRows("ApproveLevel", nextLevel);
             if(rows != null && rows.length > 0){
                 //next level approver is present.
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
@@ -578,7 +590,31 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 Map<String, String> emailHapmap =
                     GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                 emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-
+                    
+                    if(reqPage.equalsIgnoreCase("letter")){
+                        String letter_to = null;
+                            String letterType = null;
+                            String empPr = null;
+                    try {
+                                Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                                                   .getConnection()
+                                                                   .createStatement();
+                                String query =
+                                    "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER,b.emp_id from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b where a.req_id= b.req_id and b.REQ_ID=" +
+                                    emailReq.getRequestId();
+                                ResultSet rs = stmt.executeQuery(query);
+                        rs.next();
+                                letter_to  = rs.getString("LETTER_TO");    
+                        letterType = rs.getString("LETTER_TYPE");
+                            System.out.println("emp id =>"+emailReq.getEmpId()+" letter to==>"+letter_to+" letter type==>"+letterType);
+                        } catch (SQLException sqle) {
+                                // TODO: Add catch code
+                                sqle.printStackTrace();
+                            }
+                    
+                            ScheduleServiceClient ssc = new ScheduleServiceClient();
+                            ssc.scheduleReportForHrLetter(emailReq.getEmpId(), letter_to,letterType);
+                        }
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject"), emailHapmap.get("body"));
                 //empNameR

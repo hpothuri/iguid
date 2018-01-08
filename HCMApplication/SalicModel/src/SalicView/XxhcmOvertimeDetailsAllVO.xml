@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeDetailsAllVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -1498,6 +1498,15 @@ CountryROVO1.first().getAttribute("CountryName");
     ColumnType="BIGINT"
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="otdatetemp"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.sql.Date"
+    ColumnType="DATE"
+    AliasName="VIEW_ATTR"
+    SQLType="DATE"/>
   <ViewLinkAccessor
     Name="XxhcmOvertimeHeadersAllVO"
     ViewLink="SalicVL.overtimeHdrDtl"

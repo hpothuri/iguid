@@ -1477,8 +1477,6 @@ public class Employee {
                 }
 
                 if (lineVO.first() != null) {
-                    otHdrVO.getCurrentRow().setAttribute("Status",
-                                                         "Pending Approval");
                     otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                          "BusinessTrip");
                     if ("add".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("mode"))) {
@@ -1560,6 +1558,8 @@ public class Employee {
                         isValidated = false;
                         return null;
                     } else {
+                        otHdrVO.getCurrentRow().setAttribute("Status",
+                                                             "Pending Approval");
                         autoApproveRequest();
                         ADFUtils.findOperation("Commit").execute();
                         returnActivity = "save";
@@ -1592,8 +1592,6 @@ public class Employee {
                     }
                 //}
                 if (lineVO.first() != null && !isError) {
-                    otHdrVO.getCurrentRow().setAttribute("Status",
-                                                         "Pending Approval");
                     otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                          "BusinessTripCompletion");
 //                    lineVO.getCurrentRow().setAttribute("StartDate",
@@ -1614,6 +1612,9 @@ public class Employee {
                                                         ADFContext.getCurrent().getPageFlowScope().get("bussTripReqNo"));
                     lineVO.getCurrentRow().setAttribute("DestCountryCity",
                                                         this.bstDestCount.getValue());
+                    otHdrVO.getCurrentRow().setAttribute("Status",
+                                                         "Pending Approval");
+
                     autoApproveRequest();
                     ADFUtils.findOperation("Commit").execute();
                     returnActivity = "save";
@@ -1734,15 +1735,26 @@ public class Employee {
     }
 
     public void dayfInderVCL(ValueChangeEvent dayy) {
-
+        RichInputDate otdate = (RichInputDate)dayy.getComponent();
+        ViewObject lineVO =
+            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+        
+        java.sql.Date ottemp = (java.sql.Date)lineVO.getCurrentRow().getAttribute("otdatetemp");
+        if(dayy.getNewValue() == null && ottemp !=null){
+            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));       
+            otdate.setValid(false);
+            AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
+            AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
+            
+            return;
+        }
         String result = checkDuplicateOverTimeDate(dayy.getNewValue());
         java.sql.Date day1 =
             (java.sql.Date)dayy.getNewValue();
         //XxhcmOvertimeHeadersAllVO1Iterator
         ViewObject headerVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        ViewObject lineVO =
-            ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
+        
         ViewObject hdr1 =
             ADFUtils.findIterator("ValidateOverTimeReqVO1Iterator").getViewObject();
         hdr1.setNamedWhereClauseParam("bind_empid",
@@ -1754,10 +1766,10 @@ public class Employee {
         
             
         if (otcount.compareTo(new BigDecimal(0)) > 0 ) {
-            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date - "+day1+"!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
             //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
-            RichInputDate otdate = (RichInputDate)dayy.getComponent();
-            otdate.setSubmittedValue(day1);
+            
+            //otdate.setSubmittedValue(day1);
             otdate.setValid(false);
             AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
             AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
@@ -1779,8 +1791,8 @@ public class Employee {
                 JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Over Time cannot be raised on approved leave period",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
                 
                 //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
-                RichInputDate otdate = (RichInputDate)dayy.getComponent();
-                otdate.setSubmittedValue(day1);
+                //RichInputDate otdate = (RichInputDate)dayy.getComponent();
+              //  otdate.setSubmittedValue(day1);
                 otdate.setValid(false);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
@@ -1789,7 +1801,9 @@ public class Employee {
         
             
             if (result.equals("N")) {
-                RichInputDate otdate = (RichInputDate)dayy.getComponent();
+                //RichInputDate otdate = (RichInputDate)dayy.getComponent();
+                java.sql.Date dummyd = null;
+                lineVO.getCurrentRow().setAttribute("otdatetemp", dummyd);
                 otdate.setValid(true);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 Calendar calendar = Calendar.getInstance();
@@ -1852,10 +1866,11 @@ public class Employee {
                     AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
                 }
             } else {
-                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date "+day1 +" !..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+                lineVO.getCurrentRow().setAttribute("otdatetemp", dayy.getNewValue());
                 //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
-                RichInputText otdate = (RichInputText)dayy.getComponent();
-                otdate.setSubmittedValue(day1);
+                //RichInputText otdate = (RichInputText)dayy.getComponent();
+                //otdate.setSubmittedValue(day1);
                 otdate.setValid(false);
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dayy.getComponent());
                 AdfFacesContext.getCurrentInstance().addPartialTarget(dtlTable);
@@ -3400,6 +3415,14 @@ rs.closeRowSetIterator();
                 (ViewObjectImpl) ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject();
             System.err.println("purpose vo row count : "+newPurposeVO.getEstimatedRowCount());
             RowSetIterator rs  = oldPurposeVO.createRowSetIterator(null);
+            RowSetIterator rsNew = newPurposeVO.createRowSetIterator(null);
+            if(rsNew.first()!=null){
+            rsNew.first().remove();
+            }
+            while(rsNew.hasNext()){
+                rsNew.next().remove();
+            }
+            rsNew.closeRowSetIterator();
             while(rs.hasNext()){
                 Row oldPurposeRow = rs.next();
                 Row newPurposeRow = newPurposeVO.createRow();
@@ -4202,7 +4225,7 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         if(payRollStatus!=null && payRollStatus.equalsIgnoreCase("COMPLETED")){
             return "Transferred to Payroll";
         }        
-        if(reqStatus.equalsIgnoreCase("New")){
+        if(reqStatus == null || (reqStatus!=null && reqStatus.equalsIgnoreCase("New"))){
             return "New";
         }
         if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){

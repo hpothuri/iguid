@@ -1510,13 +1510,17 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         if(approveOrReject != null && "A".equalsIgnoreCase(approveOrReject)){
        
         
-        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empIdLogged.toString());
+        //Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApprBy", empIdLogged.toString());
+        ViewObject vo =  getXxQpActionHistoryTVO1();
+        vo.executeQuery();
+        Row[] rows = vo.getFilteredRows("ApprBy", empIdLogged);
+        
         if(rows != null && rows.length > 0){
             approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
             firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
             rejectReason = (String)rows[0].getAttribute("ApproverComments");
             BigDecimal nextLevel = approveLevel.add(new BigDecimal(1));
-            rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", nextLevel);
+            rows = vo.getFilteredRows("ApproveLevel", nextLevel);
             if(rows != null && rows.length > 0){
                 //next level approver is present.
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
