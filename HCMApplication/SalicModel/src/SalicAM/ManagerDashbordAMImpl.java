@@ -337,6 +337,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
             tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
                                      emailReq.getRequestId()+")");
+            tableDetail.setTableLabel("Trip Activity");
             
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("START_DATE", "DATE");
@@ -396,6 +397,54 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
             emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Expense Description");
+            tableContentCols.add("Currency");
+            tableContentCols.add("Exchange Rate");
+            tableContentCols.add("Expense Amount");
+            tableContentCols.add("Amount in SAR");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery(" select expn_desc, currency, exchn_rate, other_expn, total_amount  from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                     emailReq.getRequestId()+")");
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("EXPN_DESC", "STRING");
+            tableColumnDatatypes.put("CURRENCY", "STRING");
+            tableColumnDatatypes.put("EXCHN_RATE", "STRING");
+            tableColumnDatatypes.put("OTHER_EXPN", "STRING");
+            tableColumnDatatypes.put("TOTAL_AMOUNT", "STRING");
+            tableDetail.setTableLabel("Other Expenses");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Grand Total");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery("select (total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))) Grand_Total " +
+                       "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("GRAND_TOTAL", "STRING");
+            tableDetail.setTableLabel("Grand Total");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
             emailReq.setTableDetails(emailTableDetails);
         }
         else if(reqPage.equalsIgnoreCase("edu")){
@@ -859,7 +908,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
                             tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
                                                      emailReq.getRequestId()+")");
-                            
+                            tableDetail.setTableLabel("Trip Activity");
                             tableColumnDatatypes = new LinkedHashMap<String, String>();
                             tableColumnDatatypes.put("START_DATE", "DATE");
                             tableColumnDatatypes.put("END_DATE", "DATE");
@@ -916,6 +965,54 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
                             
                             emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Expense Description");
+                            tableContentCols.add("Currency");
+                            tableContentCols.add("Exchange Rate");
+                            tableContentCols.add("Expense Amount");
+                            tableContentCols.add("Amount in SAR");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery(" select expn_desc, currency, exchn_rate, other_expn, total_amount  from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                                     emailReq.getRequestId()+")");
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("EXPN_DESC", "STRING");
+                            tableColumnDatatypes.put("CURRENCY", "STRING");
+                            tableColumnDatatypes.put("EXCHN_RATE", "STRING");
+                            tableColumnDatatypes.put("OTHER_EXPN", "STRING");
+                            tableColumnDatatypes.put("TOTAL_AMOUNT", "STRING");
+                            tableDetail.setTableLabel("Other Expenses");
+                            
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Grand Total");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery("select (total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))) Grand_Total " +
+                                       "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("GRAND_TOTAL", "STRING");
+                            tableDetail.setTableLabel("Grand Total");
+                            
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
                             emailReq.setTableDetails(emailTableDetails);
                         }
                         else if(reqPage.equalsIgnoreCase("edu")){
@@ -1207,7 +1304,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
                             tableDetail.setDetailsQuery("select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
                                                      emailReq.getRequestId() + ")");
-                            
+                            tableDetail.setTableLabel("Trip Activity");
                             tableColumnDatatypes = new LinkedHashMap<String, String>();
                             tableColumnDatatypes.put("START_DATE", "DATE");
                             tableColumnDatatypes.put("END_DATE", "DATE");
@@ -1264,6 +1361,54 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
                             
                             emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Expense Description");
+                            tableContentCols.add("Currency");
+                            tableContentCols.add("Exchange Rate");
+                            tableContentCols.add("Expense Amount");
+                            tableContentCols.add("Amount in SAR");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery(" select expn_desc, currency, exchn_rate, other_expn, total_amount  from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                                     emailReq.getRequestId()+")");
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("EXPN_DESC", "STRING");
+                            tableColumnDatatypes.put("CURRENCY", "STRING");
+                            tableColumnDatatypes.put("EXCHN_RATE", "STRING");
+                            tableColumnDatatypes.put("OTHER_EXPN", "STRING");
+                            tableColumnDatatypes.put("TOTAL_AMOUNT", "STRING");
+                            tableDetail.setTableLabel("Other Expenses");
+                            
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Grand Total");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery("select (total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))) Grand_Total " +
+                                       "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("GRAND_TOTAL", "STRING");
+                            tableDetail.setTableLabel("Grand Total");
+                            
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
                             emailReq.setTableDetails(emailTableDetails);
                         }
                         else if(reqPage.equalsIgnoreCase("edu")){

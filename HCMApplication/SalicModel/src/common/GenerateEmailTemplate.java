@@ -50,8 +50,8 @@ public class GenerateEmailTemplate {
             if (tableDetails != null && tableDetails.size() > 0) {
                 for (EmailTableDetailsPojo tableDetail : tableDetails) {
                     String linedetailsQuery = tableDetail.getDetailsQuery();
-
-                    emailBody = emailBody +
+                    String tableLabel = tableDetail.getTableLabel();
+                    emailBody = emailBody + (tableLabel != null ? "<b>"+tableLabel+"</b>" + "<br>" : "") + 
                         "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>Sr.#</th>";
                     for (String headerCol : tableDetail.getTableContentColumns()) {
                         emailBody = emailBody + "<th  style='font-weight:bolder'>" + headerCol + "</th>";
@@ -98,7 +98,7 @@ public class GenerateEmailTemplate {
 
             String actionBody = prepareActionBodyMessage(emailReq.getActionButtons());
 
-            String bestRegardsmessage = "<br><br>Best Regards,<br>Employee Self Service Process";
+            String bestRegardsmessage = "<br><br>Best Regards";
 
             String body = message + emailBody + actionBody + bestRegardsmessage;
             emailHapmap.put("subject", emailSubject);

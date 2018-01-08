@@ -11,6 +11,7 @@ public class EmailTableDetailsPojo {
     private ArrayList<String> tableContentColumns = new ArrayList<String>();
     private String detailsQuery;
     private LinkedHashMap<String, String> tableColumnDatatypes = new LinkedHashMap<String, String>();
+    private String tableLabel;
 
     public void setTableContentColumns(ArrayList<String> tableContentColumns) {
         this.tableContentColumns = tableContentColumns;
@@ -34,5 +35,13 @@ public class EmailTableDetailsPojo {
 
     public LinkedHashMap<String, String> getTableColumnDatatypes() {
         return tableColumnDatatypes;
+    }
+
+    public void setTableLabel(String tableLabel) {
+        this.tableLabel = tableLabel;
+    }
+
+    public String getTableLabel() {
+        return tableLabel;
     }
 }

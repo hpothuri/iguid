@@ -1784,8 +1784,8 @@
                     </af:panelCollection>
                   </af:panelBox>
                   <af:panelGroupLayout id="pgl9" layout="horizontal" halign="right" styleClass="AFStretchWidth"
-                                       inlineStyle="white-space:noWrap;">
-                    <af:panelLabelAndMessage label="Total Amount" id="plam10" inlineStyle="font-size:large;">
+                                       inlineStyle="white-space:noWrap; padding-right:30px;">
+                    <af:panelLabelAndMessage label="Grand Total" id="plam10" inlineStyle="font-size:large;">
                       <af:outputText value="#{bindings.TotalColumnAmount.inputValue != null ?  (bindings.TotalColumnAmount.inputValue + bindings.TotalPerdiem.inputValue) : bindings.TotalPerdiem.inputValue}"
                                      id="ot28" partialTriggers="it44 pc6:t12:it46 it43"
                                      inlineStyle="font-weight:bold; font-size:large;"
