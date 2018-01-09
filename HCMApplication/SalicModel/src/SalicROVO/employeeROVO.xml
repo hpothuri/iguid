@@ -4,12 +4,11 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="employeeROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full"
-  UseGlueCode="false">
+  PageIterMode="Full">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -35,27 +34,26 @@
     Name="p_EmpName"
     Kind="viewcriteria"
     Type="java.lang.String"/>
-  <SQLQuery>
-    <![CDATA[SELECT 
-    XXSTG_EMPLOYEE_DETAILS.EMP_ID EMP_ID, 
-    XXSTG_EMPLOYEE_DETAILS.EMP_NUMBER EMP_NUMBER, 
-    XXSTG_EMPLOYEE_DETAILS.EMP_NAME EMP_NAME, 
-    XXSTG_EMPLOYEE_DETAILS.JOB_TITLE JOB_TITLE, 
-    XXSTG_EMPLOYEE_DETAILS.DEPARTMENT DEPARTMENT, 
-    XXSTG_EMPLOYEE_DETAILS.GRADE GRADE, 
-    XXSTG_EMPLOYEE_DETAILS.LINE_MANAGER LINE_MANAGER, 
-    XXSTG_EMPLOYEE_DETAILS.ORG_ID ORG_ID, 
-    XXSTG_EMPLOYEE_DETAILS.ORG_NAME ORG_NAME, 
-    XXSTG_EMPLOYEE_DETAILS.ORIG_SYSTEM_REF ORIG_SYSTEM_REF, 
-    XXSTG_EMPLOYEE_DETAILS.CREATED_BY CREATED_BY, 
-    XXSTG_EMPLOYEE_DETAILS.CREATION_DATE CREATION_DATE, 
-    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATED_BY LAST_UPDATED_BY, 
-    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATE_DATE LAST_UPDATE_DATE, 
-    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATE_LOGIN LAST_UPDATE_LOGIN,
-  (XXSTG_EMPLOYEE_DETAILS.LINE_MANAGER || '  (' || XXSTG_EMPLOYEE_DETAILS.EMP_NUMBER || ')') AS LINE_MANAGER_NAME 
-FROM 
-    XXSTG_EMPLOYEE_DETAILS]]>
-  </SQLQuery>
+  <SQLQuery><![CDATA[SELECT   
+    XXSTG_EMPLOYEE_DETAILS.EMP_ID EMP_ID,   
+    XXSTG_EMPLOYEE_DETAILS.EMP_NUMBER EMP_NUMBER,   
+    XXSTG_EMPLOYEE_DETAILS.EMP_NAME EMP_NAME,   
+    XXSTG_EMPLOYEE_DETAILS.JOB_TITLE JOB_TITLE,   
+    XXSTG_EMPLOYEE_DETAILS.DEPARTMENT DEPARTMENT,   
+    XXSTG_EMPLOYEE_DETAILS.GRADE GRADE,   
+    XXSTG_EMPLOYEE_DETAILS.LINE_MANAGER LINE_MANAGER,   
+    XXSTG_EMPLOYEE_DETAILS.ORG_ID ORG_ID,   
+    XXSTG_EMPLOYEE_DETAILS.ORG_NAME ORG_NAME,   
+    XXSTG_EMPLOYEE_DETAILS.ORIG_SYSTEM_REF ORIG_SYSTEM_REF,   
+    XXSTG_EMPLOYEE_DETAILS.CREATED_BY CREATED_BY,   
+    XXSTG_EMPLOYEE_DETAILS.CREATION_DATE CREATION_DATE,   
+    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATED_BY LAST_UPDATED_BY,   
+    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATE_DATE LAST_UPDATE_DATE,   
+    XXSTG_EMPLOYEE_DETAILS.LAST_UPDATE_LOGIN LAST_UPDATE_LOGIN,  
+  (XXSTG_EMPLOYEE_DETAILS.LINE_MANAGER || '  (' || XXSTG_EMPLOYEE_DETAILS.EMP_NUMBER || ')') AS LINE_MANAGER_NAME,  
+  XXSTG_EMPLOYEE_DETAILS.EMAIL_ADDRESS EMAIL_ADDRESS  
+FROM   
+    XXSTG_EMPLOYEE_DETAILS]]></SQLQuery>
   <ViewAttribute
     Name="EmpId"
     IsUpdateable="false"
@@ -325,12 +323,27 @@ FROM
       <Attr Name="_DisplaySize" Value="284"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="EmailAdddress"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="EMAIL_ADDDRESS"
+    Expression="EMAIL_ADDDRESS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewCriteria
     Name="findById"
     ViewObjectName="SalicROVO.employeeROVO"
     Conjunction="AND"
     Mode="3">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"
@@ -367,7 +380,7 @@ FROM
     ViewObjectName="SalicROVO.employeeROVO"
     Conjunction="AND"
     Mode="3">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"
@@ -411,7 +424,7 @@ FROM
     Name="findByName"
     ViewObjectName="SalicROVO.employeeROVO"
     Conjunction="AND">
-    <Properties>
+    <Properties Name="_Props">
       <CustomProperties>
         <Property
           Name="displayOperators"

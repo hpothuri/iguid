@@ -145,6 +145,9 @@
    <ViewUsage
       Name="FetchDestVisaReqdVO1"
       ViewObjectName="SalicView.FetchDestVisaReqdVO"/>
+   <ViewUsage
+      Name="FetchCurrentApprId1"
+      ViewObjectName="SalicROVO.FetchCurrentApprId"/>
    <ViewLinkUsage Name="overtimeHdrDtl1"
                   ViewLinkObjectName="SalicVL.overtimeHdrDtl"
                   SrcViewUsageName="SalicAM.overTimeAM.XxhcmOvertimeHeadersAllVO1"
