@@ -1738,7 +1738,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName("");
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") for "+emailReq.getEmpName()+" is withdrawn from "+managerMap.getKey());
-                emailReq.setMessage("<b> "+reqType+" request </b> is withdrawn which was pendining for approval from "+managerMap.getKey()+" for "+emailReq.getEmpName()+"with hereunder details: <br><br> Withdraw Reason : "+rejectReason);
+                emailReq.setMessage("<b> "+reqType+" request </b> is withdrawn which was pending for approval from "+managerMap.getKey()+" for "+emailReq.getEmpName()+"with hereunder details: <br><br> Withdraw Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -1832,7 +1832,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             emailReq.setToEmail(managerUsers);
             emailReq.setSubject(reqType +" request ("+emailReq.getRequestNo()+") Cancellation for "+emailReq.getEmpName()+" pending for your approval");
             emailReq.setMessage("<b> "+ reqType +
-                                " request ("+emailReq.getRequestNo()+")</b> Cancellation pendining for your approval with hereunder details: <br><br> Cancellation Reason : "+rejectReason);
+                                " request ("+emailReq.getRequestNo()+")</b> Cancellation pending for your approval with hereunder details: <br><br> Cancellation Reason : "+rejectReason);
             actionButtons = new LinkedHashMap<String, String>();
             actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
             actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
