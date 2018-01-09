@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -208,6 +209,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         emailReq.setEmpNumber((String) otHdrVO.getCurrentRow().getAttribute("EmployeeNumber"));
         String empNameR = (String) otHdrVO.getCurrentRow().getAttribute("EmployeeName");
         ArrayList<String> toRecepients = new ArrayList<String>();
+        
+        String reqStatus = (String) otHdrVO.getCurrentRow().getAttribute("ReqStatus");
         
         getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
@@ -592,8 +595,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
-                emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
-                emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
+                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                    emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
+                    emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
+                }
+                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+                    emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
+                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"<b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
+                }
                
                 
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
@@ -611,9 +620,16 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                String mgrUserName = secondLevelApproverName;
                emailReq.setToEmpName(mgrUserName);
                emailReq.setToEmail(managerUsers);
-               emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
-               emailReq.setMessage("<b> "+ reqType +
+                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
+                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
+                }
+                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+                    emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") Cancellation of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
+                    emailReq.setMessage("<b> "+ reqType +
+                                        " request </b> Cancellation for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
+                }
                actionButtons = new LinkedHashMap<String, String>();
                actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
                actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
@@ -630,8 +646,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName(emailReq.getEmpName());
-                emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
-                emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
+                    if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                    emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
+                    emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
+                    }
+                    else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+                        emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is cancelled.");
+                        emailReq.setMessage("Your <b> "+reqType+" request </b> is cancelled with hereunder information:");
+                    }
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -702,6 +724,39 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
             //Code for Sending email for employee
             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+        }
+        else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
+            HashMap<String, String> approvedMgrs = new HashMap<String, String>();
+            RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            ArrayList<String> toArray = new ArrayList<String>();
+            while(rs.hasNext()){
+                Row row = rs.next();
+                if(row.getAttribute("ApproverFlag") != null){
+                    String email = (String)row.getAttribute("ApproverEmail");
+                    toArray.add(email);
+                    approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
+                }
+            }
+            
+            //approvers and employee
+            for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
+                // String to[] = (String[]) toArray.toArray();
+                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                emailReq.setToEmail(to);
+                emailReq.setToEmpName("");
+                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+managerMap.getKey());
+                emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+managerMap.getKey()+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
+                LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                actionButtons = new LinkedHashMap<String, String>();
+                actionButtons.put("More Info", "");
+                emailReq.setActionButtons(actionButtons);
+                Map<String, Object> emailHapmap =
+                    GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                //Code for Sending email for second approver
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));   
+            }
         }
     }
     

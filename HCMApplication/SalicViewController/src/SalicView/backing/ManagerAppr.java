@@ -458,4 +458,10 @@ public class ManagerAppr {
     public RichOutputLabel getOl4() {
         return ol4;
     }
+
+    public void reqMoreACL(ActionEvent actionEvent) {
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        op.getParamsMap().put("approveOrReject", "M");
+        op.execute();
+    }
 }
