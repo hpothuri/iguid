@@ -47,7 +47,8 @@
        XxQpActionHistoryTEO.APPR_TYPE,   
        XxQpActionHistoryTEO.APPR_DATE,   
        XxQpActionHistoryTEO.APPR_BY, 
-       (select display_name from xxstg_person where person_id = XxQpActionHistoryTEO.APPR_BY) APPR_BY_USER_NAME 
+       (select display_name from xxstg_person where person_id = XxQpActionHistoryTEO.APPR_BY) APPR_BY_USER_NAME,
+       (select email_address from XXSTG_EMPLOYEE_DETAILS where emp_id = XxQpActionHistoryTEO.APPROVER_ID) APPROVER_EMAIL
 FROM  XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO  
 WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
   <EntityUsage
@@ -244,6 +245,21 @@ WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApproverEmail"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="APPROVER_EMAIL"
+    Expression="APPROVER_EMAIL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
   </ViewAttribute>
   <ViewCriteria

@@ -1184,6 +1184,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         String emailUrl = "";
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empIdLogged = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
+        if(empIdLogged == null)
+            empIdLogged = new BigDecimal(aDFContext.getSessionScope().get("personId")+"");
         if(emailVO.first() != null){
             emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
         }
@@ -1196,14 +1198,17 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).toString());
         //emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
-        ViewObject empManagerDet = getemployeeROVO1();
-        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empIdLogged.toString());
-        empManagerDet.executeQuery();
-        String empNameR = null;;
-        if(empManagerDet.hasNext()){
-            empNameR = (String)empManagerDet.first().getAttribute("EmpName");
-            emailReq.setEmpName((String)empManagerDet.first().getAttribute("EmpName"));
-            emailReq.setEmpNumber(empManagerDet.first().getAttribute("EmpNumber")+"");
+
+        String empNameR = null;
+        if(empIdLogged != null){
+            ViewObject empManagerDet = getemployeeROVO1();
+            empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empIdLogged.toString());
+            empManagerDet.executeQuery();
+            if(empManagerDet.hasNext()){
+                empNameR = (String)empManagerDet.first().getAttribute("EmpName");
+                emailReq.setEmpName((String)empManagerDet.first().getAttribute("EmpName"));
+                emailReq.setEmpNumber(empManagerDet.first().getAttribute("EmpNumber")+"");
+            }
         }
 
         ArrayList<String> toRecepients = new ArrayList<String>();
@@ -1689,6 +1694,133 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
             //Code for Sending email for second approver
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+        }
+        else if(approveOrReject != null && "W".equalsIgnoreCase(approveOrReject)){
+            RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            ArrayList<String> toArray = new ArrayList<String>();
+            while(rs.hasNext()){
+                Row row = rs.next();
+                if(row.getAttribute("ApproverFlag") != null){
+                    String email = (String)row.getAttribute("ApproverEmail");
+                    toArray.add(email);
+                }
+            }
+//            String to[] = (String[]) toArray.toArray();
+            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+            emailReq.setToEmail(to);
+            emailReq.setToEmpName(emailReq.getEmpName());
+            emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") has been withdrawn by "+emailReq.getToEmpName());
+            emailReq.setMessage("<b> "+reqType+" request </b> has been withdrawn with hereunder information:");
+            LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+            actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            Map<String, Object> emailHapmap =
+                GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email for second approver
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+        }
+        else if(approveOrReject != null && "C".equalsIgnoreCase(approveOrReject)){
+            String approverId = "";
+            
+            toRecepients = new ArrayList<String>();
+            
+            //        getXxQpActionHistoryTVO1().executeQuery();
+            
+            String approverName = "";
+            
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", new BigDecimal(1));
+            if(rows != null && rows.length > 0){
+                for(Row row : rows){
+                    approverName = (String)row.getAttribute("ApproverUserName");
+                    approverId = (String)row.getAttribute("ApproverId");
+                    toRecepients.add((String)row.getAttribute("ApproverUserName"));
+                }
+            }
+            
+            
+            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+            emailReq.setToEmail(to);
+            emailReq.setToEmpName(emailReq.getEmpName());
+            //                    emailReq.setToEmail((String[]) toRecepients.toArray());
+
+            emailReq.setMessage("Your <b> " + reqType + " request" +
+                                "</b> is cancelled and pending for approval from "+approverName+" with hereunder information:");
+            emailReq.setSubject("FYI : " + reqType + " cancellation request (" + emailReq.getRequestNo() + ")"+
+                                " is pending for approval, Pending with "+approverName);
+            
+        
+            LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+            actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            Map<String, Object> emailHapmap =
+                GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email for employee
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+            
+            //To mamager
+            String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+            String mgrUserName = approverName;
+            emailReq.setToEmpName(mgrUserName);
+            emailReq.setToEmail(managerUsers);
+            emailReq.setSubject("Action required for "+ reqType +" cancellation request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
+            emailReq.setMessage("<b> "+ reqType +
+                                " cancellation request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
+            actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+            actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email for Manager approval
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+        }
+        else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
+            
+            RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            ArrayList<String> toArray = new ArrayList<String>();
+            while(rs.hasNext()){
+                Row row = rs.next();
+                if(row.getAttribute("ApproverFlag") != null){
+                    String email = (String)row.getAttribute("ApproverEmail");
+                    toArray.add(email);
+                }
+            }
+            //            String to[] = (String[]) toArray.toArray();
+            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+            emailReq.setToEmail(to);
+            emailReq.setToEmpName(emailReq.getEmpName());
+            emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") has been requested for more info by "+empNameR);
+            emailReq.setMessage("<b> "+reqType+" request </b> has been requested for more info with hereunder information:");
+            LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            Map<String, Object> emailHapmap =
+                GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email to all approverss
+            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+            
+            emailReq.setToEmail(to);
+            emailReq.setToEmpName(emailReq.getEmpName());
+            emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") has been requested for more info by "+empNameR);
+            emailReq.setMessage("Your <b> "+reqType+" request </b> has been requested for more info with hereunder information:");
+            actionButtons = new LinkedHashMap<String, String>();
+            actionButtons.put("More Info", "");
+            emailReq.setActionButtons(actionButtons);
+            emailHapmap =
+                GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+            //Code for Sending email for employee
             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         }
     }

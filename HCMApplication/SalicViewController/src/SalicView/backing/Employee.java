@@ -2760,13 +2760,18 @@ public class Employee {
         op.execute();
         ADFUtils.findOperation("Commit").execute();
         
+        op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
+        op.getParamsMap().put("approveOrReject", "W");
+        op.execute();
+        
         JSFUtils.addFacesInformationMessage("Request is Withdrawn!");
         //TODO : KMA : Send Email for manager
         //TODO : KMA : Send Email for employee also stating the request is withdrawn
         AdfFacesContext.getCurrentInstance().addPartialTarget(ot10);
+        
         return "save";
     }
-    public String reqMoreACL(ActionEvent actionEvent) {
+    public String reqMoreACL() {
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -2791,6 +2796,10 @@ public class Employee {
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
         ADFUtils.findOperation("Commit").execute();
+        
+        op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
+        op.getParamsMap().put("approveOrReject", "M");
+        op.execute();
         
         JSFUtils.addFacesInformationMessage("Requested employee to update more information");
         //TODO : KMA : Send Email for manager
@@ -2833,6 +2842,10 @@ public class Employee {
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
         ADFUtils.findOperation("Commit").execute();
+        
+        op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
+        op.getParamsMap().put("approveOrReject", "C");
+        op.execute();
         
         JSFUtils.addFacesInformationMessage("Request is cancelled successfully and pending for approval!");
         
