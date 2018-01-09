@@ -1598,7 +1598,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 }
                 else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
                     emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
-                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"<b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
+                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"</b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
                 }
                 
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
