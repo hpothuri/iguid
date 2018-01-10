@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ValidateOverTimeReqVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -24,18 +24,20 @@
     Name="bind_empid"
     Kind="where"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[select count(*) countot from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b where a.req_id = b.req_id and a.req_type = 'ot' and to_date(overtime_date,'dd-MON-yyyy') = to_date(:bind_otdate,'dd-MON-yyyy') and a.status <> 'REJECT' and emp_id = :bind_empid]]></SQLQuery>
+  <SQLQuery><![CDATA[select A.REQUEST_NUMBER from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b where a.req_id = b.req_id and a.req_type = 'ot' and to_date(overtime_date,'dd-MON-yyyy') = to_date(:bind_otdate,'dd-MON-yyyy') and a.status <> 'REJECT' and emp_id = :bind_empid]]></SQLQuery>
   <ViewAttribute
-    Name="Countot"
+    Name="RequestNumber"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="java.math.BigDecimal"
-    ColumnType="BIGINT"
-    AliasName="COUNTOT"
-    Expression="COUNTOT"
-    SQLType="NUMERIC"/>
-  <AttrArray Name="KeyAttributes">
-    <Item Value="Countot"/>
-  </AttrArray>
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REQUEST_NUMBER"
+    Expression="REQUEST_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
 </ViewObject>

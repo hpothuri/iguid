@@ -261,10 +261,9 @@ public class PayrollTransferBean {
     public void moveToPayrolACL(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException,
                                                                 IOException, ParserConfigurationException,
                                                                 SAXException {
-        ADFUtils.findOperation("Commit").execute();
+        ViewObject hdrVO = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         ViewObject payRollVO = ADFUtils.findIterator("PayrollTransfer_VO1Iterator").getViewObject();
         ViewObject payRollDtlVO = ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
-        ViewObject hdrVO = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         ViewObject othrExpVO = ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getViewObject();
 
         SimpleDateFormat hcmDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -340,14 +339,15 @@ public class PayrollTransferBean {
                             Number dd = (Number) curr.getAttribute("OvertimeHours");
                             dd.toString();
                             String type = null;
-                            if (curr.getAttribute("OvertimeType").equals("OT_HOL")) {
+                            if(curr != null){
+                            if (curr.getAttribute("OvertimeType") != null && curr.getAttribute("OvertimeType").equals("OT_HOL")) {
                                 type = "Holiday";
-                            } else if (curr.getAttribute("OvertimeType").equals("OT_WD")) {
+                            } else if (curr.getAttribute("OvertimeType") != null && curr.getAttribute("OvertimeType").equals("OT_WD")) {
                                 type = "Weekday";
-                            } else if (curr.getAttribute("OvertimeType").equals("OT_WE")) {
+                            } else if (curr.getAttribute("OvertimeType") != null && curr.getAttribute("OvertimeType").equals("OT_WE")) {
                                 type = "Weekend";
                             }
-
+                            }
 
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_OTH|" + n + "|E" + perNum +
@@ -472,19 +472,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -665,19 +669,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -854,19 +862,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -1038,19 +1050,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -1252,19 +1268,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -1442,19 +1462,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -1634,19 +1658,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -1839,19 +1867,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -2060,19 +2092,23 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 } else {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
@@ -2277,19 +2313,23 @@ public class PayrollTransferBean {
                                         hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                        hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     } else {
                                         hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                        hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     }
                                     if (hdlRes.equalsIgnoreCase("SUCCESS")) {
                                         hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                        hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     } else {
                                         hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+                                        hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     }
                                     //                           hdrVO.executeQuery();
                                     ADFUtils.findOperation("Commit").execute();

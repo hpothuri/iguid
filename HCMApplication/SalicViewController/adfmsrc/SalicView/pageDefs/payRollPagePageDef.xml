@@ -27,21 +27,19 @@
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
+          <Item Value="ReqType"/>
           <Item Value="EmployeeNumber"/>
           <Item Value="EmployeeName"/>
           <Item Value="Grade"/>
           <Item Value="Department"/>
           <Item Value="LineMaganerName"/>
-          <Item Value="Status"/>
-          <Item Value="ApproverUserName"/>
-          <Item Value="Description"/>
-          <Item Value="ReqType"/>
-          <Item Value="Attribute3"/>
-          <Item Value="PayrollTansStatus"/>
-          <Item Value="PayrollTansComments"/>
           <Item Value="DispStatus"/>
-          <Item Value="LastApprovedBy"/>
+          <Item Value="PayrollTansStatus"/>
+          <Item Value="Attribute3"/>
+          <Item Value="PayrollTansComments"/>
+          <Item Value="ApproverUserName"/>
           <Item Value="LastApproverComments"/>
+          <Item Value="PayrollTransDate"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

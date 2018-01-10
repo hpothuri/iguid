@@ -4,7 +4,7 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllEO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_OVERTIME_HEADERS_ALL"
@@ -424,6 +424,18 @@
     TableName="XXHCM_OVERTIME_HEADERS_ALL">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="PayrollTransferInitBy"
+    Precision="255"
+    ColumnName="PAYROLL_TRANSFER_INIT_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_OVERTIME_HEADERS_ALL">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="255"/>
     </DesignTime>
   </Attribute>
   <Key

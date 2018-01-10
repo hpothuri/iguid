@@ -15,9 +15,9 @@ public class ValidateOverTimeReqVORowImpl extends ViewRowImpl {
      * AttributesEnum: generated enum for identifying attributes and accessors. DO NOT MODIFY.
      */
     protected enum AttributesEnum {
-        Countot {
+        RequestNumber {
             protected Object get(ValidateOverTimeReqVORowImpl obj) {
-                return obj.getCountot();
+                return obj.getRequestNumber();
             }
 
             protected void put(ValidateOverTimeReqVORowImpl obj, Object value) {
@@ -26,6 +26,7 @@ public class ValidateOverTimeReqVORowImpl extends ViewRowImpl {
         }
         ;
         private static AttributesEnum[] vals = null;
+        ;
         private static final int firstIndex = 0;
 
         protected abstract Object get(ValidateOverTimeReqVORowImpl object);
@@ -51,7 +52,8 @@ public class ValidateOverTimeReqVORowImpl extends ViewRowImpl {
             return vals;
         }
     }
-    public static final int COUNTOT = AttributesEnum.Countot.index();
+
+    public static final int REQUESTNUMBER = AttributesEnum.RequestNumber.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -59,12 +61,13 @@ public class ValidateOverTimeReqVORowImpl extends ViewRowImpl {
     public ValidateOverTimeReqVORowImpl() {
     }
 
+
     /**
-     * Gets the attribute value for the calculated attribute Countot.
-     * @return the Countot
+     * Gets the attribute value for the calculated attribute RequestNumber.
+     * @return the RequestNumber
      */
-    public BigDecimal getCountot() {
-        return (BigDecimal) getAttributeInternal(COUNTOT);
+    public String getRequestNumber() {
+        return (String) getAttributeInternal(REQUESTNUMBER);
     }
 
     /**

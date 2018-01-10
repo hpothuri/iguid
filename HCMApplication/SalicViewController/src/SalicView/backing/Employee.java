@@ -1548,13 +1548,18 @@ public class Employee {
                     System.err.println("-----Count" +
                                        ovo.getEstimatedRowCount());
                     if (ovo.getEstimatedRowCount() > 0) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                        Row earlierRow = ovo.first();
-                        String reqDate = earlierRow.getAttribute("RequestDate") != null ? sdf.format(new java.util.Date(((java.sql.Date)earlierRow.getAttribute("RequestDate")).getTime())) : null;
-                        String startDate = earlierRow.getAttribute("StartDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("StartDate")).dateValue().getTime())) : null;
-                        String endDateStr = earlierRow.getAttribute("EndDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("EndDate")).dateValue().getTime())) : null;
-                        JSFUtils.addFacesErrorMessage("Your current request is overlapping another approved/pending on "+reqDate+
-                                " request started from "+startDate+" ending on "+endDateStr);
+                        RowSetIterator rs = ovo.createRowSetIterator(null);                        
+                        String str = "";
+                        while(rs.hasNext()){
+                            Row row = rs.next();
+                            str += row.getAttribute("RequestNumber")+";";
+                        }
+//                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//                        Row earlierRow = ovo.first();
+//                        String reqDate = earlierRow.getAttribute("RequestDate") != null ? sdf.format(new java.util.Date(((java.sql.Date)earlierRow.getAttribute("RequestDate")).getTime())) : null;
+//                        String startDate = earlierRow.getAttribute("StartDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("StartDate")).dateValue().getTime())) : null;
+//                        String endDateStr = earlierRow.getAttribute("EndDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)earlierRow.getAttribute("EndDate")).dateValue().getTime())) : null;
+                        JSFUtils.addFacesErrorMessage("Your current request is overlapping with other request(s) : "+str);
 //                        ("Already this Resource had booked in these dates, please provide different Dates");
                         isValidated = false;
                         return null;
@@ -1763,11 +1768,11 @@ public class Employee {
         //        vcr.setAttribute("ReqType", "ot");
         hdr1.setNamedWhereClauseParam("bind_otdate", day1);
         hdr1.executeQuery();
-        BigDecimal otcount = (BigDecimal)hdr1.first().getAttribute("Countot");
+//        BigDecimal otcount = (BigDecimal)hdr1.first().getAttribute("Countot");
         
             
-        if (otcount.compareTo(new BigDecimal(0)) > 0 ) {
-            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date - "+day1+"!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+        if (hdr1.first() != null) {
+            JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date - "+day1+" with request number "+hdr1.first().getAttribute("RequestNumber")+"!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
             //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
             
             //otdate.setSubmittedValue(day1);

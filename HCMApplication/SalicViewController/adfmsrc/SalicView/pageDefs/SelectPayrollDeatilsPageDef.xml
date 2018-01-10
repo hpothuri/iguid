@@ -72,7 +72,7 @@
           <Item Value="ApproverUserName"/>
           <Item Value="PayrollTansComments"/>
           <Item Value="PayrollTransDate"/>
-          <Item Value="Attribute2"/>
+          <Item Value="Attribute2" Binds="Attribute2"/>
           <Item Value="ReqType"/>
           <Item Value="ReqId"/>
         </AttrNames>

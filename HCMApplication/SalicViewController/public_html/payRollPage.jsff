@@ -359,146 +359,105 @@
                                               scrollPolicy="page"
                                               autoHeightRows="20"
                                               partialTriggers=":::cb3 :::cb2 :::cb1 :::cb4 :::cb5">
-                                          <af:column id="c14" headerText="S.No"
-                                                     width="35" align="center">
-                                                <af:outputText value="#{vs.index+1}"
-                                                               id="ot11"/>
+                                          <af:column id="c14" headerText="S.No" width="35" align="center">
+                                                <af:outputText value="#{vs.index+1}" id="ot11"/>
                                           </af:column>
-                                          <af:column id="c16"
-                                                     headerText="Select"
-                                                     align="center" width="50"
+                                          <af:column id="c16" headerText="Select" align="center" width="50"
                                                      rendered="false">
-                                                <af:selectBooleanCheckbox
-                                                                          id="sbc1"
-                                                                          simple="true"
+                                                <af:selectBooleanCheckbox id="sbc1" simple="true"
                                                                           disabled="#{bindings.PayrollTansStatus.inputValue eq 'COMPLETED' or bindings.PayrollTansStatus.inputValue eq 'IN_PROCESS'}"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.RequestNumber.name}"
-                                                     sortable="true"
-                                                     headerText="Request Number"
-                                                     id="c7" width="200">
-                                                <af:outputText value="#{row.RequestNumber}"
-                                                               id="ot3"
-                                                               rendered="false"/>
-                                                <af:commandLink text="#{row.bindings.RequestNumber.inputValue}"
-                                                                id="cl1"
-                                                                action="edit"
-                                                                inlineStyle="font-weight:bold;" disabled="#{row.PayrollTansStatus ne 'Draft'}">
+                                                     sortable="true" headerText="Request Number" id="c7" width="200">
+                                                <af:outputText value="#{row.RequestNumber}" id="ot3" rendered="false"/>
+                                                <af:commandLink text="#{row.bindings.RequestNumber.inputValue}" id="cl1"
+                                                                action="edit" inlineStyle="font-weight:bold;"
+                                                                disabled="#{row.PayrollTansStatus ne 'Draft'}">
                                                       <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
                                                                               to="#{pageFlowScope.RequestNumber}"
                                                                               type="action"/>
-                                                        <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
-                                                         type="action"
-                                                         to="#{pageFlowScope.ReqType}"/>
-                                <af:setPropertyListener from="#{row.bindings.ReqId.inputValue}"
-                                                         type="action"
-                                                         to="#{pageFlowScope.ReqId}"/>
-                                <af:setPropertyListener from="#{'edit'}"
-                                                         type="action"
-                                                         to="#{sessionScope.mode}"/>
-                              <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
-                              type = "action"
-                              to = "#{sessionScope.page}"/>                                                                              
+                                                      <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
+                                                                              type="action"
+                                                                              to="#{pageFlowScope.ReqType}"/>
+                                                      <af:setPropertyListener from="#{row.bindings.ReqId.inputValue}"
+                                                                              type="action"
+                                                                              to="#{pageFlowScope.ReqId}"/>
+                                                      <af:setPropertyListener from="#{'edit'}" type="action"
+                                                                              to="#{sessionScope.mode}"/>
+                                                      <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
+                                                                              type="action" to="#{sessionScope.page}"/>
                                                 </af:commandLink>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.RequestDate.name}"
-                                                     sortable="true"
-                                                     headerText="Request Date"
-                                                     id="c8">
-                                                <af:outputText value="#{row.RequestDate}"
-                                                               id="ot6">
+                                                     sortable="true" headerText="Request Date" id="c8">
+                                                <af:outputText value="#{row.RequestDate}" id="ot6">
                                                       <af:convertDateTime pattern="dd-MMM-yyyy"/>
                                                 </af:outputText>
                                           </af:column>
                                           <af:column id="c13"
-                                          sortProperty="#{bindings.payRollObjROVO11.hints.ReqType.name}"
-                                                     headerText="Request Type"
-                                                     align="center"
-                                                     sortable="true">
-                                                <af:outputText value="Overtime"
-                                                               id="ot10"
-                                                               rendered="false"/>
+                                                     sortProperty="#{bindings.payRollObjROVO11.hints.ReqType.name}"
+                                                     headerText="Request Type" align="center" sortable="true">
+                                                <af:outputText value="Overtime" id="ot10" rendered="false"/>
                                                 <af:outputText value="#{row.ReqType eq 'ot'?'Overtime':row.ReqType eq 'vacation'?'Vacation Allowance':row.ReqType eq 'edu'?'Education Allowance':row.ReqType eq 'salary'?'Salary Advance':row.ReqType eq 'house'?'Housing Allowance':row.ReqType eq 'BusinessTrip'?'Business Trip':row.ReqType eq 'BusinessTripCompletion'?'Business Trip Completion':row.ReqType eq 'letter'?'HR Letter':''}"
                                                                id="ot14"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.EmployeeNumber.name}"
-                                                     sortable="true"
-                                                     headerText="Employee Number"
-                                                     id="c9" width="200">
-                                                <af:outputText value="#{row.EmployeeNumber}"
-                                                               id="ot1"/>
+                                                     sortable="true" headerText="Employee Number" id="c9" width="200">
+                                                <af:outputText value="#{row.EmployeeNumber}" id="ot1"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.EmployeeName.name}"
-                                                     sortable="true"
-                                                     headerText="Employee Name"
-                                                     id="c4" width="250">
-                                                <af:outputText value="#{row.EmployeeName}"
-                                                               id="ot7"/>
+                                                     sortable="true" headerText="Employee Name" id="c4" width="250">
+                                                <af:outputText value="#{row.EmployeeName}" id="ot7"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.Grade.name}"
-                                                     sortable="true"
-                                                     headerText="Employee Grade"
-                                                     id="c11" width="140">
-                                                <af:outputText value="#{row.Grade}"
-                                                               id="ot9"/>
+                                                     sortable="true" headerText="Employee Grade" id="c11" width="140">
+                                                <af:outputText value="#{row.Grade}" id="ot9"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.Department.name}"
-                                                     sortable="true"
-                                                     headerText="Employee Department"
-                                                     id="c12" width="250">
-                                                <af:outputText value="#{row.Department}"
-                                                               id="ot4"/>
+                                                     sortable="true" headerText="Employee Department" id="c12"
+                                                     width="250">
+                                                <af:outputText value="#{row.Department}" id="ot4"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.LineMaganerName.name}"
-                                                     sortable="true"
-                                                     headerText="Line Manager Name"
-                                                     id="c6" width="260">
-                                                <af:outputText value="#{row.LineMaganerName}"
-                                                               id="ot8"/>
+                                                     sortable="true" headerText="Line Manager Name" id="c6" width="260">
+                                                <af:outputText value="#{row.LineMaganerName}" id="ot8"/>
                                           </af:column>
-                                          <af:column sortProperty="#{bindings.payRollObjROVO11.hints.Status.name}"
-                                                     sortable="true"
-                                                     headerText="Request Status"
-                                                     id="c10" width="130">
-                                                <af:outputText value="#{row.DispStatus}"
-                                                               id="ot5"/>
+                                          <af:column sortProperty="#{bindings.payRollObjROVO11.hints.DispStatus.name}"
+                                                     sortable="true" headerText="Request Status" id="c10" width="130">
+                                                <af:outputText value="#{row.DispStatus}" id="ot5"/>
                                           </af:column>
                                           <af:column id="c17"
-                                          sortProperty="#{bindings.payRollObjROVO11.hints.PayrollTansStatus.name}"
-                                                     headerText="Payroll Transfer Status"
-                                                     width="150"
-                                                     sortable="true" rendered="false">
+                                                     sortProperty="#{bindings.payRollObjROVO11.hints.PayrollTansStatus.name}"
+                                                     headerText="Payroll Transfer Status" width="150" sortable="true"
+                                                     rendered="false">
                                                 <af:outputText value="#{row.PayrollTansStatus eq 'Draft'?'Draft':'Completed'}"
                                                                id="ot16"/>
                                           </af:column>
                                           <af:column headerText="Content Id"
-                                          sortProperty="#{bindings.payRollObjROVO11.hints.Attribute3.name}"
+                                                     sortProperty="#{bindings.payRollObjROVO11.hints.Attribute3.name}"
                                                      id="c19" sortable="true" width="160" minimumWidth="12">
-                                                <af:outputText value="#{row.Attribute3}"
-                                                               id="ot15"/>
+                                                <af:outputText value="#{row.Attribute3}" id="ot15"/>
                                           </af:column>
-                                          <af:column id="c18"
-                                                     headerText="Payroll Transfer Comments"
-                                                     width="180"
-                                                     
+                                          <af:column id="c18" headerText="Payroll Transfer Comments" width="180"
                                                      sortable="true">
-                                                <af:outputText value="#{row.PayrollTansComments}"
-                                                               id="ot13"/>
+                                                <af:outputText value="#{row.PayrollTansComments}" id="ot13"/>
                                           </af:column>
-                                          <af:column id="c15"
-                                                     headerText="Action By"
+                                          <af:column id="c15" headerText="Action By"
                                                      sortProperty="#{bindings.payRollObjROVO11.hints.ApproverUserName.name}"
-                                                     width="180"
-                                                     sortable="true">
-                                                <af:outputText value="#{row.LastApprovedBy}"
-                                                               id="ot12"/>
+                                                     width="180" sortable="true">
+                                                <af:outputText value="#{row.ApproverUserName}" id="ot12"/>
                                           </af:column>
-                                          <af:column sortProperty="#{bindings.payRollObjROVO11.hints.Description.name}"
-                                                     sortable="true"
-                                                     headerText="Approver Comments"
-                                                     id="c5" width="300">
-                                                <af:outputText value="#{row.LastApproverComments}"
-                                                               id="ot2"/>
+                                          <af:column sortProperty="#{bindings.payRollObjROVO11.hints.LastApproverComments.name}"
+                                                     sortable="true" headerText="Approver Comments" id="c5" width="300">
+                                                <af:outputText value="#{row.LastApproverComments}" id="ot2"/>
+                                          </af:column>
+                                          <af:column headerText="Payroll Transfer Date"
+                                                     id="c20">
+                                                <af:outputText value="#{row.PayrollTransDate}"
+                                                               shortDesc="#{bindings.payRollObjROVO11.hints.PayrollTransDate.tooltip}"
+                                                               id="ot17">
+                                                      <af:convertDateTime pattern="#{bindings.payRollObjROVO11.hints.PayrollTransDate.format}"/>
+                                                </af:outputText>
                                           </af:column>
                                     </af:table>
                               </af:panelCollection>

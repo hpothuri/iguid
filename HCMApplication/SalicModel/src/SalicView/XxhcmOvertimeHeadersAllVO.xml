@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -34,7 +34,8 @@
        XxhcmOvertimeHeadersAllEO.REQ_TYPE, 
        XxhcmOvertimeHeadersAllEO.HDL_RES, 
        XxhcmOvertimeHeadersAllEO.UCM_RES, 
-       XxhcmOvertimeHeadersAllEO.REQ_STATUS"
+       XxhcmOvertimeHeadersAllEO.REQ_STATUS, 
+       XxhcmOvertimeHeadersAllEO.PAYROLL_TRANSFER_INIT_BY"
   FromList="XXHCM_OVERTIME_HEADERS_ALL XxhcmOvertimeHeadersAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
@@ -521,6 +522,12 @@ return null;
     EntityAttrName="ReqStatus"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="REQ_STATUS"/>
+  <ViewAttribute
+    Name="PayrollTransferInitBy"
+    PrecisionRule="true"
+    EntityAttrName="PayrollTransferInitBy"
+    EntityUsage="XxhcmOvertimeHeadersAllEO"
+    AliasName="PAYROLL_TRANSFER_INIT_BY"/>
   <ViewCriteria
     Name="XxhcmOvertimeHeadersAllVOCriteria"
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"
