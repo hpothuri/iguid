@@ -58,8 +58,7 @@
           Uses="LOV_PayrollTansStatus" id="PayrollTansStatus"
           DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
     <tree IterBinding="PayrollTransfer_VO1Iterator" id="PayrollTransfer_VO1">
-      <nodeDefinition DefName="SalicView.PayrollTransfer_VO"
-                      Name="PayrollTransfer_VO10">
+      <nodeDefinition DefName="SalicView.PayrollTransfer_VO" Name="PayrollTransfer_VO10">
         <AttrNames>
           <Item Value="PayrollCheck"/>
           <Item Value="RequestNumber"/>
@@ -73,8 +72,9 @@
           <Item Value="ApproverUserName"/>
           <Item Value="PayrollTansComments"/>
           <Item Value="PayrollTransDate"/>
-          <Item Value="Attribute2" Binds="Attribute2"/>
+          <Item Value="Attribute2"/>
           <Item Value="ReqType"/>
+          <Item Value="ReqId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

@@ -120,6 +120,7 @@ public class Employee {
     private RichCommandButton appMenu;
     private RichTable dtlTable;
     private Date minDate = new Date();
+    private Date minOtDate = new Date();
     private RichOutputText ot10;
     private RichTable attTable;
     private RichInputDate salStDt;
@@ -2004,6 +2005,8 @@ public class Employee {
     public void setMinDate(Date minDate) {
         this.minDate = minDate;
     }
+    
+    
 
     public Date getMinDate() {
         try {
@@ -2741,7 +2744,7 @@ public class Employee {
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
         actionHisVO.reset();
-        actionHisVO.first().remove();
+        //actionHisVO.first();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
     //            row.setAttribute("ApproverFlag", null);
@@ -2758,6 +2761,7 @@ public class Employee {
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
+        
         ADFUtils.findOperation("Commit").execute();
         
         op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
@@ -2782,7 +2786,7 @@ public class Employee {
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
         actionHisVO.reset();
-        actionHisVO.first().remove();
+        //actionHisVO.first().remove();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
             row.remove();
@@ -2825,7 +2829,7 @@ public class Employee {
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
         actionHisVO.reset();
-        actionHisVO.first().remove();
+        //actionHisVO.first().remove();
         while(actionHisVO.hasNext()){
             Row row = actionHisVO.next();
         //            row.setAttribute("ApproverFlag", null);
@@ -4275,5 +4279,29 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
     public void onBtcStartDateVC(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDaysInBTC();
+    }
+
+    public void setMinOtDate(Date minOtDate) {
+        this.minOtDate = minOtDate;
+    }
+
+    public Date getMinOtDate() {
+        try {
+            Calendar now = Calendar.getInstance();
+            java.util.Date date = now.getTime();
+            GregorianCalendar cal = new GregorianCalendar();
+                            cal.setTime(date);
+                            //cal.add(Calendar.DATE, 0);
+                                            
+                            
+            date = cal.getTime();
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String currentDate = formatter.format(date);
+            return formatter.parse(currentDate);
+            //return formatter.parse(currentDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
