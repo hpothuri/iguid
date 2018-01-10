@@ -96,6 +96,8 @@ import oracle.adf.view.rich.component.rich.nav.RichCommandButton;
 
 import oracle.adf.view.rich.event.LaunchPopupEvent;
 
+import oracle.adf.view.rich.util.ResetUtils;
+
 import oracle.binding.AttributeBinding;
 import oracle.binding.BindingContainer;
 
@@ -158,6 +160,7 @@ public class Employee {
     
     private Boolean approveReject;
     private RichTable purposeOfTrvTable;
+    private RichTable purposeOfTravelBtcTable;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -4279,11 +4282,17 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
     public void onBtcEndDateVC(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDaysInBTC();
+        purposeOfTravelBtcTable.resetStampState();
+        ResetUtils.reset(purposeOfTravelBtcTable);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
 
     public void onBtcStartDateVC(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDaysInBTC();
+        purposeOfTravelBtcTable.resetStampState();
+        ResetUtils.reset(purposeOfTravelBtcTable);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(eduTable);
     }
 
     public void setMinOtDate(Date minOtDate) {
@@ -4308,5 +4317,13 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setPurposeOfTravelBtcTable(RichTable purposeOfTravelBtcTable) {
+        this.purposeOfTravelBtcTable = purposeOfTravelBtcTable;
+    }
+
+    public RichTable getPurposeOfTravelBtcTable() {
+        return purposeOfTravelBtcTable;
     }
 }

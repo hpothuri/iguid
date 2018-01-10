@@ -1465,7 +1465,8 @@
                                 fetchSize="#{bindings.XxhcmPurposeOfTrvl_VO1.rangeSize}"
                                 rowBandingInterval="0" id="t17"
                                 partialTriggers="::cb16 ::cb17 cb19 :::soc16" varStatus="vs"
-                                columnStretching="column:c20">
+                                columnStretching="column:c20"
+                                binding="#{backingBeanScope.backing_employee.purposeOfTravelBtcTable}">
                         <af:column id="c53" headerText="S.No" width="50">
                           <af:outputText value="#{vs.index+1}" id="ot25"/>
                         </af:column>
