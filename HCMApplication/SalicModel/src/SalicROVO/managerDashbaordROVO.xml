@@ -67,52 +67,53 @@
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
-  <SQLQuery><![CDATA[SELECT               
-    XXHCM_OVERTIME_HEADERS_ALL.REQ_ID REQ_ID,               
-    XXHCM_OVERTIME_HEADERS_ALL.EMP_ID EMP_ID,               
-    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_NUMBER REQUEST_NUMBER,               
-    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_DATE REQUEST_DATE,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE_CATEGORY ATTRIBUTE_CATEGORY,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE1 ATTRIBUTE1,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE2 ATTRIBUTE2,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE3 ATTRIBUTE3,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE4 ATTRIBUTE4,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE5 ATTRIBUTE5,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE6 ATTRIBUTE6,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE7 ATTRIBUTE7,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE8 ATTRIBUTE8,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE9 ATTRIBUTE9,               
-    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE10 ATTRIBUTE10,               
-    XXHCM_OVERTIME_HEADERS_ALL.CREATED_BY CREATED_BY,               
-    XXHCM_OVERTIME_HEADERS_ALL.CREATION_DATE CREATION_DATE,               
-    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATED_BY LAST_UPDATED_BY,               
-    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATE_DATE LAST_UPDATE_DATE,               
-    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATE_LOGIN LAST_UPDATE_LOGIN,               
-    XXHCM_OVERTIME_HEADERS_ALL.APPROVAL_TEMPLATE_ID APPROVAL_TEMPLATE_ID,               
-    XXHCM_OVERTIME_HEADERS_ALL.DESCRIPTION DESCRIPTION,               
-    XXHCM_OVERTIME_HEADERS_ALL.STATUS STATUS,               
-    XXHCM_OVERTIME_HEADERS_ALL.LINE_APPROVAL LINE_APPROVAL,               
-    XXHCM_OVERTIME_HEADERS_ALL.APPROVER_USER_NAME APPROVER_USER_NAME,              
- XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE REQ_TYPE,          
-(SELECT nvl(approver_flag,'P')         
-  FROM XX_QP_ACTION_HISTORY_T where           
-  header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID          
-  AND approver_id = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
-  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_flag,         
-  (SELECT approver_comments         
-  FROM XX_QP_ACTION_HISTORY_T where           
-  header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID          
-  AND approver_id  = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))  
-  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents, 
-  (select XXSALIC_HCM_PKG.getDisplayReqStatus(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) from dual) disp_status, 
-  (select display_name from xxstg_person where person_id = (select appr_by from (select appr_by from XX_QP_ACTION_HISTORY_T where HEADER_ID = (XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) and approver_flag is not null order by approve_level desc) where rownum =1)) last_approved_by 
-  FROM               
-    XXHCM_OVERTIME_HEADERS_ALL             
-    where status not in ('draft') and req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE ( (appr_by = :p_emp_logged_in and APPROVER_FLAG IN ('A','R'))   
-    OR            
-    (APPROVER_FLAG is null and APPROVE_LEVEL = 1 and approver_id = XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))            
-    or           
-    (APPROVER_FLAG is null and APPROVE_LEVEL >= 2 and approver_id = XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)           
+  <SQLQuery><![CDATA[SELECT                
+    XXHCM_OVERTIME_HEADERS_ALL.REQ_ID REQ_ID,                
+    XXHCM_OVERTIME_HEADERS_ALL.EMP_ID EMP_ID,                
+    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_NUMBER REQUEST_NUMBER,                
+    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_DATE REQUEST_DATE,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE_CATEGORY ATTRIBUTE_CATEGORY,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE1 ATTRIBUTE1,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE2 ATTRIBUTE2,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE3 ATTRIBUTE3,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE4 ATTRIBUTE4,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE5 ATTRIBUTE5,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE6 ATTRIBUTE6,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE7 ATTRIBUTE7,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE8 ATTRIBUTE8,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE9 ATTRIBUTE9,                
+    XXHCM_OVERTIME_HEADERS_ALL.ATTRIBUTE10 ATTRIBUTE10,                
+    XXHCM_OVERTIME_HEADERS_ALL.CREATED_BY CREATED_BY,                
+    XXHCM_OVERTIME_HEADERS_ALL.CREATION_DATE CREATION_DATE,                
+    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATED_BY LAST_UPDATED_BY,                
+    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATE_DATE LAST_UPDATE_DATE,                
+    XXHCM_OVERTIME_HEADERS_ALL.LAST_UPDATE_LOGIN LAST_UPDATE_LOGIN,                
+    XXHCM_OVERTIME_HEADERS_ALL.APPROVAL_TEMPLATE_ID APPROVAL_TEMPLATE_ID,                
+    XXHCM_OVERTIME_HEADERS_ALL.DESCRIPTION DESCRIPTION,                
+    XXHCM_OVERTIME_HEADERS_ALL.STATUS STATUS,                
+    XXHCM_OVERTIME_HEADERS_ALL.LINE_APPROVAL LINE_APPROVAL,                
+    XXHCM_OVERTIME_HEADERS_ALL.APPROVER_USER_NAME APPROVER_USER_NAME,               
+ XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE REQ_TYPE,           
+(SELECT nvl(approver_flag,'P')          
+  FROM XX_QP_ACTION_HISTORY_T where            
+  header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID           
+  AND approver_id = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))   
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_flag,          
+  (SELECT approver_comments          
+  FROM XX_QP_ACTION_HISTORY_T where            
+  header_id        = XXHCM_OVERTIME_HEADERS_ALL.REQ_ID           
+  AND approver_id  = decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))   
+  and APPROVE_LEVEL  = XXSALIC_HCM_PKG.get_current_approval_level(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID,decode(approver_flag,'A',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),'R',XXSALIC_HCM_PKG.getActualEmployee(header_id,:p_emp_logged_in),XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)))) approver_commnents,  
+  (select XXSALIC_HCM_PKG.getDisplayReqStatus(XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) from dual) disp_status,  
+  (select display_name from xxstg_person where person_id = (select appr_by from (select appr_by from XX_QP_ACTION_HISTORY_T where HEADER_ID = (XXHCM_OVERTIME_HEADERS_ALL.REQ_ID) and approver_flag is not null order by approve_level desc) where rownum =1)) last_approved_by, 
+  XXHCM_OVERTIME_HEADERS_ALL.REQ_STATUS REQ_STATUS 
+  FROM                
+    XXHCM_OVERTIME_HEADERS_ALL              
+    where status not in ('draft') and req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE ( (appr_by = :p_emp_logged_in and APPROVER_FLAG IN ('A','R'))    
+    OR             
+    (APPROVER_FLAG is null and APPROVE_LEVEL = 1 and approver_id = XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))             
+    or            
+    (APPROVER_FLAG is null and APPROVE_LEVEL >= 2 and approver_id = XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in)            
     and 0 = (select count(*) from  XX_QP_ACTION_HISTORY_T b where a.header_id =b.header_id and (APPROVER_FLAG is null or APPROVER_FLAG = 'R') AND B.APPROVE_LEVEL < A.APPROVE_LEVEL))))]]></SQLQuery>
   <ViewAttribute
     Name="ReqId"
@@ -569,6 +570,21 @@
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="500"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ReqStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REQ_STATUS"
+    Expression="REQ_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
