@@ -12,6 +12,10 @@ import SalicROVO.getApprovalSetupDetailsROVORowImpl;
 
 import SalicView.FetchDestVisaReqdVOImpl;
 
+import SalicView.ManagerDashBoardCountVOImpl;
+
+import SalicView.ManagerDashBoardCountVORowImpl;
+
 import com.oracle.xmlns.oxp.service.v2.ScheduleServiceClient;
 
 import common.AESEncryption;
@@ -87,6 +91,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         long approvedRequest = 0;
         long rejectedRequest = 0;
         long pendingRequest = 0;
+        ManagerDashBoardCountVORowImpl rowCountData = (ManagerDashBoardCountVORowImpl)getManagerDashBoardCountVO1().createRow();
+        getManagerDashBoardCountVO1().insertRow(rowCountData);
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
         ViewObjectImpl mgrVo1=this.getmanagerDashbaordROVO1();
@@ -103,6 +109,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         mgrVo.setNamedWhereClauseParam("p_emp_logged_in", empId);
         System.err.println("total request "+mgrVo.getEstimatedRowCount());
         totalRequest = mgrVo.getEstimatedRowCount();
+        rowCountData.setTotalCount(mgrVo.getEstimatedRowCount());
         aDFContext.getPageFlowScope().put("total", mgrVo.getEstimatedRowCount());
         
         ViewCriteria vc=mgrVo.createViewCriteria();
@@ -112,6 +119,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         mgrVo.applyViewCriteria(vc);
         mgrVo.executeQuery();
         System.err.println("Approved request "+mgrVo.getEstimatedRowCount());
+        rowCountData.setApprovedCount(mgrVo.getEstimatedRowCount());
         aDFContext.getPageFlowScope().put("approved", mgrVo.getEstimatedRowCount());
         approvedRequest = mgrVo.getEstimatedRowCount();
         
@@ -122,12 +130,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         mgrVo.applyViewCriteria(vcc);
         mgrVo.executeQuery();
         System.err.println("Rejected request "+mgrVo.getEstimatedRowCount());
+        rowCountData.setRejectedCount(mgrVo.getEstimatedRowCount());
         aDFContext.getPageFlowScope().put("rejected", mgrVo.getEstimatedRowCount());
         rejectedRequest = mgrVo.getEstimatedRowCount();;
     
         pendingRequest = totalRequest - approvedRequest - rejectedRequest;
         System.err.println("Pending request "+pendingRequest);
         aDFContext.getPageFlowScope().put("pending", pendingRequest);
+        rowCountData.setPendingCount(pendingRequest);
         
         ViewCriteria vcccc=mgrVo.createViewCriteria();
         ViewCriteriaRow vccccr=vcccc.createViewCriteriaRow();
@@ -1707,5 +1717,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
      */
     public FetchDestVisaReqdVOImpl getFetchDestVisaReqdVO1() {
         return (FetchDestVisaReqdVOImpl) findViewObject("FetchDestVisaReqdVO1");
+    }
+
+    /**
+     * Container's getter for ManagerDashBoardCountVO1.
+     * @return ManagerDashBoardCountVO1
+     */
+    public ManagerDashBoardCountVOImpl getManagerDashBoardCountVO1() {
+        return (ManagerDashBoardCountVOImpl) findViewObject("ManagerDashBoardCountVO1");
     }
 }

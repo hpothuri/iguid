@@ -13,6 +13,8 @@
     <searchRegion Binds="managerDashbaordROVO1Iterator" Criteria=""
                   Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
                   id="managerDashbaordROVO11Query"/>
+    <iterator Binds="ManagerDashBoardCountVO1" RangeSize="10" DataControl="ManagerDashbordAMDataControl"
+              id="ManagerDashBoardCountVO1Iterator"/>
   </executables>
   <bindings>
     <methodAction id="load"
@@ -79,6 +81,26 @@
     <attributeValues IterBinding="managerDashbaordROVO1Iterator" id="ApproverFlag">
       <AttrNames>
         <Item Value="ApproverFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManagerDashBoardCountVO1Iterator" id="ApprovedCount">
+      <AttrNames>
+        <Item Value="ApprovedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManagerDashBoardCountVO1Iterator" id="RejectedCount">
+      <AttrNames>
+        <Item Value="RejectedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManagerDashBoardCountVO1Iterator" id="PendingCount">
+      <AttrNames>
+        <Item Value="PendingCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManagerDashBoardCountVO1Iterator" id="TotalCount">
+      <AttrNames>
+        <Item Value="TotalCount"/>
       </AttrNames>
     </attributeValues>
   </bindings>

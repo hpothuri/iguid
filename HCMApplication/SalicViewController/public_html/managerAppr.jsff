@@ -106,7 +106,7 @@
                                              halign="center">
                            <af:spacer width="10" height="10" id="s2"/>
                            <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
-                                           id="ol4" value="#{pageFlowScope.pending} "
+                                           id="ol4" value="#{bindings.PendingCount.inputValue} "
                                            partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2" binding="#{ManagerAppr.ol4}"/>
                         </af:panelGroupLayout>
                         <af:panelGroupLayout id="pgl6" halign="center">
@@ -128,7 +128,7 @@
                         <af:panelGroupLayout id="pgl8" layout="vertical" styleClass="infolet-content infolet-padding"
                                              halign="center">
                            <af:spacer width="10" height="10" id="s3"/>
-                           <af:outputLabel value="#{pageFlowScope.approved}" id="ol6"
+                           <af:outputLabel value="#{bindings.ApprovedCount.inputValue}" id="ol6"
                                            inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"
                                            partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2" binding="#{ManagerAppr.ol6}"/>
                         </af:panelGroupLayout>
@@ -153,7 +153,7 @@
                         <af:panelGroupLayout id="pgl11" layout="vertical" styleClass="infolet-content infolet-padding"
                                              halign="center">
                            <af:spacer width="10" height="10" id="s4"/>
-                           <af:outputLabel value="#{pageFlowScope.rejected}" id="ol8"
+                           <af:outputLabel value="#{bindings.RejectedCount.inputValue}" id="ol8"
                                            inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"
                                            binding="#{ManagerAppr.ol8}"/>
                         </af:panelGroupLayout>
@@ -185,7 +185,7 @@
                                                       <af:spacer width="10"
                                                                  height="10"
                                                                  id="s1"/>
-                                                      <af:outputLabel value="#{pageFlowScope.total}"
+                                                      <af:outputLabel value="#{bindings.TotalCount.inputValue}"
                                                                       id="ol2"
                                                                       inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"
                                                                       partialTriggers="pc1:t2:cmi1 pc1:t2:cmi2"
