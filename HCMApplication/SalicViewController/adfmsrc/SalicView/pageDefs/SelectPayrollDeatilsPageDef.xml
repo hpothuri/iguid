@@ -90,5 +90,10 @@
         <Item Value="N"/>
       </ValueList>
     </button>
+    <methodAction id="prepareMailTemplateAndSend" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareMailTemplateAndSend" IsViewObjectMethod="false" DataControl="payRollAMDataControl"
+                  InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
+      <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

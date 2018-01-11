@@ -2343,6 +2343,13 @@ public class PayrollTransferBean {
                     }
                 }
             }
+            if(hdrVO.getCurrentRow().getAttribute("PayrollTansStatus") != null &&  
+               hdrVO.getCurrentRow().getAttribute("PayrollTansStatus").toString().equalsIgnoreCase("COMPLETED")){
+                BigDecimal reqId = new BigDecimal(hdrVO.getCurrentRow().getAttribute("ReqId")+"");
+                oracle.binding.OperationBinding op = SalicView.backing.Utils.ADFUtils.findOperation("prepareMailTemplateAndSend");
+                op.getParamsMap().put("reqId", reqId);
+                op.execute();
+            }
         }
         payRollVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(newPayrollTable);

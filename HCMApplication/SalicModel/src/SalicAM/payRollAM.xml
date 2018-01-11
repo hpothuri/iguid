@@ -4,14 +4,12 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="payRollAM"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.payRollAMImpl"
-  ComponentInterface="SalicAM.common.payRollAM"
-  ClientProxyName="SalicAM.client.payRollAMClient">
+  ComponentInterface="SalicAM.common.payRollAM">
   <DesignTime>
-    <Attr Name="_deployType" Value="0"/>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <ViewUsage
@@ -47,80 +45,29 @@
   <ViewUsage
     Name="XxhcmOtherExpenseTVO1"
     ViewObjectName="SalicView.XxhcmOtherExpenseTVO"/>
+  <ViewUsage
+    Name="FetchEmailActionLinkVO1"
+    ViewObjectName="SalicROVO.FetchEmailActionLinkVO"/>
+  <ViewUsage
+    Name="FetchReqDtlsForPayrollMail1"
+    ViewObjectName="SalicROVO.FetchReqDtlsForPayrollMail"/>
   <ViewLinkUsage
     Name="payTransOtDtlVL1"
     ViewLinkObjectName="SalicVL.payTransOtDtlVL"
     SrcViewUsageName="SalicAM.payRollAM.PayrollTransfer_VO1"
     DstViewUsageName="SalicAM.payRollAM.XxhcmOvertimeDetailsAllVO1"
     Reversed="false"/>
-  <ClientInterface>
+  <ClientInterface
+    Name="__clientInterface">
     <Method
-      Name="load">
+      Name="prepareMailTemplateAndSend"
+      MethodName="prepareMailTemplateAndSend">
       <Return
+        Name="_return_type_"
         Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="load">
-      <Return
-        Type="void"/>
+      <Parameter
+        Name="reqId"
+        Type="java.math.BigDecimal"/>
     </Method>
   </ClientInterface>
 </AppModule>
