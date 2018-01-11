@@ -1090,9 +1090,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 rsigrpDet.closeRowSetIterator(); 
             }
         }
-        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
-        //getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
-        getXxQpActionHistoryTVO1().executeQuery();
+//        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
+//        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
+//        getXxQpActionHistoryTVO1().executeQuery();
+//        getXxQpActionHistoryTVO1().getEstimatedRowCount();
     }
     
     
@@ -1201,8 +1202,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         String emailUrl = "";
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empIdLogged = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
-        if(empIdLogged == null)
-            empIdLogged = new BigDecimal(aDFContext.getSessionScope().get("personId")+"");
+//        if(empIdLogged == null)
+//            empIdLogged = new BigDecimal(aDFContext.getSessionScope().get("personId")+"");
         if(emailVO.first() != null){
             emailUrl = (String) emailVO.first().getAttribute("LookupValueNameDisp");
         }

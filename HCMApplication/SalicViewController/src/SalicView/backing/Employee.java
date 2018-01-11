@@ -1993,6 +1993,14 @@ public class Employee {
     }
 
     public void rejectACL(ActionEvent actionEvent) {
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
         ViewObject mgrVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         //        mgrVO.getCurrentRow().getAttribute("");
@@ -2742,6 +2750,14 @@ public class Employee {
 
 
     public String withdrawACL(ActionEvent actionEvent) {
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -2781,6 +2797,14 @@ public class Employee {
         return "save";
     }
     public String reqMoreACL() {
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -2826,6 +2850,14 @@ public class Employee {
     }
 
     public String deleteReqACL() {
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
@@ -3520,6 +3552,8 @@ rs.closeRowSetIterator();
         onCalculateNoOfDays();
         if(ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().first() != null){
             ADFUtils.findIterator("XxhcmPurposeOfTrvl_VO1Iterator").getViewObject().first().setAttribute("StartDate", valueChangeEvent.getNewValue());
+            purposeOfTrvTable.resetStampState();
+            ResetUtils.reset(purposeOfTrvTable);
             AdfFacesContext.getCurrentInstance().addPartialTarget(this.purposeOfTrvTable);
         }
     }
@@ -3528,6 +3562,9 @@ rs.closeRowSetIterator();
         // Add event code here...
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDays();
+        purposeOfTrvTable.resetStampState();
+        ResetUtils.reset(purposeOfTrvTable);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(this.purposeOfTrvTable);
     }
     
     public void onCalculateNoOfActualDays() {
@@ -4247,7 +4284,7 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         if(reqStatus == null || (reqStatus!=null && reqStatus.equalsIgnoreCase("New"))){
             return "New";
         }
-        if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDWRAN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
+        if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDRAWN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
             return "Draft";
         }
         // Cancelled, Pending Approval
