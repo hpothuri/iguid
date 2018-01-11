@@ -1177,7 +1177,21 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     }
     
     
-    
+    public void deleteActionReqHist(BigDecimal reqId){
+        try {
+                    Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                                       .getConnection()
+                                                       .createStatement();
+                    String query =  " delete XX_QP_ACTION_HISTORY_T where header_id = "+reqId.toString();
+            
+                        
+                    int count = stmt.executeUpdate(query);
+            
+            } catch (SQLException sqle) {
+                    // TODO: Add catch code
+                    sqle.printStackTrace();
+                }
+    }
     
     public void prepareMailTemplateAndSend(String approveOrReject) {
         EmailRequestPojo emailReq = new EmailRequestPojo();

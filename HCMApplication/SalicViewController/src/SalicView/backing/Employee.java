@@ -2751,18 +2751,14 @@ public class Employee {
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
-        actionHisVO.reset();
-        //actionHisVO.first();
-        while(actionHisVO.hasNext()){
-            Row row = actionHisVO.next();
-    //            row.setAttribute("ApproverFlag", null);
-    //            row.setAttribute("LastUpdateDate", dummyDate);
-    //            row.setAttribute("ApprDate", null);
-    //            row.setAttribute("ApproverComments", dummyDate);
-            row.remove();
-        }
-
+        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
+        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
+        opd.execute();
+           
+        actionHisVO.executeQuery();
         ADFUtils.findOperation("Commit").execute();
+        actionHisVO.executeQuery();
+                   
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
@@ -2770,6 +2766,7 @@ public class Employee {
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
         
+        autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
         
         op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
@@ -2793,20 +2790,20 @@ public class Employee {
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
-        actionHisVO.reset();
-        //actionHisVO.first().remove();
-        while(actionHisVO.hasNext()){
-            Row row = actionHisVO.next();
-            row.remove();
-        }
-
+        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
+        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
+        opd.execute();
+           
+        actionHisVO.executeQuery();
         ADFUtils.findOperation("Commit").execute();
+        actionHisVO.executeQuery();
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
+        autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
         
         op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
@@ -2836,23 +2833,20 @@ public class Employee {
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
-        actionHisVO.reset();
-        //actionHisVO.first().remove();
-        while(actionHisVO.hasNext()){
-            Row row = actionHisVO.next();
-        //            row.setAttribute("ApproverFlag", null);
-        //            row.setAttribute("LastUpdateDate", dummyDate);
-        //            row.setAttribute("ApprDate", null);
-        //            row.setAttribute("ApproverComments", dummyDate);
-            row.remove();
-        }
+        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
+        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
+        opd.execute();
+           
+        actionHisVO.executeQuery();
         ADFUtils.findOperation("Commit").execute();
+        actionHisVO.executeQuery();
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
         op.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
+        autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
         
         op = ADFUtils.findOperation("prepareMailTemplateAndSend1");

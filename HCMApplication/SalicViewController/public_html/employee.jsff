@@ -9,6 +9,7 @@
       var scrollTop = 0;
       var scrollLeft = 0;
       function stopAutoScroll(data){
+      
           if(data.status = "begin"){
               scrollTop = window.pageYOffset;
               scrollLeft = window.pageXOffset;
@@ -121,7 +122,7 @@
                                         disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.rejectOkRequest}"/>
                     <af:commandMenuItem text="Withdraw" id="cmi5"
-                                        disabled="#{bindings.PayrollTansStatus.inputValue eq 'COMPLETED'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'true':'false'}"
+                                        disabled="#{ not (bindings.Status.inputValue eq 'Pending Approval')}"
                                         visible="#{sessionScope.search eq 'emp'?'true':'false'}"
                                         actionListener="#{backingBeanScope.backing_employee.withdrawACL}"
                                         action="save"/>
@@ -130,10 +131,10 @@
                     visible="#{sessionScope.search eq 'mngr'?'true':'false'}"
                     disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"
                                         />
-                    <af:commandMenuItem text="Delete" id="cmi7"
+                    <af:commandMenuItem text="Cancel" id="cmi7"
                                         action="#{backingBeanScope.backing_employee.deleteReqACL}"
                                         rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                        disabled="#{bindings.PayrollTansStatus.inputValue eq 'COMPLETED'?'true':'false'}"/>
+                                        disabled="#{ not (bindings.Status.inputValue eq 'APPROVE')}"/>
                   </af:menu>
                 </af:menuBar>
                 <af:commandButton text="Save &amp; Close"
@@ -1223,6 +1224,7 @@
                                         maxValue="#{bindings.EndDate.inputValue}"
                                         minValue="#{bindings.StartDate.inputValue}">
                             <f:validator binding="#{row.bindings.EndDate.validator}"/>
+                            <af:clientListener method="stopAutoScroll" type="click"/>
                             <af:convertDateTime pattern="#{bindings.XxhcmPurposeOfTrvl_VO1.hints.EndDate.format}"/>
                           </af:inputDate>
                         </af:column>

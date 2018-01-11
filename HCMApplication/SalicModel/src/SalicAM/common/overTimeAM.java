@@ -47,4 +47,6 @@ public interface overTimeAM extends ApplicationModule {
     void updateApproverStatus();
 
     int validatePublicHoliday(Date otdate);
+
+    void deleteActionReqHist(BigDecimal reqId);
 }

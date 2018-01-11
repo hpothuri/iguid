@@ -675,5 +675,10 @@
          <NamedData NDName="reqType" NDType="java.lang.String"/>
          <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
       </methodAction>
+      <methodAction id="deleteActionReqHist" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="deleteActionReqHist" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.deleteActionReqHist.dataControl.dataProvider">
+         <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

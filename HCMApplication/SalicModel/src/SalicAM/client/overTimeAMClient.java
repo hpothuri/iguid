@@ -25,6 +25,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
     }
 
 
+    public void deleteActionReqHist(BigDecimal reqId) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "deleteActionReqHist", new String[] { "java.math.BigDecimal" },
+                                        new Object[] { reqId });
+        return;
+    }
+
     public BigDecimal fetchAvlAmountForChild(BigDecimal childId, Date invDate, BigDecimal maxAmt) {
         Object _ret =
             this.riInvokeExportedMethod(this, "fetchAvlAmountForChild",
