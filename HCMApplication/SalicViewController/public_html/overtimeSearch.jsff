@@ -59,7 +59,7 @@
                   selectedRowKeys="#{bindings.otHdrROVO1.collectionModel.selectedRow}"
                   selectionListener="#{bindings.otHdrROVO1.collectionModel.makeCurrent}" rowSelection="single" id="t3"
                   binding="#{OvertimeSearch.t2}" autoHeightRows="20" fetchSize="#{bindings.otHdrROVO1.rangeSize}"
-                  scrollPolicy="page" first="0" styleClass="AFStretchWidth">
+                  scrollPolicy="page" first="0" immediate="true">
           <af:column id="c13" headerText="S.No" align="center" width="35">
             <af:outputText value="#{vs.index+1}" id="ot6"/>
           </af:column>
@@ -125,7 +125,8 @@
           <af:toolbar id="t4" stretchId="sp1">
             <af:spacer id="sp1" clientComponent="true"/>
             <af:outputText value="" id="ot21"/>
-            <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}">
+            <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}"
+                              partialSubmit="true">
               <af:setPropertyListener from="add" to="#{sessionScope.mode}" type="action"/>
               <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
             </af:commandButton>

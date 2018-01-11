@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmPurposeOfTrvl_VO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmPurposeOfTrvl_EO.PURPOSE_TRVL_ID, 
        XxhcmPurposeOfTrvl_EO.REQ_DTLS_ID, 
@@ -31,7 +31,9 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  ComponentClass="SalicView.XxhcmPurposeOfTrvl_VOImpl">
+  ComponentClass="SalicView.XxhcmPurposeOfTrvl_VOImpl"
+  FetchSize="26"
+  FetchMode="FETCH_AS_NEEDED">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
   </DesignTime>

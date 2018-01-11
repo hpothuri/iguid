@@ -109,7 +109,7 @@
   XXHCM_OVERTIME_HEADERS_ALL.REQ_STATUS REQ_STATUS 
   FROM                
     XXHCM_OVERTIME_HEADERS_ALL              
-    where status not in ('draft') and req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE ( (appr_by = :p_emp_logged_in and APPROVER_FLAG IN ('A','R'))    
+    where status not in ('Draft') and req_id in (SELECT header_id from XX_QP_ACTION_HISTORY_T a WHERE ( (appr_by = :p_emp_logged_in and APPROVER_FLAG IN ('A','R'))    
     OR             
     (APPROVER_FLAG is null and APPROVE_LEVEL = 1 and approver_id = XXSALIC_HCM_PKG.getDeligatedEmployee(approver_id,:p_emp_logged_in))             
     or            
