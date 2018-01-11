@@ -1738,48 +1738,22 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             HashMap<String, String> approvedMgrs = new HashMap<String, String>();
             RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
             ArrayList<String> toArray = new ArrayList<String>();
-            while(rs.hasNext()){
-                Row row = rs.next();
-                if(row.getAttribute("ApproverFlag") != null){
-                    String email = (String)row.getAttribute("ApproverEmail");
-                    toArray.add(email);
-                    approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
-                }
-            }
             
-            for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
-                // String to[] = (String[]) toArray.toArray();
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
-                emailReq.setToEmpName("");
-                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") for "+emailReq.getEmpName()+" is withdrawn from "+managerMap.getKey());
-                emailReq.setMessage("<b> "+reqType+" request </b> is withdrawn which was pending for approval from "+managerMap.getKey()+" for "+emailReq.getEmpName()+"with hereunder details: <br><br> Withdraw Reason : "+rejectReason);
-                LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
-                actionButtons = new LinkedHashMap<String, String>();
-                actionButtons.put("More Info", "");
-                emailReq.setActionButtons(actionButtons);
-                Map<String, Object> emailHapmap =
-                    GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-
-                //Code for Sending email for second approver
-                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));   
-            }
-            
+            //to the manager with whom it is pending for approval
             FetchCurrentApprIdImpl fetchApprIdVO = getFetchCurrentApprId1();
             fetchApprIdVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
             fetchApprIdVO.executeQuery();
             String managerName = null;
             if(fetchApprIdVO.first() != null){
-                String apprId = (String) fetchApprIdVO.first().getAttribute("ApprId");
+                BigDecimal apprId = (BigDecimal) fetchApprIdVO.first().getAttribute("ApprId");
                 if(apprId != null){
                     ViewObject empManagerDet = getemployeeROVO1();
-                    empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empIdLogged.toString());
+                    empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",apprId.toString());
                     empManagerDet.executeQuery();
                     if(empManagerDet.hasNext()){
                         managerName = (String)empManagerDet.first().getAttribute("EmpName");
                         if(managerName != null){
-//                            String[] to = { (String)empManagerDet.first().getAttribute("EmailAddress") };
+            //                            String[] to = { (String)empManagerDet.first().getAttribute("EmailAddress") };
                             String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                             emailReq.setToEmail(to);
                             emailReq.setToEmpName(managerName);
@@ -1792,13 +1766,44 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                             Map<String, Object> emailHapmap =
                                 GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-    
+            
                             //Code for Sending email for second approver
                             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                         }
                     }
                 }
             }
+            
+            //to the employee and other managers who already approved
+            while(rs.hasNext()){
+                Row row = rs.next();
+                if(row.getAttribute("ApproverFlag") != null){
+                    String email = (String)row.getAttribute("ApproverEmail");
+                    toArray.add(email);
+                    approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
+                }
+            }
+            approvedMgrs.put(emailReq.getEmpName(), "");
+            
+            for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
+                // String to[] = (String[]) toArray.toArray();
+                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                emailReq.setToEmail(to);
+                emailReq.setToEmpName("");
+                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") for "+emailReq.getEmpName()+" is withdrawn from "+managerName);
+                emailReq.setMessage("<b> "+reqType+" request </b> is withdrawn which was pending for approval from <b>"+managerName+"</b> for <b>"+emailReq.getEmpName()+"</b> with hereunder details: <br><br> Withdraw Reason : "+rejectReason);
+                LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
+                actionButtons = new LinkedHashMap<String, String>();
+                actionButtons.put("More Info", "");
+                emailReq.setActionButtons(actionButtons);
+                Map<String, Object> emailHapmap =
+                    GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                //Code for Sending email for second approver
+                GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));   
+            }
+            
         }
         else if(approveOrReject != null && "C".equalsIgnoreCase(approveOrReject)){
             String approverId = "";
