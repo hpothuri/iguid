@@ -1956,6 +1956,12 @@ public class Employee {
     }
 
     public String rejectNewACL() {
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
         ViewObject mgrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
 

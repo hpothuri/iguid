@@ -1712,7 +1712,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         }
         }
         else if(approveOrReject != null && "R".equalsIgnoreCase(approveOrReject)){
-            Row[] actRws = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+            Row[] actRws = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empIdLogged.toString());
             if(actRws != null && actRws.length > 0){
                 approveLevel = (BigDecimal)actRws[0].getAttribute("ApproveLevel");
                 firstLevelApproverName = (String) actRws[0].getAttribute("ApproverUserName");
