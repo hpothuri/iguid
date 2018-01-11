@@ -1014,8 +1014,7 @@
                   <f:selectItems value="#{bindings.TripType.items}" id="selectItems1"/>
                 </af:selectOneChoice>
               </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Start Date" id="plam29"
-                                       visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}" partialTriggers="soc16">
+              <af:panelLabelAndMessage label="Start Date" id="plam29" partialTriggers="soc16">
                 <af:inputDate value="#{bindings.StartDate.inputValue}"
                               required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
                               shortDesc="#{bindings.StartDate.hints.tooltip}" id="inputDate1" contentStyle="width:200px"
@@ -1103,7 +1102,7 @@
                   <f:selectItems value="#{bindings.AdvPerdiem.items}" id="selectItems7"/>
                 </af:selectOneChoice>
               </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="End Date" id="plam30" visible="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
+              <af:panelLabelAndMessage label="End Date" id="plam30"
                                        partialTriggers="soc16">
                 <af:inputDate value="#{bindings.EndDate.inputValue}"
                               required="#{bindings.AdvPerdiem.inputValue eq 'NO'}"
