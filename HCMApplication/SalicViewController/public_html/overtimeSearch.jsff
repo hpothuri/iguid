@@ -2,208 +2,137 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
-  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
-                   id="pt1">
-    <f:facet name="pageContents">
-        <af:commandButton text="Add" id="cb1" action="add" rendered="false"/>
-          <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
-            <af:panelDrawer position="left" id="pd1" height="528" width="382">
-              <af:showDetailItem id="dr1" shortDesc="Search"
-                                 inlineStyle="border-color:transparent;"
-                                 icon="/images/func_search_32_ena.png">
-                <af:panelBox text="PanelBox1" id="pb2" showHeader="never"
-                             showDisclosure="false"
-                             inlineStyle="border-color:transparent;">
-                  <f:facet name="toolbar"/>
-                  <af:query id="qryId1" headerText="Search" disclosed="true"
-                            value="#{bindings.otHdrROVOCriteriaQuery.queryDescriptor}"
-                            model="#{bindings.otHdrROVOCriteriaQuery.queryModel}"
-                            queryListener="#{bindings.otHdrROVOCriteriaQuery.processQuery}"
-                            queryOperationListener="#{bindings.otHdrROVOCriteriaQuery.processQueryOperation}"
-                            saveQueryMode="hidden" labelAlignment="top"
-                            resultComponentId="::pc1:t3"/>
-                </af:panelBox>
-              </af:showDetailItem>
-            </af:panelDrawer>
-            <af:panelGroupLayout id="pgl3" layout="horizontal" halign="left">
-              <af:toolbar id="t1">
-                <af:inputText label="Find" id="it1" usage="search"
-                              autoSubmit="true" binding="#{OvertimeSearch.it1}"
-                              rendered="false">
-                  <af:clientListener type="keyPress" method="submitOTForm"/>
-                </af:inputText>
-                <af:commandButton text="Search" id="cb2"
-                                  actionListener="#{OvertimeSearch.onClickSearch}"
-                                  rendered="false"/>
-                <af:commandButton text="file in container" id="cb4"
-                                  actionListener="#{OvertimeSearch.fileACL}"
-                                  rendered="false"/>
-                <af:spacer width="750" height="10" id="s1"/>
-                <!--af:commandButton text="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'BusinessTrip'?'Business Trip':sessionScope.page eq 'BusinessTripCompletion'?'Business Trip Completion':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'letter'?'Create HR Letter':sessionScope.page eq 'salary'?'Create New Request':sessionScope.page eq 'edu'?'Education Allowance':''}" id="cb3"-->
-              </af:toolbar>
-            </af:panelGroupLayout>
-            <af:spacer width="10" height="10" id="s2"/>
-            <af:panelBox text="Search Result" id="pb3">
-              <f:facet name="toolbar"/>
-              <af:panelCollection id="pc1" styleClass="AFStretchWidth"
-                                  rendered="true">
-                <f:facet name="menus"/>
-                <f:facet name="toolbar">
-                  <af:toolbar id="t2">
-                    <af:outputText value="#{bindings.RequestNumber.inputValue}"
-                                   id="ot10" rendered="false"/>
-                    <af:commandImageLink id="cil1"
-                                         icon="/images/qual_download_48.png"
-                                         shortDesc="Download Report"
-                                         inlineStyle="height:3.0px;"
-                                         rendered="false">
-                      <af:fileDownloadActionListener method="#{JasperReportBean.onClickPDFReport}"
-                                                     contentType="application/pdf"/>
-                    </af:commandImageLink>
-                    <af:button id="b1" icon="/images/excel.png">
-                      <af:exportCollectionActionListener type="excelHTML" exportedId="t3" filename="SearchResults.xls"
-                                                         title="Search Results"/>
-                    </af:button>
-                  </af:toolbar>
-                </f:facet>
-                <f:facet name="statusbar"/>
-                <af:table value="#{bindings.otHdrROVO1.collectionModel}"
-                          var="row" rows="#{bindings.otHdrROVO1.rangeSize}"
-                          emptyText="#{bindings.otHdrROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
-                          rowBandingInterval="1"
-                          filterModel="#{bindings.XxhcmOvertimeHeadersAllVOCriteriaQuery.queryDescriptor}"
-                          queryListener="#{bindings.XxhcmOvertimeHeadersAllVOCriteriaQuery.processQuery}"
-                          varStatus="vs"
-                          selectedRowKeys="#{bindings.otHdrROVO1.collectionModel.selectedRow}"
-                          selectionListener="#{bindings.otHdrROVO1.collectionModel.makeCurrent}"
-                          rowSelection="single" id="t3"
-                          binding="#{OvertimeSearch.t2}" autoHeightRows="20"
-                          fetchSize="#{bindings.otHdrROVO1.rangeSize}"
-                          scrollPolicy="page" first="0"
-                          styleClass="AFStretchWidth">
-                  <af:column id="c13" headerText="S.No" align="center"
-                             width="35">
-                    <af:outputText value="#{vs.index+1}" id="ot6"/>
-                  </af:column>
-                  <af:column headerText="#{bindings.otHdrROVO1.hints.RequestNumber.label}"
-                             id="c11" width="200">
-                    <af:commandLink id="ot1" text="#{row.RequestNumber}"
-                                    action="edit">
-                     <af:setPropertyListener to="#{pageFlowScope.RequestNumber}"
-                                              from="#{row.RequestNumber}"
-                                              type="action"/>
-                      <af:setPropertyListener from="emp"
-                                              to="#{sessionScope.search}"
-                                              type="action"/>
-                                                <af:setPropertyListener from="edit"
-                                              to="#{sessionScope.mode}"
-                                              type="action"/>
-                      <af:setPropertyListener to="#{sessionScope.hr}" from="OT"
-                                              type="action"/>
-                        <af:setPropertyListener from="#{row.ReqType}"
-                                                         type="action"
-                                                         to="#{pageFlowScope.ReqType}"/>
-                                <af:setPropertyListener from="#{row.ReqId}"
-                                                         type="action"
-                                                         to="#{pageFlowScope.ReqId}"/>
-                    </af:commandLink>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.RequestDate.name}"
-                             sortable="true"
-                             headerText="#{bindings.otHdrROVO1.hints.RequestDate.label}"
-                             id="c9" width="120" filterable="true">
-                    <af:outputText value="#{row.RequestDate}" id="ot14">
-                      <af:convertDateTime pattern="dd-MMM-yyyy"/>
-                    </af:outputText>
-                    <f:facet name="filter">
-                      <af:inputDate value="#{vs.filterCriteria.RequestDate}"
-                                    id="id1"/>
-                    </f:facet>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.Description.name}"
-                             sortable="true"
-                             headerText="#{bindings.otHdrROVO1.hints.Description.label}"
-                             id="c4" width="150" rendered="false"
-                             filterable="true">
-                    <af:outputText value="#{row.Description}" id="ot9"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.employeeNameTRANS.name}"
-                             sortable="true"
-                             headerText="Employee Name"
-                             id="c8" width="150">
-                    <af:outputText value="#{row.Employeenametrans}" id="ot4"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.empNumberTRANS.name}"
-                             sortable="true"
-                             headerText="Employee Number"
-                             id="c1" width="100">
-                    <af:outputText value="#{row.Empnumbertrans}" id="ot3"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.jobTitleTRANS.name}"
-                             sortable="true"
-                             headerText="Job Title"
-                             id="c3" width="150">
-                    <af:outputText value="#{row.Jobtitletrans}" id="ot11"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.departmentTRANS.name}"
-                             sortable="true"
-                             headerText="Department"
-                             id="c10" width="150">
-                    <af:outputText value="#{row.Departmenttrans}" id="ot7"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.gradeTRANS.name}"
-                             sortable="true"
-                             headerText="Grade"
-                             id="c5" width="125">
-                    <af:outputText value="#{row.Gradetrans}" id="ot8"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.lineManagerTRANS.name}"
-                             sortable="true"
-                             headerText="Line Manager"
-                             id="c7" width="200">
-                    <af:outputText value="#{row.Linemanagertrans}" id="ot12"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.Status.name}"
-                             sortable="true"
-                             headerText="#{bindings.otHdrROVO1.hints.Status.label}"
-                             id="c2" width="125" filterable="true">
-                    <af:outputText value="#{row.DispStatus}" id="ot2"/>
-                  </af:column>
-                  <af:column sortProperty="#{bindings.otHdrROVO1.hints.LineApproval.name}"
-                             sortable="true"
-                             headerText="#{bindings.otHdrROVO1.hints.LineApproval.label}"
-                             id="c6" rendered="false" width="150"
-                             filterable="true">
-                    <af:outputText value="#{row.LineApproval}" id="ot13"/>
-                  </af:column>
-                </af:table>
-                <f:facet name="secondaryToolbar">
-                  <af:toolbar id="t4" stretchId="sp1">
-                  <af:spacer id="sp1" clientComponent="true"/>
-              <af:outputText value=""
-                             id="ot21"/>
-              
-                    <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}">
-                      <af:setPropertyListener from="add" to="#{sessionScope.mode}" type="action"/>
-                      <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
-                    </af:commandButton>
-                    
-              <af:spacer width="40" height="20" id="sde1"/>
-                  </af:toolbar>
-                </f:facet>
-              </af:panelCollection>
-            </af:panelBox>
-          </af:panelGroupLayout>
-        
-    </f:facet>
-    <f:facet name="footerStart"/>
-    <f:facet name="footer"/>
-    <f:facet name="footerEnd"/>
-    <f:facet name="startPanel"/>
-    <f:facet name="endPanel"/>
-    <f:facet name="headerStart"/>
-    <f:facet name="header"/>
-    <f:facet name="headerEnd"/>
-  </af:pageTemplate>
-  
+  <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
+    <af:panelDrawer position="left" id="pd1" height="528" width="382">
+      <af:showDetailItem id="dr1" shortDesc="Search" inlineStyle="border-color:transparent;"
+                         icon="/images/func_search_32_ena.png">
+        <af:panelBox text="PanelBox1" id="pb2" showHeader="never" showDisclosure="false"
+                     inlineStyle="border-color:transparent;">
+          <f:facet name="toolbar"/>
+          <af:query id="qryId1" headerText="Search" disclosed="true"
+                    value="#{bindings.otHdrROVOCriteriaQuery.queryDescriptor}"
+                    model="#{bindings.otHdrROVOCriteriaQuery.queryModel}"
+                    queryListener="#{bindings.otHdrROVOCriteriaQuery.processQuery}"
+                    queryOperationListener="#{bindings.otHdrROVOCriteriaQuery.processQueryOperation}"
+                    saveQueryMode="hidden" labelAlignment="top" resultComponentId="::pc1:t3"/>
+        </af:panelBox>
+      </af:showDetailItem>
+    </af:panelDrawer>
+    <af:panelGroupLayout id="pgl3" layout="horizontal" halign="left">
+      <af:toolbar id="t1">
+        <af:inputText label="Find" id="it1" usage="search" autoSubmit="true" binding="#{OvertimeSearch.it1}"
+                      rendered="false">
+          <af:clientListener type="keyPress" method="submitOTForm"/>
+        </af:inputText>
+        <af:commandButton text="Search" id="cb2" actionListener="#{OvertimeSearch.onClickSearch}" rendered="false"/>
+        <af:commandButton text="file in container" id="cb4" actionListener="#{OvertimeSearch.fileACL}"
+                          rendered="false"/>
+        <af:spacer width="750" height="10" id="s1"/>
+        <!--af:commandButton text="#{sessionScope.page eq 'ot'?'Overtime Request Search':sessionScope.page eq 'BusinessTrip'?'Business Trip':sessionScope.page eq 'BusinessTripCompletion'?'Business Trip Completion':sessionScope.page eq 'house'?'Housing in Advance Request':sessionScope.page eq 'vacation'?'Vacation Allowance':sessionScope.page eq 'letter'?'Create HR Letter':sessionScope.page eq 'salary'?'Create New Request':sessionScope.page eq 'edu'?'Education Allowance':''}" id="cb3"-->
+      </af:toolbar>
+    </af:panelGroupLayout>
+    <af:spacer width="10" height="10" id="s2"/>
+    <af:panelBox text="Search Result" id="pb3">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth" rendered="true">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t2">
+            <af:outputText value="#{bindings.RequestNumber.inputValue}" id="ot10" rendered="false"/>
+            <af:commandImageLink id="cil1" icon="/images/qual_download_48.png" shortDesc="Download Report"
+                                 inlineStyle="height:3.0px;" rendered="false">
+              <af:fileDownloadActionListener method="#{JasperReportBean.onClickPDFReport}"
+                                             contentType="application/pdf"/>
+            </af:commandImageLink>
+            <af:button id="b1" icon="/images/excel.png">
+              <af:exportCollectionActionListener type="excelHTML" exportedId="t3" filename="SearchResults.xls"
+                                                 title="Search Results"/>
+            </af:button>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.otHdrROVO1.collectionModel}" var="row" rows="#{bindings.otHdrROVO1.rangeSize}"
+                  emptyText="#{bindings.otHdrROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  rowBandingInterval="1"
+                  filterModel="#{bindings.XxhcmOvertimeHeadersAllVOCriteriaQuery.queryDescriptor}"
+                  queryListener="#{bindings.XxhcmOvertimeHeadersAllVOCriteriaQuery.processQuery}" varStatus="vs"
+                  selectedRowKeys="#{bindings.otHdrROVO1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.otHdrROVO1.collectionModel.makeCurrent}" rowSelection="single" id="t3"
+                  binding="#{OvertimeSearch.t2}" autoHeightRows="20" fetchSize="#{bindings.otHdrROVO1.rangeSize}"
+                  scrollPolicy="page" first="0" styleClass="AFStretchWidth">
+          <af:column id="c13" headerText="S.No" align="center" width="35">
+            <af:outputText value="#{vs.index+1}" id="ot6"/>
+          </af:column>
+          <af:column headerText="#{bindings.otHdrROVO1.hints.RequestNumber.label}" id="c11" width="200">
+            <af:commandLink id="ot1" text="#{row.RequestNumber}" action="edit">
+              <af:setPropertyListener to="#{pageFlowScope.RequestNumber}" from="#{row.RequestNumber}" type="action"/>
+              <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
+              <af:setPropertyListener from="edit" to="#{sessionScope.mode}" type="action"/>
+              <af:setPropertyListener to="#{sessionScope.hr}" from="OT" type="action"/>
+              <af:setPropertyListener from="#{row.ReqType}" type="action" to="#{pageFlowScope.ReqType}"/>
+              <af:setPropertyListener from="#{row.ReqId}" type="action" to="#{pageFlowScope.ReqId}"/>
+            </af:commandLink>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.RequestDate.name}" sortable="true"
+                     headerText="#{bindings.otHdrROVO1.hints.RequestDate.label}" id="c9" width="120" filterable="true">
+            <af:outputText value="#{row.RequestDate}" id="ot14">
+              <af:convertDateTime pattern="dd-MMM-yyyy"/>
+            </af:outputText>
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.RequestDate}" id="id1"/>
+            </f:facet>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.Description.name}" sortable="true"
+                     headerText="#{bindings.otHdrROVO1.hints.Description.label}" id="c4" width="150" rendered="false"
+                     filterable="true">
+            <af:outputText value="#{row.Description}" id="ot9"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.employeeNameTRANS.name}" sortable="true"
+                     headerText="Employee Name" id="c8" width="150">
+            <af:outputText value="#{row.Employeenametrans}" id="ot4"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.empNumberTRANS.name}" sortable="true"
+                     headerText="Employee Number" id="c1" width="100">
+            <af:outputText value="#{row.Empnumbertrans}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.jobTitleTRANS.name}" sortable="true"
+                     headerText="Job Title" id="c3" width="150">
+            <af:outputText value="#{row.Jobtitletrans}" id="ot11"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.departmentTRANS.name}" sortable="true"
+                     headerText="Department" id="c10" width="150">
+            <af:outputText value="#{row.Departmenttrans}" id="ot7"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.gradeTRANS.name}" sortable="true" headerText="Grade"
+                     id="c5" width="125">
+            <af:outputText value="#{row.Gradetrans}" id="ot8"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.lineManagerTRANS.name}" sortable="true"
+                     headerText="Line Manager" id="c7" width="200">
+            <af:outputText value="#{row.Linemanagertrans}" id="ot12"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.Status.name}" sortable="true"
+                     headerText="#{bindings.otHdrROVO1.hints.Status.label}" id="c2" width="125" filterable="true">
+            <af:outputText value="#{row.DispStatus}" id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.otHdrROVO1.hints.LineApproval.name}" sortable="true"
+                     headerText="#{bindings.otHdrROVO1.hints.LineApproval.label}" id="c6" rendered="false" width="150"
+                     filterable="true">
+            <af:outputText value="#{row.LineApproval}" id="ot13"/>
+          </af:column>
+        </af:table>
+        <f:facet name="secondaryToolbar">
+          <af:toolbar id="t4" stretchId="sp1">
+            <af:spacer id="sp1" clientComponent="true"/>
+            <af:outputText value="" id="ot21"/>
+            <af:commandButton text="New Request" id="cb3" action="#{OvertimeSearch.createNewRequest}">
+              <af:setPropertyListener from="add" to="#{sessionScope.mode}" type="action"/>
+              <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
+            </af:commandButton>
+            <af:spacer width="40" height="20" id="sde1"/>
+          </af:toolbar>
+        </f:facet>
+      </af:panelCollection>
+    </af:panelBox>
+  </af:panelGroupLayout>
 </jsp:root>
