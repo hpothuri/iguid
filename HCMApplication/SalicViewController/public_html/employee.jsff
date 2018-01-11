@@ -31,7 +31,7 @@
       <af:popup id="p1" binding="#{backingBeanScope.backing_employee.p1}">
         <af:dialog id="d1" type="none" inlineStyle="height:108px; width:350.0px;"
                    titleIconSource="/images/warning_qualifier.png" title="Warning">
-          <af:outputText value="Are you sure you want to Cancel this Information?" id="ot2"
+          <af:outputText value="Are you sure you want to Cancel this Information and go back?" id="ot2"
                          inlineStyle="font-weight:bold;"/>
           <f:facet name="buttonBar">
             <af:toolbar id="toolbar1">
@@ -103,6 +103,10 @@
             <af:commandMenuItem text="Cancel" id="cmi7" action="#{backingBeanScope.backing_employee.deleteReqACL}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
                                 disabled="#{ not (bindings.Status.inputValue eq 'APPROVE')}"/>
+            <af:commandMenuItem text="Delete" id="cmi8"
+                                action="#{backingBeanScope.backing_employee.onCompleteDeleteReqACL}"
+                                rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
+                                disabled="#{ not (bindings.Status.inputValue eq 'Draft')}"/>
           </af:menu>
         </af:menuBar>
         <af:commandButton text="Save &amp; Close" id="cb1" action="#{backingBeanScope.backing_employee.saveAC}"
@@ -120,7 +124,7 @@
                           disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"
                           rendered="false"/>
         <af:spacer width="10" height="10" id="s9"/>
-        <af:commandButton text="Cancel" id="cb3" inlineStyle="margin-right:13px;margin-top:10px;" immediate="true">
+        <af:commandButton text="Back" id="cb3" inlineStyle="margin-right:13px;margin-top:10px;" immediate="true">
           <af:showPopupBehavior popupId="p1" triggerType="action"/>
         </af:commandButton>
       </af:panelGroupLayout>

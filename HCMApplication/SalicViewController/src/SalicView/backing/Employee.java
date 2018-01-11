@@ -4357,4 +4357,33 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
     public RichTable getPurposeOfTravelBtcTable() {
         return purposeOfTravelBtcTable;
     }
+
+    public String onCompleteDeleteReqACL() {
+        ViewObject otHdrVO =
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
+        
+        oracle.jbo.domain.Number reqId = (Number) otHdrVO.getCurrentRow().getAttribute("ReqId");
+        
+        Object[][] dobProcArgs = null; 
+        ApplicationModuleImpl am =
+            (ApplicationModuleImpl)ADFUtils.getApplicationModuleForDataControl(null);
+     
+            dobProcArgs = new Object[][] {
+                { "IN", reqId, oracle.jdbc.internal.OracleTypes.NUMBER }
+            };
+     
+        try {
+            System.err.println("==11====");
+            DBUtils.callDBStoredProcedure(am.getDBTransaction(),
+                                          "call XXSALIC_HCM_PKG.DELETE_REQUEST(?)",
+                                          dobProcArgs);
+            System.err.println("==22====");
+        } catch (SQLException e) {
+            System.err.println("===EXE==" + e.toString());
+        }
+        
+        JSFUtils.addFacesInformationMessage("Request is deleted successfully!");
+        
+        return "save";
+    }
 }
