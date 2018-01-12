@@ -737,6 +737,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         }
         else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
             HashMap<String, String> approvedMgrs = new HashMap<String, String>();
+            
+            getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
+            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
+            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
+            getXxQpActionHistoryTVO1().executeQuery();
+            
             RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
             ArrayList<String> toArray = new ArrayList<String>();
             while(rs.hasNext()){
@@ -747,6 +753,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
                 }
             }
+            approvedMgrs.put(emailReq.getEmpName(), "");
+            
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+            if(rows != null && rows.length > 0){
+                firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+                rejectReason = (String)rows[0].getAttribute("ApproverComments");
+            }
             
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
@@ -754,8 +767,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName("");
-                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+managerMap.getKey());
-                emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+managerMap.getKey()+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
+                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
+                emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -1725,5 +1738,203 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
      */
     public ManagerDashBoardCountVOImpl getManagerDashBoardCountVO1() {
         return (ManagerDashBoardCountVOImpl) findViewObject("ManagerDashBoardCountVO1");
+    }
+    
+    public void deleteActionReqHist(BigDecimal reqId){
+        try {
+                    Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                                       .getConnection()
+                                                       .createStatement();
+                    String query =  " delete XX_QP_ACTION_HISTORY_T where header_id = "+reqId.toString();
+            
+                        
+                    int count = stmt.executeUpdate(query);
+            
+            } catch (SQLException sqle) {
+                    // TODO: Add catch code
+                    sqle.printStackTrace();
+                }
+    }
+    
+    public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+        BigDecimal empIdB = empId.bigDecimalValue();
+        int apprSeqNew = 0;
+        ViewObject approvSetup = getgetApprovalSetupDetailsROVO1();
+        approvSetup.setNamedWhereClauseParam("p_appr_type", "Approval");
+        approvSetup.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
+        approvSetup.executeQuery();
+        RowSetIterator rsi  = null;
+        RowSetIterator rsigrpDet = null;
+        Integer jobLevelInt = null;
+        String JobLevel = null;
+        ViewObject empJobLev = getGetJobLevelROVO1();
+        empJobLev.setNamedWhereClauseParam("p_emp_id", empIdB);
+        empJobLev.executeQuery();
+        if(empJobLev.hasNext()){
+            JobLevel =  (String)empJobLev.first().getAttribute("JobLevel");
+            jobLevelInt = Integer.parseInt(JobLevel);
+        }
+        try {
+            rsi = approvSetup.createRowSetIterator("apprSetup");
+            rsi.reset();
+            while (rsi.hasNext()) {
+                getApprovalSetupDetailsROVORowImpl apprSetRow = (getApprovalSetupDetailsROVORowImpl)rsi.next();
+                BigDecimal ApprLevel = apprSetRow.getApprLevel();
+                BigDecimal ApprGroupId= apprSetRow.getApprGroupId();
+                BigDecimal CustApprGroupId= apprSetRow.getCustApprGroupId();
+                BigDecimal managerId = null;
+                String managerName = null;
+                //Superwiser
+                if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
+                    ViewObject empManager = getGetManagerDetailsROVO1();
+                    empManager.setNamedWhereClauseParam("p_emp_id", empIdB);
+                    empManager.executeQuery();
+                    if(empManager.hasNext()){
+                        managerId =  (BigDecimal)empManager.first().getAttribute("ManagerId");
+                        //BV_EMP_ID
+                        ViewObject empManagerDet = getemployeeROVO1();
+                        empManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
+                        empManagerDet.executeQuery();
+                        if(empManagerDet.hasNext()){
+                            managerName =(String)empManagerDet.first().getAttribute("EmpName");
+                        }
+                        Row vonew = getXxQpActionHistoryTVO1().createRow();
+                        //xx_qp_action_history_s
+                        apprSeqNew = apprSeqNew + 1;
+                        SequenceImpl si = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                        vonew.setAttribute("ActionHistoryId", si.getSequenceNumber());
+                        vonew.setAttribute("HeaderId", req_id.bigDecimalValue());
+                        vonew.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                        vonew.setAttribute("ApproverId", managerId);
+                        vonew.setAttribute("ApproverUserName", managerName);
+                        vonew.setAttribute("ApproverComments", null);
+                        vonew.setAttribute("ApproverFlag", null);
+                        if(jobLevelInt == 0)
+                        vonew.setAttribute("ApproverFlag", 'A');
+                        
+                        vonew.setAttribute("Type", "H");
+                        vonew.setAttribute("Page", getDecodedReqType(reqType));
+                        vonew.setAttribute("ApprType", "Approval");
+                        vonew.setAttribute("CreatedBy", empIdB.toString());
+                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                        vonew.setAttribute("LastUpdatedBy", empIdB.toString());
+                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                        vonew.setAttribute("LastUpdateLogin", empIdB.toString());
+                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                        vonew.setAttribute("ReqNumber", reqNumber);
+                        getXxQpActionHistoryTVO1().insertRow(vonew);
+                        
+                        if(jobLevelInt == 2){     
+                            
+                            ViewObject empSManager = getGetManagerDetailsROVO1();
+                            empSManager.setNamedWhereClauseParam("p_emp_id", managerId);
+                            empSManager.executeQuery();
+                            if(empSManager.hasNext()){
+                                managerId =  (BigDecimal)empSManager.first().getAttribute("ManagerId");
+                                //BV_EMP_ID
+                                ViewObject empSManagerDet = getemployeeROVO1();
+                                empSManagerDet.setNamedWhereClauseParam("BV_EMP_ID", managerId);
+                                empSManagerDet.executeQuery();
+                                if(empSManagerDet.hasNext()){
+                                    managerName =(String)empSManagerDet.first().getAttribute("EmpName");
+                                }else{
+                                    managerName = null;
+                                }
+                                Row vonew1 = getXxQpActionHistoryTVO1().createRow();
+                                //xx_qp_action_history_s
+                                apprSeqNew = apprSeqNew + 1;
+                                SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                                vonew1.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+                                vonew1.setAttribute("HeaderId", req_id.bigDecimalValue());
+                                vonew1.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                                vonew1.setAttribute("ApproverId", managerId);
+                                vonew1.setAttribute("ApproverUserName", managerName);
+                                vonew1.setAttribute("ApproverComments", null);
+                                vonew1.setAttribute("ApproverFlag", null);
+                                
+                                vonew1.setAttribute("Type", "H");
+                                vonew1.setAttribute("Page", getDecodedReqType(reqType));
+                                vonew1.setAttribute("ApprType", "Approval");
+                                vonew1.setAttribute("CreatedBy", empIdB.toString());
+                                //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                                vonew1.setAttribute("LastUpdatedBy", empIdB.toString());
+                                //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                                vonew1.setAttribute("LastUpdateLogin", empIdB.toString());
+                                //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                                vonew1.setAttribute("ReqNumber", reqNumber);
+                                getXxQpActionHistoryTVO1().insertRow(vonew1);
+                            }
+                        }
+                    }                    
+                }
+                //Custom Approval group
+                if(ApprGroupId.compareTo(new BigDecimal(100011)) == 0){
+                    ViewObject approvgrpDet = getgetApprovalGrpDetailsROVO1();
+                    approvgrpDet.setNamedWhereClauseParam("p_cust_group_id", CustApprGroupId);
+                    approvgrpDet.executeQuery(); 
+                    rsigrpDet = approvgrpDet.createRowSetIterator("grp");
+                    while(rsigrpDet.hasNext()){
+                        getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();
+                        Row vonewgrp = getXxQpActionHistoryTVO1().createRow();
+                        //xx_qp_action_history_s
+                        apprSeqNew = apprSeqNew + 1;
+                        SequenceImpl si1 = new SequenceImpl("xx_qp_action_history_s",this.getDBTransaction());
+                        vonewgrp.setAttribute("ActionHistoryId", si1.getSequenceNumber());
+                        vonewgrp.setAttribute("HeaderId", req_id.bigDecimalValue());
+                        vonewgrp.setAttribute("ApproveLevel", new BigDecimal(apprSeqNew));
+                        vonewgrp.setAttribute("ApproverId", grpRec.getEmployeeId());
+                        vonewgrp.setAttribute("ApproverUserName", grpRec.getEmployeeName());
+                        vonewgrp.setAttribute("ApproverComments", null);
+                        vonewgrp.setAttribute("ApproverFlag", null);
+                        if(jobLevelInt == 0)
+                        vonewgrp.setAttribute("ApproverFlag", 'A');
+                        vonewgrp.setAttribute("Type", "H");
+                        vonewgrp.setAttribute("Page", getDecodedReqType(reqType));
+                        vonewgrp.setAttribute("ApprType", "Approval");
+                        vonewgrp.setAttribute("CreatedBy", empIdB.toString());
+                        //vonew.setAttribute("CreationDate", apprRow.getAttribute(""));
+                        vonewgrp.setAttribute("LastUpdatedBy", empIdB.toString());
+                        //vonew.setAttribute("LastUpdateDate", apprRow.getAttribute(""));
+                        vonewgrp.setAttribute("LastUpdateLogin", empIdB.toString());
+                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show    
+                        vonewgrp.setAttribute("ReqNumber", reqNumber);
+                        getXxQpActionHistoryTVO1().insertRow(vonewgrp);                         
+                    }
+                    rsigrpDet.closeRowSetIterator();
+                }
+            }
+            rsi.closeRowSetIterator();
+        } catch (Exception e) {
+            if(rsi!=null){
+                rsi.closeRowSetIterator();  
+            }
+            if(rsigrpDet!=null){
+                rsigrpDet.closeRowSetIterator(); 
+            }
+        }
+    //        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType);
+    //        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", req_id.bigDecimalValue());
+    //        getXxQpActionHistoryTVO1().executeQuery();
+    //        getXxQpActionHistoryTVO1().getEstimatedRowCount();
+    }
+
+    /**
+     * Container's getter for XxhcmOvertimeHeadersAllVO1.
+     * @return XxhcmOvertimeHeadersAllVO1
+     */
+    public ViewObjectImpl getXxhcmOvertimeHeadersAllVO1() {
+        return (ViewObjectImpl) findViewObject("XxhcmOvertimeHeadersAllVO1");
+    }
+    
+
+    public void updateHeaderStatus(BigDecimal reqId, BigDecimal approvalTemplateId, String reqStatus, String status){
+        ViewObjectImpl hdrVO = getXxhcmOvertimeHeadersAllVO1();
+        hdrVO.setWhereClause("Req_Id = "+reqId);
+        hdrVO.executeQuery();
+        if(hdrVO.first() != null){
+            hdrVO.first().setAttribute("ApprovalTemplateId", approvalTemplateId);
+            hdrVO.first().setAttribute("ReqStatus", reqStatus);
+            hdrVO.first().setAttribute("Status", status);
+        }
     }
 }

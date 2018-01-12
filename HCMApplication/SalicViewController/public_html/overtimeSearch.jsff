@@ -2,6 +2,9 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
+ <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
   <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
     <af:panelDrawer position="left" id="pd1" height="528" width="382">
       <af:showDetailItem id="dr1" shortDesc="Search" inlineStyle="border-color:transparent;"
@@ -136,4 +139,6 @@
       </af:panelCollection>
     </af:panelBox>
   </af:panelGroupLayout>
+  </f:facet>
+  </af:pageTemplate>
 </jsp:root>

@@ -103,5 +103,29 @@
         <Item Value="TotalCount"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="deleteActionReqHist" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteActionReqHist" IsViewObjectMethod="false" DataControl="ManagerDashbordAMDataControl"
+                  InstanceName="bindings.deleteActionReqHist.dataControl.dataProvider">
+      <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
+    </methodAction>
+    <methodAction id="populateApproversForReqest" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="populateApproversForReqest" IsViewObjectMethod="false"
+                  DataControl="ManagerDashbordAMDataControl"
+                  InstanceName="bindings.populateApproversForReqest.dataControl.dataProvider">
+      <NamedData NDName="reqNumber" NDType="java.lang.String"/>
+      <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="reqType" NDType="java.lang.String"/>
+      <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <action id="Commit" DataControl="ManagerDashbordAMDataControl" RequiresUpdateModel="true"
+            Action="commitTransaction"/>
+    <methodAction id="updateHeaderStatus" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="updateHeaderStatus" IsViewObjectMethod="false" DataControl="ManagerDashbordAMDataControl"
+                  InstanceName="bindings.updateHeaderStatus.dataControl.dataProvider">
+      <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
+      <NamedData NDName="approvalTemplateId" NDType="java.math.BigDecimal"/>
+      <NamedData NDName="reqStatus" NDType="java.lang.String"/>
+      <NamedData NDName="status" NDType="java.lang.String"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

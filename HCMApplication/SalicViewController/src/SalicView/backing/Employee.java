@@ -2817,6 +2817,11 @@ public class Employee {
         otHdrVO.getCurrentRow().setAttribute("ReqStatus","REQUESTMOREINFO");
         otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                              new BigDecimal(1));
+        
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
+        op.getParamsMap().put("approveOrReject", "M");
+        op.execute();
+        
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
@@ -2827,7 +2832,7 @@ public class Employee {
         actionHisVO.executeQuery();
         ADFUtils.findOperation("Commit").execute();
         actionHisVO.executeQuery();
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -2836,9 +2841,6 @@ public class Employee {
         autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
         
-        op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
-        op.getParamsMap().put("approveOrReject", "M");
-        op.execute();
         
         JSFUtils.addFacesInformationMessage("Requested employee to update more information");
         //TODO : KMA : Send Email for manager

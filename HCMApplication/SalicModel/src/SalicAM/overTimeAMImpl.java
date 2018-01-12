@@ -1875,6 +1875,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                     approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
                 }
             }
+            approvedMgrs.put(emailReq.getEmpName(), "");
+            
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+            if(rows != null && rows.length > 0){
+                firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+                rejectReason = (String)rows[0].getAttribute("ApproverComments");
+            }
             
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
@@ -1882,8 +1889,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName("");
-                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+managerMap.getKey());
-                emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+managerMap.getKey()+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
+                emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
+                emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");

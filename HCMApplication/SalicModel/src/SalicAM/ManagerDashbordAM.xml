@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ManagerDashbordAM"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.ManagerDashbordAMImpl"
@@ -65,6 +65,9 @@
   <ViewUsage
     Name="ManagerDashBoardCountVO1"
     ViewObjectName="SalicView.ManagerDashBoardCountVO"/>
+  <ViewUsage
+    Name="XxhcmOvertimeHeadersAllVO1"
+    ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"/>
   <ViewLinkUsage
     Name="manager_QpActionHistory_VL2"
     ViewLinkObjectName="SalicVL.manager_QpActionHistory_VL"
@@ -88,6 +91,54 @@
         Type="void"/>
       <Parameter
         Name="approveOrReject"
+        Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="deleteActionReqHist"
+      MethodName="deleteActionReqHist">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqId"
+        Type="java.math.BigDecimal"/>
+    </Method>
+    <Method
+      Name="populateApproversForReqest"
+      MethodName="populateApproversForReqest">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqNumber"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="empId"
+        Type="oracle.jbo.domain.Number"/>
+      <Parameter
+        Name="reqType"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="req_id"
+        Type="oracle.jbo.domain.Number"/>
+    </Method>
+    <Method
+      Name="updateHeaderStatus"
+      MethodName="updateHeaderStatus">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqId"
+        Type="java.math.BigDecimal"/>
+      <Parameter
+        Name="approvalTemplateId"
+        Type="java.math.BigDecimal"/>
+      <Parameter
+        Name="reqStatus"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="status"
         Type="java.lang.String"/>
     </Method>
   </ClientInterface>

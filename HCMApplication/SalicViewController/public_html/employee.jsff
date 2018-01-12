@@ -2,6 +2,9 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
+   <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">        
   <af:resource type="javascript">
       var scrollTop = 0;
       var scrollLeft = 0;
@@ -1729,4 +1732,6 @@
       </af:panelTabbed>
     </af:panelBox>
   </af:panelGroupLayout>
+  </f:facet>
+  </af:pageTemplate>
 </jsp:root>

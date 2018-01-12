@@ -460,8 +460,56 @@ public class ManagerAppr {
     }
 
     public void reqMoreACL(ActionEvent actionEvent) {
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
-        op.getParamsMap().put("approveOrReject", "M");
+        LoginBean usersb =
+            (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
+        
+        
+        BigDecimal empId = new BigDecimal(usersb.getPersonId());
+        ADFContext aDFContext = ADFContext.getCurrent();
+        aDFContext.getPageFlowScope().put("mempId",empId);
+        
+        ViewObject mgrVO =
+            ADFUtils.findIterator("managerDashbaordROVO1Iterator").getViewObject();
+        
+        ViewObject actionHisVO =
+            ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator1").getViewObject();
+        java.sql.Date dummyDate = null;
+        
+        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("updateHeaderStatus");
+        opd.getParamsMap().put("status", "Draft");
+        opd.getParamsMap().put("reqStatus","REQUESTMOREINFO");
+        opd.getParamsMap().put("approvalTemplateId",
+                                             new BigDecimal(1));
+        opd.getParamsMap().put("reqId", ((BigDecimal)mgrVO.getCurrentRow().getAttribute("ReqId")));
+        opd.execute();
+        
+        opd = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        opd.getParamsMap().put("approveOrReject", "M");
+        opd.execute();
+        
+        opd =  ADFUtils.findOperation("deleteActionReqHist");
+        opd.getParamsMap().put("reqId", ((BigDecimal)mgrVO.getCurrentRow().getAttribute("ReqId")))  ;
+        opd.execute();
+           
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqNumber", mgrVO.getCurrentRow().getAttribute("RequestNumber"));
+        op.getParamsMap().put("empId", (BigDecimal)mgrVO.getCurrentRow().getAttribute("EmpId"));
+        op.getParamsMap().put("reqType", mgrVO.getCurrentRow().getAttribute("ReqType"));
+        op.getParamsMap().put("req_id", mgrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
+        
+        ADFUtils.findOperation("Commit").execute();
+        
+        
+        OperationBinding ob =
+            (OperationBinding)ADFUtils.getBindingContainer().getOperationBinding("load");
+        ob.execute();
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol2);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol4);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol6);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol8);
+        AdfFacesContext.getCurrentInstance().addPartialTarget(ol10);
+        mgrVO.executeQuery();
+        AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
     }
 }
