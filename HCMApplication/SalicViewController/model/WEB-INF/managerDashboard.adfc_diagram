@@ -141,7 +141,7 @@
       from="MethodCall5"
       to="MethodCall4">
       <property
-         name="fromOutcome">load</property>
+         name="fromOutcome">load1</property>
       <property
          name="sdm:polyPoints">R50,833.4531,83.149414,892.4531,114.07471,L46</property>
    </ControlFlowCase>

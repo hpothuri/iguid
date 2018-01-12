@@ -1676,7 +1676,7 @@ public class Employee {
         if(op.getErrors().isEmpty()){
             mgrVO.executeQuery();
             approve.hide();
-            return "cancel";
+            return "save";
         }
         return null;
     }
@@ -1974,7 +1974,7 @@ public class Employee {
         if(op.getErrors().isEmpty()){
             mgrVO.executeQuery();
             approve.hide();
-            return "cancel";
+            return "save";
         }
         return null;
     }

@@ -58,7 +58,7 @@
     <method-call id="load1">
       <method>#{bindings.load.execute}</method>
       <outcome id="__42">
-        <fixed-outcome>load</fixed-outcome>
+        <fixed-outcome>load1</fixed-outcome>
       </outcome>
     </method-call>
     <method-call id="Execute">
@@ -104,7 +104,7 @@
     <control-flow-rule id="__54">
       <from-activity-id id="__55">load1</from-activity-id>
       <control-flow-case id="__58">
-        <from-outcome id="__57">load</from-outcome>
+        <from-outcome id="__57">load1</from-outcome>
         <to-activity-id id="__56">Execute</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
