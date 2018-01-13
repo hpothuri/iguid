@@ -758,8 +758,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
             if(rows != null && rows.length > 0){
                 firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
-                rejectReason = (String)rows[0].getAttribute("ApproverComments");
             }
+            
+            rejectReason = (String) otHdrVO.getCurrentRow().getAttribute("ApprComments");
             
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
