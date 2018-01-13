@@ -414,6 +414,29 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableDetail = new EmailTableDetailsPojo(); 
             
             tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Start Date");
+            tableContentCols.add("End Date");
+            tableContentCols.add("Activity");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                     emailReq.getRequestId()+")");
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("START_DATE", "DATE");
+            tableColumnDatatypes.put("END_DATE", "DATE");
+            tableColumnDatatypes.put("ACTIVITY", "STRING");
+            tableDetail.setTableLabel("Trip Activity");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
             tableContentCols.add("Expense Description");
             tableContentCols.add("Currency");
             tableContentCols.add("Exchange Rate");
@@ -1048,6 +1071,29 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableDetail = new EmailTableDetailsPojo(); 
                             
                             tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Activity");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                                     emailReq.getRequestId()+")");
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("ACTIVITY", "STRING");
+                            tableDetail.setTableLabel("Trip Activity");
+                            
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
                             tableContentCols.add("Expense Description");
                             tableContentCols.add("Currency");
                             tableContentCols.add("Exchange Rate");
@@ -1437,6 +1483,29 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableColumnDatatypes.put("DEST_VISA_REQUIRED", "STRING");
                             tableColumnDatatypes.put("PROJ_TYPE", "STRING");
                             tableColumnDatatypes.put("COMMENTS", "STRING");
+                            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+                            
+                            emailTableDetails.add(tableDetail);
+                            
+                            tableDetail = new EmailTableDetailsPojo(); 
+                            
+                            tableContentCols = new ArrayList<String>();
+                            tableContentCols.add("Start Date");
+                            tableContentCols.add("End Date");
+                            tableContentCols.add("Activity");
+                            
+                            tableDetail.setTableContentColumns(tableContentCols);
+
+
+                            tableDetail.setDetailsQuery(" select start_date, end_date, activity from XXHCM_PURPOSE_OF_TRVL where REQ_DTLS_ID = (select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +
+                                                     emailReq.getRequestId()+")");
+                            
+                            tableColumnDatatypes = new LinkedHashMap<String, String>();
+                            tableColumnDatatypes.put("START_DATE", "DATE");
+                            tableColumnDatatypes.put("END_DATE", "DATE");
+                            tableColumnDatatypes.put("ACTIVITY", "STRING");
+                            tableDetail.setTableLabel("Trip Activity");
+                            
                             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
                             
                             emailTableDetails.add(tableDetail);
