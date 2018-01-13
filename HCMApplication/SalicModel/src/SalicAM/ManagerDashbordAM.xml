@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ManagerDashbordAM"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.ManagerDashbordAMImpl"
@@ -55,7 +55,11 @@
     ViewObjectName="SalicROVO.GetManagerDetailsROVO"/>
   <ViewUsage
     Name="employeeROVO1"
-    ViewObjectName="SalicROVO.employeeROVO"/>
+    ViewObjectName="SalicROVO.employeeROVO">
+    <ViewCriteriaUsage
+      Name="findById"
+      FullName="SalicROVO.employeeROVO.findById"/>
+  </ViewUsage>
   <ViewUsage
     Name="FetchEmailActionLinkVO1"
     ViewObjectName="SalicROVO.FetchEmailActionLinkVO"/>
