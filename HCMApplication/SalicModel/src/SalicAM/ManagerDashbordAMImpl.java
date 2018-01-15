@@ -698,26 +698,27 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     if(reqPage.equalsIgnoreCase("letter")){
                         String letter_to = null;
                             String letterType = null;
-                            String empPr = null;
+                            BigDecimal empPr = null;
                     try {
                                 Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
                                                                    .getConnection()
                                                                    .createStatement();
                                 String query =
-                                    "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER,b.emp_id from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b where a.req_id= b.req_id and b.REQ_ID=" +
+                            "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER,c.emp_number from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b,xxstg_employee_details c where a.req_id= b.req_id and b.emp_id = c.emp_id and b.REQ_ID=" +
                                     emailReq.getRequestId();
                                 ResultSet rs = stmt.executeQuery(query);
                         rs.next();
                                 letter_to  = rs.getString("LETTER_TO");    
                         letterType = rs.getString("LETTER_TYPE");
-                            System.out.println("emp id =>"+emailReq.getEmpId()+" letter to==>"+letter_to+" letter type==>"+letterType);
+                            empPr = rs.getBigDecimal("emp_number");
+                            System.out.println("emp id =>"+empPr+" letter to==>"+letter_to+" letter type==>"+letterType);
                         } catch (SQLException sqle) {
                                 // TODO: Add catch code
                                 sqle.printStackTrace();
                             }
                     
                             ScheduleServiceClient ssc = new ScheduleServiceClient();
-                            ssc.scheduleReportForHrLetter(emailReq.getEmpId(), letter_to,letterType);
+                            ssc.scheduleReportForHrLetter(empPr.toString(), letter_to,letterType);
                         }
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
