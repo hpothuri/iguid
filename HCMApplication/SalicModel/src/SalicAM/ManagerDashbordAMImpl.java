@@ -2,6 +2,7 @@ package SalicAM;
 
 import SalicAM.common.ManagerDashbordAM;
 
+import SalicROVO.FetchAdvPerdiemVOImpl;
 import SalicROVO.FetchEmailActionLinkVOImpl;
 import SalicROVO.GetJobLevelROVOImpl;
 import SalicROVO.GetManagerDetailsROVOImpl;
@@ -908,8 +909,23 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             }
                         }
                         else if(payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)){
-                            emailReq.setSubject("Action required for "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" which is approved by "+managerName+" is pending with payroll group");
-                            emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is finally approved by "+managerName+" and pending with payroll group with hereunder details:");   
+                            if(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)){
+                                FetchAdvPerdiemVOImpl advPerdiemVO = getFetchAdvPerdiemVO1();
+                                advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
+                                advPerdiemVO.executeQuery();
+                                if(advPerdiemVO.first() != null){
+                                    String advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
+                                    if(advPerdiem != null && "YES".equalsIgnoreCase(advPerdiem)){
+                                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
+                                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:"); 
+                                    }
+                                }
+                                
+                            }
+                            else{
+                                emailReq.setSubject("Action required for "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" which is approved by "+managerName+" is pending with payroll group");
+                                emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is finally approved by "+managerName+" and pending with payroll group with hereunder details:");   
+                            }
                         }
                         else{
                             emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
@@ -2085,5 +2101,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             hdrVO.first().setAttribute("ReqStatus", reqStatus);
             hdrVO.first().setAttribute("Status", status);
         }
+    }
+
+    /**
+     * Container's getter for FetchAdvPerdiemVO1.
+     * @return FetchAdvPerdiemVO1
+     */
+    public FetchAdvPerdiemVOImpl getFetchAdvPerdiemVO1() {
+        return (FetchAdvPerdiemVOImpl) findViewObject("FetchAdvPerdiemVO1");
     }
 }
