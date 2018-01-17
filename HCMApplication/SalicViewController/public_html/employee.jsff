@@ -588,7 +588,7 @@
                 </af:inputText>
               </af:column>
               <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.name}" sortable="false"
-                         headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}" id="c35">
+                         headerText="Invoice Amount" id="c35">
                 <af:inputText value="#{row.bindings.InvTotal.inputValue}"
                               label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.InvTotal.label}" required="true"
                               disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -665,7 +665,8 @@
                 </af:selectOneChoice>
               </af:column>
               <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.name}" sortable="false"
-                         headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.label}" id="c21">
+                         headerText="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.label}" id="c21"
+                         rendered="false">
                 <af:inputText value="#{row.bindings.ActAmt.inputValue}"
                               label="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.label}"
                               required="#{bindings.XxhcmOvertimeDetailsAllVO21.hints.ActAmt.mandatory}"

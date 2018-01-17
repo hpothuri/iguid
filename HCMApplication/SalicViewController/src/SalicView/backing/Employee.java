@@ -1269,7 +1269,8 @@ public class Employee {
                     
                 }
                 
-            } else if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+            } 
+            else if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
 
                 //                    ViewObject otHdrVO =
                 //                                ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
@@ -1307,7 +1308,8 @@ public class Employee {
                     
                 }
 
-            } else if ("vacation".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+            }
+            else if ("vacation".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
                 String errorMsg = validateEmpVacationEligibility((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
                 if(errorMsg!=null){
                     GeneralUtils gu = new GeneralUtils();
@@ -1351,7 +1353,8 @@ public class Employee {
 //                } else {
 //                    
 //                }
-            } else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+            } 
+            else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
 
                 Boolean isValid = validateEducationAllowance();
                 if(!isValid){
@@ -1360,6 +1363,22 @@ public class Employee {
                 }else{
                     lineVO =
                         ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
+                    
+                    RowSetIterator rs = lineVO.createRowSetIterator(null);
+                    while(rs.hasNext()){
+                        Row row = rs.next();
+                        BigDecimal invTotal = (BigDecimal)row.getAttribute("InvTotal");
+                        BigDecimal avlAmt = (BigDecimal)row.getAttribute("AvlAmt");
+                        if(invTotal.compareTo(avlAmt) == -1){
+                            row.setAttribute("ActAmt", invTotal);
+                        }
+                        else if(invTotal.compareTo(avlAmt) == 1){
+                            row.setAttribute("ActAmt", avlAmt);
+                        }
+                        else{
+                            row.setAttribute("ActAmt", invTotal);
+                        }
+                    }
                     
                     isValid = isValidTotalAmountForChild();
                     if(!isValid){
@@ -1553,9 +1572,12 @@ public class Employee {
                     if (ovo.getEstimatedRowCount() > 0) {
                         RowSetIterator rs = ovo.createRowSetIterator(null);                        
                         String str = "";
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         while(rs.hasNext()){
                             Row row = rs.next();
-                            str += row.getAttribute("RequestNumber")+";";
+                            String startDate = row.getAttribute("StartDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)row.getAttribute("StartDate")).dateValue().getTime())) : null;
+                            String endDateStr = row.getAttribute("EndDate") != null ? sdf.format(new java.util.Date(((oracle.jbo.domain.Date)row.getAttribute("EndDate")).dateValue().getTime())) : null;
+                            str += row.getAttribute("RequestNumber")+"("+startDate+"-"+endDateStr+");";
                         }
 //                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 //                        Row earlierRow = ovo.first();

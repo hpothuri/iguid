@@ -1285,16 +1285,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Salary Period");
+            tableContentCols.add("Advance Date");
             tableContentCols.add("Comments");
 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select SAL_PERIOD,SALARY_DATE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("SAL_PERIOD", "STRING");
+            tableColumnDatatypes.put("SALARY_DATE", "DATE");
             tableColumnDatatypes.put("MISSIONS", "STRING");
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
@@ -1443,6 +1445,28 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail = new EmailTableDetailsPojo(); 
             
             tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Number Of Days");
+            tableContentCols.add("Perdiem Per day");
+            tableContentCols.add("Total Perdiem");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery("select number_of_days, perdiem_per_Day, total_perdiem from xxhcm_overtime_details_all where req_id = " +emailReq.getRequestId());
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+            tableColumnDatatypes.put("PERDIEM_PER_DAY", "STRING");
+            tableColumnDatatypes.put("TOTAL_PERDIEM", "STRING");
+            tableDetail.setTableLabel("Business Trip Reimbursement Info");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
             tableContentCols.add("Expense Description");
             tableContentCols.add("Currency");
             tableContentCols.add("Exchange Rate");
@@ -1563,16 +1587,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Leave");
+            tableContentCols.add("Number of Days");
             tableContentCols.add("Comments");
             
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select LEAVE,NO_OF_DAYS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LEAVE", "STRING");
+            tableColumnDatatypes.put("NO_OF_DAYS", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
@@ -2016,16 +2042,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Salary Period");
+            tableContentCols.add("Advance Date");
             tableContentCols.add("Comments");
 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select SAL_PERIOD,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select SAL_PERIOD,SALARY_DATE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("SAL_PERIOD", "STRING");
+            tableColumnDatatypes.put("SALARY_DATE", "DATE");
             tableColumnDatatypes.put("MISSIONS", "STRING");
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
@@ -2173,6 +2201,28 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail = new EmailTableDetailsPojo(); 
             
             tableContentCols = new ArrayList<String>();
+            tableContentCols.add("Number Of Days");
+            tableContentCols.add("Perdiem Per day");
+            tableContentCols.add("Total Perdiem");
+            
+            tableDetail.setTableContentColumns(tableContentCols);
+
+
+            tableDetail.setDetailsQuery("select number_of_days, perdiem_per_Day, total_perdiem from xxhcm_overtime_details_all where req_id = " +emailReq.getRequestId());
+            
+            tableColumnDatatypes = new LinkedHashMap<String, String>();
+            tableColumnDatatypes.put("NUMBER_OF_DAYS", "STRING");
+            tableColumnDatatypes.put("PERDIEM_PER_DAY", "STRING");
+            tableColumnDatatypes.put("TOTAL_PERDIEM", "STRING");
+            tableDetail.setTableLabel("Business Trip Reimbursement Info");
+            
+            tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
+            
+            emailTableDetails.add(tableDetail);
+            
+            tableDetail = new EmailTableDetailsPojo(); 
+            
+            tableContentCols = new ArrayList<String>();
             tableContentCols.add("Expense Description");
             tableContentCols.add("Currency");
             tableContentCols.add("Exchange Rate");
@@ -2292,16 +2342,18 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Leave");
+            tableContentCols.add("Number of Days");
             tableContentCols.add("Comments");
             
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select LEAVE,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select LEAVE,NO_OF_DAYS,MISSIONS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("LEAVE", "STRING");
+            tableColumnDatatypes.put("NO_OF_DAYS", "STRING");
             tableColumnDatatypes.put("MISSIONS", "STRING");
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
