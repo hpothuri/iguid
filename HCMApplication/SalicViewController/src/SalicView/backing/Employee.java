@@ -4092,6 +4092,7 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         while(rs.hasNext()){
             Row row = rs.next();
             if(!childList.contains(row.getAttribute("Contactpersonid"))){
+                childList.add(row.getAttribute("Contactpersonid"));
                 noOfChilds++;
             }
         }
