@@ -19,13 +19,15 @@ public class ScheduleServiceClient {
             ReportRequest req = new ReportRequest();
             req.setAttributeFormat("pdf"); //type of the report
             req.setAttributeLocale("en-US"); //Language
-            req.setAttributeTemplate("With Salary"); //Template type
+            req.setAttributeTemplate(letterTemplate); //Template type
             req.setReportAbsolutePath("/Custom/Human Capital Management/Human Resources/PaaS Letter/IDENTIFICATION_LTR_MAIL.xdo"); //Absolute path of the report from BIP Catalog.
             req.setSizeOfDataChunkDownload(-1); //to download all
             ParamNameValues paramList = new ParamNameValues();
             ArrayOfParamNameValue arrayOfParamNameValue = new ArrayOfParamNameValue();
             arrayOfParamNameValue.getItem().add(getArrayofparam("P_EMP_NUMBER",empId));
             arrayOfParamNameValue.getItem().add(getArrayofparam("P_LETTER_TO",letterTo));
+            arrayOfParamNameValue.getItem().add(getArrayofparam("P_TEMPLATE",letterTemplate));
+            
             paramList.setListOfParamNameValues(arrayOfParamNameValue);
             req.setParameterNameValues(paramList);
 

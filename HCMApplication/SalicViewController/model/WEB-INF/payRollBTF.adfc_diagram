@@ -87,7 +87,7 @@
       <property
          name="fromOutcome">taskFlowReturn1</property>
       <property
-         name="sdm:polyPoints">L50,498.73535,266.87354,298.02246,121.07471,R54</property>
+         name="sdm:polyPoints">L50,493.73535,266.52295,298.02246,121.07471,R54</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -97,7 +97,7 @@
       <property
          name="fromOutcome">edit</property>
       <property
-         name="sdm:polyPoints">R50,298.02246,117.57471,360.54492,83.149414,L50</property>
+         name="sdm:polyPoints">R46,298.02246,114.07471,360.54492,83.149414,L50</property>
    </ControlFlowCase>
    <TaskFlowCall
       id="TaskFlowCall10">
@@ -167,6 +167,6 @@
       <property
          name="fromOutcome">filterReqActionHistory</property>
       <property
-         name="sdm:polyPoints">B50,548.68555,144.79883,534.73535,212.87354,T50</property>
+         name="sdm:polyPoints">B50,548.68555,144.79883,534.73535,212.52295,T50</property>
    </ControlFlowCase>
 </SDM>

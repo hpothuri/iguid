@@ -279,6 +279,10 @@
                                                                 id="cl1"
                                                                 action="edit"
                                                                 inlineStyle="font-weight:bold;">
+                                                                
+                                                      <af:setPropertyListener from="#{row.bindings.RequestNumber.inputValue}"
+                                                                              to="#{pageFlowScope.RequestNumber}"
+                                                                              type="action"/>
                                                       <af:setPropertyListener from="#{row.bindings.ReqType.attributeValue}"
                                                          type="action"
                                                          to="#{pageFlowScope.ReqType}"/>
