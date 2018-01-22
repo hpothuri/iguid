@@ -213,6 +213,7 @@ public class GenerateEmailTemplate {
     private static String prepareActionBodyMessage(LinkedHashMap<String, String> actionButtons){
         String msg = "";
         for(Map.Entry<String, String> entry  : actionButtons.entrySet()){
+            if(!entry.getValue().equalsIgnoreCase("More Info"))
             msg+= "<a href=\""+entry.getValue()+"\" target=\"_parent\"><button style='font-weight:bolder;background-color: #F39C12;color:white;height:40px;width:100px'>"+entry.getKey()+"</button></a>";
         }
         msg+= "</div>";

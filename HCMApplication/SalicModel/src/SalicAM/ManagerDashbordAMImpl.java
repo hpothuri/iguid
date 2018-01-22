@@ -867,6 +867,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 BigDecimal managerId = null;
                 String managerName = null;
                 //Superwiser
+                String advPerdiem = null;
                 if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
                     ViewObject empManager = getGetManagerDetailsROVO1();
                     empManager.setNamedWhereClauseParam("p_emp_id", empIdB);
@@ -914,7 +915,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
                                 advPerdiemVO.executeQuery();
                                 if(advPerdiemVO.first() != null){
-                                    String advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
+                                    advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
                                     if(advPerdiem != null && "YES".equalsIgnoreCase(advPerdiem)){
                                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
                                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:"); 
@@ -1326,8 +1327,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
 
                         //Code for Sending email for second approver
+                        if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem))){
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
-                        
+                        }
                         if(jobLevelInt == 2){     
                             
                             ViewObject empSManager = getGetManagerDetailsROVO1();

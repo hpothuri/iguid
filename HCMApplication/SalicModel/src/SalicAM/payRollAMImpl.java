@@ -100,6 +100,7 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
                                           mgrVo.getEstimatedRowCount());
 
         ViewCriteria vcccc = mgrVo.createViewCriteria();
+        mgrVo.clearCache();
         ViewCriteriaRow vccccr = vcccc.createViewCriteriaRow();
         vccccr.setAttribute("RequestNumber", "");
         vcccc.addRow(vccccr);

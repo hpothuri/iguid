@@ -39,7 +39,7 @@
                         <af:panelGroupLayout id="pgl7" rendered="false"/>
                         <af:spacer width="230" height="10" id="s3"/>
                         <af:commandButton text="Ok" id="cb2"
-                                          actionListener="#{PayrollTransferBean.moveToPayrolACL}">
+                                          action="#{PayrollTransferBean.moveToPayrolACL}">
                           <!--<af:showPopupBehavior popupId="popup1"
                                                   triggerType="action"/>-->
                         </af:commandButton>

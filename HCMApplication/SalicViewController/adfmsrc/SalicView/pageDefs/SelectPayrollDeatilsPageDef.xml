@@ -54,9 +54,6 @@
         <Item Value="PayrollTansComments"/>
       </AttrNames>
     </attributeValues>
-    <list IterBinding="payRollObjROVO2Iterator" StaticList="false"
-          Uses="LOV_PayrollTansStatus" id="PayrollTansStatus"
-          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
     <tree IterBinding="PayrollTransfer_VO1Iterator" id="PayrollTransfer_VO1">
       <nodeDefinition DefName="SalicView.PayrollTransfer_VO" Name="PayrollTransfer_VO10">
         <AttrNames>
@@ -95,5 +92,11 @@
                   InstanceName="bindings.prepareMailTemplateAndSend.dataControl.dataProvider">
       <NamedData NDName="reqId" NDType="java.math.BigDecimal"/>
     </methodAction>
+    <action id="Rollback" DataControl="payRollAMDataControl" RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="PayrollTransfer_VO1Iterator" id="PayrollTansStatus">
+      <AttrNames>
+        <Item Value="PayrollTansStatus"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

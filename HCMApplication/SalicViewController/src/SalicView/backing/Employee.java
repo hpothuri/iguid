@@ -156,6 +156,11 @@ public class Employee {
     private BigDecimal countryValue;
     private RichPopup approve;
     private RichPopup reject;
+
+    private RichPopup cancel;
+    private RichPopup reqmore;
+    private RichPopup withdraw;
+
     private RichOutputText totalAmount;
     
     private Boolean approveReject;
@@ -1666,9 +1671,15 @@ public class Employee {
         
         
     
+        oracle.binding.OperationBinding opJobLevel = ADFUtils.findOperation("getJobLevel");
+        opJobLevel.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        opJobLevel.execute();
+        String res = (String)opJobLevel.getResult();
+        if(res == null || (res!=null && !res.equalsIgnoreCase("0"))){
         
+        }
         //TODO
-        if(isValidated){
+        if(isValidated && (res!=null && !res.equalsIgnoreCase("0"))){
             oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend");
             op.execute();
         }    
@@ -1797,6 +1808,7 @@ public class Employee {
         
             
         if (hdr1.first() != null) {
+            String reqNumber = (String)hdr1.first().getAttribute("RequestNumber");
             JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Already you raised over time request for selected date - "+day1+" with request number "+hdr1.first().getAttribute("RequestNumber")+"!..",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
             //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
             
@@ -2777,7 +2789,7 @@ public class Employee {
     }
 
 
-    public String withdrawACL(ActionEvent actionEvent) {
+    public String withdrawACL() {
         LoginBean usersb =
             (LoginBean) ADFUtils.evaluateEL("#{loginBean}");
         
@@ -4341,6 +4353,33 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         return displayReqStatus;
     }
 
+    public void cancelOkRequest(ActionEvent actionEvent){
+        AdfFacesContext.getCurrentInstance().getPageFlowScope().put("cancelComment", null);
+        cancel.show(new RichPopup.PopupHints());
+    }
+    
+    public void cancelCancelRequest(ActionEvent actionEvent){
+    cancel.hide();
+    }
+    
+    public void reqmoreOkRequest(ActionEvent actionEvent){
+        AdfFacesContext.getCurrentInstance().getPageFlowScope().put("reqComment", null);
+        reqmore.show(new RichPopup.PopupHints());
+    }
+    
+    public void reqmoreCancelRequest(ActionEvent actionEvent){
+    reqmore.hide();
+    }
+    
+    public void withdrawOkRequest(ActionEvent actionEvent){
+        AdfFacesContext.getCurrentInstance().getPageFlowScope().put("wdComment", null);
+        withdraw.show(new RichPopup.PopupHints());
+    }
+    
+    public void withdrawCancelRequest(ActionEvent actionEvent){
+    withdraw.hide();
+    }
+    
     public void onBtcEndDateVC(ValueChangeEvent valueChangeEvent) {
         valueChangeEvent.getComponent().processUpdates(FacesContext.getCurrentInstance());
         onCalculateNoOfDaysInBTC();
@@ -4416,5 +4455,29 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         JSFUtils.addFacesInformationMessage("Request is deleted successfully!");
         
         return "save";
+    }
+
+    public void setCancel(RichPopup cancel) {
+        this.cancel = cancel;
+    }
+
+    public RichPopup getCancel() {
+        return cancel;
+    }
+
+    public void setReqmore(RichPopup reqmore) {
+        this.reqmore = reqmore;
+    }
+
+    public RichPopup getReqmore() {
+        return reqmore;
+    }
+
+    public void setWithdraw(RichPopup withdraw) {
+        this.withdraw = withdraw;
+    }
+
+    public RichPopup getWithdraw() {
+        return withdraw;
     }
 }

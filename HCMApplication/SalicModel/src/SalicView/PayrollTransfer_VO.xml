@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="PayrollTransfer_VO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.APPROVAL_TEMPLATE_ID, 
        XxhcmOvertimeHeadersAllEO.APPROVER_USER_NAME, 
@@ -40,7 +40,7 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED' AND XxhcmOvertimeHeadersAllEO.REQUEST_NUMBER NOT LIKE '%HRL%' AND XxhcmOvertimeHeadersAllEO.REQ_ID NOT IN (SELECT HDR.REQ_ID FROM XXHCM_OVERTIME_HEADERS_ALL HDR ,XXHCM_OVERTIME_DETAILS_ALL DTL WHERE HDR.REQUEST_NUMBER LIKE '%-BT-%' AND DTL.ADV_PERDIEM = 'NO' AND HDR.REQ_ID = DTL.REQ_ID)"
+  Where="XxhcmOvertimeHeadersAllEO.STATUS='APPROVE' and XxhcmOvertimeHeadersAllEO.req_STATUS='APPROVE' AND XxhcmOvertimeHeadersAllEO.PAYROLL_TANS_STATUS !='COMPLETED' AND XxhcmOvertimeHeadersAllEO.REQUEST_NUMBER NOT LIKE '%HRL%' AND XxhcmOvertimeHeadersAllEO.REQ_ID NOT IN (SELECT HDR.REQ_ID FROM XXHCM_OVERTIME_HEADERS_ALL HDR ,XXHCM_OVERTIME_DETAILS_ALL DTL WHERE HDR.REQUEST_NUMBER LIKE '%-BT-%' AND DTL.ADV_PERDIEM = 'NO' AND HDR.REQ_ID = DTL.REQ_ID)"
   OrderBy='"REQUEST_DATE" Desc'>
   <Properties>
     <SchemaBasedProperties>

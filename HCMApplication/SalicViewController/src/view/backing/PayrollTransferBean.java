@@ -58,6 +58,7 @@ import okhttp3.RequestBody;
 
 import okhttp3.Response;
 
+import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
@@ -81,11 +82,13 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import view.session.UserService;
+
 public class PayrollTransferBean {
     private RichTable slectPayrollTable;
     private RichTable newPayrollTable;
     private RichPopup p1;
-
+    static ADFLogger logger = ADFLogger.createADFLogger(PayrollTransferBean.class);
     public PayrollTransferBean() {
     }
 
@@ -251,30 +254,33 @@ public class PayrollTransferBean {
         generatedString = emp + generatedString;
 
 
-        System.out.println(generatedString);
+        logger.log(generatedString);
     }
     String docname = null;
     String hdl = null;
     String ucmRes = null;
     String hdlRes = null;
 
-    public void moveToPayrolACL(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException,
+    public String moveToPayrolACL() throws FileNotFoundException, MalformedURLException,
                                                                 IOException, ParserConfigurationException,
                                                                 SAXException {
         ViewObject hdrVO = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         ViewObject payRollVO = ADFUtils.findIterator("PayrollTransfer_VO1Iterator").getViewObject();
         ViewObject payRollDtlVO = ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator").getViewObject();
         ViewObject othrExpVO = ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getViewObject();
-
+        boolean isMovedToPayroll = true;
+        String failedReqId = null;
         SimpleDateFormat hcmDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Row[] rows = payRollVO.getFilteredRows("Attribute2", "Y");
         
         if(rows == null || rows.length == 0){
             JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Select at least one row.", null);
-            return;
+            return null;
         }
-
+        logger.info("Moving selected rows to payroll -- selection count -->"+(rows!=null ? rows.length : 0));
+        StringBuffer errMesg = new StringBuffer();
+        
         for (Row cu : rows) {
             if ("ot".equals(cu.getAttribute("ReqType"))) {
                 int i = 1;
@@ -287,7 +293,7 @@ public class PayrollTransferBean {
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
 
-                        //persId
+                        logger.info("Moving Overtime to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
                         personVO.executeQuery();
@@ -322,9 +328,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr += st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i + "|E|H\n";
@@ -388,10 +395,13 @@ public class PayrollTransferBean {
                                 st + "|" + end + "|Overtime Payment|SA Legislative Data Group|" + i + "|Total Hours|" +
                                 curr.getAttribute("CalculatedHours") + "\n";
 
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            
                         }
+                        dtlRS.closeRowSetIterator();
+                        logger.info("Moving Overtime to Payroll - for "+i+" Records");
+                        logger.info("Prepared Overtime request -->\n"+dtl);
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -468,7 +478,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -479,7 +489,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -495,8 +505,15 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            logger.severe("Overtime req failed with error"+e.getMessage());
+                            logger.severe(e);
+                            //ADFUtils.findOperation("Rollback").execute();
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -510,7 +527,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Housing Allowance to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -546,9 +563,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -585,12 +603,15 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Housing Advance Payment|SA Legislative Data Group|" + i +
                                 "|Remarks|" + curr.getAttribute("Comments") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        
+                        dtlRS.closeRowSetIterator();
                         i = 0;
-
+                        logger.log("Housing request prepared is ==>\n"+dtl);
+                        logger.log("File Name for HA==>"+FileName);
                         base64code = fileACL(hdr, dtl, FileName);
 
                         java.util.Date date = new java.util.Date();
@@ -665,7 +686,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -676,7 +697,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -692,8 +713,13 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            logger.log("Housing Allowance failed! PART1 -->");
+                            logger.log(e.getMessage());
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason p1 ==>"+e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -744,9 +770,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -761,7 +788,7 @@ public class PayrollTransferBean {
                             Row curr = dtlRS.next();
                             /*Number dd = (Number)curr.getAttribute("OvertimeHours");
                                                       dd.toString();
-                                                      String type = null;
+                                         pk             String type = null;
                                                       if(curr.getAttribute("OvertimeType").equals("OT_HOL")){
                                                           type = "Holiday";
                                                       }
@@ -778,12 +805,15 @@ public class PayrollTransferBean {
                                 st + "|" + end + "|Housing Advanced Recovery|SA Legislative Data Group|" + j +
                                 "|Installments|" + curr.getAttribute("Months") + "\n";
 
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             j++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         j = 0;
 
+                        logger.log("Request detail to server==>"+dtl);
+                        logger.log("File Name for HA==>"+FileName);
                         base64code = fileACL(hdr, dtl, FileName);
 
                         java.util.Date date = new java.util.Date();
@@ -858,7 +888,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -869,7 +899,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -885,8 +915,13 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            logger.severe("HA failed for part 2");
+                            logger.severe(e.getMessage());
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason p2 ==>"+e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -901,7 +936,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Vacation Allowance to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -937,9 +972,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -966,10 +1002,11 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Vacation Allowance Payment|SA Legislative Data Group|" + i +
                                 "|Remarks|" + curr.getAttribute("Missions") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -1046,7 +1083,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1057,7 +1094,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1074,7 +1111,13 @@ public class PayrollTransferBean {
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            System.err.println(e);
+                            logger.log(e.getMessage());
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
+
                         }
                     }
                 }
@@ -1089,7 +1132,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Education Allowance to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -1125,9 +1168,9 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr += st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i + "|E|H\n";
@@ -1184,10 +1227,11 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Education Allowance|SA Legislative Data Group|" + i + "|Semester|" +
                                 curr.getAttribute("Semester") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -1264,7 +1308,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1275,7 +1319,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1291,8 +1335,13 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            
+                            logger.log(e.getMessage());
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -1306,7 +1355,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Salary Allowance to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -1342,9 +1391,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr += st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i + "|E|H\n";
@@ -1378,10 +1428,11 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Salary Advance Payment|SA Legislative Data Group|" + i +
                                 "|Remarks|" + curr.getAttribute("Comments") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -1458,7 +1509,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1469,7 +1520,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1485,8 +1536,13 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            logger.log(e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
+
                         }
                     }
                 }
@@ -1535,9 +1591,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -1574,10 +1631,11 @@ public class PayrollTransferBean {
                             dtl +=
                                 st + "|" + end + "|Salary Advance Recovery|SA Legislative Data Group|" + j +
                                 "|Remarks|" + curr.getAttribute("Comments") + "\n";
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             j++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         j = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -1654,7 +1712,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1665,7 +1723,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1681,8 +1739,12 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            logger.log(e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -1696,7 +1758,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Business Trip to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -1732,9 +1794,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -1783,10 +1846,11 @@ public class PayrollTransferBean {
                                 i + "|Trip Description|" + curr.getAttribute("Description") + "\n";
 
 
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -1863,7 +1927,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1874,7 +1938,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -1890,8 +1954,12 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            logger.log(e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -1905,7 +1973,7 @@ public class PayrollTransferBean {
                         String reqNum = (String) cu.getAttribute("RequestNumber"); //EmployeeName
                         String emp = (String) cu.getAttribute("EmployeeNumber");
 
-
+                        logger.info("Moving Business Trip Completion to Payroll - Request Number Selected -->"+reqNum+" Employee Number -->"+emp);
                         //persId
                         ViewObject personVO = ADFUtils.findIterator("personROVO1Iterator").getViewObject();
                         personVO.setNamedWhereClauseParam("persId", cu.getAttribute("EmpId"));
@@ -1941,9 +2009,10 @@ public class PayrollTransferBean {
                         payRollDtlVO.executeQuery();
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         while (dtlRS.hasNext()) {
-                            System.err.println("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details1 - - " + payRollDtlVO.getEstimatedRowCount());
                             int n = rand.nextInt(9999999) + 1;
                             hdr += "MERGE|ElementEntry|HRC_SQLLOADER|1008_MISC_" + n + "|" + n + "|E" + perNum + "|";
                             hdr +=
@@ -2008,10 +2077,11 @@ public class PayrollTransferBean {
                                 "|Adv Request Number|" + curr.getAttribute("BussTravReqNum") + "\n";
 
 
-                            System.err.println("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());
                             i++;
-                            System.err.println("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
+                            logger.log("count of detail3 - - " + payRollDtlVO.getEstimatedRowCount());
                         }
+                        dtlRS.closeRowSetIterator();
                         i = 0;
 
                         base64code = fileACL(hdr, dtl, FileName);
@@ -2088,7 +2158,7 @@ public class PayrollTransferBean {
                             impl.applyViewCriteria(impl.getViewCriteria("findById"));
                             impl.executeQuery();
                             if (hdrVO.first() != null) {
-                                if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -2099,7 +2169,7 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
-                                if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                     hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                     hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -2115,8 +2185,12 @@ public class PayrollTransferBean {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            System.err.println(e);
+                            errMesg.append("/n");
+                            errMesg.append("Failed Request Number ==>"+reqNum);
+                            errMesg.append("Request Failed to move to payroll with reason btc1==>"+e.getMessage());
+                            logger.log(e.getMessage());
+                            isMovedToPayroll = false;
+                            failedReqId= failedReqId + reqNum;
                         }
                     }
                 }
@@ -2168,8 +2242,8 @@ public class PayrollTransferBean {
 
                         RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
                         RowSetIterator othrExpRS = othrExpVO.createRowSetIterator(null);
-                        System.err.println("count of details - - " + payRollDtlVO.getEstimatedRowCount());
-                        
+                        logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
+                        dtlRS.reset();
                         while (dtlRS.hasNext()) {
                             Row detail = dtlRS.next();
                             vc = othrExpVO.createViewCriteria();
@@ -2180,7 +2254,7 @@ public class PayrollTransferBean {
                             othrExpVO.executeQuery();
 
                             othrExpRS = othrExpVO.createRowSetIterator(null);
-                            System.err.println("count of other expenses " + othrExpVO.getEstimatedRowCount());
+                            logger.log("count of other expenses " + othrExpVO.getEstimatedRowCount());
                          
                             while (othrExpRS.hasNext()) {
                                 int n = rand.nextInt(9999999) + 1;
@@ -2229,6 +2303,7 @@ public class PayrollTransferBean {
                                     st + "|" + end + "|Perdiem Payment Miscellaneous|SA Legislative Data Group|" + i +
                                     "|Expense Description|" + curr.getAttribute("ExpnDesc") + "\n"; 
                             }
+                            dtlRS.closeRowSetIterator();
                             i = 0;
 
                             base64code = fileACL(hdr, dtl, FileName);
@@ -2309,7 +2384,7 @@ public class PayrollTransferBean {
                                 impl.applyViewCriteria(impl.getViewCriteria("findById"));
                                 impl.executeQuery();
                                 if (hdrVO.first() != null) {
-                                    if (ucmRes.equalsIgnoreCase("SUCCESS")) {
+                                    if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
                                         hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -2320,7 +2395,7 @@ public class PayrollTransferBean {
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                         hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     }
-                                    if (hdlRes.equalsIgnoreCase("SUCCESS")) {
+                                    if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
                                         hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
                                         hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
@@ -2336,8 +2411,12 @@ public class PayrollTransferBean {
                                 }
 
                             } catch (Exception e) {
-                                e.printStackTrace();
-                                System.err.println(e);
+                                errMesg.append("/n");
+                                errMesg.append("Failed Request Number ==>"+reqNum);
+                                errMesg.append("Request Failed to move to payroll with reason btc2==>"+e.getMessage());
+                                logger.log(e.getMessage());
+                                isMovedToPayroll = false;
+                                failedReqId= failedReqId + reqNum;
                             }
                         }
                     }
@@ -2352,10 +2431,17 @@ public class PayrollTransferBean {
             }
         }
         payRollVO.executeQuery();
+        
         AdfFacesContext.getCurrentInstance().addPartialTarget(newPayrollTable);
         p1.cancel();
         AdfFacesContext.getCurrentInstance().addPartialTarget(p1);
+        if(errMesg.toString().isEmpty()){
         JSFUtils.addFacesInformationMessage("Selected Request Moved to PayRoll!!");
+        }else{
+            JSFUtils.addFacesInformationMessage("Failed to move below requests to payroll!!!. \n"+errMesg);
+        }
+        
+        return "toPayrollSave";
     }
 
     public String callHDL() {
@@ -2395,7 +2481,7 @@ public class PayrollTransferBean {
                 hdlRes = "SUCCESS";
             } else {
 
-                System.out.println("Report Response-------> " + reportResponse);
+                logger.log("Report Response-------> " + reportResponse);
                 reader.close();
                 hdlRes = reportResponse;
             }
@@ -2447,7 +2533,7 @@ public class PayrollTransferBean {
                 ucmRes = "SUCCESS";
             } else {
 
-                System.out.println("Report Response-------> " + reportResponse);
+                logger.log("Report Response-------> " + reportResponse);
                 reader.close();
                 ucmRes = reportResponse;
             }
@@ -2492,7 +2578,7 @@ public class PayrollTransferBean {
         RowSetIterator rs = payObj.createRowSetIterator(null);
         while (rs.hasNext()) {
             Row cu = rs.next();
-            System.err.println("ss - -" + cu.getAttribute("Attribute2"));
+            logger.log("ss - -" + cu.getAttribute("Attribute2"));
         }
 
         return null;

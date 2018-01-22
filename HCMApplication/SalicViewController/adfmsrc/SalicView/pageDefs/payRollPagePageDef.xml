@@ -40,6 +40,7 @@
           <Item Value="ApproverUserName"/>
           <Item Value="LastApproverComments"/>
           <Item Value="PayrollTransDate"/>
+          <Item Value="ActionBy"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

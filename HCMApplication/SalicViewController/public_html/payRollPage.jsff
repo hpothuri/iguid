@@ -443,9 +443,9 @@
                                                 <af:outputText value="#{row.PayrollTansComments}" id="ot13"/>
                                           </af:column>
                                           <af:column id="c15" headerText="Action By"
-                                                     sortProperty="#{bindings.payRollObjROVO11.hints.ApproverUserName.name}"
+                                                     sortProperty="#{bindings.payRollObjROVO11.hints.ActionBy.name}"
                                                      width="180" sortable="true">
-                                                <af:outputText value="#{row.ApproverUserName}" id="ot12"/>
+                                                <af:outputText value="#{row.ActionBy}" id="ot12"/>
                                           </af:column>
                                           <af:column sortProperty="#{bindings.payRollObjROVO11.hints.LastApproverComments.name}"
                                                      sortable="true" headerText="Approver Comments" id="c5" width="300">

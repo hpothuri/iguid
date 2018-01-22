@@ -72,6 +72,42 @@
           </f:facet>
         </af:dialog>
       </af:popup>
+      <af:popup childCreation="deferred" autoCancel="disabled" id="pa2"
+                binding="#{backingBeanScope.backing_employee.cancel}">
+        <af:dialog id="da2" title="Cancel Request" type="none">
+          <af:inputText label="Comments" required="true" value="#{pageFlowScope.cancelComment}" id="ita58" rows="3"/>
+          <f:facet name="buttonBar">
+            <af:button text="Ok" id="ba1" action="#{backingBeanScope.backing_employee.deleteReqACL}"/>
+            <af:button text="Cancel" id="ba2"
+                       actionListener="#{backingBeanScope.backing_employee.cancelCancelRequest}"/>
+          </f:facet>
+        </af:dialog>
+      </af:popup>
+	  
+	  <af:popup childCreation="deferred" autoCancel="disabled" id="pw2"
+                binding="#{backingBeanScope.backing_employee.reqmore}">
+        <af:dialog id="dw2" title="Request More Info" type="none">
+          <af:inputText label="Comments" required="true" value="#{pageFlowScope.reqComment}" id="itw58" rows="3"/>
+          <f:facet name="buttonBar">
+            <af:button text="Req More Info" id="bw1" action="#{backingBeanScope.backing_employee.reqMoreACL}"/>
+            <af:button text="Cancel" id="bw2"
+                       actionListener="#{backingBeanScope.backing_employee.reqmoreCancelRequest}"/>
+          </f:facet>
+        </af:dialog>
+      </af:popup>
+	  
+	  
+	  <af:popup childCreation="deferred" autoCancel="disabled" id="pr2"
+                binding="#{backingBeanScope.backing_employee.withdraw}">
+        <af:dialog id="dr2" title="Withdraw Request" type="none">
+          <af:inputText label="Comments" required="true" value="#{pageFlowScope.wdComment}" id="itr58" rows="3"/>
+          <f:facet name="buttonBar">
+            <af:button text="Withdraw" id="br1" action="#{backingBeanScope.backing_employee.withdrawACL}"/>
+            <af:button text="Cancel" id="br2"
+                       actionListener="#{backingBeanScope.backing_employee.withdrawCancelRequest}"/>
+          </f:facet>
+        </af:dialog>
+      </af:popup>
       <af:panelGroupLayout id="panelGroupLayout2" layout="horizontal">
         <af:trainButtonBar value="#{controllerContext.currentViewPort.taskFlowContext.trainModel}" id="tbb1"
                            inlineStyle="margin-right:13px;margin-top:10px;" rendered="false"/>
@@ -98,14 +134,14 @@
             <af:commandMenuItem text="Withdraw" id="cmi5"
                                 disabled="#{ not (bindings.Status.inputValue eq 'Pending Approval')}"
                                 visible="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                actionListener="#{backingBeanScope.backing_employee.withdrawACL}" action="save"/>
+                                actionListener="#{backingBeanScope.backing_employee.withdrawOkRequest}"/>
             <af:commandMenuItem text="Request More Info" id="cmi6"
-                                action="#{backingBeanScope.backing_employee.reqMoreACL}"
+                                actionListener="#{backingBeanScope.backing_employee.reqmoreOkRequest}"
                                 visible="#{sessionScope.search eq 'mngr'?'true':'false'}"
                                 disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"/>
-            <af:commandMenuItem text="Cancel" id="cmi7" action="#{backingBeanScope.backing_employee.deleteReqACL}"
+            <af:commandMenuItem text="Cancel" id="cmi7" actionListener="#{backingBeanScope.backing_employee.cancelOkRequest}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                disabled="#{ not (bindings.Status.inputValue eq 'APPROVE')}"/>
+                                disabled="#{ not (bindings.Status.inputValue eq 'APPROVE' or bindings.PayrollTansStatus.inputValue eq 'COMPLETED')}"/>
             <af:commandMenuItem text="Delete" id="cmi8"
                                 action="#{backingBeanScope.backing_employee.onCompleteDeleteReqACL}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
@@ -273,7 +309,8 @@
                               partialTriggers="soc1">
                   <f:validator binding="#{row.bindings.OvertimeHours.validator}"/>
                   <af:convertNumber groupingUsed="false"
-                                    pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.format}"/>
+                                    pattern="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeHours.format}"
+                                    maxFractionDigits="2"/>
                 </af:inputText>
               </af:column>
               <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.CalculatedHours.name}"

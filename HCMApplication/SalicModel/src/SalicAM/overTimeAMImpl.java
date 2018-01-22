@@ -667,12 +667,21 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         }
         if(jobLevelInt == 0){
             String reqType = getStringBasedOnReqType((String)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("ReqType"));
-                String empNameR = getStringBasedOnReqType((String)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("ReqType"));
+                String empNameR = null;
            getXxhcmOvertimeHeadersAllVO1().getCurrentRow().setAttribute("Status", "APPROVE"); 
+                getXxhcmOvertimeHeadersAllVO1().getCurrentRow().setAttribute("ReqStatus", "APPROVE"); 
                 EmailRequestPojo emailReq = new EmailRequestPojo();
             String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
             emailReq.setToEmail(to);
                 emailReq.setRequestNo((String)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("RequestNumber"));
+                ViewObject empManagerDet = getemployeeROVO1();
+                empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empId.bigDecimalValue().toString());
+                empManagerDet.executeQuery();
+                if(empManagerDet.hasNext()){
+                    empNameR = (String)empManagerDet.first().getAttribute("EmpName");                    
+                }
+                emailReq.setEmpId(empId.bigDecimalValue().toString());
+            emailReq.setEmpName(empNameR);
             emailReq.setToEmpName(emailReq.getEmpName());
             emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
             emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
