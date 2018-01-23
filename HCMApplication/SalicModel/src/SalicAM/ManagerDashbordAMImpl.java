@@ -917,8 +917,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 if(advPerdiemVO.first() != null){
                                     advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
                                     if(advPerdiem != null && "YES".equalsIgnoreCase(advPerdiem)){
-                                        emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
-                                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:"); 
+                                        emailReq.setSubject("Action required for "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" which is approved by "+managerName+" is pending with payroll group");
+                                        emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is finally approved by "+managerName+" and pending with payroll group with hereunder details:");   
                                     }
                                 }
                                 
