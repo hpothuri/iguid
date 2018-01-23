@@ -2074,7 +2074,7 @@ public class PayrollTransferBean {
                                 "|";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Request Number|" + curr.getAttribute("BussTravReqNum") + "\n";
+                                "|Adv Request Number|" + curr.getAttribute("BussTravReqNumValue") + "\n";
 
 
                             logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());

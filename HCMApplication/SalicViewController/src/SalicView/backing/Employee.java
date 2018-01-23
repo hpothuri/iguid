@@ -3423,11 +3423,11 @@ rs.closeRowSetIterator();
 
 
             currRow.setAttribute("OrigStartDate",
-                                 oldRow.getAttribute("OrigStartDate") == null ?
-                                 "" : oldRow.getAttribute("OrigStartDate"));
+                                        oldRow.getAttribute("StartDate") == null ?
+                                        "" : oldRow.getAttribute("StartDate"));
             currRow.setAttribute("OrigEndDate",
-                                 oldRow.getAttribute("OrigEndDate") == null ?
-                                 "" : oldRow.getAttribute("OrigEndDate"));
+                                        oldRow.getAttribute("EndDate") == null ? "" :
+                                        oldRow.getAttribute("EndDate"));
 
 
             currRow.setAttribute("DestCategory",
