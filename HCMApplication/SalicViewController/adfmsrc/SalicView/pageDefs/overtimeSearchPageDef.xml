@@ -47,6 +47,12 @@
               RangeSize="25"/>
     <iterator id="XxhcmOvertimeHeadersAllVO1Iterator2" Binds="XxhcmOvertimeHeadersAllVO2"
               DataControl="overTimeAMDataControl" RangeSize="25"/>
+    <taskFlow id="RequestStausTFxml1" taskFlowId="/WEB-INF/RequestStausTFxml.xml#RequestStausTFxml"
+              activation="deferred" xmlns="http://xmlns.oracle.com/adf/controller/binding" Refresh="ifNeeded">
+      <parameters>
+        <parameter id="reqNumber" value="#{viewScope.selReqNumber}"/>
+      </parameters>
+    </taskFlow>
   </executables>
   <bindings>
     <attributeValues IterBinding="XxhcmOvertimeHeadersAllVO1Iterator"
@@ -84,14 +90,6 @@
     <action IterBinding="XxhcmPurposeOfTrvl_VO1Iterator" id="CreateInsert2"
             InstanceName="overTimeAMDataControl.XxhcmPurposeOfTrvl_VO1" DataControl="overTimeAMDataControl"
             RequiresUpdateModel="true" Action="createInsertRow"/>
-    <methodAction id="populateApproversForReqest" RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="populateApproversForReqest" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
-                  InstanceName="bindings.populateApproversForReqest.dataControl.dataProvider">
-      <NamedData NDName="reqNumber" NDType="java.lang.String"/>
-      <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
-      <NamedData NDName="reqType" NDType="java.lang.String"/>
-      <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
-    </methodAction>
     <methodAction id="getOTGradeEligibility" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="getOTGradeEligibility" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
                   InstanceName="bindings.getOTGradeEligibility.dataControl.dataProvider"
@@ -103,6 +101,22 @@
                   InstanceName="bindings.fetchMaxAmountForEmployee.dataControl.dataProvider"
                   ReturnName="data.overTimeAMDataControl.methodResults.fetchMaxAmountForEmployee_fetchMaxAmountForEmployee_dataControl_dataProvider_fetchMaxAmountForEmployee_result">
       <NamedData NDName="empId" NDType="java.math.BigDecimal"/>
+    </methodAction>
+    <methodAction id="populateApproversForReqest" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="populateApproversForReqest" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.populateApproversForReqest.dataControl.dataProvider">
+      <NamedData NDName="reqStatus" NDType="java.lang.String"/>
+      <NamedData NDName="reqNumber" NDType="java.lang.String"/>
+      <NamedData NDName="empId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="reqType" NDType="java.lang.String"/>
+      <NamedData NDName="req_id" NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <methodAction id="validateVacationElig" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="validateVacationElig" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                  InstanceName="bindings.validateVacationElig.dataControl.dataProvider"
+                  ReturnName="data.overTimeAMDataControl.methodResults.validateVacationElig_validateVacationElig_dataControl_dataProvider_validateVacationElig_result">
+      <NamedData NDName="empid" NDType="java.math.BigDecimal"/>
+      <NamedData NDName="reqtype" NDType="java.lang.String"/>
     </methodAction>
   </bindings>
 </pageDefinition>

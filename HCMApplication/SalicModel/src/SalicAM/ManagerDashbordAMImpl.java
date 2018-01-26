@@ -1923,9 +1923,54 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 }
     }
     
-    public void populateApproversForReqest(String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+    public Integer getMaximumLevelForRequest(String reqId){
+        Integer maxLevel = 0;
+        try {
+            Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                               .getConnection()
+                                               .createStatement();
+            String query =
+                "select  XXSALIC_HCM_PKG.getMaximumLevel("+reqId+") max_count from dual";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            maxLevel = rs.getInt("max_count");
+        } catch (SQLException sqle) {
+        }
+        
+        return maxLevel;
+        
+    }
+    
+    
+    public Integer getMaximumActionSetForRequest(String reqId){
+        Integer maxLevel = 0;
+        try {
+            Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                               .getConnection()
+                                               .createStatement();
+            String query =
+                "SELECT max(action_set) max_set\n" + 
+                "      FROM XX_QP_ACTION_HISTORY_T\n" + 
+                "      WHERE HEADER_ID    = "+reqId;
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            maxLevel = rs.getInt("max_set");
+        } catch (SQLException sqle) {
+        }
+        if(maxLevel!=null){
+            maxLevel = maxLevel + 1;
+        }else{
+            maxLevel = 1;
+        }
+        return maxLevel;
+        
+    }
+    
+    
+    public void populateApproversForReqest(String reqStatus,String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
         BigDecimal empIdB = empId.bigDecimalValue();
-        int apprSeqNew = 0;
+        int apprSeqNew = getMaximumLevelForRequest(req_id.toString());
+        int actionSet = getMaximumActionSetForRequest(req_id.toString());
         ViewObject approvSetup = getgetApprovalSetupDetailsROVO1();
         approvSetup.setNamedWhereClauseParam("p_appr_type", "Approval");
         approvSetup.setNamedWhereClauseParam("p_req_type", getDecodedReqType(reqType));
@@ -1977,8 +2022,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         vonew.setAttribute("ApproverComments", null);
                         vonew.setAttribute("ApproverFlag", null);
                         if(jobLevelInt == 0)
-                        vonew.setAttribute("ApproverFlag", 'A');
-                        
+                        vonew.setAttribute("ApproverFlag", "A");
+                        vonew.setAttribute("Active", "A");        
+                        vonew.setAttribute("ReqStatus", reqStatus);
+                        vonew.setAttribute("ActionSet", actionSet);
                         vonew.setAttribute("Type", "H");
                         vonew.setAttribute("Page", getDecodedReqType(reqType));
                         vonew.setAttribute("ApprType", "Approval");
@@ -2018,7 +2065,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 vonew1.setAttribute("ApproverUserName", managerName);
                                 vonew1.setAttribute("ApproverComments", null);
                                 vonew1.setAttribute("ApproverFlag", null);
-                                
+                                vonew1.setAttribute("Active", "A");        
+                                vonew1.setAttribute("ReqStatus", reqStatus);
+                                vonew1.setAttribute("ActionSet", actionSet);        
                                 vonew1.setAttribute("Type", "H");
                                 vonew1.setAttribute("Page", getDecodedReqType(reqType));
                                 vonew1.setAttribute("ApprType", "Approval");
@@ -2054,7 +2103,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         vonewgrp.setAttribute("ApproverComments", null);
                         vonewgrp.setAttribute("ApproverFlag", null);
                         if(jobLevelInt == 0)
-                        vonewgrp.setAttribute("ApproverFlag", 'A');
+                        vonewgrp.setAttribute("ApproverFlag", "A");
+                        vonewgrp.setAttribute("Active", "A");        
+                        vonewgrp.setAttribute("ReqStatus", reqStatus);
+                        vonewgrp.setAttribute("ActionSet", actionSet);
                         vonewgrp.setAttribute("Type", "H");
                         vonewgrp.setAttribute("Page", getDecodedReqType(reqType));
                         vonewgrp.setAttribute("ApprType", "Approval");

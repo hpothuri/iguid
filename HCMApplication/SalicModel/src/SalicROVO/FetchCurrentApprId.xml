@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="FetchCurrentApprId"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -26,7 +26,16 @@
     Name="bindReqId"
     Kind="where"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[select xxsalic_hcm_pkg.getCurrentApprId(:bindReqId) appr_id from dual]]></SQLQuery>
+  <Variable
+    Name="bindAset"
+    Kind="where"
+    Type="java.lang.Integer"/>
+  <SQLQuery><![CDATA[SELECT approver_id appr_id 
+      FROM XX_QP_ACTION_HISTORY_T 
+      WHERE HEADER_ID    = :bindReqId 
+      AND ACTion_set = :bindAset 
+      AND approver_flag IS NULL 
+      ORDER BY approve_level asc]]></SQLQuery>
   <ViewAttribute
     Name="ApprId"
     IsUpdateable="false"

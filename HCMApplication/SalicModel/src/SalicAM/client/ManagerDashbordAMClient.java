@@ -31,13 +31,14 @@ public class ManagerDashbordAMClient extends ApplicationModuleImpl implements Ma
         return;
     }
 
-    public void populateApproversForReqest(String reqNumber, oracle.jbo.domain.Number empId, String reqType,
-                                           oracle.jbo.domain.Number req_id) {
+    public void populateApproversForReqest(String reqStatus, String reqNumber, oracle.jbo.domain.Number empId,
+                                           String reqType, oracle.jbo.domain.Number req_id) {
         Object _ret =
             this.riInvokeExportedMethod(this, "populateApproversForReqest",
-                                        new String[] { "java.lang.String", "oracle.jbo.domain.Number",
-                                                       "java.lang.String", "oracle.jbo.domain.Number" },
-                                        new Object[] { reqNumber, empId, reqType, req_id });
+                                        new String[] { "java.lang.String", "java.lang.String",
+                                                       "oracle.jbo.domain.Number", "java.lang.String",
+                                                       "oracle.jbo.domain.Number" },
+                                        new Object[] { reqStatus, reqNumber, empId, reqType, req_id });
         return;
     }
 

@@ -4,7 +4,7 @@
 <AppModule
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="ManagerDashbordAM"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   ClearCacheOnRollback="true"
   ComponentClass="SalicAM.ManagerDashbordAMImpl"
@@ -111,25 +111,6 @@
         Type="java.math.BigDecimal"/>
     </Method>
     <Method
-      Name="populateApproversForReqest"
-      MethodName="populateApproversForReqest">
-      <Return
-        Name="_return_type_"
-        Type="void"/>
-      <Parameter
-        Name="reqNumber"
-        Type="java.lang.String"/>
-      <Parameter
-        Name="empId"
-        Type="oracle.jbo.domain.Number"/>
-      <Parameter
-        Name="reqType"
-        Type="java.lang.String"/>
-      <Parameter
-        Name="req_id"
-        Type="oracle.jbo.domain.Number"/>
-    </Method>
-    <Method
       Name="updateHeaderStatus"
       MethodName="updateHeaderStatus">
       <Return
@@ -147,6 +128,28 @@
       <Parameter
         Name="status"
         Type="java.lang.String"/>
+    </Method>
+    <Method
+      Name="populateApproversForReqest"
+      MethodName="populateApproversForReqest">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqStatus"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="reqNumber"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="empId"
+        Type="oracle.jbo.domain.Number"/>
+      <Parameter
+        Name="reqType"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="req_id"
+        Type="oracle.jbo.domain.Number"/>
     </Method>
   </ClientInterface>
 </AppModule>

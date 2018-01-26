@@ -41,7 +41,7 @@ FROM XXHCM_OVERTIME_HEADERS_ALL OVERTIME,
 XXHCM_OVERTIME_DETAILS_ALL LINE      
 WHERE      
 OVERTIME.REQ_ID=LINE.REQ_ID      
-and OVERTIME.status not in ('draft','REJECT')  
+and OVERTIME.status not in ('Draft','REJECT')  
 and (trunc(LINE.START_DATE)  between :p_startdate1 and :p_enddate1 
 or LINE.END_DATE between  :p_startdate1 and :p_enddate1  
 or :p_startdate1 between trunc(LINE.START_DATE) and LINE.END_DATE 

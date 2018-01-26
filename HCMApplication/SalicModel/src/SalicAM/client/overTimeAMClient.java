@@ -100,17 +100,26 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return (Number) _ret;
     }
 
+    public void getRequestActionHist(String reqNum) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "getRequestActionHist", new String[] { "java.lang.String" },
+                                        new Object[] { reqNum });
+        return;
+    }
+
     public void insertRecords() {
         Object _ret = this.riInvokeExportedMethod(this, "insertRecords", null, null);
         return;
     }
 
-    public void populateApproversForReqest(String reqNumber, Number empId, String reqType, Number req_id) {
+    public void populateApproversForReqest(String reqStatus, String reqNumber, Number empId, String reqType,
+                                           Number req_id) {
         Object _ret =
             this.riInvokeExportedMethod(this, "populateApproversForReqest",
-                                        new String[] { "java.lang.String", "oracle.jbo.domain.Number",
-                                                       "java.lang.String", "oracle.jbo.domain.Number" },
-                                        new Object[] { reqNumber, empId, reqType, req_id });
+                                        new String[] { "java.lang.String", "java.lang.String",
+                                                       "oracle.jbo.domain.Number", "java.lang.String",
+                                                       "oracle.jbo.domain.Number" },
+                                        new Object[] { reqStatus, reqNumber, empId, reqType, req_id });
         return;
     }
 
@@ -138,6 +147,16 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void updateRequestForCWR(String reqStatus, String reqNumber, Number empId, String reqType, Number req_id) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "updateRequestForCWR",
+                                        new String[] { "java.lang.String", "java.lang.String",
+                                                       "oracle.jbo.domain.Number", "java.lang.String",
+                                                       "oracle.jbo.domain.Number" },
+                                        new Object[] { reqStatus, reqNumber, empId, reqType, req_id });
+        return;
+    }
+
     public int validatePublicHoliday(Date otdate) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validatePublicHoliday", new String[] { "java.sql.Date" },
@@ -152,5 +171,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
                                                        "java.math.BigDecimal" },
                                         new Object[] { empId, invDate, childId });
         return (Boolean) _ret;
+    }
+
+    public int validateVacationElig(BigDecimal empid, String reqtype) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "validateVacationElig",
+                                        new String[] { "java.math.BigDecimal", "java.lang.String" },
+                                        new Object[] { empid, reqtype });
+        return ((Integer) _ret).intValue();
     }
 }

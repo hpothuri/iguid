@@ -4,11 +4,12 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxQpActionHistoryTVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  OrderBy="APPROVE_LEVEL desc">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -22,34 +23,38 @@
     Type="java.lang.String">
     <TransientExpression
       Name="VariableScript"
+      trustMode="trusted"
       CodeSourceName="XxQpActionHistoryTVO"/>
   </Variable>
   <Variable
     Name="p_req_id"
     Kind="viewcriteria"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[SELECT XxQpActionHistoryTEO.ACTION_HISTORY_ID,   
-       XxQpActionHistoryTEO.HEADER_ID,   
-       XxQpActionHistoryTEO.APPROVE_LEVEL,   
-       XxQpActionHistoryTEO.APPROVER_ID,   
-       XxQpActionHistoryTEO.APPROVER_USER_NAME,   
-       XxQpActionHistoryTEO.APPROVER_COMMENTS,   
-       XxQpActionHistoryTEO.APPROVER_FLAG,   
-       XxQpActionHistoryTEO.TYPE,   
-       XxQpActionHistoryTEO.CREATED_BY,   
-       XxQpActionHistoryTEO.CREATION_DATE,   
-       XxQpActionHistoryTEO.LAST_UPDATED_BY,   
-       XxQpActionHistoryTEO.LAST_UPDATE_DATE,   
-       XxQpActionHistoryTEO.LAST_UPDATE_LOGIN,   
-       XxQpActionHistoryTEO.ROWID,   
-       XxQpActionHistoryTEO.PAGE,   
-       XxQpActionHistoryTEO.REQ_NUMBER,   
-       XxQpActionHistoryTEO.APPR_TYPE,   
-       XxQpActionHistoryTEO.APPR_DATE,   
-       XxQpActionHistoryTEO.APPR_BY, 
-       (select display_name from xxstg_person where person_id = XxQpActionHistoryTEO.APPR_BY) APPR_BY_USER_NAME,
-       (select email_address from XXSTG_EMPLOYEE_DETAILS where emp_id = XxQpActionHistoryTEO.APPROVER_ID) APPROVER_EMAIL
-FROM  XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO  
+  <SQLQuery><![CDATA[SELECT XxQpActionHistoryTEO.ACTION_HISTORY_ID,        
+       XxQpActionHistoryTEO.HEADER_ID,        
+       XxQpActionHistoryTEO.APPROVE_LEVEL,        
+       XxQpActionHistoryTEO.APPROVER_ID,        
+       XxQpActionHistoryTEO.APPROVER_USER_NAME,        
+       XxQpActionHistoryTEO.APPROVER_COMMENTS,        
+       XxQpActionHistoryTEO.APPROVER_FLAG,        
+       XxQpActionHistoryTEO.TYPE,        
+       XxQpActionHistoryTEO.CREATED_BY,        
+       XxQpActionHistoryTEO.CREATION_DATE,        
+       XxQpActionHistoryTEO.LAST_UPDATED_BY,        
+       XxQpActionHistoryTEO.LAST_UPDATE_DATE,        
+       XxQpActionHistoryTEO.LAST_UPDATE_LOGIN,        
+       XxQpActionHistoryTEO.ROWID,        
+       XxQpActionHistoryTEO.PAGE,        
+       XxQpActionHistoryTEO.REQ_NUMBER,        
+       XxQpActionHistoryTEO.APPR_TYPE,        
+       XxQpActionHistoryTEO.APPR_DATE,        
+       XxQpActionHistoryTEO.APPR_BY,      
+       (select display_name from xxstg_person where person_id = XxQpActionHistoryTEO.APPR_BY) APPR_BY_USER_NAME,     
+       (select email_address from XXSTG_EMPLOYEE_DETAILS where emp_id = XxQpActionHistoryTEO.APPROVER_ID) APPROVER_EMAIL,     
+       XxQpActionHistoryTEO.Active  ,  
+       XxQpActionHistoryTEO.REQ_STATUS , 
+       XxQpActionHistoryTEO.ACTION_SET 
+FROM  XX_QP_ACTION_HISTORY_T XxQpActionHistoryTEO       
 WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
   <EntityUsage
     Name="XxQpActionHistoryTEO"
@@ -262,6 +267,24 @@ WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
       <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
   </ViewAttribute>
+  <ViewAttribute
+    Name="Active"
+    PrecisionRule="true"
+    EntityAttrName="Active"
+    EntityUsage="XxQpActionHistoryTEO"
+    AliasName="ACTIVE"/>
+  <ViewAttribute
+    Name="ReqStatus"
+    PrecisionRule="true"
+    EntityAttrName="ReqStatus"
+    EntityUsage="XxQpActionHistoryTEO"
+    AliasName="REQ_STATUS"/>
+  <ViewAttribute
+    Name="ActionSet"
+    PrecisionRule="true"
+    EntityAttrName="ActionSet"
+    EntityUsage="XxQpActionHistoryTEO"
+    AliasName="ACTION_SET"/>
   <ViewCriteria
     Name="XxQpActionHistoryTVOCriteria"
     ViewObjectName="SalicView.XxQpActionHistoryTVO"

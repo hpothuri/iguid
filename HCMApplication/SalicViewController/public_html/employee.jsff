@@ -1624,7 +1624,15 @@
                          headerText="#{bindings.XxQpActionHistoryTVO1.hints.ApproveLevel.label}" id="c13" width="175">
                 <af:outputText value="#{row.ApproveLevel}" id="ot14"/>
               </af:column>
-              <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproverUserName.name}" sortable="false"
+                  <af:column headerText="#{bindings.XxQpActionHistoryTVO1.hints.ReqStatus.label}" id="c63">
+                    <af:outputText value="#{row.ReqStatus}"
+                                   shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ReqStatus.tooltip}" id="ot22"/>
+                  </af:column>
+                  <af:column headerText="#{bindings.XxQpActionHistoryTVO1.hints.Active.label}" id="c62">
+                    <af:outputText value="#{row.Active}"
+                                   shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.Active.tooltip}" id="ot20"/>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.ApproverUserName.name}" sortable="false"
                          headerText="Assigned To" id="c9" width="175">
                 <af:outputText value="#{row.ApproverUserName}" id="ot11"/>
               </af:column>
@@ -1701,7 +1709,7 @@
                       fetchSize="#{bindings.XxhcmMasterAttachment_VO2.rangeSize}" rowBandingInterval="0"
                       selectedRowKeys="#{bindings.XxhcmMasterAttachment_VO2.collectionModel.selectedRow}"
                       selectionListener="#{bindings.XxhcmMasterAttachment_VO2.collectionModel.makeCurrent}"
-                      rowSelection="single" id="t5" varStatus="vs" columnStretching="column:c14"
+                      rowSelection="single" id="t5" varStatus="vs" 
                       binding="#{backingBeanScope.backing_employee.attTable}" partialTriggers="::cb4 cl1 cil6">
               <af:column id="c16" headerText="S.No" align="center" width="50">
                 <af:outputText value="#{vs.index+1}" id="ot18"/>

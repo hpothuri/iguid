@@ -129,6 +129,7 @@
     </DesignTime>
     <TransientExpression
       Name="ExpressionScript"
+      trustMode="trusted"
       CodeSourceName="XxQpActionHistoryTEORow"/>
   </Attribute>
   <Attribute
@@ -225,6 +226,39 @@
     ColumnName="APPR_BY"
     SQLType="NUMERIC"
     Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    TableName="XX_QP_ACTION_HISTORY_T"/>
+  <Attribute
+    Name="Active"
+    Precision="1"
+    ColumnName="ACTIVE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XX_QP_ACTION_HISTORY_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ReqStatus"
+    Precision="20"
+    ColumnName="REQ_STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XX_QP_ACTION_HISTORY_T">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="ActionSet"
+    Precision="2"
+    Scale="0"
+    ColumnName="ACTION_SET"
+    SQLType="NUMERIC"
+    Type="java.lang.Integer"
     ColumnType="NUMBER"
     TableName="XX_QP_ACTION_HISTORY_T"/>
   <Key

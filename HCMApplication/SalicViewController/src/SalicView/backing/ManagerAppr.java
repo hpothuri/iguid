@@ -492,6 +492,7 @@ public class ManagerAppr {
         opd.execute();
            
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
         op.getParamsMap().put("reqNumber", mgrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (BigDecimal)mgrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", mgrVO.getCurrentRow().getAttribute("ReqType"));

@@ -53,6 +53,10 @@ import oracle.adf.view.rich.context.AdfFacesContext;
 //import oracle.cloud.storage.CloudStorageConfig;
 //import oracle.cloud.storage.CloudStorageFactory;
 
+import oracle.adf.view.rich.event.PopupFetchEvent;
+
+import oracle.binding.OperationBinding;
+
 import oracle.jbo.Row;
 import oracle.jbo.ViewCriteria;
 import oracle.jbo.ViewCriteriaRow;
@@ -486,6 +490,7 @@ public class OvertimeSearch {
         }
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         //RequestNumber
+        op.getParamsMap().put("reqStatus", "Draft");
         op.getParamsMap().put("reqNumber", reqHeaderRow.getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)reqHeaderRow.getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -606,16 +611,22 @@ public class OvertimeSearch {
     }
 
     public String validateEmpVacationEligibility(oracle.jbo.domain.Number empId){
+        //validateVacationElig
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("validateVacationElig");
+        op.getParamsMap().put("empid", empId);
+        op.getParamsMap().put("reqtype", "vacation");
+        Integer res = (Integer)op.execute();
+        
         String errorMsg = null;
-        ViewObject hdr2 = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator2").getViewObject();
-        ViewCriteria vcc = hdr2.createViewCriteria();
-        ViewCriteriaRow vccr = vcc.createViewCriteriaRow();
-        vccr.setAttribute("EmpId", empId);
-        vccr.setAttribute("ReqType", "vacation");
-        vcc.addRow(vccr);
-        hdr2.applyViewCriteria(vcc);
-        hdr2.executeQuery();
-        if (hdr2.first() != null) {
+//        ViewObject hdr2 = ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator2").getViewObject();
+//        ViewCriteria vcc = hdr2.createViewCriteria();
+//        ViewCriteriaRow vccr = vcc.createViewCriteriaRow();
+//        vccr.setAttribute("EmpId", empId);
+//        vccr.setAttribute("ReqType", "vacation");
+//        vcc.addRow(vccr);
+//        hdr2.applyViewCriteria(vcc);
+//        hdr2.executeQuery();
+        if (res!=null && res == 1) {
             return "Already you have Raised Vacation Allowance for this Year!";
         }else{            
             ViewObject ethnicVO = ADFUtils.findIterator("ethnicROVO1Iterator").getViewObject();
@@ -630,5 +641,9 @@ public class OvertimeSearch {
         }
         return errorMsg;
     }
-       
+
+    public void openRequestSummary(PopupFetchEvent popupFetchEvent) {
+        String selReqNumber = (String)JSFUtils.resolveExpression("#{source.attributes.requestNumber}");
+                AdfFacesContext.getCurrentInstance().getViewScope().put("selReqNumber", selReqNumber);
+    }
 }

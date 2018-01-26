@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -35,11 +35,15 @@
        XxhcmOvertimeHeadersAllEO.HDL_RES, 
        XxhcmOvertimeHeadersAllEO.UCM_RES, 
        XxhcmOvertimeHeadersAllEO.REQ_STATUS, 
-       XxhcmOvertimeHeadersAllEO.PAYROLL_TRANSFER_INIT_BY"
+       XxhcmOvertimeHeadersAllEO.PAYROLL_TRANSFER_INIT_BY, 
+       XxhcmOvertimeHeadersAllEO.CANCEL_REASON, 
+       XxhcmOvertimeHeadersAllEO.WD_REASON"
   FromList="XXHCM_OVERTIME_HEADERS_ALL XxhcmOvertimeHeadersAllEO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <Variable
     Name="BV_REQ_ID"
     Kind="viewcriteria"
@@ -528,6 +532,18 @@ return null;
     EntityAttrName="PayrollTransferInitBy"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="PAYROLL_TRANSFER_INIT_BY"/>
+  <ViewAttribute
+    Name="CancelReason"
+    PrecisionRule="true"
+    EntityAttrName="CancelReason"
+    EntityUsage="XxhcmOvertimeHeadersAllEO"
+    AliasName="CANCEL_REASON"/>
+  <ViewAttribute
+    Name="WdReason"
+    PrecisionRule="true"
+    EntityAttrName="WdReason"
+    EntityUsage="XxhcmOvertimeHeadersAllEO"
+    AliasName="WD_REASON"/>
   <ViewCriteria
     Name="XxhcmOvertimeHeadersAllVOCriteria"
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"

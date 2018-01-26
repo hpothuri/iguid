@@ -31,5 +31,21 @@ public class FetchCurrentApprIdImpl extends ViewObjectImpl {
     public void setbindReqId(BigDecimal value) {
         setNamedWhereClauseParam("bindReqId", value);
     }
+
+    /**
+     * Returns the bind variable value for bindAset.
+     * @return bind variable value for bindAset
+     */
+    public Integer getbindAset() {
+        return (Integer) getNamedWhereClauseParam("bindAset");
+    }
+
+    /**
+     * Sets <code>value</code> for bind variable bindAset.
+     * @param value value to bind as bindAset
+     */
+    public void setbindAset(Integer value) {
+        setNamedWhereClauseParam("bindAset", value);
+    }
 }
 

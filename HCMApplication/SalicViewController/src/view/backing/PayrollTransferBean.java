@@ -2060,15 +2060,17 @@ public class PayrollTransferBean {
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADF|" + n + "|E" + perNum +
                                 "|";
-                            dtl +=
+                            String dtOrigg =  curr.getAttribute("OrigStartDate") != null ? hcmDateFormat.format(curr.getAttribute("OrigStartDate")) : "";
+                            dtl += 
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Date From|" + hcmDateFormat.format(curr.getAttribute("OrigStartDate")) + "\n";
+                                "|Adv Date From|" + dtOrigg + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADT|" + n + "|E" + perNum +
                                 "|";
+                            String dtEndOr = curr.getAttribute("OrigEndDate") != null ? hcmDateFormat.format(curr.getAttribute("OrigEndDate")) : "";
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Date To|" + hcmDateFormat.format(curr.getAttribute("OrigEndDate")) + "\n";
+                                "|Adv Date To|" + dtEndOr + "\n";
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADN|" + n + "|E" + perNum +
                                 "|";
@@ -2232,22 +2234,22 @@ public class PayrollTransferBean {
 
                         calendar.add(Calendar.DAY_OF_MONTH, numOfDaysInMonth - 1);
                         String end = dateFormat1.format(calendar.getTime());
+//                        payRollDtlVO.clearCache();
+//                        ViewCriteria vc = payRollDtlVO.createViewCriteria();
+//                        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
+//                        vcr.setAttribute("ReqId", cu.getAttribute("ReqId"));
+//                        vc.addRow(vcr);
+//                        payRollDtlVO.applyViewCriteria(vc);
+//                        payRollDtlVO.executeQuery();
 
-                        ViewCriteria vc = payRollDtlVO.createViewCriteria();
-                        ViewCriteriaRow vcr = vc.createViewCriteriaRow();
-                        vcr.setAttribute("ReqId", cu.getAttribute("ReqId"));
-                        vc.addRow(vcr);
-                        payRollDtlVO.applyViewCriteria(vc);
-                        payRollDtlVO.executeQuery();
-
-                        RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator(null);
-                        RowSetIterator othrExpRS = othrExpVO.createRowSetIterator(null);
+                        RowSetIterator dtlRS = payRollDtlVO.createRowSetIterator("dtls");
+                        RowSetIterator othrExpRS = null;
                         logger.log("count of details - - " + payRollDtlVO.getEstimatedRowCount());
                         dtlRS.reset();
-                        while (dtlRS.hasNext()) {
+                        while (dtlRS != null && dtlRS.hasNext()) {
                             Row detail = dtlRS.next();
-                            vc = othrExpVO.createViewCriteria();
-                            vcr = vc.createViewCriteriaRow();
+                            ViewCriteria vc = othrExpVO.createViewCriteria();
+                            ViewCriteriaRow vcr = vc.createViewCriteriaRow();
                             vcr.setAttribute("ReqDtlsId", detail.getAttribute("ReqDtlsId"));
                             vc.addRow(vcr);
                             othrExpVO.applyViewCriteria(vc);
@@ -2303,7 +2305,7 @@ public class PayrollTransferBean {
                                     st + "|" + end + "|Perdiem Payment Miscellaneous|SA Legislative Data Group|" + i +
                                     "|Expense Description|" + curr.getAttribute("ExpnDesc") + "\n"; 
                             }
-                            dtlRS.closeRowSetIterator();
+                            othrExpRS.closeRowSetIterator();
                             i = 0;
 
                             base64code = fileACL(hdr, dtl, FileName);
@@ -2418,7 +2420,9 @@ public class PayrollTransferBean {
                                 isMovedToPayroll = false;
                                 failedReqId= failedReqId + reqNum;
                             }
+                           
                         }
+                        dtlRS.closeRowSetIterator();
                     }
                 }
             }

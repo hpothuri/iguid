@@ -14,8 +14,9 @@ public interface ManagerDashbordAM extends ApplicationModule {
 
     void deleteActionReqHist(BigDecimal reqId);
 
-    void populateApproversForReqest(String reqNumber, oracle.jbo.domain.Number empId, String reqType,
-                                    oracle.jbo.domain.Number req_id);
 
     void updateHeaderStatus(BigDecimal reqId, BigDecimal approvalTemplateId, String reqStatus, String status);
+
+    void populateApproversForReqest(String reqStatus, String reqNumber, oracle.jbo.domain.Number empId, String reqType,
+                                    oracle.jbo.domain.Number req_id);
 }

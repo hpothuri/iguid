@@ -6,7 +6,17 @@
                    id="pt1">
     <f:facet name="pageContents">
   <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
-    <af:panelDrawer position="left" id="pd1" height="528" width="382">
+        <af:popup childCreation="deferred" launcherVar="source" eventContext="launcher" autoCancel="disabled" id="reqStat" contentDelivery="lazyUncached"
+                  popupFetchListener="#{OvertimeSearch.openRequestSummary}">
+          <af:dialog id="d1">
+            <af:region value="#{bindings.RequestStausTFxml1.regionModel}" id="r1"/>
+            <f:facet name="buttonBar"/>
+          </af:dialog>
+          <af:setPropertyListener from="#{source.attributes.requestNumber}"
+                                       to="#{viewScope.selReqNumber}"
+                                       type="popupFetch"/>
+        </af:popup>
+        <af:panelDrawer position="left" id="pd1" height="528" width="382">
       <af:showDetailItem id="dr1" shortDesc="Search" inlineStyle="border-color:transparent;"
                          icon="/images/func_search_32_ena.png">
         <af:panelBox text="PanelBox1" id="pb2" showHeader="never" showDisclosure="false"
@@ -116,7 +126,13 @@
           </af:column>
           <af:column sortProperty="#{bindings.otHdrROVO1.hints.Status.name}" sortable="true"
                      headerText="#{bindings.otHdrROVO1.hints.Status.label}" id="c2" width="125" filterable="true">
-            <af:outputText value="#{row.DispStatus}" id="ot2"/>
+            <af:outputText value="#{row.DispStatus}" id="ot2">
+            <af:clientAttribute name="requestNumber"
+                                         value="#{row.RequestNumber}"/>
+                     <af:showPopupBehavior align="endAfter"
+                                           triggerType="mouseHover"
+                                           popupId=":::reqStat"/>
+            </af:outputText>
           </af:column>
           <af:column sortProperty="#{bindings.otHdrROVO1.hints.LineApproval.name}" sortable="true"
                      headerText="#{bindings.otHdrROVO1.hints.LineApproval.label}" id="c6" rendered="false" width="150"

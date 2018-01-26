@@ -106,6 +106,9 @@
       <page path="/WEB-INF/ApproveOrRejectEmailTF.xml#ApproveOrRejectEmailTF@initAppOrRej"
             usageId="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
       <page path="/pages/BusinessTrip.jsf" usageId="SalicView_BusinessTripPageDef"/>
+      <page path="/reqStatus.jsff" usageId="SalicView_reqStatusPageDef"/>
+      <page path="/WEB-INF/RequestStausTFxml.xml#RequestStausTFxml@getRequestActionHist"
+            usageId="SalicView_RequestStausTFxml_RequestStausTFxml_getRequestActionHistPageDef"/>
    </pageMap>
    <pageDefinitionUsages>
       <page id="SalicView_managerDashboard_managerDashboard_ExecutePageDef"
@@ -213,6 +216,9 @@
       <page id="SalicView_ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"
             path="SalicView.pageDefs.ApproveOrRejectEmailTF_ApproveOrRejectEmailTF_initAppOrRejPageDef"/>
       <page id="SalicView_BusinessTripPageDef" path="pages.BusinessTripPageDef"/>
+      <page id="SalicView_reqStatusPageDef" path="SalicView.pageDefs.reqStatusPageDef"/>
+      <page id="SalicView_RequestStausTFxml_RequestStausTFxml_getRequestActionHistPageDef"
+            path="SalicView.pageDefs.RequestStausTFxml_RequestStausTFxml_getRequestActionHistPageDef"/>
    </pageDefinitionUsages>
    <dataControlUsages>
       <BC4JDataControl id="ManagerDashbordAMDataControl" Package="SalicAM"

@@ -408,6 +408,7 @@ public class Employee {
             vcr.setAttribute("EmpId",
                              otHdrVO.getCurrentRow().getAttribute("EmpId"));
             vcr.setAttribute("ReqType", "vacation");
+            
             vc.addRow(vcr);
             hdr1.applyViewCriteria(vc);
             hdr1.executeQuery();
@@ -628,7 +629,7 @@ public class Employee {
                 otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
                 otHdrVO.getCurrentRow().setAttribute("ReqType",
                                                      "BusinessTripCompletion");
-
+                
 //                lineVO.getCurrentRow().setAttribute("StartDate",
 //                                                    this.bstStDt.getValue());
 //                lineVO.getCurrentRow().setAttribute("EndDate",
@@ -1024,6 +1025,7 @@ public class Employee {
         //populateApproversForReqest
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         //RequestNumber
+        op.getParamsMap().put("reqStatus", "SUBMITTED");
         op.getParamsMap().put("reqNumber", variationSearchVo.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)variationSearchVo.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -1234,10 +1236,6 @@ public class Employee {
 
             otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                                  new BigDecimal(1));
-            lineVO.getCurrentRow().setAttribute("OrigStartDate",
-                                                lineVO.getCurrentRow().getAttribute("StartDate"));
-            lineVO.getCurrentRow().setAttribute("OrigEndDate",
-                                                lineVO.getCurrentRow().getAttribute("EndDate"));
 
                 String reqStatus = (String)otHdrVO.getCurrentRow().getAttribute("ReqStatus");
                 if(reqStatus.equalsIgnoreCase("New"))      {
@@ -2797,25 +2795,34 @@ public class Employee {
         BigDecimal empId = new BigDecimal(usersb.getPersonId());
         ADFContext aDFContext = ADFContext.getCurrent();
         aDFContext.getPageFlowScope().put("mempId",empId);
-        
+        String wdReason = (String)aDFContext.getPageFlowScope().get("wdComment");
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
         otHdrVO.getCurrentRow().setAttribute("ReqStatus","WITHDRAWN");
+        otHdrVO.getCurrentRow().setAttribute("WdReason",wdReason);
         otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                              new BigDecimal(1));
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
-        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
-        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
-        opd.execute();
-           
-        actionHisVO.executeQuery();
-        ADFUtils.findOperation("Commit").execute();
-        actionHisVO.executeQuery();
-                   
+//        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
+//        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
+//        opd.execute();
+//        
+                
+        //updateRequestForCWR	void	String, String, Number, String, Number
+        oracle.binding.OperationBinding opu = ADFUtils.findOperation("updateRequestForCWR");
+        opu.getParamsMap().put("reqStatus", "WITHDRAWN");
+        opu.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opu.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        opu.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        opu.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        opu.execute();
+        
+              
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqStatus", "WITHDRAWN");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -2824,6 +2831,9 @@ public class Employee {
         
         autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
+        
+        actionHisVO.executeQuery();
+        
         
         op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "W");
@@ -2849,8 +2859,10 @@ public class Employee {
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
         otHdrVO.getCurrentRow().setAttribute("ReqStatus","REQUESTMOREINFO");
+        //otHdrVO.getCurrentRow().setAttribute("ReqStatus","REQUESTMOREINFO");
         otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                              new BigDecimal(1));
+        
         
         oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
         op.getParamsMap().put("approveOrReject", "M");
@@ -2867,6 +2879,7 @@ public class Employee {
         ADFUtils.findOperation("Commit").execute();
         actionHisVO.executeQuery();
         op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -2899,22 +2912,28 @@ public class Employee {
         BigDecimal empId = new BigDecimal(usersb.getPersonId());
         ADFContext aDFContext = ADFContext.getCurrent();
         aDFContext.getPageFlowScope().put("mempId",empId);
-        
+        String reason = (String)aDFContext.getPageFlowScope().get("cancelComment");
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
-        otHdrVO.getCurrentRow().setAttribute("Status", "Pending Approval");
+        otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
+        otHdrVO.getCurrentRow().setAttribute("CancelReason",reason);
         otHdrVO.getCurrentRow().setAttribute("ReqStatus","DELETED");
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
-        java.sql.Date dummyDate = null;
-        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
-        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
-        opd.execute();
-           
+
+        oracle.binding.OperationBinding opu = ADFUtils.findOperation("updateRequestForCWR");
+        opu.getParamsMap().put("reqStatus", "DELETED");
+        opu.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opu.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        opu.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        opu.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        opu.execute();
+         
         actionHisVO.executeQuery();
-        ADFUtils.findOperation("Commit").execute();
+        //ADFUtils.findOperation("Commit").execute();
         actionHisVO.executeQuery();
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
+        op.getParamsMap().put("reqStatus", "DELETED");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
         op.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
@@ -2927,7 +2946,7 @@ public class Employee {
         op.getParamsMap().put("approveOrReject", "C");
         op.execute();
         
-        JSFUtils.addFacesInformationMessage("Request is cancelled successfully and pending for approval!");
+        JSFUtils.addFacesInformationMessage("Request is cancelled successfully!");
         
         return "save";
     }
@@ -4332,18 +4351,29 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         }
         // Cancelled, Pending Approval
         if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
-            return "Cancelled, Pending Approval";
+            return "Cancelled and resubmitted, Pending Approval";
+        }
+        if(reqStatus.equalsIgnoreCase("Pending Approval") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("WITHDRAWN")){
+            return "Withdrawn and resubmitted, Pending Approval";
         }
         //Pending Approval
         if(reqStatus.equalsIgnoreCase("Pending Approval")){
             return "Pending Approval";
         }        
         if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
-            return "Cancelled, Approved";
+            return "Cancelled and resubmitted, Approved";
         }
         if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("DELETED")){
-            return "Cancelled, Rejected";
+            return "Cancelled and resubmitted, Rejected";
         }
+        
+        if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("WITHDRAWN")){
+            return "Withdrawn and resubmitted, Approved";
+        }
+        if(reqStatus.equalsIgnoreCase("REJECT") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("WITHDRAWN")){
+            return "Withdrawn and resubmitted, Rejected";
+        }
+        
         if(reqStatus.equalsIgnoreCase("APPROVE") && reqActionStatus != null && reqActionStatus.equalsIgnoreCase("APPROVE")){
             return "Approved";
         }

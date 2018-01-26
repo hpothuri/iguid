@@ -28,17 +28,3 @@ def validateCombination_OnConditionScript_OnCondition()
 adf.context.sessionScope.page == 'edu'
 }
 
-
-@ValidatorConditionExpression(name="OvertimeHoursRule1")
-def OvertimeHours_OvertimeHoursRule1_OnConditionScript_OnCondition()
-{
-OvertimeType == 'OT_WE'
-}
-
-
-@ValidatorConditionExpression(name="OvertimeHoursRule0")
-def OvertimeHours_OvertimeHoursRule0_OnConditionScript_OnCondition()
-{
-OvertimeType == 'OT_WD'
-}
-

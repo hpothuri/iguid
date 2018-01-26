@@ -108,11 +108,8 @@
       OperandType="LITERAL"
       Inverse="false"
       MinValue="0"
-      MaxValue="24">
-      <validation:OnCondition
-        Name="OnConditionScript"
-        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
-    </validation:RangeValidationBean>
+      MaxValue="24"
+      Description="Validating weekend hours"/>
     <validation:RangeValidationBean
       Name="OvertimeHoursRule0"
       ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_0"
@@ -120,11 +117,8 @@
       OperandType="LITERAL"
       Inverse="false"
       MinValue="0"
-      MaxValue="16">
-      <validation:OnCondition
-        Name="OnConditionScript"
-        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
-    </validation:RangeValidationBean>
+      MaxValue="16"
+      Description="Validating weekday hours"/>
   </Attribute>
   <Attribute
     Name="OvertimeDate"
