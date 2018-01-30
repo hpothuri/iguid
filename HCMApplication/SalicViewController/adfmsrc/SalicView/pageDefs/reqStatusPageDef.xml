@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.12.24" id="reqStatusPageDef"
+                Package="SalicView.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RequestStatusROVO1" RangeSize="25" DataControl="overTimeAMDataControl"
+              id="RequestStatusROVO1Iterator"/>
+    <searchRegion Binds="RequestStatusROVO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer" id="RequestStatusROVO1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="RequestStatusROVO1Iterator" id="RequestStatusROVO1">
+      <nodeDefinition DefName="SalicROVO.RequestStatusROVO" Name="RequestStatusROVO10">
+        <AttrNames>
+          <Item Value="ApproveLevel"/>
+          <Item Value="ApproverUserName"/>
+          <Item Value="ApproverComments"/>
+          <Item Value="ApproverFlag"/>
+          <Item Value="LastUpdateDate"/>
+          <Item Value="ApprByUserName"/>
+          <Item Value="ApprDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

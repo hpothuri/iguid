@@ -2074,9 +2074,15 @@ public class PayrollTransferBean {
                             dtl +=
                                 "MERGE|ElementEntryValue|HRC_SQLLOADER|1008_MISC_" + n + "_ADN|" + n + "|E" + perNum +
                                 "|";
+                            String advPerdiem = (String)  curr.getAttribute("AdvPerdiem");
+                            
+                            String reqNumY = "";
+                            if(advPerdiem.equalsIgnoreCase("YES")){
+                                reqNumY = (String)curr.getAttribute("BussTravReqNumValue");
+                            }
                             dtl +=
                                 st + "|" + end + "|Perdiem Payment Business Trip|SA Legislative Data Group|" + i +
-                                "|Adv Request Number|" + curr.getAttribute("BussTravReqNumValue") + "\n";
+                                "|Adv Request Number|" + reqNumY + "\n";
 
 
                             logger.log("count of details2 - - " + payRollDtlVO.getEstimatedRowCount());

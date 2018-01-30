@@ -57,4 +57,24 @@ public class ManagerDashbordAMClient extends ApplicationModuleImpl implements Ma
                                         new Object[] { reqId, approvalTemplateId, reqStatus, status });
         return;
     }
+
+    public void updateRequestForCWR(String reqStatus, String reqNumber, oracle.jbo.domain.Number empId, String reqType,
+                                    oracle.jbo.domain.Number req_id) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "updateRequestForCWR",
+                                        new String[] { "java.lang.String", "java.lang.String",
+                                                       "oracle.jbo.domain.Number", "java.lang.String",
+                                                       "oracle.jbo.domain.Number" },
+                                        new Object[] { reqStatus, reqNumber, empId, reqType, req_id });
+        return;
+    }
+
+    public void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "updateRequestReasonForCWR",
+                                        new String[] { "java.lang.String", "java.math.BigDecimal", "java.lang.String",
+                                                       "java.lang.String" },
+                                        new Object[] { reqNumber, req_id, reason, empLogged });
+        return;
+    }
 }

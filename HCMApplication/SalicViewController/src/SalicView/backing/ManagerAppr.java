@@ -475,6 +475,7 @@ public class ManagerAppr {
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator1").getViewObject();
         java.sql.Date dummyDate = null;
         
+        
         oracle.binding.OperationBinding opd =  ADFUtils.findOperation("updateHeaderStatus");
         opd.getParamsMap().put("status", "Draft");
         opd.getParamsMap().put("reqStatus","REQUESTMOREINFO");
@@ -482,14 +483,36 @@ public class ManagerAppr {
                                              new BigDecimal(1));
         opd.getParamsMap().put("reqId", ((BigDecimal)mgrVO.getCurrentRow().getAttribute("ReqId")));
         opd.execute();
+        String reason = (String)mgrVO.getCurrentRow().getAttribute("ApprComments");
+        BigDecimal reqId = (BigDecimal)mgrVO.getCurrentRow().getAttribute("ReqId");
         
-        opd = ADFUtils.findOperation("prepareMailTemplateAndSend");
-        opd.getParamsMap().put("approveOrReject", "M");
-        opd.execute();
+        try{
+        oracle.binding.OperationBinding qopd = ADFUtils.findOperation("prepareMailTemplateAndSend");
+        qopd.getParamsMap().put("approveOrReject", "M");
+        qopd.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         
-        opd =  ADFUtils.findOperation("deleteActionReqHist");
-        opd.getParamsMap().put("reqId", ((BigDecimal)mgrVO.getCurrentRow().getAttribute("ReqId")))  ;
-        opd.execute();
+        oracle.binding.OperationBinding opures = ADFUtils.findOperation("updateRequestReasonForCWR");
+        opures.getParamsMap().put("reqNumber", mgrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opures.getParamsMap().put("req_id", reqId);
+        opures.getParamsMap().put("reason", reason);
+        opures.getParamsMap().put("empLogged", usersb.getPersonId());
+        opures.execute();
+        
+           
+        actionHisVO.executeQuery();
+        oracle.binding.OperationBinding opu = ADFUtils.findOperation("updateRequestForCWR");
+        opu.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
+        opu.getParamsMap().put("reqNumber", mgrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opu.getParamsMap().put("empId", (BigDecimal)mgrVO.getCurrentRow().getAttribute("EmpId"));
+        opu.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        opu.getParamsMap().put("req_id", mgrVO.getCurrentRow().getAttribute("ReqId"));
+        opu.execute();
+         
+        actionHisVO.executeQuery();
+
            
         oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
@@ -498,6 +521,7 @@ public class ManagerAppr {
         op.getParamsMap().put("reqType", mgrVO.getCurrentRow().getAttribute("ReqType"));
         op.getParamsMap().put("req_id", mgrVO.getCurrentRow().getAttribute("ReqId"));
         op.execute();
+        
         
         ADFUtils.findOperation("Commit").execute();
         
@@ -512,5 +536,7 @@ public class ManagerAppr {
         AdfFacesContext.getCurrentInstance().addPartialTarget(ol10);
         mgrVO.executeQuery();
         AdfFacesContext.getCurrentInstance().addPartialTarget(t2);
+        
+
     }
 }

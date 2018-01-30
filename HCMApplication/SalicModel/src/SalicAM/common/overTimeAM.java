@@ -56,4 +56,6 @@ public interface overTimeAM extends ApplicationModule {
     int validateVacationElig(BigDecimal empid, String reqtype);
 
     void getRequestActionHist(String reqNum);
+
+    void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged);
 }

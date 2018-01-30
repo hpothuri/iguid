@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout styleClass="AFStretchWidth" id="pgl1">
+      <af:table value="#{bindings.RequestStatusROVO1.collectionModel}" var="row"
+                rows="#{bindings.RequestStatusROVO1.rangeSize}"
+                emptyText="#{bindings.RequestStatusROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                rowBandingInterval="0" selectedRowKeys="#{bindings.RequestStatusROVO1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.RequestStatusROVO1.collectionModel.makeCurrent}" rowSelection="single"
+                fetchSize="#{bindings.RequestStatusROVO1.rangeSize}" styleClass="AFStretchWidth"
+                filterModel="#{bindings.RequestStatusROVO1Query.queryDescriptor}" filterVisible="true"
+                queryListener="#{bindings.RequestStatusROVO1Query.processQuery}" varStatus="vs" id="t1">
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApproveLevel.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApproveLevel.label}" id="c1">
+          <af:outputText value="#{row.ApproveLevel}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.ApproveLevel.tooltip}" id="ot1">
+            <af:convertNumber groupingUsed="false" pattern="#{bindings.RequestStatusROVO1.hints.ApproveLevel.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApproverUserName.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApproverUserName.label}" id="c2">
+          <af:outputText value="#{row.ApproverUserName}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.ApproverUserName.tooltip}" id="ot2"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApproverComments.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApproverComments.label}" id="c3">
+          <af:outputText value="#{row.ApproverComments}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.ApproverComments.tooltip}" id="ot3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApproverFlag.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApproverFlag.label}" id="c4">
+          <af:outputText value="#{row.ApproverFlag}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.ApproverFlag.tooltip}" id="ot4"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.LastUpdateDate.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.LastUpdateDate.label}" id="c5">
+          <f:facet name="filter">
+            <af:inputDate value="#{bindings.RequestStatusROVO1Query.queryDescriptor.filterConjunctionCriterion.criterionMap.LastUpdateDate.value}"
+                          id="id1">
+              <af:convertDateTime pattern="#{bindings.RequestStatusROVO1.hints.LastUpdateDate.format}"/>
+            </af:inputDate>
+          </f:facet>
+          <af:outputText value="#{row.LastUpdateDate}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.LastUpdateDate.tooltip}" id="ot5">
+            <af:convertDateTime pattern="#{bindings.RequestStatusROVO1.hints.LastUpdateDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApprByUserName.name}" filterable="true"
+                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApprByUserName.label}" id="c6">
+          <af:outputText value="#{row.ApprByUserName}"
+                         shortDesc="#{bindings.RequestStatusROVO1.hints.ApprByUserName.tooltip}" id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApprDate.name}" filterable="true" sortable="true"
+                   headerText="Approved Date" id="c7">
+          <f:facet name="filter">
+            <af:inputDate value="#{bindings.RequestStatusROVO1Query.queryDescriptor.filterConjunctionCriterion.criterionMap.ApprDate.value}"
+                          id="id2">
+              <af:convertDateTime pattern="#{bindings.RequestStatusROVO1.hints.ApprDate.format}"/>
+            </af:inputDate>
+          </f:facet>
+          <af:outputText value="#{row.ApprDate}" shortDesc="#{bindings.RequestStatusROVO1.hints.ApprDate.tooltip}"
+                         id="ot7">
+            <af:convertDateTime pattern="#{bindings.RequestStatusROVO1.hints.ApprDate.format}"/>
+          </af:outputText>
+        </af:column>
+      </af:table>
+      </af:panelGroupLayout>
+</jsp:root>

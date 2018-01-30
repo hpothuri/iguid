@@ -157,6 +157,15 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
         return;
     }
 
+    public void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "updateRequestReasonForCWR",
+                                        new String[] { "java.lang.String", "java.math.BigDecimal", "java.lang.String",
+                                                       "java.lang.String" },
+                                        new Object[] { reqNumber, req_id, reason, empLogged });
+        return;
+    }
+
     public int validatePublicHoliday(Date otdate) {
         Object _ret =
             this.riInvokeExportedMethod(this, "validatePublicHoliday", new String[] { "java.sql.Date" },

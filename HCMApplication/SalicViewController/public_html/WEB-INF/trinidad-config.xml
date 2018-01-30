@@ -3,4 +3,5 @@
 
   <skin-family>alta</skin-family>
   <skin-version>v1</skin-version>
+  <formatting-locale>en_US</formatting-locale>
 </trinidad-config>

@@ -31,7 +31,7 @@
       <property
          name="description">&lt;html>&lt;p>&lt;b>taskFlowReturn1&lt;/b>&lt;/p>&lt;p>Activity Type:  Task Flow Return&lt;/p>&lt;p>Outcome:  taskFlowReturn1&lt;/p></property>
       <property
-         name="y">97.74707</property>
+         name="y">97.396484</property>
       <property
          name="finish">true</property>
       <property
@@ -66,7 +66,7 @@
       <property
          name="fromOutcome">save</property>
       <property
-         name="sdm:polyPoints">R46,132.5,188.24707,233.5,97.396484,L50</property>
+         name="sdm:polyPoints">R46,132.5,188.24707,233.5,97.0459,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"

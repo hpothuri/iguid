@@ -23,7 +23,6 @@
     Type="java.lang.String">
     <TransientExpression
       Name="VariableScript"
-      trustMode="trusted"
       CodeSourceName="XxQpActionHistoryTVO"/>
   </Variable>
   <Variable
@@ -223,7 +222,14 @@ WHERE XxQpActionHistoryTEO.PAGE=:p_req_typ]]></SQLQuery>
     PrecisionRule="true"
     EntityAttrName="ApprDate"
     EntityUsage="XxQpActionHistoryTEO"
-    AliasName="APPR_DATE"/>
+    AliasName="APPR_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="SalicView.XxQpActionHistoryTVO.ApprDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
   <ViewAttribute
     Name="ApprBy"
     PrecisionRule="true"

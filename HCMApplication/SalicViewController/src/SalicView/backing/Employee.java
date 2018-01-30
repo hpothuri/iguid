@@ -2659,7 +2659,6 @@ public class Employee {
     }
 
     public void OnFileUpload(ValueChangeEvent vce) {
-
         if (vce.getNewValue() != null) {
             UploadFileActionToDB((UploadedFile)vce.getNewValue());
 
@@ -2692,8 +2691,8 @@ public class Employee {
                                    filename);
                 System.err.println("this is the attachment file name----->" +
                                    ContentType);
-                curRow.setAttribute("AttachDesc", filename);
-                //curRow.setAttribute("AttachFileFileType", ContentType);
+                curRow.setAttribute("Attribute1", filename);
+                curRow.setAttribute("AttachFileType", ContentType);
                 curRow.setAttribute("AttachFile", createBlobDomain(myfile));
 
                 //curRow.setAttachment(createBlobDomain(myfile));
@@ -2855,6 +2854,7 @@ public class Employee {
         ADFContext aDFContext = ADFContext.getCurrent();
         aDFContext.getPageFlowScope().put("mempId",empId);
         
+        
         ViewObject otHdrVO =
             ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
         otHdrVO.getCurrentRow().setAttribute("Status", "Draft");
@@ -2863,22 +2863,32 @@ public class Employee {
         otHdrVO.getCurrentRow().setAttribute("ApprovalTemplateId",
                                              new BigDecimal(1));
         
+        String reason = (String)aDFContext.getPageFlowScope().get("reqComment");
+        oracle.jbo.domain.Number reqId = (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId");
+        oracle.binding.OperationBinding opures = ADFUtils.findOperation("updateRequestReasonForCWR");
+        opures.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opures.getParamsMap().put("req_id", reqId.bigDecimalValue());
+        opures.getParamsMap().put("reason", reason);
+        opures.getParamsMap().put("empLogged", usersb.getPersonId());
+        opures.execute();
         
-        oracle.binding.OperationBinding op = ADFUtils.findOperation("prepareMailTemplateAndSend1");
-        op.getParamsMap().put("approveOrReject", "M");
-        op.execute();
         
         ViewObject actionHisVO =
             ADFUtils.findIterator("XxQpActionHistoryTVO1Iterator").getViewObject();
         java.sql.Date dummyDate = null;
-        oracle.binding.OperationBinding opd =  ADFUtils.findOperation("deleteActionReqHist");
-        opd.getParamsMap().put("reqId", ((oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("ReqId")).bigDecimalValue())  ;
-        opd.execute();
            
         actionHisVO.executeQuery();
-        ADFUtils.findOperation("Commit").execute();
+        oracle.binding.OperationBinding opu = ADFUtils.findOperation("updateRequestForCWR");
+        opu.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
+        opu.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
+        opu.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
+        opu.getParamsMap().put("reqType", (String)ADFContext.getCurrent().getSessionScope().get("page"));
+        opu.getParamsMap().put("req_id", otHdrVO.getCurrentRow().getAttribute("ReqId"));
+        opu.execute();
+         
         actionHisVO.executeQuery();
-        op = ADFUtils.findOperation("populateApproversForReqest");
+        //ADFUtils.findOperation("Commit").execute();
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("populateApproversForReqest");
         op.getParamsMap().put("reqStatus", "REQUESTMOREINFO");
         op.getParamsMap().put("reqNumber", otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         op.getParamsMap().put("empId", (oracle.jbo.domain.Number)otHdrVO.getCurrentRow().getAttribute("EmpId"));
@@ -2888,6 +2898,10 @@ public class Employee {
         autoApproveRequest();
         ADFUtils.findOperation("Commit").execute();
         
+        oracle.binding.OperationBinding op1 = ADFUtils.findOperation("prepareMailTemplateAndSend1");
+        op1.getParamsMap().put("approveOrReject", "M");
+        op1.execute();
+                
         
         JSFUtils.addFacesInformationMessage("Requested employee to update more information");
         //TODO : KMA : Send Email for manager

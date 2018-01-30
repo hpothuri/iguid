@@ -1,0 +1,12 @@
+//Groovy Scripts for SalicEntity.XxhcmMasterAttachment_EO
+
+package SalicEntity
+
+import oracle.jbo.script.annotation.TransientValueExpression;
+
+@TransientValueExpression(attributeName="MattachId")
+def MattachId_ExpressionScript_Expression()
+{
+(new oracle.jbo.server.SequenceImpl("MATTACH_ID_S",adf.object.getDBTransaction())).getSequenceNumber()
+}
+

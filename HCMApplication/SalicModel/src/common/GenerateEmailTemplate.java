@@ -53,9 +53,6 @@ public class GenerateEmailTemplate {
     private static String FROM_USER = "paas.user@salic.com";
     private static String FROM_USER_PASSWORD = "Salic@123";
     
-//    private static String FROM_USER = "muralikona.oracle@gmail.com";
-//    private static String FROM_USER_PASSWORD = "k1m2k3k1";
-
     public static Map<String, Object> prepareEmailTemplate(EmailRequestPojo emailReq, DBTransaction dbTrans) {
         Map<String, Object> emailHapmap = new HashMap<String, Object>();
         Statement statement = dbTrans.createStatement(0);
@@ -228,6 +225,65 @@ public class GenerateEmailTemplate {
             try {
                 String query =
                     "select file_name, file_type, attachment from xxhcm_master_attachment where master_ref_id = " +
+                    reqId;
+                ResultSet resultSet1 = statement.executeQuery(query);
+                while (resultSet1.next()) {
+                    String fileName = resultSet1.getString(1);
+                    String fileType = resultSet1.getString(2);
+                    java.sql.Blob file = resultSet1.getBlob(3);
+                    MimeBodyPart att = fetchBodyPartFromBlob(file, fileType, fileName);
+                    if(att != null){
+                        bodyParts.add(att);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            try {
+                String query =
+                    "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_overtime_details_all b, xxhcm_other_expense c, xxhcm_attachment d\n" + 
+                    "where a.req_id = b.req_id and b.req_dtls_id = c.req_dtls_id and c.expense_id = d.expense_id and a.req_id =  " +
+                    reqId;
+                ResultSet resultSet1 = statement.executeQuery(query);
+                while (resultSet1.next()) {
+                    String fileName = resultSet1.getString(1);
+                    String fileType = resultSet1.getString(2);
+                    java.sql.Blob file = resultSet1.getBlob(3);
+                    MimeBodyPart att = fetchBodyPartFromBlob(file, fileType, fileName);
+                    if(att != null){
+                        bodyParts.add(att);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+        return bodyParts;
+    }
+    
+    
+    private static ArrayList<MimeBodyPart> fetchbtcAttachments(String reqId, DBTransaction dbTrans) {
+        ArrayList<MimeBodyPart> bodyParts = new ArrayList<MimeBodyPart>();
+        if (reqId != null) {
+            Statement statement = dbTrans.createStatement(0);
+            try {
+                String query =
+                    "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_overtime_details_all b, xxhcm_other_expense c, xxhcm_attachment d\n" + 
+                    "where a.req_id = b.req_id and b.req_dtls_id = c.req_dtls_id and c.expense_id = d.expense_id and a.req_id =  " +
                     reqId;
                 ResultSet resultSet1 = statement.executeQuery(query);
                 while (resultSet1.next()) {

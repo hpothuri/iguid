@@ -8,7 +8,7 @@ public class ScheduleServiceClient {
 //        scheduleReportForHrLetter("300000005807455","EMBASSY OF  QATAR");
 //    }
 
-    public void scheduleReportForHrLetter(String empId,String letterTo,String letterTemplate) {
+    public void scheduleReportForHrLetter(String empId,String letterTo,String letterToAr,String letterTemplate) {
         ScheduleService_Service scheduleService_Service = new ScheduleService_Service();
         ScheduleService scheduleService = scheduleService_Service.getScheduleService();
 
@@ -25,7 +25,8 @@ public class ScheduleServiceClient {
             ParamNameValues paramList = new ParamNameValues();
             ArrayOfParamNameValue arrayOfParamNameValue = new ArrayOfParamNameValue();
             arrayOfParamNameValue.getItem().add(getArrayofparam("P_EMP_NUMBER",empId));
-            arrayOfParamNameValue.getItem().add(getArrayofparam("P_LETTER_TO",letterTo));
+            arrayOfParamNameValue.getItem().add(getArrayofparam("P_EN_LETTER_TO",letterTo));
+            arrayOfParamNameValue.getItem().add(getArrayofparam("P_AR_LETTER_TO",letterToAr));
             arrayOfParamNameValue.getItem().add(getArrayofparam("P_TEMPLATE",letterTemplate));
             
             paramList.setListOfParamNameValues(arrayOfParamNameValue);

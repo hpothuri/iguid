@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE html>
 <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
-    <af:document title="BusinessTrip.jsf" id="d1">
-        <af:form id="f1">
+    <af:document title="BusinessTrip.jsf"  id="d1">
+        <af:form usesUpload="true" id="f1">
             <af:panelGroupLayout id="pgl1" layout="vertical">
                 <af:region value="#{bindings.overtimeSearchBTF1.regionModel}" id="r1"/>
             </af:panelGroupLayout>

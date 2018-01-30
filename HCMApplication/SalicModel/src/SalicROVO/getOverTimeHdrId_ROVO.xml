@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="getOverTimeHdrId_ROVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -32,22 +32,22 @@
       </SchemaBasedProperties>
     </Properties>
   </Variable>
-  <SQLQuery><![CDATA[SELECT    
-    XXHCM_OVERTIME_HEADERS_ALL.REQ_ID REQ_ID,    
-    XXHCM_OVERTIME_HEADERS_ALL.EMP_ID EMP_ID,    
-    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_NUMBER REQUEST_NUMBER,    
-    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_DATE REQUEST_DATE,    
-    XXHCM_OVERTIME_HEADERS_ALL.STATUS STATUS,    
-    XXHCM_OVERTIME_HEADERS_ALL.LINE_APPROVAL LINE_APPROVAL,    
-    XXHCM_OVERTIME_HEADERS_ALL.APPROVER_USER_NAME APPROVER_USER_NAME,    
-    XXHCM_OVERTIME_HEADERS_ALL.PAYROLL_TANS_STATUS PAYROLL_TANS_STATUS,    
-    XXHCM_OVERTIME_HEADERS_ALL.PAYROLL_CHECK PAYROLL_CHECK,    
-    XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE REQ_TYPE    
-FROM    
-    XXHCM_OVERTIME_HEADERS_ALL    
-WHERE    
-      XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE='BusinessTrip' and emp_id = :bind_empid  
-      and req_id not in (select buss_trav_req_num from xxhcm_overtime_details_all where buss_trav_req_num is not null)]]></SQLQuery>
+  <SQLQuery><![CDATA[SELECT          
+    XXHCM_OVERTIME_HEADERS_ALL.REQ_ID REQ_ID,          
+    XXHCM_OVERTIME_HEADERS_ALL.EMP_ID EMP_ID,          
+    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_NUMBER REQUEST_NUMBER,          
+    XXHCM_OVERTIME_HEADERS_ALL.REQUEST_DATE REQUEST_DATE,          
+    XXHCM_OVERTIME_HEADERS_ALL.STATUS STATUS,          
+    XXHCM_OVERTIME_HEADERS_ALL.LINE_APPROVAL LINE_APPROVAL,          
+    XXHCM_OVERTIME_HEADERS_ALL.APPROVER_USER_NAME APPROVER_USER_NAME,          
+    XXHCM_OVERTIME_HEADERS_ALL.PAYROLL_TANS_STATUS PAYROLL_TANS_STATUS,          
+    XXHCM_OVERTIME_HEADERS_ALL.PAYROLL_CHECK PAYROLL_CHECK,          
+    XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE REQ_TYPE          
+FROM          
+    XXHCM_OVERTIME_HEADERS_ALL          
+WHERE          
+      XXHCM_OVERTIME_HEADERS_ALL.REQ_TYPE='BusinessTrip' and emp_id = :bind_empid   
+      and req_id not in (select buss_trav_req_num from XXHCM_OVERTIME_HEADERS_ALL A,xxhcm_overtime_details_all B where a.req_id = b.req_id and buss_trav_req_num is not null and a.status not in ('Draft','REJECT'))]]></SQLQuery>
   <ViewAttribute
     Name="ReqId"
     IsUpdateable="false"

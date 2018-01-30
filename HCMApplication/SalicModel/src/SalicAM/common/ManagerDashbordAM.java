@@ -19,4 +19,9 @@ public interface ManagerDashbordAM extends ApplicationModule {
 
     void populateApproversForReqest(String reqStatus, String reqNumber, oracle.jbo.domain.Number empId, String reqType,
                                     oracle.jbo.domain.Number req_id);
+
+    void updateRequestForCWR(String reqStatus, String reqNumber, oracle.jbo.domain.Number empId, String reqType,
+                             oracle.jbo.domain.Number req_id);
+
+    void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged);
 }

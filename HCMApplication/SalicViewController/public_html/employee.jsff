@@ -141,7 +141,7 @@
                                 disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"/>
             <af:commandMenuItem text="Cancel" id="cmi7" actionListener="#{backingBeanScope.backing_employee.cancelOkRequest}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                disabled="#{ not (bindings.Status.inputValue eq 'APPROVE' or bindings.PayrollTansStatus.inputValue eq 'COMPLETED')}"/>
+                                disabled="#{ not (bindings.Status.inputValue eq 'APPROVE' and bindings.PayrollTansStatus.inputValue ne 'COMPLETED')}"/>
             <af:commandMenuItem text="Delete" id="cmi8"
                                 action="#{backingBeanScope.backing_employee.onCompleteDeleteReqACL}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
@@ -233,7 +233,7 @@
     <af:separator id="s2"/>
     <af:panelBox text="Request Details" id="pb1" inlineStyle="border-color:transparent;" styleClass="AFStretchWidth"
                  showDisclosure="false">
-      <f:facet name="toolbar"/>
+          <f:facet name="toolbar"/>
       <af:panelTabbed position="above" id="pt2" styleClass="AFStretchWidth">
         <af:showDetailItem id="tab1" text="Over Time Lines" styleClass="AFStretchWidth"
                            rendered="#{sessionScope.page eq 'ot'}">
@@ -812,7 +812,7 @@
             <f:facet name="toolbar"/>
             <af:panelFormLayout id="pfl7" maxColumns="2" rows="6" labelWidth="250px">
               <f:facet name="footer"/>
-              <af:panelLabelAndMessage label="Trip Type" id="plam13">
+                  <af:panelLabelAndMessage label="Trip Type" id="plam13">
                 <af:selectOneChoice value="#{bindings.TripType.inputValue}" label="Trip Type"
                                     shortDesc="#{bindings.TripType.hints.tooltip}" id="soc9" required="true"
                                     contentStyle="width:200px" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
@@ -820,7 +820,19 @@
                   <f:selectItems value="#{bindings.TripType.items}" id="si9"/>
                 </af:selectOneChoice>
               </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Airline Ticket Type" id="plam14">
+                  <af:panelLabelAndMessage label="Start Date" id="plam15">
+                    <af:inputDate value="#{bindings.StartDate.inputValue}"
+                                  shortDesc="#{bindings.StartDate.hints.tooltip}" id="id5" contentStyle="width:200px"
+                                  required="true"
+                                  valueChangeListener="#{backingBeanScope.backing_employee.onChangeStartDate}"
+                                  autoSubmit="true" minValue="#{backingBeanScope.backing_employee.minDate}"
+                                  disabled="#{sessionScope.mode=='edit'?'true':'false'}" label="Start Date"
+                                  simple="true">
+                      <f:validator binding="#{bindings.StartDate.validator}"/>
+                      <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
+                    </af:inputDate>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="Airline Ticket Type" id="plam14">
                 <af:selectOneChoice value="#{bindings.AirlineTicketType1.inputValue}" label="Airline Ticket Type"
                                     required="false" shortDesc="#{bindings.AirlineTicketType1.hints.tooltip}" id="soc17"
                                     contentStyle="width:200px" autoSubmit="true" disabled="true"
@@ -829,26 +841,6 @@
                                     simple="true">
                   <f:selectItems value="#{bindings.AirlineTicketType1.items}" id="si17"/>
                 </af:selectOneChoice>
-              </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Start Date" id="plam15">
-                <af:inputDate value="#{bindings.StartDate.inputValue}" shortDesc="#{bindings.StartDate.hints.tooltip}"
-                              id="id5" contentStyle="width:200px" required="true"
-                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeStartDate}"
-                              autoSubmit="true" minValue="#{backingBeanScope.backing_employee.minDate}"
-                              disabled="#{sessionScope.mode=='edit'?'true':'false'}" label="Start Date" simple="true">
-                  <f:validator binding="#{bindings.StartDate.validator}"/>
-                  <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
-                </af:inputDate>
-              </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="End Date" id="plam16">
-                <af:inputDate value="#{bindings.EndDate.inputValue}" shortDesc="#{bindings.EndDate.hints.tooltip}"
-                              id="id6" contentStyle="width:200px" required="true"
-                              valueChangeListener="#{backingBeanScope.backing_employee.onChangeEndDate}"
-                              autoSubmit="true" minValue="#{backingBeanScope.backing_employee.minDate}"
-                              disabled="#{sessionScope.mode=='edit'?'true':'false'}" label="End Date" simple="true">
-                  <f:validator binding="#{bindings.EndDate.validator}"/>
-                  <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
-                </af:inputDate>
               </af:panelLabelAndMessage>
               <af:panelLabelAndMessage label="Destination Category" id="plam17">
                 <af:selectOneChoice value="#{bindings.DestCategory.inputValue}" label="Destination Category"
@@ -883,7 +875,33 @@
                   <f:validator binding="#{bindings.DestCountryCity.validator}"/>
                 </af:selectOneChoice>
               </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Number of Days" id="plam18">
+                  <af:panelLabelAndMessage label="Exit Reentry Visa" id="plam22">
+                    <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}" label="Exit Reentry Visa"
+                                        required="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="soc11"
+                                        contentStyle="width:200px" simple="true">
+                      <f:selectItems value="#{bindings.ExitRerentryVisa.items}" id="si11"/>
+                    </af:selectOneChoice>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="Advance PerDiem" id="plam24">
+                    <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}" label="Advance PerDiem"
+                                        required="true" shortDesc="#{bindings.AdvPerdiem.hints.tooltip}" id="soc14"
+                                        contentStyle="width:200px"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}" simple="true">
+                      <f:selectItems value="#{bindings.AdvPerdiem.items}" id="si14"/>
+                    </af:selectOneChoice>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="End Date" id="plam16">
+                    <af:inputDate value="#{bindings.EndDate.inputValue}" shortDesc="#{bindings.EndDate.hints.tooltip}"
+                                  id="id6" contentStyle="width:200px" required="true"
+                                  valueChangeListener="#{backingBeanScope.backing_employee.onChangeEndDate}"
+                                  autoSubmit="true" minValue="#{backingBeanScope.backing_employee.minDate}"
+                                  disabled="#{sessionScope.mode=='edit'?'true':'false'}" label="End Date" simple="true">
+                      <f:validator binding="#{bindings.EndDate.validator}"/>
+                      <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
+                    </af:inputDate>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="Number of Days" id="plam18">
                 <af:inputText value="#{bindings.NumberOfDays.inputValue}" required="false"
                               columns="#{bindings.NumberOfDays.hints.displayWidth}"
                               maximumLength="#{bindings.NumberOfDays.hints.precision}"
@@ -894,35 +912,20 @@
                   <f:validator binding="#{bindings.NumberOfDays.validator}"/>
                 </af:inputText>
               </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Project Type" id="plam21">
+                  <af:panelLabelAndMessage label="Destination Visa Required" id="plam23">
+                    <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}"
+                                        label="Destination Visa Required" required="true"
+                                        disabled="#{sessionScope.mode=='edit'?'true':'false'}"
+                                        shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="soc12"
+                                        contentStyle="width:200px" simple="true">
+                      <f:selectItems value="#{bindings.DestVisaRequired.items}" id="si12"/>
+                    </af:selectOneChoice>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="Project Type" id="plam21">
                 <af:selectOneChoice value="#{bindings.ProjType.inputValue}" label="Project Type" required="true"
                                     shortDesc="#{bindings.ProjType.hints.tooltip}" id="soc15" contentStyle="width:200px"
                                     disabled="#{sessionScope.mode=='edit'?'true':'false'}" simple="true">
                   <f:selectItems value="#{bindings.ProjType.items}" id="si15"/>
-                </af:selectOneChoice>
-              </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Exit Reentry Visa" id="plam22">
-                <af:selectOneChoice value="#{bindings.ExitRerentryVisa.inputValue}" label="Exit Reentry Visa"
-                                    required="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                    shortDesc="#{bindings.ExitRerentryVisa.hints.tooltip}" id="soc11"
-                                    contentStyle="width:200px" simple="true">
-                  <f:selectItems value="#{bindings.ExitRerentryVisa.items}" id="si11"/>
-                </af:selectOneChoice>
-              </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Destination Visa Required" id="plam23">
-                <af:selectOneChoice value="#{bindings.DestVisaRequired.inputValue}" label="Destination Visa Required"
-                                    required="true" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                    shortDesc="#{bindings.DestVisaRequired.hints.tooltip}" id="soc12"
-                                    contentStyle="width:200px" simple="true">
-                  <f:selectItems value="#{bindings.DestVisaRequired.items}" id="si12"/>
-                </af:selectOneChoice>
-              </af:panelLabelAndMessage>
-              <af:panelLabelAndMessage label="Advance PerDiem" id="plam24">
-                <af:selectOneChoice value="#{bindings.AdvPerdiem.inputValue}" label="Advance PerDiem" required="true"
-                                    shortDesc="#{bindings.AdvPerdiem.hints.tooltip}" id="soc14"
-                                    contentStyle="width:200px" disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                    simple="true">
-                  <f:selectItems value="#{bindings.AdvPerdiem.items}" id="si14"/>
                 </af:selectOneChoice>
               </af:panelLabelAndMessage>
               <af:panelLabelAndMessage label="Trip Description" id="plam25">
@@ -1083,12 +1086,13 @@
                 </af:inputDate>
               </af:panelLabelAndMessage>
               <af:panelLabelAndMessage label="Airline Ticket Type" id="plam28">
-                <af:inputText value="#{bindings.AirlineTicketType.inputValue}" simple="true"
+                <af:inputText value="#{bindings.AirlineTicketType1.inputValue}" simple="true"
                               required="#{bindings.AirlineTicketType.hints.mandatory}"
                               columns="#{bindings.AirlineTicketType.hints.displayWidth}"
                               maximumLength="#{bindings.AirlineTicketType.hints.precision}"
+                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
                               shortDesc="#{bindings.AirlineTicketType.hints.tooltip}" id="inputText1"
-                              disabled="#{bindings.BussTravReqNumValue.inputValue == null}" contentStyle="width:200px"
+                               contentStyle="width:200px"
                               partialTriggers="soc16">
                   <f:validator binding="#{bindings.AirlineTicketType.validator}"/>
                 </af:inputText>
@@ -1661,7 +1665,7 @@
                 <af:outputText value="#{row.ApprByUserName}"
                                shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprByUserName.tooltip}" id="ot29"/>
               </af:column>
-              <af:column sortable="false" headerText="Approved Date" id="c60">
+              <af:column sortable="false" headerText="Action Date" id="c60">
                 <af:outputText value="#{row.ApprDate}"
                                shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.tooltip}" id="ot27">
                   <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.format}"/>
@@ -1671,7 +1675,7 @@
           </af:panelCollection>
         </af:showDetailItem>
         <af:showDetailItem text="Attachment" id="sdi2">
-          <af:panelCollection id="pc3" styleClass="AFStretchWidth">
+              <af:panelCollection id="pc3" styleClass="AFStretchWidth">
             <f:facet name="menus"/>
             <f:facet name="toolbar">
               <af:toolbar id="t6" flex="10">
@@ -1747,19 +1751,9 @@
               </af:column>
               <af:column sortProperty="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.name}" sortable="false"
                          headerText="Attachments" id="c14" width="200">
-                <af:inputText value="#{row.bindings.Attachment.inputValue}"
-                              label="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.label}"
-                              required="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.mandatory}"
-                              columns="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.displayWidth}"
-                              maximumLength="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.precision}"
-                              shortDesc="#{bindings.XxhcmMasterAttachment_VO2.hints.Attachment.tooltip}" id="it2"
-                              rendered="false"
-                              disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}">
-                  <f:validator binding="#{row.bindings.Attachment.validator}"/>
-                </af:inputText>
-                <af:inputFile label="Label 1" id="if1"
+                    <af:inputFile label="Label 1" id="if1"
                               valueChangeListener="#{backingBeanScope.backing_employee.OnFileUpload}" autoSubmit="true"
-                              disabled="#{bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':bindings.Status.inputValue eq 'Draft'?'false':bindings.Status.inputValue eq 'Pending Approval'?'true':'false'}"/>
+                              />
               </af:column>
               <af:column id="c17" headerText="Download" align="center" width="100">
                 <af:commandButton text="Download" partialTriggers="if1" id="cb9"/>

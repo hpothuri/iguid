@@ -151,5 +151,46 @@
         Name="req_id"
         Type="oracle.jbo.domain.Number"/>
     </Method>
+    <Method
+      Name="updateRequestForCWR"
+      MethodName="updateRequestForCWR">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqStatus"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="reqNumber"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="empId"
+        Type="oracle.jbo.domain.Number"/>
+      <Parameter
+        Name="reqType"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="req_id"
+        Type="oracle.jbo.domain.Number"/>
+    </Method>
+    <Method
+      Name="updateRequestReasonForCWR"
+      MethodName="updateRequestReasonForCWR">
+      <Return
+        Name="_return_type_"
+        Type="void"/>
+      <Parameter
+        Name="reqNumber"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="req_id"
+        Type="java.math.BigDecimal"/>
+      <Parameter
+        Name="reason"
+        Type="java.lang.String"/>
+      <Parameter
+        Name="empLogged"
+        Type="java.lang.String"/>
+    </Method>
   </ClientInterface>
 </AppModule>

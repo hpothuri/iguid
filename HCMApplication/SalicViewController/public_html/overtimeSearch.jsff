@@ -8,7 +8,7 @@
   <af:panelGroupLayout id="pgl2" styleClass="AFStretchWidth" layout="vertical" rendered="true">
         <af:popup childCreation="deferred" launcherVar="source" eventContext="launcher" autoCancel="disabled" id="reqStat" contentDelivery="lazyUncached"
                   popupFetchListener="#{OvertimeSearch.openRequestSummary}">
-          <af:dialog id="d1">
+          <af:dialog title="Request Status" type="none" id="d1">
             <af:region value="#{bindings.RequestStausTFxml1.regionModel}" id="r1"/>
             <f:facet name="buttonBar"/>
           </af:dialog>

@@ -81,8 +81,7 @@
       </nodeDefinition>
     </tree>
     <tree IterBinding="hrAdminObjROVO1Iterator" id="hrAdminObjROVO1">
-      <nodeDefinition DefName="SalicROVO.hrAdminObjROVO"
-                      Name="hrAdminObjROVO10">
+      <nodeDefinition DefName="SalicROVO.hrAdminObjROVO" Name="hrAdminObjROVO10">
         <AttrNames>
           <Item Value="RequestNumber"/>
           <Item Value="RequestDate"/>
@@ -95,6 +94,7 @@
           <Item Value="Description"/>
           <Item Value="ApproverUserName"/>
           <Item Value="ReqType"/>
+          <Item Value="ReqId"/>
         </AttrNames>
       </nodeDefinition>
     </tree>

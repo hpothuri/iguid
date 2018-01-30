@@ -94,6 +94,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         long pendingRequest = 0;
         ManagerDashBoardCountVORowImpl rowCountData = (ManagerDashBoardCountVORowImpl)getManagerDashBoardCountVO1().createRow();
         getManagerDashBoardCountVO1().insertRow(rowCountData);
+        getManagerDashBoardCountVO1().setMaxFetchSize(0);
         ADFContext aDFContext = ADFContext.getCurrent();
         BigDecimal empId = (BigDecimal)aDFContext.getPageFlowScope().get("mempId");
         ViewObjectImpl mgrVo1=this.getmanagerDashbaordROVO1();
@@ -724,6 +725,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     
                     if(reqPage.equalsIgnoreCase("letter")){
                         String letter_to = null;
+                        String letter_to_ar = null;
+                        String letter_to_ot = null;
+                        String letter_to_ot_ar = null;
                             String letterType = null;
                             BigDecimal empPr = null;
                     try {
@@ -731,11 +735,17 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                                                    .getConnection()
                                                                    .createStatement();
                                 String query =
-                            "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE,LETTER_TO,OTHER,c.emp_number from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b,xxstg_employee_details c where a.req_id= b.req_id and b.emp_id = c.emp_id and b.REQ_ID=" +
+                            "select (select dtl.lookup_value_name_disp from xxfnd_lookup_types_t hdr,xxfnd_lookup_values_t dtl where hdr.lookup_type_id = dtl.lookup_type_id and  hdr.lookup_type_name = 'LETTER_TYPE' and dtl.lookup_value_name=LETTER_TYPE) LETTER_TYPE," +
+                                    "LETTER_TO,OTHER,OTHER1,c.emp_number, (select arbname FROM XXSTG_HRLETTERDTLS WHERE ENGNAME = LETTER_TO) LETTER_AR " +
+                                    " from XXHCM_OVERTIME_DETAILS_ALL a, xxhcm_overtime_headers_all b,xxstg_employee_details c where a.req_id= b.req_id and b.emp_id = c.emp_id and b.REQ_ID=" +
                                     emailReq.getRequestId();
+                        
                                 ResultSet rs = stmt.executeQuery(query);
                         rs.next();
                                 letter_to  = rs.getString("LETTER_TO");    
+                            letter_to_ar = rs.getString("LETTER_AR"); 
+                        letter_to_ot = rs.getString("OTHER1");
+                            letter_to_ot_ar = rs.getString("OTHER");
                         letterType = rs.getString("LETTER_TYPE");
                             empPr = rs.getBigDecimal("emp_number");
                             System.out.println("emp id =>"+empPr+" letter to==>"+letter_to+" letter type==>"+letterType);
@@ -745,7 +755,11 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             }
                     
                             ScheduleServiceClient ssc = new ScheduleServiceClient();
-                            ssc.scheduleReportForHrLetter(empPr.toString(), letter_to,letterType);
+                            if(letter_to.equalsIgnoreCase("OTHERS")){
+                            ssc.scheduleReportForHrLetter(empPr.toString(), letter_to_ot,letter_to_ot_ar,letterType);
+                            }else{
+                                ssc.scheduleReportForHrLetter(empPr.toString(), letter_to,letter_to_ar,letterType);
+                            }
                         }
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
@@ -1328,7 +1342,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
 
                         //Code for Sending email for second approver
                         if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem))){
-                        GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+                            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                         }
                         if(jobLevelInt == 2){     
                             
@@ -1361,8 +1375,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
-                        //Code for Sending email for second approver
+                        if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem))){
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+                        }
                             }
                         }
                     }                    
@@ -2163,5 +2178,65 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
      */
     public FetchAdvPerdiemVOImpl getFetchAdvPerdiemVO1() {
         return (FetchAdvPerdiemVOImpl) findViewObject("FetchAdvPerdiemVO1");
+    }
+       
+    public Integer getCurrentApprForRequest(BigDecimal req_id,String empLogged){
+        Integer maxLevel = 0;
+        try {
+            Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                               .getConnection()
+                                               .createStatement();
+            String query =
+                "SELECT xxsalic_hcm_PKG.get_current_approval_level(" + req_id +
+                          "," + empLogged + ") levelapr from dual";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            maxLevel = rs.getInt("levelapr");
+        } catch (SQLException sqle) {
+        }
+        if(maxLevel!=null){
+            maxLevel = maxLevel;
+        }else{
+            maxLevel = 1;
+        }
+        return maxLevel;
+        
+    }
+    public void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged) {
+        Integer aprLevel = getCurrentApprForRequest(req_id,empLogged);
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empLogged);
+        RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
+        //Write condition in SQL query format
+        rq.setWhereClause("ApproverId='" + empLogged +
+                          "' and Active = 'A' and ApproveLevel = "+aprLevel);
+        Row filteredRows[] = getXxQpActionHistoryTVO1().getFilteredRows(rq);
+
+        for (Row row : filteredRows) {
+            row.setAttribute("ApproverComments", reason);
+        }
+    }
+    public void updateRequestForCWR(String reqStatus,String reqNumber,oracle.jbo.domain.Number empId,String reqType,oracle.jbo.domain.Number req_id){
+    //        try {
+    //                    Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+    //                                                       .getConnection()
+    //                                                       .createStatement();
+    //                    String query =  " update  REQ_STATUS = ''"+reqStatus+"'', Active = 'N' XX_QP_ACTION_HISTORY_T where header_id = "+req_id.toString()+" AND Active = 'Y'";
+    //                    int count = stmt.executeUpdate(query);
+    //
+    //            } catch (SQLException sqle) {
+    //            throw new JboException("Error updating the action history while "+reqStatus+" operatrion");
+    //            }
+    //        populateApproversForReqest(reqStatus,reqNumber,empId,reqType,req_id);
+    //
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("Active", "A");
+    //        RowSetIterator rsi = getXxQpActionHistoryTVO1().createRowSetIterator("cwr");
+    //        rsi.reset();
+        //while(rsi.hasNext()){
+        for (Row row : rows){
+            //XxQpActionHistoryTVORowImpl row = (XxQpActionHistoryTVORowImpl)rsi.next();
+            //row.setAttribute("ReqStatus",reqStatus);
+            row.setAttribute("Active","N");
+        }
+        //rsi.closeRowSetIterator();
     }
 }

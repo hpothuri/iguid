@@ -10,7 +10,8 @@
   CustomQuery="true"
   PageIterMode="Full"
   FetchMode="FETCH_AS_NEEDED"
-  Passivate="All">
+  Passivate="All"
+  FetchSize="26">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
