@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="RequestStausTFxml">
+    <default-activity>getRequestActionHist</default-activity>
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+    <input-parameter-definition id="__4">
+      <name>reqNumber</name>
+      <value>#{pageFlowScope.RequestStatusPSB.reqNumber}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__3">
+      <managed-bean-name>RequestStatusPSB</managed-bean-name>
+      <managed-bean-class>SalicView.backing.RequestStatusPSB</managed-bean-class>
+      <managed-bean-scope>pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="reqStatus">
+      <page>/reqStatus.jsff</page>
+    </view>
+    <method-call id="getRequestActionHist">
+      <method>#{bindings.getRequestActionHist.execute}</method>
+      <outcome>
+        <fixed-outcome>getRequestActionHist</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__1">
+      <from-activity-id>getRequestActionHist</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>getRequestActionHist</from-outcome>
+        <to-activity-id>reqStatus</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>
