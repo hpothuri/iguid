@@ -1701,8 +1701,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select (total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
-                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))) Grand_Total " +
+            tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
             
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -1724,6 +1724,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             
             tableContentCols.add("Invoice Number");
             tableContentCols.add("Invoice Date");
+            tableContentCols.add("Invoice Amount");
             tableContentCols.add("Child Name");
             tableContentCols.add("School Grade");
             tableContentCols.add("Actual Amount");
@@ -1736,12 +1737,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,INV_TOTAL,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("INV_NUM", "STRING");
             tableColumnDatatypes.put("INV_DATE", "DATE");
+            tableColumnDatatypes.put("INV_TOTAL", "STRING");
             tableColumnDatatypes.put("CHILD", "STRING");
             tableColumnDatatypes.put("GRADE", "STRING");
             tableColumnDatatypes.put("ACT_AMT", "STRING");
@@ -1750,6 +1752,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("SEMESTER", "STRING");
             tableColumnDatatypes.put("MAX_AMT", "STRING");
             tableColumnDatatypes.put("AVL_AMT", "STRING");
+            
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
             emailTableDetails.add(tableDetail);
@@ -1815,17 +1818,22 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Advance Amount");
+            tableContentCols.add("Salary Date");
             tableContentCols.add("Comments");
+            tableContentCols.add("No. of Months");
             
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select ADV_AMT,SALARY_DATE,COMMENTS,MONTHS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("ADV_AMT", "STRING");
+            tableColumnDatatypes.put("SALARY_DATE", "DATE");
             tableColumnDatatypes.put("COMMENTS", "STRING");
+            tableColumnDatatypes.put("MONTHS", "STRING");
+            
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
             emailTableDetails.add(tableDetail);
@@ -2487,8 +2495,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select (total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
-                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))) Grand_Total " +
+            tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
             
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -2510,6 +2518,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             
             tableContentCols.add("Invoice Number");
             tableContentCols.add("Invoice Date");
+            tableContentCols.add("Invoice Amount");
             tableContentCols.add("Child Name");
             tableContentCols.add("School Grade");
             tableContentCols.add("Actual Amount");
@@ -2522,12 +2531,13 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select INV_NUM,INV_DATE,INV_TOTAL,(select display_name from XXSTG_PERSON where person_id = contactpersonid) CHILD,GRADE,ACT_AMT,SCHOOL,AGE,SEMESTER,MAX_AMT,AVL_AMT from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("INV_NUM", "STRING");
             tableColumnDatatypes.put("INV_DATE", "DATE");
+            tableColumnDatatypes.put("INV_TOTAL", "STRING");
             tableColumnDatatypes.put("CHILD", "STRING");
             tableColumnDatatypes.put("GRADE", "STRING");
             tableColumnDatatypes.put("ACT_AMT", "STRING");
@@ -2536,6 +2546,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             tableColumnDatatypes.put("SEMESTER", "STRING");
             tableColumnDatatypes.put("MAX_AMT", "STRING");
             tableColumnDatatypes.put("AVL_AMT", "STRING");
+            
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
             emailTableDetails.add(tableDetail);
@@ -2601,17 +2612,22 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
             tableContentCols.add("Advance Amount");
+            tableContentCols.add("Salary Date");
             tableContentCols.add("Comments");
+            tableContentCols.add("No. of Months");
             
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select ADV_AMT,COMMENTS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
+            tableDetail.setDetailsQuery("select ADV_AMT,SALARY_DATE,COMMENTS,MONTHS from XXHCM_OVERTIME_DETAILS_ALL where REQ_ID=" +
                                      emailReq.getRequestId());
 
             tableColumnDatatypes = new LinkedHashMap<String, String>();
             tableColumnDatatypes.put("ADV_AMT", "STRING");
+            tableColumnDatatypes.put("SALARY_DATE", "DATE");
             tableColumnDatatypes.put("COMMENTS", "STRING");
+            tableColumnDatatypes.put("MONTHS", "STRING");
+            
             tableDetail.setTableColumnDatatypes(tableColumnDatatypes);
             
             emailTableDetails.add(tableDetail);
