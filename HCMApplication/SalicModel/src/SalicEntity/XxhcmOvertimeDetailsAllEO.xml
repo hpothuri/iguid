@@ -109,7 +109,12 @@
       Inverse="false"
       MinValue="0"
       MaxValue="24"
-      Description="Validating weekend hours"/>
+      Description="Validating weekend hours">
+      <validation:OnCondition
+        Name="OnConditionScript"
+        trustMode="untrusted"
+        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+    </validation:RangeValidationBean>
     <validation:RangeValidationBean
       Name="OvertimeHoursRule0"
       ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_0"
@@ -118,7 +123,12 @@
       Inverse="false"
       MinValue="0"
       MaxValue="16"
-      Description="Validating weekday hours"/>
+      Description="Validating weekday hours">
+      <validation:OnCondition
+        Name="OnConditionScript"
+        trustMode="untrusted"
+        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
+    </validation:RangeValidationBean>
   </Attribute>
   <Attribute
     Name="OvertimeDate"

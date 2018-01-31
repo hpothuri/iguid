@@ -26,6 +26,112 @@
                                                  id="pd2"
                                                  inlineStyle="width:auto;height:200px;"
                                                  columns="5" rowHeight="195px">
+                                    <af:panelBox text="PanelBox2" id="pb2" type="stretch" showDisclosure="false"
+                                                 showHeader="never" inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl4" inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Payroll Transfer Pending" id="ol3"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl5" layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10" height="10" id="s2"/>
+                                                      <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
+                                                                      id="ol4" value="#{pageFlowScope.pending} "/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl6" halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue" id="cb2"
+                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterPendingStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox3" id="pb3" type="stretch" showDisclosure="false"
+                                                 showHeader="never" inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl7" layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Payroll Transfer Completed" id="ol5"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl8" layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10" height="10" id="s3"/>
+                                                      <af:outputLabel value="#{pageFlowScope.approved}" id="ol6"
+                                                                      inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl9" halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue" id="cb3"
+                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterCompletedStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox4" id="pb4" type="stretch" showDisclosure="false"
+                                                 showHeader="never" inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl10" layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Payroll Transfer In-Process" id="ol7"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl11" layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10" height="10" id="s4"/>
+                                                      <af:outputLabel value="#{pageFlowScope.rejected}" id="ol8"
+                                                                      inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl12" halign="center">
+                                                      <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue" id="cb4"
+                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterInProgressStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
+                                    <af:panelBox text="PanelBox5" id="pb5" type="stretch" showDisclosure="false"
+                                                 showHeader="never" inlineStyle="width:220.0px; height:160px;">
+                                          <af:panelGroupLayout id="pgl13" layout="vertical"
+                                                               inlineStyle="height:inherit; width:inherit;">
+                                                <af:outputLabel value="Payroll Transfer Error" id="ol9"
+                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
+                                                                styleClass="InfoTileTitle"/>
+                                                <af:panelGroupLayout id="pgl14" layout="vertical"
+                                                                     styleClass="infolet-content infolet-padding"
+                                                                     halign="center">
+                                                      <af:spacer width="10" height="10" id="s5"/>
+                                                      <af:outputLabel value="#{pageFlowScope.PayrollError}" id="ol10"
+                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
+                                                </af:panelGroupLayout>
+                                                <af:panelGroupLayout id="pgl15" halign="center">
+                                                      <af:commandButton text=""
+                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
+                                                                        icon="/images/func_arrowheaddown_16_onb.png"
+                                                                        styleClass="background-blue" id="cb5"
+                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterErrorStatus}"
+                                                                        clientComponent="true">
+                                                            <af:clientListener method="infoletChangeBgColor"
+                                                                               type="click"/>
+                                                      </af:commandButton>
+                                                </af:panelGroupLayout>
+                                          </af:panelGroupLayout>
+                                    </af:panelBox>
                                     <af:panelBox text="PanelBox1" id="pb1"
                                                  type="stretch"
                                                  showDisclosure="false"
@@ -126,156 +232,6 @@
                                                                         icon="/images/func_arrowheaddown_16_onb.png"
                                                                         styleClass="background-blue"
                                                                         actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterTotalStatus}">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox2" id="pb2"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl4"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Payroll Transfer Pending"
-                                                                id="ol3"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
-                                                                styleClass="InfoTileTitle"/>
-                                                <af:panelGroupLayout id="pgl5"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s2"/>
-                                                      <af:outputLabel inlineStyle=" color:Red; font-weight:600; font-size:medium;font-size:x-large;"
-                                                                      id="ol4"
-                                                                      value="#{pageFlowScope.pending} "/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl6"
-                                                                     halign="center">
-                                                      <af:commandButton text=""
-                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb2"
-                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterPendingStatus}"
-                                                                        clientComponent="true">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox3" id="pb3"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl7"
-                                                               layout="vertical"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Payroll Transfer Completed"
-                                                                id="ol5"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:14px;"
-                                                                styleClass="InfoTileTitle"/>
-                                                <af:panelGroupLayout id="pgl8"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s3"/>
-                                                      <af:outputLabel value="#{pageFlowScope.approved}"
-                                                                      id="ol6"
-                                                                      inlineStyle=" color:Blue; font-weight:600; font-size:medium;font-size:x-large;"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl9"
-                                                                     halign="center">
-                                                      <af:commandButton text=""
-                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb3"
-                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterCompletedStatus}"
-                                                                        clientComponent="true">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox4" id="pb4"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl10"
-                                                               layout="vertical"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Payroll Transfer In-Process"
-                                                                id="ol7"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:0px;"
-                                                                styleClass="InfoTileTitle"/>
-                                                <af:panelGroupLayout id="pgl11"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s4"/>
-                                                      <af:outputLabel value="#{pageFlowScope.rejected}"
-                                                                      id="ol8"
-                                                                      inlineStyle=" color:Olive; font-weight:600; font-size:medium;font-size:x-large;"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl12"
-                                                                     halign="center">
-                                                      <af:commandButton inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb4"
-                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterInProgressStatus}"
-                                                                        clientComponent="true">
-                                                            <af:clientListener method="infoletChangeBgColor"
-                                                                               type="click"/>
-                                                      </af:commandButton>
-                                                </af:panelGroupLayout>
-                                          </af:panelGroupLayout>
-                                    </af:panelBox>
-                                    <af:panelBox text="PanelBox5" id="pb5"
-                                                 type="stretch"
-                                                 showDisclosure="false"
-                                                 showHeader="never"
-                                                 inlineStyle="width:220.0px; height:160px;">
-                                          <af:panelGroupLayout id="pgl13"
-                                                               layout="vertical"
-                                                               inlineStyle="height:inherit; width:inherit;">
-                                                <af:outputLabel value="Payroll Transfer Error"
-                                                                id="ol9"
-                                                                inlineStyle="margin-top:10px; font-size:small; font-weight:900;margin-left:8px;"
-                                                                styleClass="InfoTileTitle"/>
-                                                <af:panelGroupLayout id="pgl14"
-                                                                     layout="vertical"
-                                                                     styleClass="infolet-content infolet-padding"
-                                                                     halign="center">
-                                                      <af:spacer width="10"
-                                                                 height="10"
-                                                                 id="s5"/>
-                                                      <af:outputLabel value="#{pageFlowScope.PayrollError}"
-                                                                      id="ol10"
-                                                                      inlineStyle=" color:Green; font-weight:600; font-size:medium;font-size:x-large;"/>
-                                                </af:panelGroupLayout>
-                                                <af:panelGroupLayout id="pgl15"
-                                                                     halign="center">
-                                                      <af:commandButton text=""
-                                                                        inlineStyle="width:220.0px; background-color:#e4e8ea;margin-top:46px;"
-                                                                        icon="/images/func_arrowheaddown_16_onb.png"
-                                                                        styleClass="background-blue"
-                                                                        id="cb5"
-                                                                        actionListener="#{backingBeanScope.backing_payRollPage.onClickFilterErrorStatus}"
-                                                                        clientComponent="true">
                                                             <af:clientListener method="infoletChangeBgColor"
                                                                                type="click"/>
                                                       </af:commandButton>

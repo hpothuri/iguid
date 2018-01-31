@@ -917,7 +917,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-                                if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)) {
+                                if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup) && reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {
                                     if (reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {
                                         FetchAdvPerdiemVOImpl advPerdiemVO = getFetchAdvPerdiemVO1();
                                         advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
@@ -948,6 +948,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 }
                 //Custom Approval group
                 if(ApprGroupId.compareTo(new BigDecimal(100011)) == 0){
+                    
                     ViewObject approvgrpDet = getgetApprovalGrpDetailsROVO1();
                     approvgrpDet.setNamedWhereClauseParam("p_cust_group_id", CustApprGroupId);
                     approvgrpDet.executeQuery(); 
@@ -982,6 +983,19 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         EmailRequestPojo emailReq = new EmailRequestPojo();
                         emailReq.setToEmail(to);
                         emailReq.setRequestNo(reqNumber);
+                        String advPerdiem = null;
+                        if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)) {
+                            if (reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {
+                                FetchAdvPerdiemVOImpl advPerdiemVO = getFetchAdvPerdiemVO1();
+                                advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
+                                advPerdiemVO.executeQuery();
+                                if (advPerdiemVO.first() != null) {
+                                    advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
+                                    
+                                }
+
+                            }
+                        }
                         emailReq.setToEmpName(grpRec.getEmployeeName());
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
@@ -994,6 +1008,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
+                        if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                     }
                     rsigrpDet.closeRowSetIterator();
@@ -2041,7 +2056,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                             emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
             
                             //Code for Sending email for second approver
-                            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+                            //GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                         }
                     }
                 }
@@ -2050,11 +2065,11 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             //to the employee and other managers who already approved
             for(Row row : rs)
             {              
-                if(row.getAttribute("ApproverFlag") != null){
+                //if(row.getAttribute("ApproverFlag") != null){
                     String email = (String)row.getAttribute("ApproverEmail");
                     toArray.add(email);
                     approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
-                }
+                //}
             }
             
             
@@ -2087,10 +2102,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             toRecepients = new ArrayList<String>();
             
             //        getXxQpActionHistoryTVO1().executeQuery();
-            
+            int actionSet = getMaximumActionSetForRequest(emailReq.getRequestId().toString()) -1;
             String approverName = "";
             
-            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", new BigDecimal(1));
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ActionSet", actionSet);
             if(rows != null && rows.length > 0){
                 for(Row row : rows){
                     approverName = (String)row.getAttribute("ApproverUserName");

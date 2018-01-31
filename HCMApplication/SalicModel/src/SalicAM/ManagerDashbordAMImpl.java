@@ -715,14 +715,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName(emailReq.getEmpName());
-                    if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                    //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                     emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
                     emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
-                    }
-                    else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                        emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is cancelled.");
-                        emailReq.setMessage("Your <b> "+reqType+" request </b> is cancelled with hereunder information:");
-                    }
+//                    }
+//                    else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                        emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is cancelled.");
+//                        emailReq.setMessage("Your <b> "+reqType+" request </b> is cancelled with hereunder information:");
+//                    }
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -1818,6 +1818,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
+                        if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                     }
                     rsigrpDet.closeRowSetIterator();

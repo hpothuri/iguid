@@ -1619,7 +1619,7 @@ public class Employee {
                 //XxhcmAttachmentsTVO1Iterator
                 //if(ADFUtils.findIterator("XxhcmOtherExpenseTVO1Iterator").getEstimatedRowCount() > 0){
                     if(ADFUtils.findIterator("XxhcmAttachmentsTVO1Iterator").getEstimatedRowCount() ==0){
-                     JSFUtils.addFacesErrorMessage("Please add attachments for expense records");
+                     JSFUtils.addFacesErrorMessage("Attachment of trip report is mandtory");
                         isError = true;
                         isValidated = false;
                      returnActivity = null;   

@@ -701,5 +701,8 @@
          <NamedData NDName="reason" NDType="java.lang.String"/>
          <NamedData NDName="empLogged" NDType="java.lang.String"/>
       </methodAction>
+      <action IterBinding="XxhcmOtherExpenseTVO1Iterator" id="Delete5"
+              InstanceName="overTimeAMDataControl.XxhcmOtherExpenseTVO1" DataControl="overTimeAMDataControl"
+              RequiresUpdateModel="false" Action="removeCurrentRow"/>
    </bindings>
 </pageDefinition>
