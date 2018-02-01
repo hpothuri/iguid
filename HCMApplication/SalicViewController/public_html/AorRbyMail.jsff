@@ -3,7 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core">
   <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
     <f:facet name="pageContents">
-      <af:outputText value="The request is successfully #{param.appOrRej eq 'R' ? 'Rejected' : 'Approved'}" id="ot1"/>
+      <af:outputText value="The request is successfully #{param.appOrRej eq 'R' ? 'Rejected' : 'Approved'}" id="ot1" visible="#{sessionScope.mailFlag ne 'N'}"/>
+      <af:outputText value="The request was already processed" id="ot2" visible="#{sessionScope.mailFlag eq 'N'}"/>
     </f:facet>
     <f:facet name="footerStart"/>
     <f:facet name="footer"/>

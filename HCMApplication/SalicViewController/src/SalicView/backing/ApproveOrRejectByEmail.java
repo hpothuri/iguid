@@ -37,11 +37,17 @@ public class ApproveOrRejectByEmail {
         oracle.jbo.Row rows[] = mgrVo.getFilteredRows("ReqId", new BigDecimal(reqId));
         if(rows != null && rows.length > 0){
             mgrVo.setCurrentRow(rows[0]);
-            if(appOrRejFlag != null && "A".equals(appOrRejFlag)){
-                approveACL(reqId,appOrRejFlag,approverId);
+            String currApprFlag = (String) rows[0].getAttribute("ApproverFlag");
+            if(currApprFlag != null && "P".equalsIgnoreCase(currApprFlag)){
+                if(appOrRejFlag != null && "A".equals(appOrRejFlag)){
+                    approveACL(reqId,appOrRejFlag,approverId);
+                }
+                else if(appOrRejFlag != null && "R".equals(appOrRejFlag)){
+                    rejectACL(reqId, appOrRejFlag, approverId);
+                }
             }
-            else if(appOrRejFlag != null && "R".equals(appOrRejFlag)){
-                rejectACL(reqId, appOrRejFlag, approverId);
+            else{
+                ADFUtils.setEL("#{sessionScope.mailFlag}", "N");
             }
         }
     }
