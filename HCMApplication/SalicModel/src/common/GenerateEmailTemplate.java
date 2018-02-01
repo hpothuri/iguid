@@ -66,6 +66,18 @@ public class GenerateEmailTemplate {
             if (tableDetails != null && tableDetails.size() > 0) {
                 for (EmailTableDetailsPojo tableDetail : tableDetails) {
                     String linedetailsQuery = tableDetail.getDetailsQuery();
+                    if (linedetailsQuery != null) {
+                        ResultSet resultSet2 = statement.executeQuery("select count(*) from ("+linedetailsQuery+")");
+                        int size= 0;
+                        if (resultSet2 != null)   
+                        { 
+                            resultSet2.next();
+                            size = resultSet2.getInt(1);
+                        }
+                        if(size == 0){
+                            continue;
+                        }
+                    }
                     String tableLabel = tableDetail.getTableLabel();
                     emailBody = emailBody + (tableLabel != null ? "<b>"+tableLabel+"</b>" + "<br>" : "") + 
                         "<table style='width:800px;height:150px;border:2px solid black;font-size:14px;font-family:arial;border-collapse:collapse' border=1 ><tr style='background-color:#D6EAF8;'><th style='font-weight:bolder;'>Sr.#</th>";
@@ -245,13 +257,14 @@ public class GenerateEmailTemplate {
                     e.printStackTrace();
                 }
             }
-            
+
+            Statement statement1 = dbTrans.createStatement(0);
             try {
                 String query =
                     "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_overtime_details_all b, xxhcm_other_expense c, xxhcm_attachment d\n" + 
                     "where a.req_id = b.req_id and b.req_dtls_id = c.req_dtls_id and c.expense_id = d.expense_id and a.req_id =  " +
                     reqId;
-                ResultSet resultSet1 = statement.executeQuery(query);
+                ResultSet resultSet1 = statement1.executeQuery(query);
                 while (resultSet1.next()) {
                     String fileName = resultSet1.getString(1);
                     String fileType = resultSet1.getString(2);
@@ -265,7 +278,7 @@ public class GenerateEmailTemplate {
                 e.printStackTrace();
             } finally {
                 try {
-                    statement.close();
+                    statement1.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
