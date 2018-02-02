@@ -24,9 +24,10 @@
     Name="bind_date"
     Kind="where"
     Type="java.sql.Date"/>
-  <SQLQuery><![CDATA[select sum(overtime_hours) totalhrs from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b   
-where a.req_id = b.req_id and a.req_type = 'ot' and   
-to_char(to_date(overtime_date,'dd-MON-yyyy'),'MON') = to_char(to_date(:bind_date,'dd-MON-yyyy'),'MON')   
+  <SQLQuery><![CDATA[select sum(overtime_hours) totalhrs from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b    
+where a.req_id = b.req_id and a.req_type = 'ot' and    
+to_char(to_date(overtime_date,'dd-MON-yyyy'),'MON') = to_char(to_date(:bind_date,'dd-MON-yyyy'),'MON')    
+and to_char(to_date(overtime_date,'dd-MON-yyyy'),'YYYY') = to_char(to_date(:bind_date,'dd-MON-yyyy'),'YYYY') 
 and emp_id = :bind_empid and a.status in ('APPROVE','Pending Approval')]]></SQLQuery>
   <ViewAttribute
     Name="Totalhrs"

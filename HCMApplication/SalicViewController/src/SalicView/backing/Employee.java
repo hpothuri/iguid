@@ -1069,36 +1069,89 @@ public class Employee {
             ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
         BigDecimal totlHrs = new BigDecimal(0);
         java.sql.Date overtimeDate = (java.sql.Date)ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getCurrentRow().getAttribute("OvertimeDate");
-        RowSetIterator rsi = lineVO1.createRowSetIterator("total");
+        String err = null;
         int month = overtimeDate.getMonth();
         String[] months = {"January", "February",
               "March", "April", "May", "June", "July",
               "August", "September", "October", "November",
               "December"};
-
+              int i = 0; 
               String monthStr = months[month];
-        System.out.println("Month selected is ==>"+monthStr);
-        while(rsi.hasNext()){
-            oracle.jbo.domain.Number hrs = (oracle.jbo.domain.Number)rsi.next().getAttribute("OvertimeHours");
-            totlHrs = totlHrs.add(hrs.bigDecimalValue());
-        }
-        rsi.closeRowSetIterator();
+              int yearToCheck = 0;
+              for(String month1 : months)      {
+                  totlHrs = new BigDecimal(0);
+                  RowSetIterator rsi = lineVO1.createRowSetIterator("total");
+                  java.sql.Date otdate = null;
+                  i = i + 1;     
+                  System.out.println("Month selected is ==>"+month1);
+                  while(rsi.hasNext()){
+                      Row row = rsi.next();
+                      Calendar calendar = Calendar.getInstance();
+                      otdate = (java.sql.Date)row.getAttribute("OvertimeDate");
+                      
+                      String monthS = getMonthFromSqlDate(otdate);
+                      if(month1.equalsIgnoreCase(monthS)){
+                      yearToCheck = getYearFromSqlDate(otdate);
+                      oracle.jbo.domain.Number hrs = (oracle.jbo.domain.Number)row.getAttribute("OvertimeHours");
+                     
+                      totlHrs = totlHrs.add(hrs.bigDecimalValue());
+                      }
+                  }
+                  rsi.closeRowSetIterator();
+                  if(totlHrs.compareTo(new BigDecimal(0)) == 1){
+                  ViewObject countcheckVO =
+                      ADFUtils.findIterator("OvertimeHoursForEmpROVO1Iterator").getViewObject();
+                  countcheckVO.setNamedWhereClauseParam("bind_empid",empId.bigDecimalValue());
+                  //bind_date
+                  Calendar c = Calendar.getInstance();    
+                  c.set(yearToCheck,i-1,1); //------>
+                  c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+                  
+                  countcheckVO.setNamedWhereClauseParam("bind_date",new java.sql.Date(c.getTimeInMillis()));
+                  countcheckVO.executeQuery();
+                  BigDecimal count = (BigDecimal)countcheckVO.first().getAttribute("Totalhrs");
+                  totlHrs = totlHrs.add(count!=null ? count : new BigDecimal(0));
+                  }
+                  if(totlHrs.compareTo(new BigDecimal(40)) == 1){
+                      err = "You have exceeded 40 hours in the "+month1+" month. Total Overtime hours booked is : "+totlHrs;
+                     break;
+                     
+                  }
+              }
         
-        ViewObject countcheckVO =
-            ADFUtils.findIterator("OvertimeHoursForEmpROVO1Iterator").getViewObject();
-        countcheckVO.setNamedWhereClauseParam("bind_empid",empId.bigDecimalValue());
-        //bind_date
-        countcheckVO.setNamedWhereClauseParam("bind_date",overtimeDate);
-        countcheckVO.executeQuery();
-        BigDecimal count = (BigDecimal)countcheckVO.first().getAttribute("Totalhrs");
-        totlHrs = totlHrs.add(count!=null ? count : new BigDecimal(0));
-        if(totlHrs.compareTo(new BigDecimal(40)) == 1){
-            
-           return "You have exceeded 40 hours in the "+monthStr+" month";
+        if(err!=null){            
+           return err;
         }
-        return errorMsg;
+        return err;
     }
     
+    public String getMonthFromSqlDate(java.sql.Date dates){
+        String[] chkmonths = {"January", "February",
+              "March", "April", "May", "June", "July",
+              "August", "September", "October", "November",
+              "December"};
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date otdate = dates;
+        Date date = calendar.getTime();
+        date.setTime(otdate.getTime());
+        calendar.setTime(date);
+        int monthn = calendar.get(Calendar.MONTH);
+        String monthS = chkmonths[monthn];
+        return chkmonths[monthn];
+    }
+    
+    
+    public int getYearFromSqlDate(java.sql.Date dates){
+        
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date otdate = dates;
+        Date date = calendar.getTime();
+        date.setTime(otdate.getTime());
+        calendar.setTime(date);
+        int yearn = calendar.get(Calendar.YEAR);
+        
+        return yearn;
+    }
     public String validateEmpBusinessTrip(oracle.jbo.domain.Number empId){
         String errorMsg = null;
         
@@ -1829,7 +1882,8 @@ public class Employee {
                 otPersonId = (BigDecimal)hdr2.first().getAttribute("PersonId");
             }
             if(otPersonId!=null){
-                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Over Time cannot be raised on approved leave period",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
+                String leavePeriod = (String)hdr2.first().getAttribute("AnnualLeave");
+                JSFUtils.addComponentFacesMessage(FacesMessage.SEVERITY_ERROR,"Over Time cannot be raised on approved leave period("+leavePeriod+")",dayy.getComponent().getClientId(FacesContext.getCurrentInstance()));
                 
                 //lineVO.getCurrentRow().setAttribute("OvertimeDate", null);
                 //RichInputDate otdate = (RichInputDate)dayy.getComponent();
@@ -4360,7 +4414,7 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
         if(reqStatus == null || (reqStatus!=null && reqStatus.equalsIgnoreCase("New"))){
             return "New";
         }
-        if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDRAWN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO"))){
+        if(reqStatus.equalsIgnoreCase("Draft") && reqActionStatus != null && (reqActionStatus.equalsIgnoreCase("Draft")||reqActionStatus.equalsIgnoreCase("WITHDRAWN") || reqActionStatus.equalsIgnoreCase("REQUESTMOREINFO") | reqActionStatus.equalsIgnoreCase("DELETED"))){
             return "Draft";
         }
         // Cancelled, Pending Approval

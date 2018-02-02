@@ -24,7 +24,7 @@
     Name="bind_date"
     Kind="where"
     Type="java.sql.Date"/>
-  <SQLQuery><![CDATA[select person_id from xxstg_absence where person_id =:bind_empid and :bind_date between to_date(start_date,'dd-mm-yyyy') and to_date(end_date,'dd-mm-yyyy')]]></SQLQuery>
+  <SQLQuery><![CDATA[select person_id,Annual_leave from xxstg_absence where person_id =:bind_empid and :bind_date between to_date(start_date,'dd-mm-yyyy') and to_date(end_date,'dd-mm-yyyy')]]></SQLQuery>
   <ViewAttribute
     Name="PersonId"
     IsUpdateable="false"
@@ -35,6 +35,21 @@
     AliasName="PERSON_ID"
     Expression="PERSON_ID"
     SQLType="NUMERIC"/>
+  <ViewAttribute
+    Name="AnnualLeave"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ANNUAL_LEAVE"
+    Expression="ANNUAL_LEAVE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </ViewAttribute>
   <AttrArray Name="KeyAttributes">
     <Item Value="PersonId"/>
   </AttrArray>

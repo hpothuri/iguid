@@ -4,16 +4,12 @@
 <Entity
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmAttachmentEo"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   DBObjectType="table"
   DBObjectName="XXHCM_ATTACHMENT"
   AliasName="XxhcmAttachmentEo"
-  BindingStyle="OracleName"
-  UseGlueCode="false">
-  <DesignTime>
-    <AttrArray Name="_publishEvents"/>
-  </DesignTime>
+  BindingStyle="OracleName">
   <Attribute
     Name="AttachmentId"
     ColumnName="ATTACHMENT_ID"
@@ -61,9 +57,10 @@
     Name="AttachFileType"
     ColumnName="ATTACH_FILE_TYPE"
     SQLType="NUMERIC"
-    Type="java.math.BigDecimal"
-    ColumnType="NUMBER"
-    TableName="XXHCM_ATTACHMENT">
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="XXHCM_ATTACHMENT"
+    Precision="100">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>

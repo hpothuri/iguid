@@ -24,7 +24,7 @@
     Name="bind_empid"
     Kind="where"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[select A.REQUEST_NUMBER from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b where a.req_id = b.req_id and a.req_type = 'ot' and to_date(overtime_date,'dd-MON-yyyy') = to_date(:bind_otdate,'dd-MON-yyyy') and a.status <> 'REJECT' and emp_id = :bind_empid]]></SQLQuery>
+  <SQLQuery><![CDATA[select A.REQUEST_NUMBER from xxhcm_overtime_headers_all a,xxhcm_overtime_details_all b where a.req_id = b.req_id and a.req_type = 'ot' and to_date(overtime_date,'dd-MON-yyyy') = to_date(:bind_otdate,'dd-MON-yyyy') and a.status not in  ('Draft','REJECT') and emp_id = :bind_empid]]></SQLQuery>
   <ViewAttribute
     Name="RequestNumber"
     IsUpdateable="false"

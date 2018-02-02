@@ -235,7 +235,7 @@
                  showDisclosure="false">
           <f:facet name="toolbar"/>
       <af:panelTabbed position="above" id="pt2" styleClass="AFStretchWidth">
-        <af:showDetailItem id="tab1" text="Over Time Lines" styleClass="AFStretchWidth"
+        <af:showDetailItem id="tab1" text="Overtime Lines" styleClass="AFStretchWidth"
                            rendered="#{sessionScope.page eq 'ot'}">
           <af:panelCollection id="pc1" styleClass="AFStretchWidth">
             <f:facet name="menus"/>
@@ -932,7 +932,7 @@
                 <af:inputText value="#{bindings.Comments.inputValue}" required="#{bindings.Comments.hints.mandatory}"
                               columns="50" maximumLength="#{bindings.Comments.hints.precision}"
                               shortDesc="#{bindings.Comments.hints.tooltip}" id="it37" contentStyle="width:200px"
-                              rows="3" readOnly="#{sessionScope.mode=='edit'?'true':'false'}" label="Trip Description"
+                              rows="3" disabled="#{sessionScope.mode=='edit'?'true':'false'}" label="Trip Description"
                               simple="true">
                   <f:validator binding="#{bindings.Comments.validator}"/>
                 </af:inputText>
@@ -1056,8 +1056,8 @@
               <af:panelLabelAndMessage label="Trip Type" id="plam27">
                 <af:selectOneChoice value="#{bindings.TripType.inputValue}" label="#{bindings.TripType.label}"
                                     required="true" shortDesc="#{bindings.TripType.hints.tooltip}"
-                                    readOnly="#{sessionScope.mode=='edit'?'true':'false'}" id="selectOneChoice1"
-                                    simple="true" disabled="#{bindings.BussTravReqNumValue.inputValue == null}"
+                                     id="selectOneChoice1"
+                                    simple="true" disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                                     contentStyle="width:200px" partialTriggers="soc16">
                   <f:selectItems value="#{bindings.TripType.items}" id="selectItems1"/>
                 </af:selectOneChoice>
@@ -1090,7 +1090,7 @@
                               required="#{bindings.AirlineTicketType.hints.mandatory}"
                               columns="#{bindings.AirlineTicketType.hints.displayWidth}"
                               maximumLength="#{bindings.AirlineTicketType.hints.precision}"
-                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false' || bindings.AdvPerdiem.inputValue eq 'NO'}"
+                              disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
                               shortDesc="#{bindings.AirlineTicketType.hints.tooltip}" id="inputText1"
                                contentStyle="width:200px"
                               partialTriggers="soc16">
@@ -1390,7 +1390,7 @@
                   <af:inputText value="#{row.bindings.ExpnDesc.inputValue}"
                                 label="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.label}"
                                 disabled="#{sessionScope.mode=='edit'?'true':'false'}"
-                                required="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.mandatory}"
+                                required="true"
                                 columns="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.displayWidth}"
                                 maximumLength="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.precision}"
                                 shortDesc="#{bindings.XxhcmOtherExpenseTVO1.hints.ExpnDesc.tooltip}" id="it47"

@@ -612,115 +612,115 @@ public class PayrollTransferBean {
                         i = 0;
                         logger.log("Housing request prepared is ==>\n"+dtl);
                         logger.log("File Name for HA==>"+FileName);
-                        base64code = fileACL(hdr, dtl, FileName);
-
-                        java.util.Date date = new java.util.Date();
-                        SimpleDateFormat dateFormat =
-                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
-                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-                        long t = date.getTime();
-                        java.util.Date expDate;
-
-                        expDate = new java.util.Date(t + (10 * 600));
-
-                        java.util.Date plusOne;
-
-
-                        plusOne = new java.util.Date(t + (24 * 3600000));
-
-                        String createdTS = dateFormat.format(date);
-                        String expiresTS = dateFormat.format(expDate);
-
-                        pp =
-                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
-                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
-                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
-                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
-                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-
-                        hdl =
-                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
-                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
-                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-                        try {
-                            callWebservice();
-                            callHDL();
-
-                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
-                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
-                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
-                            impl.executeQuery();
-                            if (hdrVO.first() != null) {
-                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                }
-                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                }
-                                //                           hdrVO.executeQuery();
-                                ADFUtils.findOperation("Commit").execute();
-                            }
-
-                        } catch (Exception e) {
-                            logger.log("Housing Allowance failed! PART1 -->");
-                            logger.log(e.getMessage());
-                            errMesg.append("/n");
-                            errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason p1 ==>"+e.getMessage());
-                            isMovedToPayroll = false;
-                            failedReqId= failedReqId + reqNum;
-                        }
+//                        base64code = fileACL(hdr, dtl, FileName);
+//
+//                        java.util.Date date = new java.util.Date();
+//                        SimpleDateFormat dateFormat =
+//                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
+//                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//
+//                        long t = date.getTime();
+//                        java.util.Date expDate;
+//
+//                        expDate = new java.util.Date(t + (10 * 600));
+//
+//                        java.util.Date plusOne;
+//
+//
+//                        plusOne = new java.util.Date(t + (24 * 3600000));
+//
+//                        String createdTS = dateFormat.format(date);
+//                        String expiresTS = dateFormat.format(expDate);
+//
+//                        pp =
+//                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
+//                            "   <soapenv:Header>\n" +
+//                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+//                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+//                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+//                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
+//                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+//                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
+//                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+//                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+//                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
+//                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
+//                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
+//                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
+//                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
+//                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
+//                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+//
+//                        hdl =
+//                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
+//                            "   <soapenv:Header>\n" +
+//                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+//                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+//                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+//                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
+//                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+//                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
+//                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+//                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+//                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
+//                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
+//                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+//                        try {
+//                            callWebservice();
+//                            callHDL();
+//
+//                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
+//                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
+//                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
+//                            impl.executeQuery();
+//                            if (hdrVO.first() != null) {
+//                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
+//                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                } else {
+//                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                }
+//                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
+//                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                } else {
+//                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                }
+//                                //                           hdrVO.executeQuery();
+//                                ADFUtils.findOperation("Commit").execute();
+//                            }
+//
+//                        } catch (Exception e) {
+//                            logger.log("Housing Allowance failed! PART1 -->");
+//                            logger.log(e.getMessage());
+//                            errMesg.append("/n");
+//                            errMesg.append("Failed Request Number ==>"+reqNum);
+//                            errMesg.append("Request Failed to move to payroll with reason p1 ==>"+e.getMessage());
+//                            isMovedToPayroll = false;
+//                            failedReqId= failedReqId + reqNum;
+//                        }
                     }
                 }
 
@@ -1435,120 +1435,120 @@ public class PayrollTransferBean {
                         dtlRS.closeRowSetIterator();
                         i = 0;
 
-                        base64code = fileACL(hdr, dtl, FileName);
-
-                        java.util.Date date = new java.util.Date();
-                        SimpleDateFormat dateFormat =
-                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
-                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-                        long t = date.getTime();
-                        java.util.Date expDate;
-
-                        expDate = new java.util.Date(t + (10 * 600));
-
-                        java.util.Date plusOne;
-
-
-                        plusOne = new java.util.Date(t + (24 * 3600000));
-
-                        String createdTS = dateFormat.format(date);
-                        String expiresTS = dateFormat.format(expDate);
-
-                        pp =
-                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
-                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
-                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
-                            "            <!--Optional:-->\n" +
-                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
-                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
-                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
-                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-
-                        hdl =
-                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
-                            "   <soapenv:Header>\n" +
-                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
-                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
-                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
-                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
-                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
-                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
-                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
-                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
-                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
-                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
-                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
-                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
-                        try {
-                            callWebservice();
-                            callHDL();
-
-                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
-                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
-                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
-                            impl.executeQuery();
-                            if (hdrVO.first() != null) {
-                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                }
-                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                } else {
-                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
-                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
-                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
-                                }
-                                //                           hdrVO.executeQuery();
-                                ADFUtils.findOperation("Commit").execute();
-                            }
-
-                        } catch (Exception e) {
-                            errMesg.append("/n");
-                            errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
-                            logger.log(e.getMessage());
-                            isMovedToPayroll = false;
-                            failedReqId= failedReqId + reqNum;
-
-                        }
+//                        base64code = fileACL(hdr, dtl, FileName);
+//
+//                        java.util.Date date = new java.util.Date();
+//                        SimpleDateFormat dateFormat =
+//                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'"); //Hours:Minutes:Seconds
+//                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//
+//                        long t = date.getTime();
+//                        java.util.Date expDate;
+//
+//                        expDate = new java.util.Date(t + (10 * 600));
+//
+//                        java.util.Date plusOne;
+//
+//
+//                        plusOne = new java.util.Date(t + (24 * 3600000));
+//
+//                        String createdTS = dateFormat.format(date);
+//                        String expiresTS = dateFormat.format(expDate);
+//
+//                        pp =
+//                            "<soapenv:Envelope xmlns:erp=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/\">\n" +
+//                            "   <soapenv:Header>\n" +
+//                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+//                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15052969404602\">\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+//                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+//                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15052969348891\">\n" +
+//                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+//                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
+//                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">iU7oRIFC/+67/n4SkJ3mzQ==</wsse:Nonce>\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+//                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+//                            "   <soapenv:Body>\n" + "     <typ:uploadFileToUcm>\n" + "         <typ:document>\n" +
+//                            "            <erp:Content>" + base64code + "</erp:Content>\n" +
+//                            "            <erp:FileName>" + FileName + ".zip</erp:FileName>\n" +
+//                            "            <!--Optional:-->\n" + "            <erp:ContentType>zip</erp:ContentType>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentTitle>ElementEntry.zip</erp:DocumentTitle>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentAuthor>Mahalingam</erp:DocumentAuthor>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentSecurityGroup>FAFusionImportExport</erp:DocumentSecurityGroup>\n" +
+//                            "            <!--Optional:-->\n" +
+//                            "            <erp:DocumentAccount>hcm$/dataloader$/import$</erp:DocumentAccount>\n" +
+//                            "            <!--Optional:-->\n" + "            <erp:DocumentName>" + docname +
+//                            "</erp:DocumentName>\n" + "            <!--Optional:-->\n" + "         </typ:document>\n" +
+//                            "      </typ:uploadFileToUcm>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+//
+//                        hdl =
+//                            "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/types/\">\n" +
+//                            "   <soapenv:Header>\n" +
+//                            "      <wsse:Security soapenv:mustUnderstand=\"1\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\" xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\">\n" +
+//                            "         <wsu:Timestamp wsu:Id=\"TS-CA8645EA17D44D489D15055632292379\">\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" + "            <wsu:Expires>" +
+//                            expiresTS + "</wsu:Expires>\n" + "         </wsu:Timestamp>\n" +
+//                            "         <wsse:UsernameToken wsu:Id=\"UsernameToken-CA8645EA17D44D489D15055621504837\">\n" +
+//                            "            <wsse:Username>paas.user@salic.com</wsse:Username>\n" +
+//                            "            <wsse:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText\">Welc@me123</wsse:Password>\n" +
+//                            "            <wsse:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">0LK4VNEj89A+UnSOaw0SiQ==</wsse:Nonce>\n" +
+//                            "            <wsu:Created>" + createdTS + "</wsu:Created>\n" +
+//                            "         </wsse:UsernameToken>\n" + "      </wsse:Security>\n" + "   </soapenv:Header>\n" +
+//                            "   <soapenv:Body>\n" + "      <typ:importAndLoadData>\n" + "         <typ:ContentId>" +
+//                            docname + "</typ:ContentId>\n" + "      </typ:importAndLoadData>\n" +
+//                            "   </soapenv:Body>\n" + "</soapenv:Envelope>";
+//                        try {
+//                            callWebservice();
+//                            callHDL();
+//
+//                            ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
+//                            impl.setNamedWhereClauseParam("BV_ID", cu.getAttribute("RequestNumber"));
+//                            impl.applyViewCriteria(impl.getViewCriteria("findById"));
+//                            impl.executeQuery();
+//                            if (hdrVO.first() != null) {
+//                                if (ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) {
+//                                    hdrVO.getCurrentRow().setAttribute("UcmRes", "SUCCESS");
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                } else {
+//                                    hdrVO.getCurrentRow().setAttribute("UcmRes", ucmRes); //PayrollTansStatus
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                }
+//                                if (hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS")) {
+//                                    hdrVO.getCurrentRow().setAttribute("HdlRes", "SUCCESS");
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "COMPLETED");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                } else {
+//                                    hdrVO.getCurrentRow().setAttribute("HdlRes", hdlRes);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTansStatus", "ERROR");
+//                                    hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
+//                                    hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
+//                                }
+//                                //                           hdrVO.executeQuery();
+//                                ADFUtils.findOperation("Commit").execute();
+//                            }
+//
+//                        } catch (Exception e) {
+//                            errMesg.append("/n");
+//                            errMesg.append("Failed Request Number ==>"+reqNum);
+//                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+//                            logger.log(e.getMessage());
+//                            isMovedToPayroll = false;
+//                            failedReqId= failedReqId + reqNum;
+//
+//                        }
                     }
                 }
                 int j = 1;
-                hdr = "";
-                dtl = "";
+                //hdr = "";
+                //dtl = "";
 
                 if (cu.getAttribute("Attribute2") != null) {
                     if (cu.getAttribute("Attribute2").equals("Y")) {

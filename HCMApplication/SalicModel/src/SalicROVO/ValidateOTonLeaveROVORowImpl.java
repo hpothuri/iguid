@@ -23,6 +23,16 @@ public class ValidateOTonLeaveROVORowImpl extends ViewRowImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        AnnualLeave {
+            protected Object get(ValidateOTonLeaveROVORowImpl obj) {
+                return obj.getAttributeInternal(index());
+            }
+
+            protected void put(ValidateOTonLeaveROVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
@@ -50,7 +60,9 @@ public class ValidateOTonLeaveROVORowImpl extends ViewRowImpl {
             return vals;
         }
     }
+
     public static final int PERSONID = AttributesEnum.PersonId.index();
+    public static final int ANNUALLEAVE = AttributesEnum.AnnualLeave.index();
 
     /**
      * This is the default constructor (do not remove).

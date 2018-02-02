@@ -4,12 +4,14 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="otHdrROVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  OrderBy='"REQUEST_DATE" desc,"REQ_ID" Desc'>
+  OrderBy='"REQUEST_DATE" desc,"REQ_ID" Desc'
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>

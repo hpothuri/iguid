@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import java.sql.Date;
 
+import oracle.jbo.JboException;
 import oracle.jbo.Key;
 import oracle.jbo.RowSet;
 import oracle.jbo.domain.Number;
@@ -19,6 +20,23 @@ import oracle.jbo.server.ViewRowImpl;
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
 public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
+    /**
+     * Validation method for OvertimeHours.
+     */
+    public boolean validateOvertimeHours(Number overtimehours) {
+        if(getOvertimeType().equalsIgnoreCase("OT_WE") || getOvertimeType().equalsIgnoreCase("OT_HOL")){
+            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && overtimehours.compareTo(24) == -1)){
+                throw new JboException("Enter Overtime hours between 1 to 24");
+            }
+        }
+        if(getOvertimeType().equalsIgnoreCase("OT_WD")){
+            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && overtimehours.compareTo(16) == -1)){
+                throw new JboException("Enter Overtime hours between 1 to 16");
+            }
+        }
+        return true;
+    }
+
     /**
      * AttributesEnum: generated enum for identifying attributes and accessors. DO NOT MODIFY.
      */

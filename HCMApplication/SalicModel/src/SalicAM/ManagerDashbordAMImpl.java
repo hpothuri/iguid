@@ -247,9 +247,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             ArrayList<String> tableContentCols = new ArrayList<String>();
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
-            tableContentCols.add("Over Time Date");
-            tableContentCols.add("Over Time Type");
-            tableContentCols.add("Over Time Hours");
+            tableContentCols.add("Overtime Date");
+            tableContentCols.add("Overtime Type");
+            tableContentCols.add("Overtime Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
@@ -664,14 +664,14 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
-                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                     emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
                     emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
-                }
-                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                    emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
-                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"<b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
-                }
+//                }
+//                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                    emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
+//                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"<b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
+//                }
                
                 
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
@@ -689,16 +689,16 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                String mgrUserName = secondLevelApproverName;
                emailReq.setToEmpName(mgrUserName);
                emailReq.setToEmail(managerUsers);
-                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                 emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
                 emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
-                }
-                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                    emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") Cancellation of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
-                    emailReq.setMessage("<b> "+ reqType +
-                                        " request </b> Cancellation for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
-                }
+//                }
+//                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                    emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") Cancellation of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
+//                    emailReq.setMessage("<b> "+ reqType +
+//                                        " request </b> Cancellation for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
+//                }
                actionButtons = new LinkedHashMap<String, String>();
                actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
                actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
@@ -809,17 +809,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         }
         else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
+            int actionSet = getMaximumActionSetForRequest(emailReq.getRequestId().toString()) -1;
+            Row[] rs =  getXxQpActionHistoryTVO1().getFilteredRows("ActionSet", actionSet);
+            
             HashMap<String, String> approvedMgrs = new HashMap<String, String>();
-            
-            getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
-            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
-            getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
-            getXxQpActionHistoryTVO1().executeQuery();
-            
-            RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
+            //RowSetIterator rs =  getXxQpActionHistoryTVO1().createRowSetIterator(null);
             ArrayList<String> toArray = new ArrayList<String>();
-            while(rs.hasNext()){
-                Row row = rs.next();
+            for (Row row : rs){
                 if(row.getAttribute("ApproverFlag") != null){
                     String email = (String)row.getAttribute("ApproverEmail");
                     toArray.add(email);
@@ -840,7 +836,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 // String to[] = (String[]) toArray.toArray();
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
-                emailReq.setToEmpName("");
+                emailReq.setToEmpName(emailReq.getEmpName());
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
                 emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
@@ -971,9 +967,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             ArrayList<String> tableContentCols = new ArrayList<String>();
                             LinkedHashMap<String, String> tableColumnDatatypes = null;
                             
-                            tableContentCols.add("Over Time Date");
-                            tableContentCols.add("Over Time Type");
-                            tableContentCols.add("Over Time Hours");
+                            tableContentCols.add("Overtime Date");
+                            tableContentCols.add("Overtime Type");
+                            tableContentCols.add("Overtime Hours");
                             tableContentCols.add("Calculated Hours");
                             tableContentCols.add("Description");
 
@@ -1426,9 +1422,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             ArrayList<String> tableContentCols = new ArrayList<String>();
                             LinkedHashMap<String, String> tableColumnDatatypes = null;
                             
-                            tableContentCols.add("Over Time Date");
-                            tableContentCols.add("Over Time Type");
-                            tableContentCols.add("Over Time Hours");
+                            tableContentCols.add("Overtime Date");
+                            tableContentCols.add("Overtime Type");
+                            tableContentCols.add("Overtime Hours");
                             tableContentCols.add("Calculated Hours");
                             tableContentCols.add("Description");
 
@@ -1816,7 +1812,16 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         Map<String, Object> emailHapmap =
                             GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-
+                        if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)) {
+                            if (reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {
+                                FetchAdvPerdiemVOImpl advPerdiemVO = getFetchAdvPerdiemVO1();
+                                advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
+                                advPerdiemVO.executeQuery();
+                                if (advPerdiemVO.first() != null) {
+                                    advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
+                                }
+                            }
+                        }
                         //Code for Sending email for second approver
                         if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
@@ -1837,7 +1842,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
     private String getStringBasedOnReqType(String reqType){
         String reqty = null;
         if(reqType.equalsIgnoreCase("ot"))
-            return "Over Time";       
+            return "Overtime";       
         if(reqType.equalsIgnoreCase("salary"))
             return "Salary In Advance";
         if(reqType.equalsIgnoreCase("BusinessTrip"))

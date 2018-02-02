@@ -101,34 +101,10 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="39"/>
     </DesignTime>
-    <validation:RangeValidationBean
-      Name="OvertimeHoursRule1"
-      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_1"
-      OnAttribute="OvertimeHours"
-      OperandType="LITERAL"
-      Inverse="false"
-      MinValue="0"
-      MaxValue="24"
-      Description="Validating weekend hours">
-      <validation:OnCondition
-        Name="OnConditionScript"
-        trustMode="untrusted"
-        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
-    </validation:RangeValidationBean>
-    <validation:RangeValidationBean
+    <validation:MethodValidationBean
       Name="OvertimeHoursRule0"
-      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_0"
-      OnAttribute="OvertimeHours"
-      OperandType="LITERAL"
-      Inverse="false"
-      MinValue="0"
-      MaxValue="16"
-      Description="Validating weekday hours">
-      <validation:OnCondition
-        Name="OnConditionScript"
-        trustMode="untrusted"
-        CodeSourceName="XxhcmOvertimeDetailsAllEORow"/>
-    </validation:RangeValidationBean>
+      ResId="SalicEntity.XxhcmOvertimeDetailsAllEO.OvertimeHours_Rule_2"
+      MethodName="validateOvertimeHours"/>
   </Attribute>
   <Attribute
     Name="OvertimeDate"

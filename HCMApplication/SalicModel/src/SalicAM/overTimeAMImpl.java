@@ -52,6 +52,7 @@ import java.math.BigDecimal;
 
 import oracle.adf.share.ADFContext;
 
+import oracle.jbo.Session;
 import oracle.jbo.ViewObject;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.ViewLinkImpl;
@@ -785,6 +786,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmail(to);
                         emailReq.setToEmpName(managerName);
+                        String advPerdiem = null;
                         if(ticketGroup != null && "Y".equalsIgnoreCase(ticketGroup)){
                             if(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)){
                                 FetchDestVisaReqdVOImpl destVisaVO = getFetchDestVisaReqdVO1();
@@ -813,7 +815,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                                 advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
                                 advPerdiemVO.executeQuery();
                                 if(advPerdiemVO.first() != null){
-                                    String advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
+                                    advPerdiem = (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
                                     if(advPerdiem != null && "YES".equalsIgnoreCase(advPerdiem)){
                                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName);
                                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" has been finally approved by "+managerName+" with hereunder details:"); 
@@ -839,6 +841,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
                         //Code for Sending email for second approver
+                        if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
     //                        Row vonew = getXxQpActionHistoryTVO1().createRow();
     //                        //xx_qp_action_history_s
@@ -923,7 +926,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                                         advPerdiemVO.setbindReqId(new BigDecimal(emailReq.getRequestId()));
                                         advPerdiemVO.executeQuery();
                                         if (advPerdiemVO.first() != null) {
-                                            String advPerdiem =
+                                            advPerdiem =
                                                 (String) advPerdiemVO.first().getAttribute("AdvPerdiem");
                                             if (advPerdiem != null && "YES".equalsIgnoreCase(advPerdiem)) {
                                                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(),
@@ -1038,6 +1041,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             rs.next();
             maxLevel = rs.getInt("max_count");
         } catch (SQLException sqle) {
+            
         }
         
         return maxLevel;
@@ -1470,9 +1474,9 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             ArrayList<String> tableContentCols = new ArrayList<String>();
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
-            tableContentCols.add("Over Time Date");
-            tableContentCols.add("Over Time Type");
-            tableContentCols.add("Over Time Hours");
+            tableContentCols.add("Overtime Date");
+            tableContentCols.add("Overtime Type");
+            tableContentCols.add("Overtime Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
@@ -1881,14 +1885,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
-                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                     emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved from "+firstLevelApproverName+",  pending with "+secondLevelApproverName);
                     emailReq.setMessage("Your <b> "+reqType+" request </b>is pending for approval from <b>"+secondLevelApproverName+" </b> with hereunder information:");
-                }
-                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                    emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
-                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"</b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
-                }
+//                }
+//                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                    emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") Cancellation is approved from "+firstLevelApproverName+" and assigned to "+secondLevelApproverName);
+//                    emailReq.setMessage("<b>"+reqType+" request </b>Cancellation is approved from <b>"+firstLevelApproverName+"</b> and assigned to <b>"+secondLevelApproverName+" </b> with hereunder information:");
+//                }
                 
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -1905,16 +1909,16 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                String mgrUserName = secondLevelApproverName;
                emailReq.setToEmpName(mgrUserName);
                emailReq.setToEmail(managerUsers);
-                if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
                emailReq.setMessage("<b> "+ reqType +
                                    " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
-                }
-                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                    emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") Cancellation of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
-                    emailReq.setMessage("<b> "+ reqType +
-                                        " request </b> Cancellation for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
-                }
+//                }
+//                else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                    emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") Cancellation of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
+//                    emailReq.setMessage("<b> "+ reqType +
+//                                        " request </b> Cancellation for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
+//                }
                actionButtons = new LinkedHashMap<String, String>();
                actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
                actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
@@ -1931,14 +1935,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
                 emailReq.setToEmpName(emailReq.getEmpName());
-                    if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
+                    //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                 emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
                 emailReq.setMessage("Your <b> "+reqType+" request </b> is approved with hereunder information:");
-                    }
-                    else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
-                        emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is cancelled.");
-                        emailReq.setMessage("Your <b> "+reqType+" request </b> is cancelled with hereunder information:");
-                    }
+//                    }
+//                    else if(reqStatus != null && "DELETED".equalsIgnoreCase(reqStatus)){
+//                        emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is cancelled.");
+//                        emailReq.setMessage("Your <b> "+reqType+" request </b> is cancelled with hereunder information:");
+//                    }
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                 actionButtons = new LinkedHashMap<String, String>();
                 actionButtons.put("More Info", "");
@@ -2106,13 +2110,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             String approverName = "";
             
             Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ActionSet", actionSet);
-            if(rows != null && rows.length > 0){
-                for(Row row : rows){
-                    approverName = (String)row.getAttribute("ApproverUserName");
-                    approverId = (String)row.getAttribute("ApproverId");
-                    toRecepients.add((String)row.getAttribute("ApproverUserName"));
-                }
-            }
+            
             
             
             String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
@@ -2137,22 +2135,30 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
             
             //To mamager
-            String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
-            String mgrUserName = approverName;
-            emailReq.setToEmpName(mgrUserName);
-            emailReq.setToEmail(managerUsers);
-            emailReq.setMessage("<b>"+reqType + " request" +
-                                "</b> Cancelled by "+emailReq.getEmpName()+" with hereunder details:: <br><br> Cancellation Reason : "+cancelReason);
-            emailReq.setSubject(reqType + " request (" + emailReq.getRequestNo() + ") cancelled by "+emailReq.getEmpName());
-            actionButtons = new LinkedHashMap<String, String>();
-//            actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
-//            actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
-//            actionButtons.put("More Info", "");
-            emailReq.setActionButtons(actionButtons);
-            emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+            if(rows != null && rows.length > 0){
+                for(Row row : rows){
+                    approverName = (String)row.getAttribute("ApproverUserName");
+                    approverId = (String)row.getAttribute("ApproverId");
+                    toRecepients.add((String)row.getAttribute("ApproverUserName"));
+                    String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+                    String mgrUserName = approverName;
+                    emailReq.setToEmpName(mgrUserName);
+                    emailReq.setToEmail(managerUsers);
+                    emailReq.setMessage("<b>"+reqType + " request" +
+                                        "</b> Cancelled by "+emailReq.getEmpName()+" with hereunder details:: <br><br> Cancellation Reason : "+cancelReason);
+                    emailReq.setSubject(reqType + " request (" + emailReq.getRequestNo() + ") cancelled by "+emailReq.getEmpName());
+                    actionButtons = new LinkedHashMap<String, String>();
+                    //            actionButtons.put("Approve", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=A");
+                    //            actionButtons.put("Reject", emailUrl+"?reqId="+AESEncryption.encryptText(emailReq.getRequestId().toString())+"&approverId="+AESEncryption.encryptText(approverId)+"&appOrRej=R");
+                    //            actionButtons.put("More Info", "");
+                    emailReq.setActionButtons(actionButtons);
+                    emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
 
-            //Code for Sending email for Manager approval
-            GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+                    //Code for Sending email for Manager approval
+                    GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
+                }
+            }
+            
         }
         else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
             int actionSet = getMaximumActionSetForRequest(emailReq.getRequestId().toString()) -1;
@@ -2174,7 +2180,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
             //Write condition in SQL query format
             rq.setWhereClause("ApproverId='" + empIdLogged +
-                              "' and Active = 'A' and ApproveLevel = "+aprLevel);
+                              "ActionSet = "+actionSet);
             //Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empIdLogged);
 //            RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
 //            //Write condition in SQL query format
@@ -2193,7 +2199,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 // String to[] = (String[]) toArray.toArray();
                 String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                 emailReq.setToEmail(to);
-                emailReq.setToEmpName("");
+                emailReq.setToEmpName(managerMap.getKey());
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
                 emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
@@ -2207,6 +2213,23 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 //Code for Sending email for second approver
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));   
             }
+        }
+    }
+
+    @Override
+    protected void prepareSession(Session session) {
+        
+        // TODO Implement this method
+        super.prepareSession(session);
+        try {
+            Statement stmt = getDBTransaction().createPreparedStatement("select * from dual", 1)
+                                               .getConnection()
+                                               .createStatement();
+            String query = "ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY'";
+            stmt.executeUpdate(query);
+        } catch (SQLException sqle) {
+            // TODO: Add catch code
+            sqle.printStackTrace();
         }
     }
 
@@ -2237,8 +2260,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
 //        getXxQpActionHistoryTVO1().executeQuery();
         
         String approverName = "";
-        
-        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", new BigDecimal(1));
+        Integer aprLevel = getMinLevelForRequest(emailReq.getRequestId().toString());
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", aprLevel);
         if(rows != null && rows.length > 0){
             for(Row row : rows){
                 approverName = (String)row.getAttribute("ApproverUserName");
@@ -2267,9 +2290,9 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             ArrayList<String> tableContentCols = new ArrayList<String>();
             LinkedHashMap<String, String> tableColumnDatatypes = null;
             
-            tableContentCols.add("Over Time Date");
-            tableContentCols.add("Over Time Type");
-            tableContentCols.add("Over Time Hours");
+            tableContentCols.add("Overtime Date");
+            tableContentCols.add("Overtime Type");
+            tableContentCols.add("Overtime Hours");
             tableContentCols.add("Calculated Hours");
             tableContentCols.add("Description");
 
@@ -2511,7 +2534,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
 
 
             tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
-                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
+                "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+"))),0) Grand_Total " +
                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
             
             tableColumnDatatypes = new LinkedHashMap<String, String>();
@@ -2682,7 +2705,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     private String getStringBasedOnReqType(String reqType){
         String reqty = null;
         if(reqType.equalsIgnoreCase("ot"))
-            return "Over Time";       
+            return "Overtime";       
         if(reqType.equalsIgnoreCase("salary"))
             return "Salary In Advance";
         if(reqType.equalsIgnoreCase("BusinessTrip"))

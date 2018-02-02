@@ -42,3 +42,17 @@ def OvertimeHoursRule0_OnConditionScript_OnCondition()
 OvertimeType == 'OT_WD'
 }
 
+
+@ValidatorConditionExpression(name="validateWeekendHours")
+def validateWeekendHours_OnConditionScript_OnCondition()
+{
+OvertimeType == 'OT_WE'
+}
+
+
+@ValidatorConditionExpression(name="Validatingweekdayhours")
+def Validatingweekdayhours_OnConditionScript_OnCondition()
+{
+OvertimeType == 'OT_WD'
+}
+
