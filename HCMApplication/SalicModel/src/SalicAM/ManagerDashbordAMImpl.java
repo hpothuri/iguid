@@ -495,7 +495,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             tableDetail.setTableContentColumns(tableContentCols);
 
 
-            tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+            tableDetail.setDetailsQuery("select (total_perdiem + nvl((select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID =" +
                 "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
             
@@ -1212,7 +1212,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableDetail.setTableContentColumns(tableContentCols);
 
 
-                            tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                            tableDetail.setDetailsQuery("select (total_perdiem + nvl((select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID =" +
                                 "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
                                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
                             
@@ -1667,7 +1667,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             tableDetail.setTableContentColumns(tableContentCols);
 
 
-                            tableDetail.setDetailsQuery("select nvl((total_perdiem + (select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID = " +
+                            tableDetail.setDetailsQuery("select (total_perdiem + nvl((select sum(total_amount) from XXHCM_OTHER_EXPENSE where REQ_DTLS_ID =" +
                                 "(select req_dtls_id from XXHCM_OVERTIME_DETAILS_ALL where req_id = "+emailReq.getRequestId()+")),0)) Grand_Total " +
                                        "from XXHCM_OVERTIME_DETAILS_ALL where req_id = " +emailReq.getRequestId());
                             
