@@ -704,5 +704,9 @@
       <action IterBinding="XxhcmOtherExpenseTVO1Iterator" id="Delete5"
               InstanceName="overTimeAMDataControl.XxhcmOtherExpenseTVO1" DataControl="overTimeAMDataControl"
               RequiresUpdateModel="false" Action="removeCurrentRow"/>
+      <methodAction id="validateChildTotalAmount" RequiresUpdateModel="true" Action="invokeMethod"
+                    MethodName="validateChildTotalAmount" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.validateChildTotalAmount.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.validateChildTotalAmount_validateChildTotalAmount_dataControl_dataProvider_validateChildTotalAmount_result"/>
    </bindings>
 </pageDefinition>

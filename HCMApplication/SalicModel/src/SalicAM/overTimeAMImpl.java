@@ -506,6 +506,77 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         return maxAmt;
     }
 
+    public String validateChildTotalAmount() {
+        String failed = "";
+        ViewObjectImpl lineVO = getXxhcmOvertimeDetailsAllVO2();
+        ArrayList<oracle.jbo.domain.Number> processedRecords = new ArrayList<oracle.jbo.domain.Number>();
+        RowSetIterator rs = lineVO.createRowSetIterator(null);
+//        CheckClaimedAmountVOImpl claimedVO = getCheckClaimedAmountVO1();
+        while (rs.hasNext()) {
+            Row lineRow = rs.next();
+            if (!processedRecords.contains(lineRow.getAttribute("ReqDtlsId"))) {
+                BigDecimal childId = (BigDecimal) lineRow.getAttribute("Contactpersonid");
+                Date invDate = (Date) lineRow.getAttribute("InvDate");
+                oracle.jbo.domain.Number reqDtlsId = (Number) lineRow.getAttribute("ReqDtlsId");
+                BigDecimal maxAmt = (BigDecimal) lineRow.getAttribute("AvlAmt");
+                SimpleDateFormat sdf = new SimpleDateFormat("MM");
+                String monthStr = sdf.format(invDate);
+                int month = Integer.parseInt(monthStr);
+                sdf = new SimpleDateFormat("yyyy");
+                String yearStr = sdf.format(invDate);
+                int year = Integer.parseInt(yearStr);
+                Integer startYear = 0;
+                Integer endYear = 0;
+                if (month >= 9) {
+                    startYear = year;
+                    endYear = year + 1;
+                } else {
+                    startYear = year - 1;
+                    endYear = year;
+                }
+
+//                claimedVO.setbindStartDate("01-09-" + startYear);
+//                claimedVO.setbindEndDate("31-08-" + endYear);
+//                claimedVO.setbindChildId(childId);
+//                claimedVO.executeQuery();
+//                if (claimedVO.getEstimatedRowCount() > 0) {
+//                    BigDecimal claimedAmt = (BigDecimal) claimedVO.first().getAttribute("ClaimedAmount");
+//                    if (maxAmt != null && claimedAmt != null)
+//                        maxAmt = maxAmt.subtract(claimedAmt);
+//                }
+
+                RowQualifier rowQualifier = new RowQualifier(lineVO);
+                rowQualifier.setWhereClause("Contactpersonid=" + childId + " AND InvDate between TO_DATE('01-09-" +
+                                            startYear + "','DD-MM-YYYY') and TO_DATE('31-08-" + endYear +
+                                            "','DD-MM-YYYY')");
+
+                BigDecimal remainedAmt = maxAmt;
+                Row rows[] = lineVO.getFilteredRows(rowQualifier);
+                if (rows.length > 0) {
+                    for (Row row : rows) {
+                        if (//!row.getAttribute("ReqDtlsId").equals(reqDtlsId) &&
+                            !processedRecords.contains(row.getAttribute("ReqDtlsId"))) {
+                            if (remainedAmt.compareTo(new BigDecimal(0)) > 0) {
+                                processedRecords.add((Number) row.getAttribute("ReqDtlsId"));
+                                BigDecimal rowInvTotal = (BigDecimal) row.getAttribute("InvTotal");
+                                if (rowInvTotal.compareTo(remainedAmt) >= 0) {
+                                    row.setAttribute("ActAmt", remainedAmt);
+                                } else {
+                                    row.setAttribute("ActAmt", rowInvTotal);
+                                }
+                                remainedAmt = remainedAmt.subtract((BigDecimal) row.getAttribute("ActAmt"));
+                            } else {
+                                failed = failed + "Maximum Amount exceeding for child " + lineRow.getAttribute("childTRANS");
+                                return failed;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return failed;
+    }
+
     /**
      * Container's getter for CheckClaimedAmountVO1.
      * @return CheckClaimedAmountVO1

@@ -58,4 +58,6 @@ public interface overTimeAM extends ApplicationModule {
     void getRequestActionHist(String reqNum);
 
     void updateRequestReasonForCWR(String reqNumber, BigDecimal req_id, String reason, String empLogged);
+
+    String validateChildTotalAmount();
 }

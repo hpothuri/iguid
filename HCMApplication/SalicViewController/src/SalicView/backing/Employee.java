@@ -323,7 +323,8 @@ public class Employee {
 
                 }
             }
-        } else if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+        } 
+        else if ("house".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             //            ViewObject otHdrVO =
             //                        ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getViewObject();
             ViewObject probCheckVO =
@@ -400,7 +401,8 @@ public class Employee {
             }
 
 
-        } else if ("vacation".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+        } 
+        else if ("vacation".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             ViewObject hdr1 =
                 ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator2").getViewObject();
             ViewCriteria vc = hdr1.createViewCriteria();
@@ -429,7 +431,8 @@ public class Employee {
                 }
             }
 
-        } else if ("salary".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+        } 
+        else if ("salary".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             ViewObject probCheckVO =
                 ADFUtils.findIterator("hireROVO1Iterator").getViewObject();
             probCheckVO.setNamedWhereClauseParam("per",
@@ -496,7 +499,8 @@ public class Employee {
 
             }
 
-        } else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
+        }
+        else if ("edu".equalsIgnoreCase((String)ADFContext.getCurrent().getSessionScope().get("page"))) {
             ViewObject attVo =
                 ADFUtils.findIterator("XxhcmMasterAttachment_VO2Iterator").getViewObject();
             ViewObject lineCurrVO =
@@ -1420,21 +1424,21 @@ public class Employee {
                     lineVO =
                         ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
                     
-                    RowSetIterator rs = lineVO.createRowSetIterator(null);
-                    while(rs.hasNext()){
-                        Row row = rs.next();
-                        BigDecimal invTotal = (BigDecimal)row.getAttribute("InvTotal");
-                        BigDecimal avlAmt = (BigDecimal)row.getAttribute("AvlAmt");
-                        if(invTotal.compareTo(avlAmt) == -1){
-                            row.setAttribute("ActAmt", invTotal);
-                        }
-                        else if(invTotal.compareTo(avlAmt) == 1){
-                            row.setAttribute("ActAmt", avlAmt);
-                        }
-                        else{
-                            row.setAttribute("ActAmt", invTotal);
-                        }
-                    }
+//                    RowSetIterator rs = lineVO.createRowSetIterator(null);
+//                    while(rs.hasNext()){
+//                        Row row = rs.next();
+//                        BigDecimal invTotal = (BigDecimal)row.getAttribute("InvTotal");
+//                        BigDecimal avlAmt = (BigDecimal)row.getAttribute("AvlAmt");
+//                        if(invTotal.compareTo(avlAmt) == -1){
+//                            row.setAttribute("ActAmt", invTotal);
+//                        }
+//                        else if(invTotal.compareTo(avlAmt) == 1){
+//                            row.setAttribute("ActAmt", avlAmt);
+//                        }
+//                        else{
+//                            row.setAttribute("ActAmt", invTotal);
+//                        }
+//                    }
                     
                     isValid = isValidTotalAmountForChild();
                     if(!isValid){
@@ -4285,61 +4289,10 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
     }
     
     public Boolean isValidTotalAmountForChild(){
-        try
-        {	
-            ViewObject lineVO =
-                ADFUtils.findIterator("XxhcmOvertimeDetailsAllVO2Iterator1").getViewObject();
-            RowSetIterator rs = lineVO.createRowSetIterator(null);
-            while(rs.hasNext()){
-                BigDecimal totalAmt = new BigDecimal(0);
-                Row row = rs.next();
-                java.sql.Date invDate = (java.sql.Date) row.getAttribute("InvDate");
-                java.util.Date invDateUtil = new java.util.Date(invDate.getTime());
-                SimpleDateFormat sdf = new SimpleDateFormat("MM");
-                String monthStr = sdf.format(invDateUtil);
-                int month = Integer.parseInt(monthStr);
-                sdf = new SimpleDateFormat("yyyy");
-                String yearStr = sdf.format(invDateUtil);
-                int year = Integer.parseInt(yearStr);
-                Integer startYear = 0;
-                Integer endYear = 0;
-                if(month >= 9){
-                    startYear = year;
-                    endYear = year+1;
-                }
-                else{
-                    startYear = year-1;
-                    endYear = year;
-                }
-                String finStartDateStr = "01-09-"+startYear;
-                String finEndDateStr = "31-08-"+endYear;
-                sdf = new SimpleDateFormat("dd-MM-YYYY");
-                java.util.Date finStartDate = sdf.parse(finStartDateStr);
-                java.util.Date finEndDate = sdf.parse(finEndDateStr);
-                BigDecimal childId = (BigDecimal) row.getAttribute("Contactpersonid"); 
-                Row filteredRows[] = lineVO.getFilteredRows("Contactpersonid", childId);
-                for(Row filteredRow : filteredRows){
-                    if(filteredRow.getAttribute("ActAmt") != null){
-                        if(filteredRow.getAttribute("InvDate") != null){
-                            java.sql.Date rowDate = (java.sql.Date) filteredRow.getAttribute("InvDate");
-                            java.util.Date rowDateUtil = new java.util.Date(rowDate.getTime());
-                            if((rowDateUtil.after(finStartDate) && rowDateUtil.before(finEndDate)) || rowDateUtil.equals(finStartDate) || rowDateUtil.equals(finEndDate))
-                                totalAmt = totalAmt.add((BigDecimal) filteredRow.getAttribute("ActAmt"));   
-                        }
-                    }
-                }
-                if(totalAmt.compareTo((BigDecimal) row.getAttribute("AvlAmt")) == 1){
-                    JSFUtils.addFacesErrorMessage("Total Claim amount for Child "+row.getAttribute("childTRANS")+ " is exceeding Available amount.");
-                    return Boolean.FALSE;
-                }
-            }
-        }
-        catch(NumberFormatException nfe)
-        {
-            nfe.printStackTrace();
-        }catch(ParseException pe)
-        {
-            pe.printStackTrace();
+        String failed = (String) ADFUtils.findOperation("validateChildTotalAmount").execute();
+        if(failed != null && !"".equals(failed)){
+            JSFUtils.addFacesErrorMessage(failed);
+            return Boolean.FALSE;
         }
         return Boolean.TRUE;
     }
