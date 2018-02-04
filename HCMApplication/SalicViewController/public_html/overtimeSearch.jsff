@@ -126,7 +126,7 @@
           </af:column>
           <af:column sortProperty="#{bindings.otHdrROVO1.hints.Status.name}" sortable="true"
                      headerText="#{bindings.otHdrROVO1.hints.Status.label}" id="c2" width="125" filterable="true">
-            <af:outputText value="#{row.DispStatus}" id="ot2">
+            <af:outputText value="#{row.DispStatus}" id="ot2" inlineStyle="color:Blue; font-weight:bold;">
             <af:clientAttribute name="requestNumber"
                                          value="#{row.RequestNumber}"/>
                      <af:showPopupBehavior align="endAfter"

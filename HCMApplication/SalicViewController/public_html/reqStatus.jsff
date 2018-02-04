@@ -8,7 +8,7 @@
                 rowBandingInterval="0" selectedRowKeys="#{bindings.RequestStatusROVO1.collectionModel.selectedRow}"
                 selectionListener="#{bindings.RequestStatusROVO1.collectionModel.makeCurrent}" rowSelection="single"
                 fetchSize="#{bindings.RequestStatusROVO1.rangeSize}" styleClass="AFStretchWidth"
-                filterModel="#{bindings.RequestStatusROVO1Query.queryDescriptor}" filterVisible="true"
+                filterModel="#{bindings.RequestStatusROVO1Query.queryDescriptor}" filterVisible="false"
                 queryListener="#{bindings.RequestStatusROVO1Query.processQuery}" varStatus="vs" id="t1">
         <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApproveLevel.name}" filterable="true"
                    sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApproveLevel.label}" id="c1">
