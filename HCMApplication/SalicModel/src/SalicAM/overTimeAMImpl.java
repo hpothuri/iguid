@@ -2244,13 +2244,14 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         
         String reqType =  getStringBasedOnReqType((String) ADFContext.getCurrent().getSessionScope()
                                                                                .get("page"));
-        
+        String reqType1 = getDecodedReqType((String) ADFContext.getCurrent().getSessionScope()
+                                                                               .get("page"));
         ViewObjectImpl otHdrVO = getXxhcmOvertimeHeadersAllVO1();
         emailReq.setRequestId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("ReqId")).intValue());
         emailReq.setRequestNo((String) otHdrVO.getCurrentRow().getAttribute("RequestNumber"));
         emailReq.setEmpId(((oracle.jbo.domain.Number) otHdrVO.getCurrentRow().getAttribute("EmpId")).stringValue());
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("employeeNameTRANS"));
-        emailReq.setEmpNumber((String) otHdrVO.getCurrentRow().getAttribute("empNumberTRANS"));
+         emailReq.setEmpNumber((String) otHdrVO.getCurrentRow().getAttribute("empNumberTRANS"));
         
         String approverId = "";
         
@@ -2260,7 +2261,15 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         
         String approverName = "";
         Integer aprLevel = getMinLevelForRequest(emailReq.getRequestId().toString());
-        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproveLevel", aprLevel);
+        getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType1);
+        getXxQpActionHistoryTVO1().executeQuery();
+        
+        
+        RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
+        //Write condition in SQL query format
+        rq.setWhereClause("ApproveLevel = "+aprLevel);
+        
+        Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows(rq);
         if(rows != null && rows.length > 0){
             for(Row row : rows){
                 approverName = (String)row.getAttribute("ApproverUserName");
