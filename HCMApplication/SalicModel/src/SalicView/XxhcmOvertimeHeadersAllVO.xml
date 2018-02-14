@@ -119,7 +119,7 @@
       <Item Value="Grade"/>
       <Item Value="JobTitle"/>
       <Item Value="LineManager"/>
-      <Item Value="EmailAdddress"/>
+      <Item Value="EmailAddress"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="EmpName"/>
