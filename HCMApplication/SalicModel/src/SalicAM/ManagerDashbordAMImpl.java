@@ -941,6 +941,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 String ticketGroup = apprSetRow.getTicketGroup();
                 BigDecimal managerId = null;
                 String managerName = null;
+                String emailAddress = null;
                 //Superwiser
                 String advPerdiem = null;
                 if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
@@ -955,11 +956,25 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         empManagerDet.executeQuery();
                         if(empManagerDet.hasNext()){
                             managerName =(String)empManagerDet.first().getAttribute("EmpName");
+                            emailAddress = (String)empManagerDet.first().getAttribute("EmailAddress");   
                         }
-                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                        
                         EmailRequestPojo emailReq = new EmailRequestPojo();
                         emailReq.setRequestNo(reqNumber);
-                        emailReq.setToEmail(to);
+                        
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
+                        
                         emailReq.setRequestId(new Integer(req_id+""));
                         emailReq.setToEmpName(managerName);
                         if(ticketGroup != null && "Y".equalsIgnoreCase(ticketGroup)){
@@ -1426,13 +1441,24 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 empSManagerDet.executeQuery();
                                 if(empSManagerDet.hasNext()){
                                     managerName =(String)empSManagerDet.first().getAttribute("EmpName");
+                                    emailAddress =(String)empSManagerDet.first().getAttribute("EmailAddress");
                                 }else{
                                     managerName = null;
+                                    emailAddress = null;
                                 }
                                
-                        //String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-//                        emailReq = new EmailRequestPojo();
-                        emailReq.setToEmail(to);
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
                                 emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmpName(managerName);
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
@@ -1460,9 +1486,22 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     while(rsigrpDet.hasNext()){
                         getApprovalGrpDetailsROVORowImpl grpRec = (getApprovalGrpDetailsROVORowImpl)rsigrpDet.next();  
                         
-                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                         EmailRequestPojo emailReq = new EmailRequestPojo();
-                        emailReq.setToEmail(to);
+                        
+                        emailAddress = grpRec.getEmailAddress();
+                        
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
                         emailReq.setRequestNo(reqNumber);
                         emailReq.setRequestId(new Integer(req_id+""));
                         emailReq.setToEmpName(grpRec.getEmployeeName());

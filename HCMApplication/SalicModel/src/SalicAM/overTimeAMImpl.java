@@ -758,19 +758,33 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         if(jobLevelInt == 0){
             String reqType = getStringBasedOnReqType((String)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("ReqType"));
                 String empNameR = null;
+                String emailAddress = null;
            getXxhcmOvertimeHeadersAllVO1().getCurrentRow().setAttribute("Status", "APPROVE"); 
                 getXxhcmOvertimeHeadersAllVO1().getCurrentRow().setAttribute("ReqStatus", "APPROVE"); 
                 EmailRequestPojo emailReq = new EmailRequestPojo();
-            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-            emailReq.setToEmail(to);
+        
                 emailReq.setRequestNo((String)getXxhcmOvertimeHeadersAllVO1().getCurrentRow().getAttribute("RequestNumber"));
                 ViewObject empManagerDet = getemployeeROVO1();
                 empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",empId.bigDecimalValue().toString());
                 empManagerDet.executeQuery();
                 if(empManagerDet.hasNext()){
-                    empNameR = (String)empManagerDet.first().getAttribute("EmpName");                    
+                    empNameR = (String)empManagerDet.first().getAttribute("EmpName");       
+                    emailAddress = (String)empManagerDet.first().getAttribute("EmailAddress");   
                 }
                 emailReq.setEmpId(empId.bigDecimalValue().toString());
+                
+                if(ORIGINAL_EMAILS){
+                    if(emailAddress == null){
+                        emailAddress = "paas.user@salic.com";
+                    }
+                    String[] to = {emailAddress};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                }
+                
             emailReq.setEmpName(empNameR);
             emailReq.setToEmpName(emailReq.getEmpName());
             emailReq.setSubject("Your "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
@@ -827,6 +841,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 String ticketGroup = apprSetRow.getTicketGroup();
                 BigDecimal managerId = null;
                 String managerName = null;
+                String emailAddress = null;
                 //Superwiser
                 if(ApprGroupId.compareTo(new BigDecimal(100012)) == 0){
                     ViewObject empManager = getGetManagerDetailsROVO1();
@@ -840,11 +855,23 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                         empManagerDet.executeQuery();
                         if(empManagerDet.hasNext()){
                             managerName =(String)empManagerDet.first().getAttribute("EmpName");
+                            emailAddress = (String)empManagerDet.first().getAttribute("EmailAddress");
                         }
-                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                        
                         EmailRequestPojo emailReq = new EmailRequestPojo();
                         emailReq.setRequestNo(reqNumber);
-                        emailReq.setToEmail(to);
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
                         emailReq.setToEmpName(managerName);
                         String advPerdiem = null;
                         if(ticketGroup != null && "Y".equalsIgnoreCase(ticketGroup)){
@@ -940,8 +967,10 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                                 empSManagerDet.executeQuery();
                                 if(empSManagerDet.hasNext()){
                                     managerName =(String)empSManagerDet.first().getAttribute("EmpName");
+                                    emailAddress = (String)empSManagerDet.first().getAttribute("EmailAddress");
                                 }else{
                                     managerName = null;
+                                    emailAddress = null;
                                 }
     //                                Row vonew1 = getXxQpActionHistoryTVO1().createRow();
     //                                //xx_qp_action_history_s
@@ -968,8 +997,20 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     //                                getXxQpActionHistoryTVO1().insertRow(vonew1);
                         //String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                         emailReq = new EmailRequestPojo();
-                        emailReq.setToEmail(to);
-                                emailReq.setRequestNo(reqNumber);
+                        
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
+                        emailReq.setRequestNo(reqNumber);
                         emailReq.setToEmpName(managerName);
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
@@ -1041,11 +1082,22 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
     //                        //ReqNumber String  REQ_NUMBER      XxQpActionHistoryTEO    Show
     //                        vonewgrp.setAttribute("ReqNumber", reqNumber);
     //                        getXxQpActionHistoryTVO1().insertRow(vonewgrp);
-                        
-                        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
                         EmailRequestPojo emailReq = new EmailRequestPojo();
-                        emailReq.setToEmail(to);
                         emailReq.setRequestNo(reqNumber);
+                        emailAddress = grpRec.getEmailAddress();
+                        
+                        if(ORIGINAL_EMAILS){
+                            if(emailAddress == null){
+                                emailAddress = "paas.user@salic.com";
+                            }
+                            String[] to = {emailAddress};
+                            emailReq.setToEmail(to);
+                        }
+                        else{
+                            String[] to = { "paas.user@salic.com" }; 
+                            emailReq.setToEmail(to);
+                        }
+                        
                         String advPerdiem = null;
                         if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)) {
                             if (reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {

@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="getApprovalGrpDetailsROVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
@@ -20,12 +20,12 @@
     Name="p_cust_group_id"
     Kind="where"
     Type="java.math.BigDecimal"/>
-  <SQLQuery><![CDATA[SELECT XALA.APPROVAL_LEVEL,XALA.EMPLOYEE_ID,XALA.EMPLOYEE_NAME   FROM  
-    XX_APPROVAL_HEADERS_ALL XAHA,  
-    XX_APPROVAL_LINES_ALL XALA  
-  WHERE XAHA.APPROVAL_LIST_ID = :p_cust_group_id  
-  AND XAHA.APPROVAL_LIST_ID  =XALA.APPROVAL_LIST_ID  
-  AND SYSDATE BETWEEN START_DATE AND END_DATE  
+  <SQLQuery><![CDATA[SELECT XALA.APPROVAL_LEVEL,XALA.EMPLOYEE_ID,XALA.EMPLOYEE_NAME,(select email_address from XXSTG_EMPLOYEE_DETAILS where emp_id = XALA.EMPLOYEE_ID) EMAIL_ADDRESS FROM   
+    XX_APPROVAL_HEADERS_ALL XAHA,   
+    XX_APPROVAL_LINES_ALL XALA   
+  WHERE XAHA.APPROVAL_LIST_ID = :p_cust_group_id   
+  AND XAHA.APPROVAL_LIST_ID  =XALA.APPROVAL_LIST_ID   
+  AND SYSDATE BETWEEN START_DATE AND END_DATE   
   order by XALA.APPROVAL_LEVEL asc]]></SQLQuery>
   <ViewAttribute
     Name="ApprovalLevel"
@@ -64,6 +64,21 @@
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="245"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EmailAddress"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="EMAIL_ADDRESS"
+    Expression="EMAIL_ADDRESS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
     </DesignTime>
   </ViewAttribute>
   <AttrArray Name="KeyAttributes">

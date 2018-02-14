@@ -44,6 +44,16 @@ public class getApprovalGrpDetailsROVORowImpl extends ViewRowImpl {
                 obj.setAttributeInternal(index(), value);
             }
         }
+        ,
+        EmailAddress {
+            protected Object get(getApprovalGrpDetailsROVORowImpl obj) {
+                return obj.getEmailAddress();
+            }
+
+            protected void put(getApprovalGrpDetailsROVORowImpl obj, Object value) {
+                obj.setAttributeInternal(index(), value);
+            }
+        }
         ;
         private static AttributesEnum[] vals = null;
         private static final int firstIndex = 0;
@@ -72,9 +82,11 @@ public class getApprovalGrpDetailsROVORowImpl extends ViewRowImpl {
         }
     }
 
+
     public static final int APPROVALLEVEL = AttributesEnum.ApprovalLevel.index();
     public static final int EMPLOYEEID = AttributesEnum.EmployeeId.index();
     public static final int EMPLOYEENAME = AttributesEnum.EmployeeName.index();
+    public static final int EMAILADDRESS = AttributesEnum.EmailAddress.index();
 
     /**
      * This is the default constructor (do not remove).
@@ -104,6 +116,14 @@ public class getApprovalGrpDetailsROVORowImpl extends ViewRowImpl {
      */
     public String getEmployeeName() {
         return (String) getAttributeInternal(EMPLOYEENAME);
+    }
+
+    /**
+     * Gets the attribute value for the calculated attribute EmailAddress.
+     * @return the EmailAddress
+     */
+    public String getEmailAddress() {
+        return (String) getAttributeInternal(EMAILADDRESS);
     }
 
     /**
