@@ -43,6 +43,7 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
     public payRollAMImpl() {
     }
 
+    private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
 
     /**
      * Container's getter for XxQpActionHistoryTVO1.
@@ -222,11 +223,21 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
         String reqType = getStringBasedOnReqType((String)fetchVO.first().getAttribute("ReqType"));
         
 //        fetchVO.first().getAttribute("EmailAddress");
-        
-        ArrayList<String> toRecepients = new ArrayList<String>();
-
-        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-        emailReq.setToEmail(to);
+       
+       //for group
+        if(ORIGINAL_EMAILS){
+            String email = (String)fetchVO.first().getAttribute("EmailAddress");
+            if(email == null){
+                email = "paas.user@salic.com";
+            }
+            String[] to = {email};
+            emailReq.setToEmail(to);
+        }
+        else{
+            String[] to = { "paas.user@salic.com" }; 
+            emailReq.setToEmail(to);
+        } 
+       
         emailReq.setToEmpName(emailReq.getEmpName());
         //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 

@@ -271,6 +271,7 @@ public class OvertimeSearch {
         dateFormat1.getTimeInstance().format(date1);
         
         reqHeaderRow.setAttribute("employeeNameTRANS", empRow.getAttribute("EmpName"));
+        reqHeaderRow.setAttribute("emailTrans", empRow.getAttribute("EmailAddress"));
         reqHeaderRow.setAttribute("RequestDate", date1);
         
         reqHeaderRow.setAttribute("Status", "New");

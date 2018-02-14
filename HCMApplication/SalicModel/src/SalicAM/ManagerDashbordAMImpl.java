@@ -61,6 +61,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
      */
     public ManagerDashbordAMImpl() {
     }
+    
+    private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
 
     /**
      * Container's getter for XxhcmApprovalDtlsVO1.
@@ -223,6 +225,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         ArrayList<String> toRecepients = new ArrayList<String>();
         
         String reqStatus = (String) otHdrVO.getCurrentRow().getAttribute("ReqStatus");
+        String empEmail =  (String) otHdrVO.getCurrentRow().getAttribute("EmpEmail");
         
         getXxQpActionHistoryTVO1().applyViewCriteria(getXxQpActionHistoryTVO1().getViewCriteria("XxQpActionHistoryTVOCriteria1"));
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
@@ -237,6 +240,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
         BigDecimal approveLevel = null;
         String firstLevelApproverName = "";
         String secondLevelApproverName = "";
+        String apprEmail = null;
         String rejectReason = "";
         
         String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
@@ -657,10 +661,22 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 //next level approver is present.
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
                 String approverId = (String) rows[0].getAttribute("ApproverId");
+                apprEmail = (String) rows[0].getAttribute("ApproverEmail");
                 //sending email to employee about first level approval complete and nexi is pending
+                //for employee
+                 if(ORIGINAL_EMAILS){
+                     if(empEmail == null){
+                         empEmail = "paas.user@salic.com";
+                     }
+                     String[] to = {empEmail};
+                     emailReq.setToEmail(to);
+                 }
+                 else{
+                     String[] to = { "paas.user@salic.com" }; 
+                     emailReq.setToEmail(to);
+                 } 
                 
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
@@ -685,10 +701,20 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"",(ArrayList) emailHapmap.get("bodyParts"));
                 
                 //To second approver
-               String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+                if(ORIGINAL_EMAILS){
+                    if(apprEmail == null){
+                        apprEmail = "paas.user@salic.com";
+                    }
+                    String[] to = {apprEmail};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                } 
+              
                String mgrUserName = secondLevelApproverName;
                emailReq.setToEmpName(mgrUserName);
-               emailReq.setToEmail(managerUsers);
                 //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                 emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
                 emailReq.setMessage("<b> "+ reqType +
@@ -711,9 +737,18 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 
             }
             else{
-                
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                //for employee on finalapproval
+                if(ORIGINAL_EMAILS){
+                    if(empEmail == null){
+                        empEmail = "paas.user@salic.com";
+                    }
+                    String[] to = {empEmail};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                } 
                 emailReq.setToEmpName(emailReq.getEmpName());
                     //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                     emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
@@ -792,8 +827,18 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
                 rejectReason = (String)rows[0].getAttribute("ApproverComments");
             }
-            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-            emailReq.setToEmail(to);
+            //to employee
+            if(ORIGINAL_EMAILS){
+                if(empEmail == null){
+                    empEmail = "paas.user@salic.com";
+                }
+                String[] to = {empEmail};
+                emailReq.setToEmail(to);
+            }
+            else{
+                String[] to = { "paas.user@salic.com" }; 
+                emailReq.setToEmail(to);
+            } 
             emailReq.setToEmpName(emailReq.getEmpName());
             emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is rejected");
             emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected by "+firstLevelApproverName+" with hereunder information: <br><br> Reject Reason : "+rejectReason);
@@ -822,7 +867,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                     approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
                 }
             }
-            approvedMgrs.put(emailReq.getEmpName(), "");
+            approvedMgrs.put(emailReq.getEmpName(), empEmail);
             
             Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
             if(rows != null && rows.length > 0){
@@ -834,9 +879,21 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
                 // String to[] = (String[]) toArray.toArray();
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
-                emailReq.setToEmpName(emailReq.getEmpName());
+                //to approvers and employees
+                if(ORIGINAL_EMAILS){
+                    String email = managerMap.getValue();
+                    if(email == null){
+                        email = "paas.user@salic.com";
+                    }
+                    String to[] = { email };
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                    emailReq.setToEmail(to);
+                }
+                
+                emailReq.setToEmpName(managerMap.getKey());
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
                 emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
                 LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();

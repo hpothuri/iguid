@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="12.2.1.12.24"
+  Version="12.2.1.16.48"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -109,6 +109,7 @@
       <Item Value="gradeTRANS"/>
       <Item Value="jobTitleTRANS"/>
       <Item Value="lineManagerTRANS"/>
+      <Item Value="emailTrans"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="EmpName"/>
@@ -118,6 +119,7 @@
       <Item Value="Grade"/>
       <Item Value="JobTitle"/>
       <Item Value="LineManager"/>
+      <Item Value="EmailAdddress"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="EmpName"/>
@@ -544,6 +546,15 @@ return null;
     EntityAttrName="WdReason"
     EntityUsage="XxhcmOvertimeHeadersAllEO"
     AliasName="WD_REASON"/>
+  <ViewAttribute
+    Name="emailTrans"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="CHAR"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
   <ViewCriteria
     Name="XxhcmOvertimeHeadersAllVOCriteria"
     ViewObjectName="SalicView.XxhcmOvertimeHeadersAllVO"

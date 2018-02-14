@@ -90,6 +90,9 @@ import oracle.jbo.server.RowQualifier;
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
 public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM {
+    
+    private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
+    
     /**
      * This is the default constructor (do not remove).
      */
@@ -1512,6 +1515,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         //emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("EmployeeName"));
 
         String empNameR = null;
+        String reqEmpEmail = null;
         if(empIdLogged != null){
             ViewObject empManagerDet = getemployeeROVO1();
             empManagerDet.setNamedWhereClauseParam("BV_EMP_ID",emailReq.getEmpId().toString());
@@ -1520,6 +1524,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 empNameR = (String)empManagerDet.first().getAttribute("EmpName");
                 emailReq.setEmpName((String)empManagerDet.first().getAttribute("EmpName"));
                 emailReq.setEmpNumber(empManagerDet.first().getAttribute("EmpNumber")+"");
+                reqEmpEmail = (String)empManagerDet.first().getAttribute("EmailAddress");
             }
         }
 
@@ -1535,6 +1540,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         String firstLevelApproverName = "";
         String secondLevelApproverName = "";
         String rejectReason = "";
+        String approverEmail = "";
         
         String reqPage = (String) otHdrVO.getCurrentRow().getAttribute("ReqType");
         
@@ -1949,9 +1955,17 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 secondLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
                 String approverId = (String) rows[0].getAttribute("ApproverId");
                 //sending email to employee about first level approval complete and nexi is pending
-                
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                if(ORIGINAL_EMAILS){
+                    if(reqEmpEmail == null){
+                        reqEmpEmail = "paas.user@salic.com";
+                    }
+                    String[] to = {reqEmpEmail};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                }
                 emailReq.setToEmpName(emailReq.getEmpName());
                 //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
@@ -1975,10 +1989,25 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
                 
                 //To second approver
-               String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+               
                String mgrUserName = secondLevelApproverName;
                emailReq.setToEmpName(mgrUserName);
-               emailReq.setToEmail(managerUsers);
+               
+               //to approver
+                if(ORIGINAL_EMAILS){
+                    String apprEmail = (String) rows[0].getAttribute("ApproverEmail");
+                    if(apprEmail == null){
+                        apprEmail = "paas.user@salic.com";
+                    }
+                    String[] to = {apprEmail};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                }
+               
+               
                 //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
                emailReq.setMessage("<b> "+ reqType +
@@ -2002,8 +2031,19 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             }
             else{
                 
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                //FYI on final approval for employee
+                if(ORIGINAL_EMAILS){
+                    if(reqEmpEmail == null){
+                        reqEmpEmail = "paas.user@salic.com";
+                    }
+                    String[] to = {reqEmpEmail};
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; 
+                    emailReq.setToEmail(to);
+                }
+
                 emailReq.setToEmpName(emailReq.getEmpName());
                     //if(reqStatus != null && !"DELETED".equalsIgnoreCase(reqStatus)){   
                 emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is approved.");
@@ -2078,8 +2118,21 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                 firstLevelApproverName = (String) actRws[0].getAttribute("ApproverUserName");
                 rejectReason = (String)actRws[0].getAttribute("ApproverComments");
             }
-            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-            emailReq.setToEmail(to);
+            
+            //to employee
+            if(ORIGINAL_EMAILS){
+                if(reqEmpEmail == null){
+                    reqEmpEmail = "paas.user@salic.com";
+                }
+                String[] to = {reqEmpEmail};
+                emailReq.setToEmail(to);
+            }
+            else{
+                String[] to = { "paas.user@salic.com" }; 
+                emailReq.setToEmail(to);
+            }
+
+            
             emailReq.setToEmpName(emailReq.getEmpName());
             emailReq.setSubject("FYI : "+reqType+" request("+emailReq.getRequestNo()+") is rejected by "+firstLevelApproverName);
             emailReq.setMessage("Your <b> "+reqType+" request </b> is rejected by "+firstLevelApproverName+" with hereunder information: <br><br> Reject Reason : "+rejectReason);
@@ -2115,9 +2168,21 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                     if(empManagerDet.hasNext()){
                         managerName = (String)empManagerDet.first().getAttribute("EmpName");
                         if(managerName != null){
-            //                            String[] to = { (String)empManagerDet.first().getAttribute("EmailAddress") };
-                            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                            emailReq.setToEmail(to);
+                            
+                            //to manager email
+                            if(ORIGINAL_EMAILS){
+                                String apprEmail = (String)empManagerDet.first().getAttribute("ApproverEmail");
+                                if(apprEmail == null){
+                                    apprEmail = "paas.user@salic.com";
+                                }
+                                String[] to = {apprEmail};
+                                emailReq.setToEmail(to);
+                            }
+                            else{
+                                String[] to = { "paas.user@salic.com" }; 
+                                emailReq.setToEmail(to);
+                            }
+
                             emailReq.setToEmpName(managerName);
                             emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") for "+emailReq.getEmpName()+" is withdrawn from  "+managerName);
                             emailReq.setMessage("<b> "+reqType+" request </b> is withdrawn which was pending for approval from <b>"+managerName+"</b> for <b>"+emailReq.getEmpName()+"</b> with hereunder details: <br><br> Withdraw Reason : "+wdReason);;
@@ -2147,12 +2212,24 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             }
             
             
-            approvedMgrs.put(emailReq.getEmpName(), "");
+            approvedMgrs.put(emailReq.getEmpName(), reqEmpEmail);
             
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
                 // String to[] = (String[]) toArray.toArray();
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                
+                //for all emails in map
+                if(ORIGINAL_EMAILS){
+                    String email = managerMap.getValue();
+                    if(email == null){
+                        email = "paas.user@salic.com";
+                    }
+                    String to[] = { email };
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                    emailReq.setToEmail(to);
+                }
                 
                 emailReq.setToEmpName(managerMap.getKey());
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") for "+emailReq.getEmpName()+" is withdrawn from "+managerName);
@@ -2181,10 +2258,19 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             
             Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ActionSet", actionSet);
             
+            //to employee
+            if(ORIGINAL_EMAILS){
+                if(reqEmpEmail == null){
+                    reqEmpEmail = "paas.user@salic.com";
+                }
+                String[] to = {reqEmpEmail};
+                emailReq.setToEmail(to);
+            }
+            else{
+                String[] to = { "paas.user@salic.com" }; 
+                emailReq.setToEmail(to);
+            }
             
-            
-            String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-            emailReq.setToEmail(to);
             emailReq.setToEmpName(emailReq.getEmpName());
             //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
@@ -2210,10 +2296,23 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                     approverName = (String)row.getAttribute("ApproverUserName");
                     approverId = (String)row.getAttribute("ApproverId");
                     toRecepients.add((String)row.getAttribute("ApproverUserName"));
-                    String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+                    
+                    //to manager email
+                    if(ORIGINAL_EMAILS){
+                        String apprEmail = (String)row.getAttribute("ApproverEmail");
+                        if(apprEmail == null){
+                            apprEmail = "paas.user@salic.com";
+                        }
+                        String[] to = {apprEmail};
+                        emailReq.setToEmail(to);
+                    }
+                    else{
+                        String[] to = { "paas.user@salic.com" }; 
+                        emailReq.setToEmail(to);
+                    }
+                    
                     String mgrUserName = approverName;
                     emailReq.setToEmpName(mgrUserName);
-                    emailReq.setToEmail(managerUsers);
                     emailReq.setMessage("<b>"+reqType + " request" +
                                         "</b> Cancelled by "+emailReq.getEmpName()+" with hereunder details:: <br><br> Cancellation Reason : "+cancelReason);
                     emailReq.setSubject(reqType + " request (" + emailReq.getRequestNo() + ") cancelled by "+emailReq.getEmpName());
@@ -2244,7 +2343,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
                     approvedMgrs.put(row.getAttribute("ApproverUserName")+"", email);
                 }
             }
-            approvedMgrs.put(emailReq.getEmpName(), "");
+            approvedMgrs.put(emailReq.getEmpName(), reqEmpEmail);
             Integer aprLevel = getCurrentApprForRequest(new BigDecimal(emailReq.getRequestId()),empIdLogged.toString());
             //Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empIdLogged);
             RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
@@ -2266,9 +2365,19 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
             
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
-                // String to[] = (String[]) toArray.toArray();
-                String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-                emailReq.setToEmail(to);
+                //for all emails in map
+                if(ORIGINAL_EMAILS){
+                    String email = managerMap.getValue();
+                    if(email == null){
+                        email = "paas.user@salic.com";
+                    }
+                    String to[] = { email };
+                    emailReq.setToEmail(to);
+                }
+                else{
+                    String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                    emailReq.setToEmail(to);
+                }
                 emailReq.setToEmpName(managerMap.getKey());
                 emailReq.setSubject(reqType+" request("+emailReq.getRequestNo()+") is returned to "+empNameR+" for more information from "+firstLevelApproverName);
                 emailReq.setMessage("<b> "+reqType+" request </b> is returned for more information from "+firstLevelApproverName+" with hereunder details: <br><br> More Information Reason : "+rejectReason);
@@ -2324,6 +2433,8 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         emailReq.setEmpName((String) otHdrVO.getCurrentRow().getAttribute("employeeNameTRANS"));
          emailReq.setEmpNumber((String) otHdrVO.getCurrentRow().getAttribute("empNumberTRANS"));
         
+        String reqEmpEmail = (String) otHdrVO.getCurrentRow().getAttribute("emailTrans");
+        
         String approverId = "";
         
         ArrayList<String> toRecepients = new ArrayList<String>();
@@ -2331,6 +2442,7 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
 //        getXxQpActionHistoryTVO1().executeQuery();
         
         String approverName = "";
+        String approverEmail = "";
         Integer aprLevel = getMinLevelForRequest(emailReq.getRequestId().toString());
         getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", reqType1);
         getXxQpActionHistoryTVO1().executeQuery();
@@ -2344,14 +2456,25 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         if(rows != null && rows.length > 0){
             for(Row row : rows){
                 approverName = (String)row.getAttribute("ApproverUserName");
+                approverEmail = (String)row.getAttribute("ApproverEmail");
                 approverId = (String)row.getAttribute("ApproverId");
                 toRecepients.add((String)row.getAttribute("ApproverUserName"));
             }
         }
         
+        //to employee
+        if(ORIGINAL_EMAILS){
+            if(reqEmpEmail == null){
+                reqEmpEmail = "paas.user@salic.com";
+            }
+            String[] to = {reqEmpEmail};
+            emailReq.setToEmail(to);
+        }
+        else{
+            String[] to = { "paas.user@salic.com" }; 
+            emailReq.setToEmail(to);
+        }
         
-        String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
-        emailReq.setToEmail(to);
         emailReq.setToEmpName(emailReq.getEmpName());
         //                    emailReq.setToEmail((String[]) toRecepients.toArray());
 
@@ -2762,10 +2885,20 @@ public class overTimeAMImpl extends ApplicationModuleImpl implements overTimeAM 
         
         
         //To mamager
-        String[] managerUsers = { "paas.user@salic.com" }; //TODO get manager email 
+        if(ORIGINAL_EMAILS){
+            if(approverEmail == null){
+                approverEmail = "paas.user@salic.com";
+            }
+            String[] to = {approverEmail};
+            emailReq.setToEmail(to);
+        }
+        else{
+            String[] to = { "paas.user@salic.com" }; 
+            emailReq.setToEmail(to);
+        }
+       
         String mgrUserName = approverName;
         emailReq.setToEmpName(mgrUserName);
-        emailReq.setToEmail(managerUsers);
         emailReq.setSubject("Action required for "+ reqType +" request ("+emailReq.getRequestNo()+") of "+emailReq.getEmpName()+"("+emailReq.getEmpNumber()+")");
         emailReq.setMessage("<b> "+ reqType +
                             " request </b> for <b>"+emailReq.getEmpName()+ "("+emailReq.getEmpNumber()+") </b> is pending for your approval with hereunder details:");
