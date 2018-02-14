@@ -324,15 +324,15 @@ FROM
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
-    Name="EmailAdddress"
+    Name="EmailAddress"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
     Precision="40"
     Type="java.lang.String"
     ColumnType="VARCHAR2"
-    AliasName="EMAIL_ADDDRESS"
-    Expression="EMAIL_ADDDRESS"
+    AliasName="EMAIL_ADDRESS"
+    Expression="EMAIL_ADDRESS"
     SQLType="VARCHAR">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="40"/>
