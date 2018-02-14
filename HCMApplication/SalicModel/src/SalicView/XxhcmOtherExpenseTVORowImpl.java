@@ -18,6 +18,7 @@ import oracle.jbo.server.ViewRowImpl;
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
 public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
+
     public static final int ENTITY_XXHCMOTHEREXPENSEEO = 0;
 
     /**
@@ -274,16 +275,6 @@ public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
             }
         }
         ,
-        XxhcmAttachmentsTVO {
-            protected Object get(XxhcmOtherExpenseTVORowImpl obj) {
-                return obj.getXxhcmAttachmentsTVO();
-            }
-
-            protected void put(XxhcmOtherExpenseTVORowImpl obj, Object value) {
-                obj.setAttributeInternal(index(), value);
-            }
-        }
-        ,
         CurrencyListROVO1 {
             protected Object get(XxhcmOtherExpenseTVORowImpl obj) {
                 return obj.getCurrencyListROVO1();
@@ -295,6 +286,7 @@ public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
         }
         ;
         private static AttributesEnum[] vals = null;
+        ;
         private static final int firstIndex = 0;
 
         protected abstract Object get(XxhcmOtherExpenseTVORowImpl object);
@@ -320,6 +312,7 @@ public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
             return vals;
         }
     }
+
     public static final int ATTRIBUTE1 = AttributesEnum.Attribute1.index();
     public static final int ATTRIBUTE10 = AttributesEnum.Attribute10.index();
     public static final int ATTRIBUTE2 = AttributesEnum.Attribute2.index();
@@ -345,7 +338,6 @@ public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
     public static final int REQDTLSID = AttributesEnum.ReqDtlsId.index();
     public static final int TOTALAMOUNT = AttributesEnum.TotalAmount.index();
     public static final int TOTALCOLUMNAMOUNT = AttributesEnum.TotalColumnAmount.index();
-    public static final int XXHCMATTACHMENTSTVO = AttributesEnum.XxhcmAttachmentsTVO.index();
     public static final int CURRENCYLISTROVO1 = AttributesEnum.CurrencyListROVO1.index();
 
     /**
@@ -772,12 +764,6 @@ public class XxhcmOtherExpenseTVORowImpl extends ViewRowImpl {
         setAttributeInternal(TOTALCOLUMNAMOUNT, value);
     }
 
-    /**
-     * Gets the associated <code>RowIterator</code> using master-detail link XxhcmAttachmentsTVO.
-     */
-    public RowIterator getXxhcmAttachmentsTVO() {
-        return (RowIterator) getAttributeInternal(XXHCMATTACHMENTSTVO);
-    }
 
     /**
      * Gets the view accessor <code>RowSet</code> CurrencyListROVO1.

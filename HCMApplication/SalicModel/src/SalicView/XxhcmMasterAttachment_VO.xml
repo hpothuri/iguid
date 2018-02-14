@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmMasterAttachment_VO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmMasterAttachment_EO.MATTACH_ID, 
        XxhcmMasterAttachment_EO.MASTER_REF_ID, 
@@ -21,10 +21,8 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="VarAccess"/>
-  </DesignTime>
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <EntityUsage
     Name="XxhcmMasterAttachment_EO"
     Entity="SalicEntity.XxhcmMasterAttachment_EO"/>

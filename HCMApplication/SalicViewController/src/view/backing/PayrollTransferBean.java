@@ -471,6 +471,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                            if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -510,7 +511,7 @@ public class PayrollTransferBean {
                             //ADFUtils.findOperation("Rollback").execute();
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason ==>"+e.getMessage());
                             
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
@@ -881,6 +882,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                                if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -910,6 +912,19 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
+                                if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                    errMesg.append("/n");
+                                    errMesg.append("Failed Request Number ==>"+reqNum);
+                                    errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                    if(ucmRes!=null){
+                                        errMesg.append(ucmRes);
+                                    }
+                                    if(hdlRes!=null){
+                                        errMesg.append(hdlRes);
+                                    }
+                                    isMovedToPayroll = false;
+                                    failedReqId= failedReqId + reqNum;
+                                }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
                             }
@@ -919,7 +934,7 @@ public class PayrollTransferBean {
                             logger.severe(e.getMessage());
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason p2 ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason p2 ==>"+e.getMessage());
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
                         }
@@ -1076,6 +1091,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                                if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -1105,6 +1121,19 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
+                                if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                    errMesg.append("/n");
+                                    errMesg.append("Failed Request Number ==>"+reqNum);
+                                    errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                    if(ucmRes!=null){
+                                        errMesg.append(ucmRes);
+                                    }
+                                    if(hdlRes!=null){
+                                        errMesg.append(hdlRes);
+                                    }
+                                    isMovedToPayroll = false;
+                                    failedReqId= failedReqId + reqNum;
+                                }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
                             }
@@ -1114,7 +1143,7 @@ public class PayrollTransferBean {
                             logger.log(e.getMessage());
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason ==>"+e.getMessage());
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
 
@@ -1301,6 +1330,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                                if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -1330,6 +1360,19 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
+                                if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                    errMesg.append("/n");
+                                    errMesg.append("Failed Request Number ==>"+reqNum);
+                                    errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                    if(ucmRes!=null){
+                                        errMesg.append(ucmRes);
+                                    }
+                                    if(hdlRes!=null){
+                                        errMesg.append(hdlRes);
+                                    }
+                                    isMovedToPayroll = false;
+                                    failedReqId= failedReqId + reqNum;
+                                }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
                             }
@@ -1339,7 +1382,7 @@ public class PayrollTransferBean {
                             logger.log(e.getMessage());
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason ==>"+e.getMessage());
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
                         }
@@ -1705,6 +1748,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                                if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -1734,6 +1778,19 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
+                                if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                    errMesg.append("/n");
+                                    errMesg.append("Failed Request Number ==>"+reqNum);
+                                    errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                    if(ucmRes!=null){
+                                        errMesg.append(ucmRes);
+                                    }
+                                    if(hdlRes!=null){
+                                        errMesg.append(hdlRes);
+                                    }
+                                    isMovedToPayroll = false;
+                                    failedReqId= failedReqId + reqNum;
+                                }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
                             }
@@ -1741,7 +1798,7 @@ public class PayrollTransferBean {
                         } catch (Exception e) {
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason ==>"+e.getMessage());
                             logger.log(e.getMessage());
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
@@ -1920,6 +1977,7 @@ public class PayrollTransferBean {
                             "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                         try {
                             callWebservice();
+                                if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                             callHDL();
 
                             ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -1949,6 +2007,19 @@ public class PayrollTransferBean {
                                     hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                     hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                 }
+                                if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                    errMesg.append("/n");
+                                    errMesg.append("Failed Request Number ==>"+reqNum);
+                                    errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                    if(ucmRes!=null){
+                                        errMesg.append(ucmRes);
+                                    }
+                                    if(hdlRes!=null){
+                                        errMesg.append(hdlRes);
+                                    }
+                                    isMovedToPayroll = false;
+                                    failedReqId= failedReqId + reqNum;
+                                }
                                 //                           hdrVO.executeQuery();
                                 ADFUtils.findOperation("Commit").execute();
                             }
@@ -1956,7 +2027,7 @@ public class PayrollTransferBean {
                         } catch (Exception e) {
                             errMesg.append("/n");
                             errMesg.append("Failed Request Number ==>"+reqNum);
-                            errMesg.append("Request Failed to move to payroll with reason ==>"+e.getMessage());
+                            errMesg.append(" - Request Failed to move to payroll with reason ==>"+e.getMessage());
                             logger.log(e.getMessage());
                             isMovedToPayroll = false;
                             failedReqId= failedReqId + reqNum;
@@ -2385,6 +2456,7 @@ public class PayrollTransferBean {
                                 "      </typ:importAndLoadData>\n" + "   </soapenv:Body>\n" + "</soapenv:Envelope>";
                             try {
                                 callWebservice();
+                                    if(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS"))
                                 callHDL();
 
                                 ViewObjectImpl impl = (ViewObjectImpl) hdrVO.getViewObject();
@@ -2414,6 +2486,19 @@ public class PayrollTransferBean {
                                         hdrVO.getCurrentRow().setAttribute("Attribute3", docname);
                                         hdrVO.getCurrentRow().setAttribute("PayrollTransferInitBy", ADFUtils.evaluateEL("#{loginBean.personId}"));
                                     }
+                                    if(!(ucmRes!=null && ucmRes.equalsIgnoreCase("SUCCESS")) || !(hdlRes !=null && hdlRes.equalsIgnoreCase("SUCCESS"))){
+                                        errMesg.append("/n");
+                                        errMesg.append("Failed Request Number ==>"+reqNum);
+                                        errMesg.append(" - Request Failed to move to payroll, : Unable to upload the file");
+                                        if(ucmRes!=null){
+                                            errMesg.append(ucmRes);
+                                        }
+                                        if(hdlRes!=null){
+                                            errMesg.append(hdlRes);
+                                        }
+                                        isMovedToPayroll = false;
+                                        failedReqId= failedReqId + reqNum;
+                                    }
                                     //                           hdrVO.executeQuery();
                                     ADFUtils.findOperation("Commit").execute();
                                 }
@@ -2421,7 +2506,7 @@ public class PayrollTransferBean {
                             } catch (Exception e) {
                                 errMesg.append("/n");
                                 errMesg.append("Failed Request Number ==>"+reqNum);
-                                errMesg.append("Request Failed to move to payroll with reason btc2==>"+e.getMessage());
+                                errMesg.append(" - Request Failed to move to payroll with reason btc2==>"+e.getMessage());
                                 logger.log(e.getMessage());
                                 isMovedToPayroll = false;
                                 failedReqId= failedReqId + reqNum;
@@ -2432,7 +2517,7 @@ public class PayrollTransferBean {
                     }
                 }
             }
-            if(hdrVO.getCurrentRow().getAttribute("PayrollTansStatus") != null &&  
+            if(hdrVO.getCurrentRow() !=null && hdrVO.getCurrentRow().getAttribute("PayrollTansStatus") != null &&  
                hdrVO.getCurrentRow().getAttribute("PayrollTansStatus").toString().equalsIgnoreCase("COMPLETED")){
                 BigDecimal reqId = new BigDecimal(hdrVO.getCurrentRow().getAttribute("ReqId")+"");
                 oracle.binding.OperationBinding op = SalicView.backing.Utils.ADFUtils.findOperation("prepareMailTemplateAndSend");
@@ -2448,7 +2533,7 @@ public class PayrollTransferBean {
         if(errMesg.toString().isEmpty()){
         JSFUtils.addFacesInformationMessage("Selected Request Moved to PayRoll!!");
         }else{
-            JSFUtils.addFacesInformationMessage("Failed to move below requests to payroll!!!. \n"+errMesg);
+            JSFUtils.addFacesInformationMessage("Failed to move below requests to payroll!!!. /n"+errMesg);
         }
         
         return "toPayrollSave";
@@ -2505,7 +2590,7 @@ public class PayrollTransferBean {
         return hdlRes;
     }
 
-    public String callWebservice() {
+    public String callWebservice() throws Exception {
         try {
             OkHttpClient client = new OkHttpClient();
 
@@ -2548,11 +2633,12 @@ public class PayrollTransferBean {
                 ucmRes = reportResponse;
             }
 
-
-        }
-
-        catch (Exception e) {
+            if(ucmRes==null){
+                throw new Exception("Upload to HCM content server failed!!!");
+            }
+        }catch (Exception e) {
             e.printStackTrace();
+            throw new Exception("Error::"+e.getMessage());            
         }
         return ucmRes;
     }

@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmApprSetupDtl_VO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmApprSetupDtl_EO.APPR_DTL_ID, 
        XxhcmApprSetupDtl_EO.APPR_GROUP_ID, 
@@ -32,7 +32,9 @@
   FromList="XXHCM_APPR_SETUP_DTL XxhcmApprSetupDtl_EO"
   BindingStyle="OracleName"
   CustomQuery="false"
-  PageIterMode="Full">
+  PageIterMode="Full"
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <Properties>
     <SchemaBasedProperties>
       <LABEL

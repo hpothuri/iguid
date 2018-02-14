@@ -33,7 +33,8 @@
   PageIterMode="Full"
   ComponentClass="SalicView.XxhcmPurposeOfTrvl_VOImpl"
   FetchSize="26"
-  FetchMode="FETCH_AS_NEEDED">
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
   </DesignTime>

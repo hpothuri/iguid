@@ -673,6 +673,11 @@ return null;
     ViewLink="SalicVL.OverTimeDetPurposeOfTrvlVL"
     Type="oracle.jbo.RowIterator"
     IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="XxhcmAttachmentsTVO"
+    ViewLink="SalicVL.OtherExpense_AttachmentVl"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="SalicModel.SalicModelBundle"/>

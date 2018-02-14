@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOtherExpenseTVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOtherExpenseEO.ATTRIBUTE10, 
        XxhcmOtherExpenseEO.ATTRIBUTE2, 
@@ -34,7 +34,9 @@
   CustomQuery="false"
   PageIterMode="Full"
   RowClass="SalicView.XxhcmOtherExpenseTVORowImpl"
-  ComponentClass="SalicView.XxhcmOtherExpenseTVOImpl">
+  ComponentClass="SalicView.XxhcmOtherExpenseTVOImpl"
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
     <Attr Name="_isCodegen" Value="true"/>
@@ -235,11 +237,6 @@
     ColumnType="BIGINT"
     AliasName="VIEW_ATTR"
     SQLType="NUMERIC"/>
-  <ViewLinkAccessor
-    Name="XxhcmAttachmentsTVO"
-    ViewLink="SalicVL.OtherExpense_AttachmentVl"
-    Type="oracle.jbo.RowIterator"
-    IsUpdateable="false"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="SalicModel.SalicModelBundle"/>

@@ -80,7 +80,7 @@
             <af:commandLink id="ot1" text="#{row.RequestNumber}" action="edit">
               <af:setPropertyListener to="#{pageFlowScope.RequestNumber}" from="#{row.RequestNumber}" type="action"/>
               <af:setPropertyListener from="emp" to="#{sessionScope.search}" type="action"/>
-              <af:setPropertyListener from="edit" to="#{sessionScope.mode}" type="action"/>
+              <af:setPropertyListener from="#{row.Status == 'Draft' ? 'editable' : 'edit'}" to="#{sessionScope.mode}" type="action"/>
               <af:setPropertyListener to="#{sessionScope.hr}" from="OT" type="action"/>
               <af:setPropertyListener from="#{row.ReqType}" type="action" to="#{pageFlowScope.ReqType}"/>
               <af:setPropertyListener from="#{row.ReqId}" type="action" to="#{pageFlowScope.ReqId}"/>

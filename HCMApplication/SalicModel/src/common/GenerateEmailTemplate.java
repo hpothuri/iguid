@@ -261,9 +261,9 @@ public class GenerateEmailTemplate {
             Statement statement1 = dbTrans.createStatement(0);
             try {
                 String query =
-                    "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_overtime_details_all b, xxhcm_other_expense c, xxhcm_attachment d\n" + 
-                    "where a.req_id = b.req_id and b.req_dtls_id = c.req_dtls_id and c.expense_id = d.expense_id and a.req_id =  " +
-                    reqId;
+                "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_attachment d\n" + 
+                "where a.req_id = d.req_id and a.req_id =  " +
+                reqId;
                 ResultSet resultSet1 = statement1.executeQuery(query);
                 while (resultSet1.next()) {
                     String fileName = resultSet1.getString(1);
@@ -295,8 +295,8 @@ public class GenerateEmailTemplate {
             Statement statement = dbTrans.createStatement(0);
             try {
                 String query =
-                    "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_overtime_details_all b, xxhcm_other_expense c, xxhcm_attachment d\n" + 
-                    "where a.req_id = b.req_id and b.req_dtls_id = c.req_dtls_id and c.expense_id = d.expense_id and a.req_id =  " +
+                    "select d.attribute1,d.attach_file_type,d.attach_file from xxhcm_overtime_headers_all a, xxhcm_attachment d\n" + 
+                    "where a.req_id = d.req_id and a.req_id =  " +
                     reqId;
                 ResultSet resultSet1 = statement.executeQuery(query);
                 while (resultSet1.next()) {

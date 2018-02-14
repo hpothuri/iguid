@@ -4,12 +4,13 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CountryROVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>

@@ -25,6 +25,13 @@ public class overTimeAMClient extends ApplicationModuleImpl implements overTimeA
     }
 
 
+    public String checkBtUsed(String reqnum) {
+        Object _ret =
+            this.riInvokeExportedMethod(this, "checkBtUsed", new String[] { "java.lang.String" },
+                                        new Object[] { reqnum });
+        return (String) _ret;
+    }
+
     public void deleteActionReqHist(BigDecimal reqId) {
         Object _ret =
             this.riInvokeExportedMethod(this, "deleteActionReqHist", new String[] { "java.math.BigDecimal" },

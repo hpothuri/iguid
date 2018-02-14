@@ -141,7 +141,7 @@
                                 disabled="#{sessionScope.search ne 'mngr' ?'true':sessionScope.search eq 'emp' ? 'true' :bindings.Status.inputValue eq 'APPROVE'?'true':bindings.Status.inputValue eq 'REJECT'?'true':backingBeanScope.backing_employee.approveReject ? 'true' : 'false'}"/>
             <af:commandMenuItem text="Cancel" id="cmi7" actionListener="#{backingBeanScope.backing_employee.cancelOkRequest}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
-                                disabled="#{ not (bindings.Status.inputValue eq 'APPROVE' and bindings.PayrollTansStatus.inputValue ne 'COMPLETED')}"/>
+                                disabled="#{ not (backingBeanScope.backing_employee.btUsed eq 'N' and bindings.Status.inputValue eq 'APPROVE' and bindings.PayrollTansStatus.inputValue ne 'COMPLETED')}"/>
             <af:commandMenuItem text="Delete" id="cmi8"
                                 action="#{backingBeanScope.backing_employee.onCompleteDeleteReqACL}"
                                 rendered="#{sessionScope.search eq 'emp'?'true':'false'}"
@@ -1057,7 +1057,7 @@
                 <af:selectOneChoice value="#{bindings.TripType.inputValue}" label="#{bindings.TripType.label}"
                                     required="true" shortDesc="#{bindings.TripType.hints.tooltip}"
                                      id="selectOneChoice1"
-                                    simple="true" disabled="#{bindings.BussTravReqNumValue.inputValue == null || sessionScope.mode=='edit'?'true':'false'}"
+                                    simple="true" disabled="true"
                                     contentStyle="width:200px" partialTriggers="soc16">
                   <f:selectItems value="#{bindings.TripType.items}" id="selectItems1"/>
                 </af:selectOneChoice>
@@ -1501,7 +1501,7 @@
           </af:panelBox>
           <af:panelGroupLayout id="pgl9" layout="horizontal" halign="right" styleClass="AFStretchWidth"
                                inlineStyle="white-space:noWrap; padding-right:30px;">
-            <af:panelLabelAndMessage label="Grand Total" id="plam10" inlineStyle="font-weight:bold; font-size:large;">
+            <af:panelLabelAndMessage label="Grand Total" id="plam10" labelStyle="font-weight:bold; font-size:large;"  inlineStyle="font-weight:bold; font-size:large;">
               <af:outputText value="#{bindings.TotalColumnAmount.inputValue != null ?  (bindings.TotalColumnAmount.inputValue + bindings.TotalPerdiem.inputValue) : bindings.TotalPerdiem.inputValue}"
                              id="ot28" partialTriggers="it44 pc6:t12:it46 it43"
                              inlineStyle="font-weight:bold; font-size:large;"
@@ -1525,7 +1525,7 @@
               <f:facet name="menus"/>
               <f:facet name="toolbar">
                 <af:toolbar id="t15">
-                  <af:commandButton actionListener="#{bindings.CreateInsert5.execute}" text="Add"
+                  <af:commandButton actionListener="#{backingBeanScope.backing_employee.createNewAttachment}" text="Add"
                                     disabled="#{!bindings.CreateInsert5.enabled}" id="cb18" partialSubmit="true"/>
                   <af:spacer width="10" height="10" id="s13"/>
                   <af:button actionListener="#{bindings.Delete4.execute}" text="Delete"
@@ -1582,7 +1582,7 @@
                   <af:inputFile id="if2" value="#{row.bindings.AttachFile.inputValue}" autoSubmit="true"
                                 valueChangeListener="#{backingBeanScope.backing_employee.OnExpenseFileUpload}"
                                 rendered="false"/>
-                  <af:inputFile simple="true" required="true" columns="25"
+                  <af:inputFile simple="true" columns="25"
                                 disabled="#{sessionScope.mode=='edit'?'true':'false'}"
                                 shortDesc="#{bindings.XxhcmAttachmentsTVO1.hints.AttachFile.tooltip}" id="it56"
                                 label="Label 2"
@@ -1603,10 +1603,10 @@
                   </af:inputText>
                 </af:column>
                 <af:column id="c51" headerText="Download">
-                  <af:commandLink text="Download" id="cl2">
-                    <af:fileDownloadActionListener filename="#{bindings.AttachDesc.inputValue}"
+                  <af:link text="Download" id="cl2">
+                    <af:fileDownloadActionListener filename="#{row.bindings.Attribute1.inputValue}"
                                                    method="#{backingBeanScope.backing_employee.downloadFileListener2}"/>
-                  </af:commandLink>
+                  </af:link>
                 </af:column>
               </af:table>
             </af:panelCollection>
@@ -1756,7 +1756,10 @@
                               />
               </af:column>
               <af:column id="c17" headerText="Download" align="center" width="100">
-                <af:commandButton text="Download" partialTriggers="if1" id="cb9"/>
+                <af:link text="Download" partialTriggers="if1" id="cb9">
+                      <af:fileDownloadActionListener filename="#{row.bindings.FileName.inputValue}"
+                                                 method="#{backingBeanScope.backing_employee.downloadFileListener}"/>
+                    </af:link>
               </af:column>
               <af:column id="c18" headerText="Delete" align="center" width="60">
                 <af:commandLink actionListener="#{bindings.Delete1.execute}" text="Delete1"

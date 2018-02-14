@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmAttachmentsTVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmAttachmentEo.ATTACH_DESC, 
        XxhcmAttachmentEo.ATTACH_FILE, 
@@ -26,12 +26,14 @@
        XxhcmAttachmentEo.EXPENSE_ID, 
        XxhcmAttachmentEo.LAST_UPDATE_DATE, 
        XxhcmAttachmentEo.LAST_UPDATE_LOGIN, 
-       XxhcmAttachmentEo.LAST_UPDATED_BY"
+       XxhcmAttachmentEo.LAST_UPDATED_BY, 
+       XxhcmAttachmentEo.REQ_ID"
   FromList="XXHCM_ATTACHMENT XxhcmAttachmentEo"
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <Properties>
     <SchemaBasedProperties>
       <LABEL
@@ -66,7 +68,8 @@
     EntityAttrName="AttachmentId"
     EntityUsage="XxhcmAttachmentEo"
     AliasName="ATTACHMENT_ID">
-    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("XXFND_MAIN_MENU_S",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[(new oracle.jbo.server.SequenceImpl("XXFND_MAIN_MENU_S",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
   </ViewAttribute>
   <ViewAttribute
     Name="Attribute1"
@@ -170,6 +173,12 @@
     EntityAttrName="LastUpdatedBy"
     EntityUsage="XxhcmAttachmentEo"
     AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="ReqId"
+    PrecisionRule="true"
+    EntityAttrName="ReqId"
+    EntityUsage="XxhcmAttachmentEo"
+    AliasName="REQ_ID"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="SalicModel.SalicModelBundle"/>

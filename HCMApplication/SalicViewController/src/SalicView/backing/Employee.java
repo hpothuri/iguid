@@ -166,6 +166,8 @@ public class Employee {
     private Boolean approveReject;
     private RichTable purposeOfTrvTable;
     private RichTable purposeOfTravelBtcTable;
+    private String btUsed;
+    private Boolean enableReqEdit;
 
     public void setEmployeeNameTRANSId(RichInputListOfValues employeeNameTRANSId) {
         this.employeeNameTRANSId = employeeNameTRANSId;
@@ -4530,5 +4532,40 @@ JSFUtils.addFacesErrorMessage("No Exchange rate available for the request date")
 
     public RichPopup getWithdraw() {
         return withdraw;
+    }
+
+    public void createNewAttachment(ActionEvent actionEvent) {
+Row hdrRow = 
+            ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getCurrentRow();
+        oracle.jbo.domain.Number reqId = (oracle.jbo.domain.Number)hdrRow.getAttribute("ReqId");
+        ADFUtils.findOperation("CreateInsert5").execute();
+//        Row row = ADFUtils.findIterator("XxhcmAttachmentsTVO1Iterator").getCurrentRow();
+//        row.setAttribute("ReqId", reqId.bigDecimalValue());
+           }
+    public String isBTUsedinBtc(){
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("checkBtUsed");
+        String isValid = (String) op.execute();
+        return isValid;
+    }
+
+    public void setBtUsed(String btUsed) {
+        this.btUsed = btUsed;
+    }
+
+    public String getBtUsed() {
+        oracle.binding.OperationBinding op = ADFUtils.findOperation("checkBtUsed");
+        String isValid = (String) op.execute();
+        return isValid;
+    }
+
+    public void setEnableReqEdit(Boolean enableReqEdit) {
+        this.enableReqEdit = enableReqEdit;
+    }
+
+    public Boolean getEnableReqEdit() {
+        Row hdrRow = 
+                    ADFUtils.findIterator("XxhcmOvertimeHeadersAllVO1Iterator").getCurrentRow();
+                oracle.jbo.domain.Number reqId = (oracle.jbo.domain.Number)hdrRow.getAttribute("EmpId");
+        return enableReqEdit;
     }
 }

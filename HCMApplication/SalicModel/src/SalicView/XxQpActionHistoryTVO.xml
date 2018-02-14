@@ -9,7 +9,9 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  OrderBy="APPROVE_LEVEL desc">
+  OrderBy="APPROVE_LEVEL desc"
+  FetchMode="FETCH_AS_NEEDED"
+  Passivate="All">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>

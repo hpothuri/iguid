@@ -471,13 +471,13 @@
               RequiresUpdateModel="true" Action="createInsertRow"/>
       <tree IterBinding="XxhcmAttachmentsTVO1Iterator"
             id="XxhcmAttachmentsTVO1">
-         <nodeDefinition DefName="SalicView.XxhcmAttachmentsTVO"
-                         Name="XxhcmAttachmentsTVO10">
+         <nodeDefinition DefName="SalicView.XxhcmAttachmentsTVO" Name="XxhcmAttachmentsTVO10">
             <AttrNames>
                <Item Value="AttachDesc"/>
                <Item Value="AttachFile"/>
                <Item Value="AttachFileType"/>
                <Item Value="AttachmentId"/>
+               <Item Value="Attribute1"/>
             </AttrNames>
          </nodeDefinition>
       </tree>
@@ -708,5 +708,11 @@
                     MethodName="validateChildTotalAmount" IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
                     InstanceName="bindings.validateChildTotalAmount.dataControl.dataProvider"
                     ReturnName="data.overTimeAMDataControl.methodResults.validateChildTotalAmount_validateChildTotalAmount_dataControl_dataProvider_validateChildTotalAmount_result"/>
+      <methodAction id="checkBtUsed" RequiresUpdateModel="true" Action="invokeMethod" MethodName="checkBtUsed"
+                    IsViewObjectMethod="false" DataControl="overTimeAMDataControl"
+                    InstanceName="bindings.checkBtUsed.dataControl.dataProvider"
+                    ReturnName="data.overTimeAMDataControl.methodResults.checkBtUsed_checkBtUsed_dataControl_dataProvider_checkBtUsed_result">
+         <NamedData NDName="reqnum" NDValue="#{bindings.RequestNumber.inputValue}" NDType="java.lang.String"/>
+      </methodAction>
    </bindings>
 </pageDefinition>

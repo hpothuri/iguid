@@ -46,12 +46,12 @@
           </af:outputText>
         </af:column>
         <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApprByUserName.name}" filterable="true"
-                   sortable="true" headerText="#{bindings.RequestStatusROVO1.hints.ApprByUserName.label}" id="c6">
+                   sortable="true" headerText="Action By" id="c6">
           <af:outputText value="#{row.ApprByUserName}"
                          shortDesc="#{bindings.RequestStatusROVO1.hints.ApprByUserName.tooltip}" id="ot6"/>
         </af:column>
         <af:column sortProperty="#{bindings.RequestStatusROVO1.hints.ApprDate.name}" filterable="true" sortable="true"
-                   headerText="Approved Date" id="c7">
+                   headerText="Action Date" id="c7">
           <f:facet name="filter">
             <af:inputDate value="#{bindings.RequestStatusROVO1Query.queryDescriptor.filterConjunctionCriterion.criterionMap.ApprDate.value}"
                           id="id2">
