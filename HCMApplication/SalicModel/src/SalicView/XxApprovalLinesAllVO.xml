@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxApprovalLinesAllVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxApprovalLinesAllEO.LINE_ID, 
        XxApprovalLinesAllEO.APPROVAL_LIST_ID, 
@@ -16,10 +16,8 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
-  </DesignTime>
+  FetchSize="26"
+  FetchMode="FETCH_AS_NEEDED">
   <ViewAccessor
     Name="employeeROVO1"
     ViewObjectName="SalicROVO.employeeROVO"
@@ -29,11 +27,11 @@
     ListVOName="employeeROVO1"
     ListRangeSize="-1"
     NullValueFlag="none"
-    NullValueId="LOV_EmployeeId_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="EmployeeId"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="DerivedAttrNames">
       <Item Value="EmployeeName"/>
     </AttrArray>
@@ -51,11 +49,11 @@
     ListVOName="employeeROVO1"
     ListRangeSize="10"
     NullValueFlag="none"
-    NullValueId="LOV_EmployeeName_LOVUIHints_NullValueId"
     MRUCount="0">
     <AttrArray Name="AttrNames">
       <Item Value="EmployeeName"/>
     </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
     <AttrArray Name="DerivedAttrNames">
       <Item Value="EmployeeId"/>
     </AttrArray>

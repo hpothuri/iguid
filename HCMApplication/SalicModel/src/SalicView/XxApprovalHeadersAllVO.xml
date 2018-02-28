@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxApprovalHeadersAllVO"
-  Version="11.1.1.66.73"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxApprovalHeadersAllEO.APPROVAL_LIST_ID, 
        XxApprovalHeadersAllEO.APPROVAL_LIST, 
@@ -17,10 +17,8 @@
   BindingStyle="OracleName"
   CustomQuery="false"
   PageIterMode="Full"
-  UseGlueCode="false">
-  <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
-  </DesignTime>
+  FetchSize="26"
+  FetchMode="FETCH_AS_NEEDED">
   <EntityUsage
     Name="XxApprovalHeadersAllEO"
     Entity="SalicEntity.XxApprovalHeadersAllEO"/>
@@ -80,7 +78,8 @@
     EntityAttrName="StartDate"
     EntityUsage="XxApprovalHeadersAllEO"
     AliasName="START_DATE">
-    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[adf.currentDate]]></TransientExpression>
     <Properties>
       <SchemaBasedProperties>
         <LABEL
@@ -94,7 +93,8 @@
     EntityAttrName="EndDate"
     EntityUsage="XxApprovalHeadersAllEO"
     AliasName="END_DATE">
-    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+    <TransientExpression
+      Name="ExpressionScript"><![CDATA[adf.currentDate]]></TransientExpression>
     <Properties>
       <SchemaBasedProperties>
         <LABEL

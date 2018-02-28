@@ -320,8 +320,8 @@
               sortProperty="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.name}"
                          sortable="true"
                          align="center" frozen="true">
-                <af:inputDate value="#{row.bindings.PayrollTransDate.inputValue}"
-                              required="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.mandatory}"
+                <af:inputDate value="#{row.bindings.PayrollTransDate.inputValue}" 
+                              required="true"
                               shortDesc="#{bindings.PayrollTransfer_VO1.hints.PayrollTransDate.tooltip}"
                               id="id1" autoSubmit="true">
                   <f:validator binding="#{row.bindings.PayrollTransDate.validator}"/>

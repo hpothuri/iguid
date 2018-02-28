@@ -4,14 +4,14 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="CountryROVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   BindingStyle="OracleName"
   CustomQuery="true"
   RowClass="SalicROVO.CountryROVORowImpl"
   ComponentClass="SalicROVO.CountryROVOImpl"
   PageIterMode="Full"
-  FetchSize="50"
+  FetchSize="26"
   FetchMode="FETCH_AS_NEEDED">
   <DesignTime>
     <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>

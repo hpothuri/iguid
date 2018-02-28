@@ -41,6 +41,9 @@ public class UserService
   private String jwtUserToken;
   private String userServiceEndPoint;
   private String empUrl = "https://eepz-test.hcm.em2.oraclecloud.com/hcmCoreApi/resources/11.12.1.0/emps/";
+    private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
+    private static String mail_box = ORIGINAL_EMAILS ? "oracle.paas@salic.com" : "paas.user@salic.com";
+    private static String mail_box_pwd = ORIGINAL_EMAILS ? "Welc@me1234" : "Welc@me123";
   
   public UserService(String userServiceEndPoint, String username, String password)
   {
@@ -322,9 +325,9 @@ public class UserService
     UserService mm = new UserService("https://eepz-test.hcm.em2.oraclecloud.com/hcmPeopleRolesV2/UserDetailsService", token);
       LoginBean loginBean  = null;
       loginBean =   mm.findSelfUserDetails(new LoginBean());
-//      UserService serv = new UserService(null, "paas.user@salic.com", "Welcome@123");
+//      UserService serv = new UserService(null, "oracle.paas@salic.com", "Welc@me1234");
       //"300000009808202"
-      List<RolePojo> roles = mm.fetchRoles("paas.user@salic.com", "Welc@me123", loginBean.getPersonId());
+      List<RolePojo> roles = mm.fetchRoles(mail_box, mail_box_pwd, loginBean.getPersonId());
       
       for(RolePojo role : roles)
        System.err.println(role.getRoleName());

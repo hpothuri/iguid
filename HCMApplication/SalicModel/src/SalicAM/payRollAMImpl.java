@@ -44,7 +44,8 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
     }
 
     private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
-
+    private static String mail_box = ORIGINAL_EMAILS ? "oracle.paas@salic.com" : "paas.user@salic.com";
+    
     /**
      * Container's getter for XxQpActionHistoryTVO1.
      * @return XxQpActionHistoryTVO1
@@ -228,13 +229,13 @@ public class payRollAMImpl extends ApplicationModuleImpl implements payRollAM {
         if(ORIGINAL_EMAILS){
             String email = (String)fetchVO.first().getAttribute("EmailAddress");
             if(email == null){
-                email = "paas.user@salic.com";
+                email = mail_box;
             }
             String[] to = {email};
             emailReq.setToEmail(to);
         }
         else{
-            String[] to = { "paas.user@salic.com" }; 
+            String[] to = { mail_box }; 
             emailReq.setToEmail(to);
         } 
        

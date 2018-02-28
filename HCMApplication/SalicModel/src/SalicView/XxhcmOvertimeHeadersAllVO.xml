@@ -4,7 +4,7 @@
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxhcmOvertimeHeadersAllVO"
-  Version="12.2.1.16.48"
+  Version="12.2.1.12.24"
   InheritPersonalization="merge"
   SelectList="XxhcmOvertimeHeadersAllEO.REQ_ID, 
        XxhcmOvertimeHeadersAllEO.EMP_ID, 
@@ -43,7 +43,8 @@
   CustomQuery="false"
   PageIterMode="Full"
   FetchMode="FETCH_AS_NEEDED"
-  Passivate="All">
+  Passivate="All"
+  FetchSize="26">
   <Variable
     Name="BV_REQ_ID"
     Kind="viewcriteria"

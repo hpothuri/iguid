@@ -266,7 +266,10 @@
                       rowSelection="single" id="t2" columnStretching="last"
                       partialTriggers="::cil1 ::cil2 :::employeeNameTRANSId"
                       binding="#{backingBeanScope.backing_employee.dtlTable}" scrollPolicy="scroll" autoHeightRows="7">
-              <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.name}" sortable="true"
+                  <af:column headerText="Seq" width="40" id="c64">
+                    <af:outputText value="#{vs.index+1}" id="ot23"/>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.name}" sortable="true"
                          headerText="#{bindings.XxhcmOvertimeDetailsAllVO2.hints.OvertimeDate.label}" id="c3"
                          width="160">
                 <af:inputDate value="#{row.bindings.OvertimeDate.inputValue}"
@@ -1658,7 +1661,7 @@
               <af:column sortProperty="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.name}" sortable="false"
                          headerText="Assigned Date" id="c11" width="175">
                 <af:outputText value="#{row.LastUpdateDate}" id="ot16">
-                  <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.LastUpdateDate.format}"/>
+                  <af:convertDateTime pattern="dd/MMM/yyyy HH:mm" timeZone="Asia/Kuwait"/>
                 </af:outputText>
               </af:column>
               <af:column headerText="#{bindings.XxQpActionHistoryTVO1.hints.ApprBy.label}" id="c61">
@@ -1668,7 +1671,7 @@
               <af:column sortable="false" headerText="Action Date" id="c60">
                 <af:outputText value="#{row.ApprDate}"
                                shortDesc="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.tooltip}" id="ot27">
-                  <af:convertDateTime pattern="#{bindings.XxQpActionHistoryTVO1.hints.ApprDate.format}"/>
+                  <af:convertDateTime pattern="dd/MMM/yyyy HH:mm" timeZone="Asia/Kuwait"/>
                 </af:outputText>
               </af:column>
             </af:table>

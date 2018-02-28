@@ -11,7 +11,8 @@
   PageIterMode="Full"
   OrderBy="APPROVE_LEVEL desc"
   FetchMode="FETCH_AS_NEEDED"
-  Passivate="All">
+  Passivate="All"
+  FetchSize="26">
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>

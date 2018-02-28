@@ -24,13 +24,14 @@ public class XxhcmOvertimeDetailsAllEOImpl extends EntityImpl {
      * Validation method for OvertimeHours.
      */
     public boolean validateOvertimeHours(Number overtimehours) {
+        
         if(getOvertimeType().equalsIgnoreCase("OT_WE") || getOvertimeType().equalsIgnoreCase("OT_HOL")){
-            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && overtimehours.compareTo(24) == -1)){
+            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && (overtimehours.compareTo(24) == 0 || overtimehours.compareTo(24) == -1))){
                 throw new JboException("Enter Overtime hours between 1 to 24");
             }
         }
         if(getOvertimeType().equalsIgnoreCase("OT_WD")){
-            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && overtimehours.compareTo(16) == -1)){
+            if(!(overtimehours!=null && overtimehours.compareTo(0) == 1 && (overtimehours.compareTo(16) == 0 || overtimehours.compareTo(16) == -1))){
                 throw new JboException("Enter Overtime hours between 1 to 16");
             }
         }

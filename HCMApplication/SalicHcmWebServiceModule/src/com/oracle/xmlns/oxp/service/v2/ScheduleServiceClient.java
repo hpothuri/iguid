@@ -7,7 +7,10 @@ public class ScheduleServiceClient {
 //    public static void main(String[] args) {
 //        scheduleReportForHrLetter("300000005807455","EMBASSY OF  QATAR");
 //    }
-
+    private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
+    private static String mail_box = ORIGINAL_EMAILS ? "oracle.paas@salic.com" : "paas.user@salic.com";
+    private static String mail_box_pwd = ORIGINAL_EMAILS ? "Welc@me1234" : "Welc@me123";
+    
     public void scheduleReportForHrLetter(String empId,String letterTo,String letterToAr,String letterTemplate) {
         ScheduleService_Service scheduleService_Service = new ScheduleService_Service();
         ScheduleService scheduleService = scheduleService_Service.getScheduleService();
@@ -44,7 +47,7 @@ public class ScheduleServiceClient {
             String job_id = null;
             ;
             try {
-                job_id = scheduleService.scheduleReport(sreq, "paas.user@salic.com", "Welc@me123");
+                job_id = scheduleService.scheduleReport(sreq, mail_box, mail_box_pwd);
             } catch (AccessDeniedException_Exception | InvalidParametersException_Exception |
                      OperationFailedException_Exception e) {
                 e.printStackTrace();

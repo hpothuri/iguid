@@ -63,6 +63,7 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
     }
     
     private static Boolean ORIGINAL_EMAILS = Boolean.FALSE;
+    private static String mail_box = ORIGINAL_EMAILS ? "oracle.paas@salic.com" : "paas.user@salic.com";
 
     /**
      * Container's getter for XxhcmApprovalDtlsVO1.
@@ -666,13 +667,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 //for employee
                  if(ORIGINAL_EMAILS){
                      if(empEmail == null){
-                         empEmail = "paas.user@salic.com";
+                         empEmail = mail_box;
                      }
                      String[] to = {empEmail};
                      emailReq.setToEmail(to);
                  }
                  else{
-                     String[] to = { "paas.user@salic.com" }; 
+                     String[] to = { mail_box }; 
                      emailReq.setToEmail(to);
                  } 
                 
@@ -703,13 +704,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 //To second approver
                 if(ORIGINAL_EMAILS){
                     if(apprEmail == null){
-                        apprEmail = "paas.user@salic.com";
+                        apprEmail = mail_box;
                     }
                     String[] to = {apprEmail};
                     emailReq.setToEmail(to);
                 }
                 else{
-                    String[] to = { "paas.user@salic.com" }; 
+                    String[] to = { mail_box }; 
                     emailReq.setToEmail(to);
                 } 
               
@@ -740,13 +741,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 //for employee on finalapproval
                 if(ORIGINAL_EMAILS){
                     if(empEmail == null){
-                        empEmail = "paas.user@salic.com";
+                        empEmail = mail_box;
                     }
                     String[] to = {empEmail};
                     emailReq.setToEmail(to);
                 }
                 else{
-                    String[] to = { "paas.user@salic.com" }; 
+                    String[] to = { mail_box }; 
                     emailReq.setToEmail(to);
                 } 
                 emailReq.setToEmpName(emailReq.getEmpName());
@@ -821,7 +822,8 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_typ", getDecodedReqType((String) otHdrVO.getCurrentRow().getAttribute("ReqType")));
             getXxQpActionHistoryTVO1().setNamedWhereClauseParam("p_req_id", ((BigDecimal) otHdrVO.getCurrentRow().getAttribute("ReqId")));
             getXxQpActionHistoryTVO1().executeQuery();
-            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+            
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApprBy", empId);
             if(rows != null && rows.length > 0){
                 approveLevel = (BigDecimal)rows[0].getAttribute("ApproveLevel");
                 firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
@@ -830,13 +832,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             //to employee
             if(ORIGINAL_EMAILS){
                 if(empEmail == null){
-                    empEmail = "paas.user@salic.com";
+                    empEmail = mail_box;
                 }
                 String[] to = {empEmail};
                 emailReq.setToEmail(to);
             }
             else{
-                String[] to = { "paas.user@salic.com" }; 
+                String[] to = { mail_box }; 
                 emailReq.setToEmail(to);
             } 
             emailReq.setToEmpName(emailReq.getEmpName());
@@ -854,7 +856,9 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
         }
         else if(approveOrReject != null && "M".equalsIgnoreCase(approveOrReject)){
-            int actionSet = getMaximumActionSetForRequest(emailReq.getRequestId().toString()) -1;
+            int actionSet = getMaximumActionSetForRequest(emailReq.getRequestId().toString()) -2;
+            getXxQpActionHistoryTVO1().clearCache();
+            getXxQpActionHistoryTVO1().executeQuery();
             Row[] rs =  getXxQpActionHistoryTVO1().getFilteredRows("ActionSet", actionSet);
             
             HashMap<String, String> approvedMgrs = new HashMap<String, String>();
@@ -868,13 +872,19 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 }
             }
             approvedMgrs.put(emailReq.getEmpName(), empEmail);
-            
-            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows("ApproverId", empId.toString());
+            RowQualifier rq = new RowQualifier(getXxQpActionHistoryTVO1());
+            //            //Write condition in SQL query format
+            rq.setWhereClause("ApproverId=" + empId.toString() +
+                              " AND ActionSet = "+actionSet);
+
+
+            Row[] rows = getXxQpActionHistoryTVO1().getFilteredRows(rq);//"ApproverId", empId.toString());
             if(rows != null && rows.length > 0){
                 firstLevelApproverName = (String) rows[0].getAttribute("ApproverUserName");
+                rejectReason = (String)rows[0].getAttribute("ApproverComments");
             }
             
-            rejectReason = (String) otHdrVO.getCurrentRow().getAttribute("ApprComments");
+            //rejectReason = (String) otHdrVO.getCurrentRow().getAttribute("ApprComments");
             
             //approvers and employee
             for(Map.Entry<String, String> managerMap : approvedMgrs.entrySet()){
@@ -883,13 +893,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                 if(ORIGINAL_EMAILS){
                     String email = managerMap.getValue();
                     if(email == null){
-                        email = "paas.user@salic.com";
+                        email = mail_box;
                     }
                     String to[] = { email };
                     emailReq.setToEmail(to);
                 }
                 else{
-                    String[] to = { "paas.user@salic.com" }; //TODO get logged in user email
+                    String[] to = { mail_box }; //TODO get logged in user email
                     emailReq.setToEmail(to);
                 }
                 
@@ -964,13 +974,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         
                         if(ORIGINAL_EMAILS){
                             if(emailAddress == null){
-                                emailAddress = "paas.user@salic.com";
+                                emailAddress = mail_box;
                             }
                             String[] to = {emailAddress};
                             emailReq.setToEmail(to);
                         }
                         else{
-                            String[] to = { "paas.user@salic.com" }; 
+                            String[] to = { mail_box }; 
                             emailReq.setToEmail(to);
                         }
                         
@@ -1026,9 +1036,12 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
-                        Map<String, Object> emailHapmap =
-                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+
+                        if(payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup) && !(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
+                        {
+                            emailReq.setSubject(getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" is approved");
+                            emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is approved and pending for process in payroll with hereunder details:");   
+                        }
                         
                         String reqPage = reqType;
                         
@@ -1422,8 +1435,10 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                             emailTableDetails.add(tableDetail);
                             emailReq.setTableDetails(emailTableDetails);
                         }
-
-
+                        Map<String, Object> emailHapmap =
+                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        
                         //Code for Sending email for second approver
                         if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem))){
                             GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));
@@ -1449,13 +1464,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                
                         if(ORIGINAL_EMAILS){
                             if(emailAddress == null){
-                                emailAddress = "paas.user@salic.com";
+                                emailAddress = mail_box;
                             }
                             String[] to = {emailAddress};
                             emailReq.setToEmail(to);
                         }
                         else{
-                            String[] to = { "paas.user@salic.com" }; 
+                            String[] to = { mail_box }; 
                             emailReq.setToEmail(to);
                         }
                         
@@ -1463,6 +1478,11 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         emailReq.setToEmpName(managerName);
                         emailReq.setSubject("FYI : "+getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") is approved successfully.");
                         emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") for "+empRName+", is approved successfully. This is for your information Only.");
+                                if(payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup) && !(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
+                                {
+                                    emailReq.setSubject(getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" is approved");
+                                    emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is approved and pending for process in payroll with hereunder details:");   
+                                }
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
                         emailReq.setActionButtons(actionButtons);
@@ -1492,13 +1512,13 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         
                         if(ORIGINAL_EMAILS){
                             if(emailAddress == null){
-                                emailAddress = "paas.user@salic.com";
+                                emailAddress = mail_box;
                             }
                             String[] to = {emailAddress};
                             emailReq.setToEmail(to);
                         }
                         else{
-                            String[] to = { "paas.user@salic.com" }; 
+                            String[] to = { mail_box }; 
                             emailReq.setToEmail(to);
                         }
                         
@@ -1904,10 +1924,6 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                         LinkedHashMap<String, String> actionButtons = new LinkedHashMap<String, String>();
                         actionButtons = new LinkedHashMap<String, String>();
                         actionButtons.put("More Info", "");
-                        emailReq.setActionButtons(actionButtons);
-                        Map<String, Object> emailHapmap =
-                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
-                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
                         if (payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup)) {
                             if (reqType != null && "BusinessTrip".equalsIgnoreCase(reqType)) {
                                 FetchAdvPerdiemVOImpl advPerdiemVO = getFetchAdvPerdiemVO1();
@@ -1918,6 +1934,16 @@ public class ManagerDashbordAMImpl extends ApplicationModuleImpl implements Mana
                                 }
                             }
                         }
+                        if(payrollGroup != null && "Y".equalsIgnoreCase(payrollGroup) && !(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
+                        {
+                            emailReq.setSubject(getStringBasedOnReqType(reqType)+" request ("+emailReq.getRequestNo()+") of "+empRName+" is approved");
+                            emailReq.setMessage(getStringBasedOnReqType(reqType)+" ("+emailReq.getRequestNo()+") of "+empRName+" is approved and pending for process in payroll with hereunder details:");   
+                        }
+                        emailReq.setActionButtons(actionButtons);
+                        Map<String, Object> emailHapmap =
+                            GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        emailHapmap = GenerateEmailTemplate.prepareEmailTemplate(emailReq, getDBTransaction());
+                        
                         //Code for Sending email for second approver
                         if(!(reqType != null && "BusinessTrip".equalsIgnoreCase(reqType) && advPerdiem != null && "NO".equalsIgnoreCase(advPerdiem)))
                         GenerateEmailTemplate.sendFromGMail(emailReq.getToEmail(), emailHapmap.get("subject")+"", emailHapmap.get("body")+"", (ArrayList) emailHapmap.get("bodyParts"));

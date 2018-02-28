@@ -25,7 +25,8 @@
   CustomQuery="false"
   PageIterMode="Full"
   FetchMode="FETCH_AS_NEEDED"
-  Passivate="All">
+  Passivate="All"
+  FetchSize="26">
   <EntityUsage
     Name="XxfndLookupValuesTEO"
     Entity="SalicEntity.XxfndLookupValuesTEO"/>
